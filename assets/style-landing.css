@@ -1,50 +1,120 @@
+/* =======================
+   ESTILO LANDING PAGE
+   ======================= */
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #c0ffa5;
+  color: #492f70;
+}
+
+/* ======= HERO (primeira dobra) ======= */
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  padding: 0 20px;
+}
+
+.hero__inner {
+  max-width: 600px;
+  padding-top: 0 !important; /* remove espaço extra no topo */
+}
+
 /* Logo no topo */
 .logo-topo {
-  height: 50px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  height: 30px;
 }
 
 /* Logo central acima do título */
 .logo-central {
-  width: 500px;
-  margin-bottom: 20px;
+  display: block;
+  width: 170px;                  /* ajuste do tamanho */
+  margin: 0 auto 5px !important; /* espaço logo → frase */
+  padding: 0 !important;
 }
 
-/* Seção "Sobre" */
+/* Título principal */
+.hero__title {
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.2;
+}
+
+/* Subtítulo */
+.hero__subtitle {
+  font-size: 1.1em;
+  margin-top: 8px !important;
+}
+
+/* Remove margens padrão dos textos no hero */
+.hero h1, .hero p {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Botão principal */
+.hero__btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: #492f70;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 30px;
+  transition: background-color 0.3s;
+}
+
+.hero__btn:hover {
+  background-color: #321f4d;
+}
+
+/* ======= SEÇÃO SOBRE ======= */
 .sobre {
-  background: #fff;
-  color: var(--text);
+  background: white;
+  color: #492f70;
   padding: 60px 20px;
   text-align: center;
 }
-.sobre__inner {
-  max-width: 800px;
-  margin: auto;
-}
+
 .sobre h2 {
-  color: var(--purple);
-  font-size: 1.8rem;
-  margin-bottom: 5px;
+  font-size: 2em;
+  margin-bottom: 20px;
 }
+
 .sobre p {
-  font-size: 1rem;
+  font-size: 1em;
   line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
-/* Botão "Saiba mais" */
-.saiba-mais {
-  display: inline-block;
-  margin-top: 20px;
-  font-size: 1.2rem;
-  text-decoration: none;
-  color: var(--purple);
-  animation: pulse 1.5s infinite;
-}
-@keyframes pulse {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(5px); }
-}
-
-/* Scroll suave */
-html {
-  scroll-behavior: smooth;
+/* ======= RESPONSIVIDADE ======= */
+@media (min-width: 768px) {
+  .hero__title {
+    font-size: 3em;
+  }
+  .hero__subtitle {
+    font-size: 1.3em;
+  }
+  .logo-central {
+    width: 200px;
+    margin-bottom: 8px !important;
+  }
 }
