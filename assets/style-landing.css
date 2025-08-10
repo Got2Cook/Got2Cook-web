@@ -1,0 +1,50 @@
+/* Logo no topo */
+.logo-topo {
+  height: 20px;
+}
+
+/* Logo central acima do título */
+.logo-central {
+  width: 120px;
+  margin-bottom: 20px;
+}
+
+/* Seção "Sobre" */
+.sobre {
+  background: #fff;
+  color: var(--text);
+  padding: 60px 20px;
+  text-align: center;
+}
+.sobre__inner {
+  max-width: 800px;
+  margin: auto;
+}
+.sobre h2 {
+  color: var(--purple);
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+.sobre p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Botão "Saiba mais" */
+.saiba-mais {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: var(--purple);
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+/* Scroll suave */
+html {
+  scroll-behavior: smooth;
+}
