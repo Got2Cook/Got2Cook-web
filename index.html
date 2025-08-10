@@ -6,23 +6,41 @@
   <title>Got2Cook — Landing</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="stylesheet" href="/assets/style-landing.css" />
 </head>
 <body>
+  <!-- topo -->
   <header class="topbar">
     <div class="topbar__inner">
-      <a class="brand" href="/"><span class="brand__txt">G2C</span></a>
+      <a class="brand" href="/">
+        <img src="/assets/logo-topo.png" alt="Got2Cook Logo" class="logo-topo">
+      </a>
       <a class="btn btn--ghost" href="/app/">Login</a>
     </div>
   </header>
 
+  <!-- hero -->
   <main class="hero">
     <div class="hero__inner">
+      <img src="/assets/logo-central.png" alt="Got2Cook" class="logo-central">
       <h1 class="hero__title">Receitas que combinam com seu humor 🔎</h1>
-      <p class="hero__subtitle">Use os ingredientes da geladeira e descubra pratos perfeitos para o momento.</p>
+      <p class="hero__subtitle">Use os ingredientes da sua geladeira e descubra pratos perfeitos para o momento.</p>
       <a class="btn btn--primary" href="/app/">Abrir WebApp</a>
+      <br>
+      <a href="#sobre" class="saiba-mais">↓ Saiba mais</a>
     </div>
   </main>
 
-  <footer class="footer"><small>© Got2Cook — versão web (MVP)</small></footer>
+  <!-- seção sobre -->
+  <section id="sobre" class="sobre">
+    <div class="sobre__inner">
+      <h2>Sobre o Got2Cook</h2>
+      <p>O Got2Cook é um web app que sugere receitas de acordo com seu humor e ingredientes disponíveis em casa.
+         Personalize sua experiência culinária, descubra novos sabores e aproveite o que já tem na geladeira!</p>
+    </div>
+  </section>
+
+  <!-- rodapé -->
+  <footer class="footer"><small>© Got2Cook 2025</small></footer>
 </body>
 </html>
