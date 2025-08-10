@@ -10,15 +10,25 @@
   <header class="topbar">
     <div class="topbar__inner">
       <a class="brand" href="/"><span class="brand__txt">G2C</span></a>
-      <a class="btn btn--ghost" href="/pagamento/">Premium</a>
+      <nav style="display:flex;gap:10px">
+        <a class="btn btn--ghost" href="/pagamento/">Premium</a>
+        <a class="btn btn--ghost" href="/">Sair</a>
+      </nav>
     </div>
   </header>
 
   <main class="hero">
     <div class="hero__inner">
       <h1 class="hero__title">Web App</h1>
-      <p class="hero__subtitle">Aqui entra sua interface real (humor, geladeira, etc.).</p>
+      <p class="hero__subtitle">Aqui entra sua interface (humor, geladeira, receitas, etc.).</p>
+
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a class="btn btn--primary" href="/app/humor.html">Escolher humor</a>
+        <a class="btn btn--ghost" href="/app/geladeira.html">Minha geladeira</a>
+        <a class="btn btn--ghost" href="/app/receitas.html">Minhas receitas</a>
+      </div>
     </div>
   </main>
 </body>
 </html>
+
