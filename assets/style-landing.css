@@ -22,13 +22,14 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: 100vh;
+  min-height: 100vh; /* garante que cubra toda a tela */
   padding: 0 20px;
 }
 
+/* Limita conteúdo e remove padding extra */
 .hero__inner {
   max-width: 600px;
-  padding-top: 0 !important; /* remove espaço extra no topo */
+  padding-top: 0 !important;
 }
 
 /* Logo no topo */
@@ -36,20 +37,20 @@ body {
   position: absolute;
   top: 20px;
   left: 20px;
-  height: 30px;
+  height: 40px; /* um pouco maior */
 }
 
 /* Logo central acima do título */
 .logo-central {
   display: block;
-  width: 170px;                  /* ajuste do tamanho */
-  margin: 0 auto 5px !important; /* espaço logo → frase */
+  width: 220px; /* maior que antes */
+  margin: 0 auto 2px !important; /* cola mais no título */
   padding: 0 !important;
 }
 
 /* Título principal */
 .hero__title {
-  font-size: 2em;
+  font-size: 2.5em;
   font-weight: bold;
   margin: 0 !important;
   padding: 0 !important;
@@ -59,10 +60,10 @@ body {
 /* Subtítulo */
 .hero__subtitle {
   font-size: 1.1em;
-  margin-top: 8px !important;
+  margin-top: 15px !important; /* mais afastado do título */
 }
 
-/* Remove margens padrão dos textos no hero */
+/* Remove margens padrão */
 .hero h1, .hero p {
   margin: 0 !important;
   padding: 0 !important;
@@ -71,7 +72,7 @@ body {
 /* Botão principal */
 .hero__btn {
   display: inline-block;
-  margin-top: 20px;
+  margin-top: 25px; /* mais espaço do subtítulo para o botão */
   padding: 12px 24px;
   background-color: #492f70;
   color: white;
@@ -112,9 +113,10 @@ body {
   }
   .hero__subtitle {
     font-size: 1.3em;
+    margin-top: 20px !important;
   }
   .logo-central {
-    width: 200px;
-    margin-bottom: 8px !important;
+    width: 250px;
+    margin-bottom: 4px !important;
   }
 }
