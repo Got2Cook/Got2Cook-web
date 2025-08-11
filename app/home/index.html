@@ -10,37 +10,78 @@
 <body>
   <div class="container">
 
-    <!-- Cabeçalho: perfil (esquerda) e menu (direita) -->
-    <header>
-      <div class="icone perfil">
-        <img src="../../assets/perfil.png" alt="Perfil" id="perfilBtn" />
-        <!-- Menu do perfil (sem ícones para evitar caminhos que você não tem) -->
-        <div class="menu-perfil hidden" id="perfilMenu">
-          <div class="perfil-nome">
-            <img src="../../assets/perfil.png" alt="Ícone Perfil" />
-            <span id="perfil-nome"></span>
-          </div>
-          <ul>
-            <li onclick="window.location.href='../perfil/index.html'">Dados pessoais</li>
-            <li onclick="window.location.href='../historico/index.html'">Meu histórico de humor</li>
-            <li onclick="window.location.href='../gostos/index.html'">Meus gostos culinários</li>
-          </ul>
-        </div>
+<header>
+  <!-- Perfil (esquerda) -->
+  <div class="icone perfil">
+    <img src="../../assets/perfil.png" alt="Perfil" id="perfilBtn" />
+    <nav class="menu-perfil hidden" id="perfilMenu" aria-label="Menu do perfil">
+      <div class="perfil-nome">
+        <img src="../../assets/perfil.png" alt="Ícone Perfil" />
+        <span id="perfil-nome"></span>
       </div>
+      <ul>
+        <!-- Trocar emoji por <img src="../../assets/icone-dados.png" alt=""> quando enviar -->
+        <li onclick="window.location.href='../perfil/index.html'">
+          <span class="item-ico" aria-hidden="true">🧑‍💼</span> <!-- icone-dados.png -->
+          <span>Dados pessoais</span>
+        </li>
+        <li onclick="window.location.href='../historico/index.html'">
+          <span class="item-ico" aria-hidden="true">📈</span> <!-- icone-humor.png -->
+          <span>Meu histórico de humor</span>
+        </li>
+        <li onclick="window.location.href='../gostos/index.html'">
+          <span class="item-ico" aria-hidden="true">❤️‍🔥</span> <!-- icone-gostos.png -->
+          <span>Meus gostos culinários</span>
+        </li>
+        <li onclick="window.location.href='../jornada/index.html'">
+          <span class="item-ico" aria-hidden="true">🗺️</span> <!-- icone-jornada.png -->
+          <span>Minha jornada culinária</span>
+        </li>
+      </ul>
+    </nav>
+  </div>
 
-      <div class="icone menu">
-        <img src="../../assets/menu.png" alt="Menu" id="menuBtn" />
-        <div class="menu-principal hidden" id="menuPrincipal">
-          <ul>
-            <li onclick="window.location.href='../meu-plano/index.html'">Gerenciar plano</li>
-            <li onclick="window.location.href='../historico/index.html'">Meu histórico</li>
-            <li onclick="window.location.href='../config/index.html'">Configurações</li>
-            <li onclick="window.location.href='../faleconosco/index.html'">Fale conosco</li>
-            <li onclick="window.location.href='../../index.html'">Sair para a landing</li>
-          </ul>
-        </div>
-      </div>
-    </header>
+  <!-- Menu (direita) -->
+  <div class="icone menu">
+    <img src="../../assets/menu.png" alt="Menu" id="menuBtn" />
+    <nav class="menu-principal hidden" id="menuPrincipal" aria-label="Menu principal">
+      <ul>
+        <li onclick="window.location.href='../meu-plano/index.html'">
+          <span class="item-ico" aria-hidden="true">💳</span> <!-- icone-plano.png -->
+          <span>Gerenciar plano</span>
+        </li>
+        <li onclick="window.location.href='../historico/index.html'">
+          <span class="item-ico" aria-hidden="true">🕘</span> <!-- icone-historico.png -->
+          <span>Meu histórico</span>
+        </li>
+        <li onclick="window.location.href='../config/index.html'">
+          <span class="item-ico" aria-hidden="true">⚙️</span> <!-- icone-config.png -->
+          <span>Configurações</span>
+        </li>
+        <li onclick="window.location.href='../faleconosco/index.html'">
+          <span class="item-ico" aria-hidden="true">💬</span> <!-- icone-fale.png -->
+          <span>Fale conosco</span>
+        </li>
+        <li onclick="window.location.href='../politica/index.html'">
+          <span class="item-ico" aria-hidden="true">📜</span> <!-- icone-politica.png -->
+          <span>Política de privacidade</span>
+        </li>
+        <li onclick="window.location.href='../tutorial/index.html'">
+          <span class="item-ico" aria-hidden="true">🎯</span> <!-- icone-tutorial.png -->
+          <span>Tutorial / Como usar</span>
+        </li>
+        <li class="danger" onclick="window.location.href='../apagar-conta/index.html'">
+          <span class="item-ico" aria-hidden="true">🗑️</span> <!-- icone-apagar.png -->
+          <span>Apagar conta</span>
+        </li>
+        <li onclick="window.location.href='../../index.html'">
+          <span class="item-ico" aria-hidden="true">🚪</span> <!-- icone-sair.png -->
+          <span>Sair para a landing</span>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
     <!-- Fala do cozinheiro -->
     <div class="fala">
