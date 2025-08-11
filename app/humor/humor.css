@@ -163,62 +163,67 @@ body {
   }
 }
 
-/* ===== Layout para PC: balões nos cantos ===== */
+/* ===== Desktop: caber em 1 tela, sem rolagem ===== */
 @media (min-width: 1024px) {
-  /* container vira “palco” para posicionar os balões */
-  .container {
-    max-width: 1200px;
+  /* palco geral */
+  .container{
+    max-width: 1100px;
     min-height: 100vh;
-    position: relative;  /* importante para posicionar os balões */
-    padding-top: 140px;  /* espaço para os balões no topo */
+    display: grid;
+    grid-template-rows: auto auto auto; /* pergunta / emojis / resposta */
+    align-content: start;
+    justify-items: center;
+    gap: 16px;
+    padding-top: 32px;     /* respiro superior */
+    padding-bottom: 120px; /* espaço da curva fixa */
   }
 
-  /* balão da PERGUNTA no canto superior esquerdo */
-  .balao.pergunta {
-    position: absolute;
-    top: 80px;
-    left: 40px;
-    margin: 0;                /* remove margem padrão */
-    max-width: 420px;         /* limita largura para não invadir o centro */
+  /* balão da PERGUNTA no topo, alinhado à esquerda (canto) */
+  .balao.pergunta{
+    position: static;        /* sai do absoluto */
+    margin: 0;
+    justify-self: start;     /* cola à esquerda */
+    max-width: 520px;
+    padding: 22px 28px;      /* menor pra caber melhor */
+    font-size: 22px;         /* ↓ um pouco */
   }
-  .balao.pergunta::after {
-    left: -8px;               /* mantém a cauda do lado esquerdo */
-    top: 28px;
+  .balao.pergunta::after{
+    left: -8px; top: 28px;   /* mantém a cauda à esquerda */
     transform: rotate(100deg);
   }
 
-  /* balão da RESPOSTA no canto superior direito (aparece após escolher o emoji) */
-  .balao.resposta {
-    position: absolute;
-    top: 80px;
-    right: 40px;
-    margin: 0;
-    max-width: 420px;
+  /* EMOJIS centralizados no meio, em 2 linhas de 4 */
+  .emojis{
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 0;               /* remove grandes margens do mobile */
+    width: 680px;            /* largura fixa confortável */
+    max-width: 90vw;         /* segura em telas menores */
+    justify-items: center;
   }
-  .balao.resposta::after {
-    right: -10px;             /* mantém a cauda do lado direito */
-    top: 28px;
+  .emojis button{
+    font-size: 22px;         /* um pouco menor */
+    padding: 10px 12px;      /* compacto */
+    border-radius: 10px;
+  }
+
+  /* balão da RESPOSTA logo abaixo dos emojis (sem absoluto) */
+  .balao.resposta{
+    position: static;
+    margin: 0;
+    max-width: 520px;
+    padding: 20px 24px;
+    font-size: 28px;         /* menor que no mobile */
+    align-self: start;
+    justify-self: end;       /* puxa levemente à direita */
+  }
+  .balao.resposta::after{
+    right: -10px; top: 24px; /* cauda à direita */
     transform: rotate(-50deg);
   }
 
-  /* grade de emojis centralizada abaixo dos balões */
-  .emojis {
-    grid-template-columns: repeat(8, 1fr); /* todos em uma linha grande */
-    gap: 16px;
-    width: auto;
-    margin-top: 220px;        /* espaço para não bater nos balões */
-    margin-bottom: 100px;     /* respiro antes da curva */
-    justify-items: center;
-  }
-  /* se preferir 2 linhas no desktop, troque por repeat(6, 1fr) e ajuste o gap */
-
-  .emojis button {
-    font-size: 28px;
-    padding: 18px;
-  }
-
-  /* curva fixa continua, só garantimos que nada fique por baixo sem respiro */
-  .curva {
-    height: 110px;
+  /* curva fixa no rodapé (mantém) */
+  .curva{
+    height: 100px;
   }
 }
