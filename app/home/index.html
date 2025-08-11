@@ -2,113 +2,86 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Got2Cook — Home</title>
-  <meta name="description" content="Sugestões de receitas baseadas no seu humor no Got2Cook." />
-
-  <!-- Tipografia -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
-
-  <!-- Estilos -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Got2Cook - Início</title>
+  <meta name="description" content="Página inicial do Got2Cook com sugestões de receitas e atalhos rápidos.">
   <link rel="stylesheet" href="./home.css" />
 </head>
 <body>
-  <div class="page">
+  <div class="container">
 
-    <!-- Cabeçalho -->
-    <header class="app-header" role="banner">
-      <div class="header-inner">
-        <!-- Logo → Volta para landing -->
-        <a href="../../index.html" class="brand" aria-label="Voltar para a landing">
-          <img class="brand__img" src="../../assets/logo.png" alt="Logo Got2Cook" />
-          <span class="brand__text">Got2Cook</span>
-        </a>
-
-        <!-- Botão menu -->
-        <button class="icon-btn" type="button" aria-label="Abrir menu" id="menuBtn" title="Menu">
-          <img src="../../assets/menu.png" alt="Abrir menu" width="20" height="20" />
-        </button>
-
-        <!-- Menu principal -->
-        <nav class="menu" id="menu" aria-label="Menu principal">
+    <!-- Cabeçalho: perfil (esquerda) e menu (direita) -->
+    <header>
+      <div class="icone perfil">
+        <img src="../../assets/perfil.png" alt="Perfil" id="perfilBtn" />
+        <!-- Menu do perfil (sem ícones para evitar caminhos que você não tem) -->
+        <div class="menu-perfil hidden" id="perfilMenu">
+          <div class="perfil-nome">
+            <img src="../../assets/perfil.png" alt="Ícone Perfil" />
+            <span id="perfil-nome"></span>
+          </div>
           <ul>
-            <li><a href="../minhas-receitas/index.html">Minhas receitas</a></li>
-            <li><a href="../historico/index.html">Histórico</a></li>
-            <li><a href="../humor/index.html">Trocar humor</a></li>
-            <li><a href="../../index.html">Sair para landing</a></li>
+            <li onclick="window.location.href='../perfil/index.html'">Dados pessoais</li>
+            <li onclick="window.location.href='../historico/index.html'">Meu histórico de humor</li>
+            <li onclick="window.location.href='../gostos/index.html'">Meus gostos culinários</li>
           </ul>
-        </nav>
+        </div>
+      </div>
+
+      <div class="icone menu">
+        <img src="../../assets/menu.png" alt="Menu" id="menuBtn" />
+        <div class="menu-principal hidden" id="menuPrincipal">
+          <ul>
+            <li onclick="window.location.href='../meu-plano/index.html'">Gerenciar plano</li>
+            <li onclick="window.location.href='../historico/index.html'">Meu histórico</li>
+            <li onclick="window.location.href='../config/index.html'">Configurações</li>
+            <li onclick="window.location.href='../faleconosco/index.html'">Fale conosco</li>
+            <li onclick="window.location.href='../../index.html'">Sair para a landing</li>
+          </ul>
+        </div>
       </div>
     </header>
 
-    <!-- Conteúdo -->
-    <main class="content" role="main">
-      <!-- Saudação -->
-      <section class="greeting" aria-labelledby="titulo-saudacao">
-        <h1 id="titulo-saudacao" class="visually-hidden">Saudação</h1>
-        <div class="bubble">
-          <p class="bubble__text">
-            <span class="bubble__hello">Olá<span class="bubble__comma">,</span></span>
-            <span id="usuarioNome" class="bubble__name"></span>
-            <span id="usuarioEmoji" class="bubble__emoji" role="img" aria-label="Humor atual"></span>
-          </p>
-          <p class="bubble__question">o que vamos cozinhar hoje?</p>
-        </div>
-      </section>
-
-      <!-- Personagem -->
-      <div class="chef-wrap">
-        <img src="../../assets/cozinheiro.png" alt="Personagem cozinheiro" class="chef-img" />
+    <!-- Fala do cozinheiro -->
+    <div class="fala">
+      <img src="../../assets/cozinheiro.png" alt="Cozinheiro" class="cozinheiro" />
+      <div class="balao-fala">
+        Olá, <span id="usuario">Usuário</span>! O que vamos cozinhar hoje?
       </div>
+    </div>
 
-      <!-- Sugestões -->
-      <section class="suggestions" aria-labelledby="titulo-sugestoes">
-        <h2 id="titulo-sugestoes" class="suggestions__title">Sugestões baseadas no seu humor</h2>
+    <!-- Sugestões -->
+    <section class="sugestoes">
+      <h2>Sugestões baseadas no seu humor</h2>
+      <div class="sugestoes-grid">
+        <a href="../minhas-receitas/index.html" class="card"><img src="../../assets/receita1.png" alt="Receita 1" /></a>
+        <a href="../minhas-receitas/index.html" class="card"><img src="../../assets/receita2.png" alt="Receita 2" /></a>
+        <a href="../minhas-receitas/index.html" class="card"><img src="../../assets/receita3.png" alt="Receita 3" /></a>
+        <a href="../minhas-receitas/index.html" class="card"><img src="../../assets/receita4.png" alt="Receita 4" /></a>
+      </div>
+    </section>
 
-        <div id="cardsGrid" class="cards" role="list">
-          <!-- Cards renderizados pelo JS -->
-        </div>
+    <!-- Atalhos que aparecem ao tocar no botão central -->
+    <section class="acessos-rapidos" id="atalhosRapidos" aria-label="Atalhos rápidos">
+      <button onclick="window.location.href='../minhas-receitas/index.html'" class="acesso-btn">MINHAS RECEITAS</button>
+      <button onclick="window.location.href='../gerar/index.html'" class="acesso-btn">GERAR RECEITA</button>
+    </section>
 
-        <div class="more-row">
-          <a class="more-row__link" href="../minhas-receitas/index.html" aria-label="Ver mais receitas">
-            Ver mais sugestões <span aria-hidden="true">›</span>
-          </a>
-        </div>
-      </section>
-    </main>
+    <!-- Rodapé curvo com 3 botões (igual ao do seu app) -->
+    <footer class="curva">
+      <button class="btn-footer voltar" id="btnVoltar" aria-label="Selecionar humor novamente">
+        <img src="../../assets/humor.png" alt="" />
+      </button>
+      <button class="btn-footer logo" id="btnLogo" aria-label="Abrir atalhos rápidos">
+        <img src="../../assets/logocentral.png" alt="" />
+      </button>
+      <button class="btn-footer geladeira" id="btnGeladeira" aria-label="Abrir Minha Geladeira">
+        <img src="../../assets/geladeira.png" alt="" />
+      </button>
+    </footer>
 
-    <!-- Rodapé -->
-  <footer class="app-footer" role="contentinfo" aria-label="Navegação inferior">
-  <nav class="footer-nav" aria-label="Ações rápidas">
-    <!-- Voltar (Humor) -->
-    <a
-      class="footer-btn footer-btn--round"
-      href="../humor/index.html"
-      aria-label="Voltar para seleção de humor"
-      style="--icon:url('../../assets/humor.png')"
-    ><span class="sr-only">Humor</span></a>
+  </div>
 
-    <!-- Gerar (central maior) -->
-    <a
-      class="footer-btn footer-btn--center-big"
-      href="../gerar/index.html"
-      aria-label="Abrir Gerar Receita"
-      style="--icon:url('../../assets/logocentral.png')"
-    ><span class="sr-only">Gerar</span></a>
-
-    <!-- Geladeira -->
-    <a
-      class="footer-btn footer-btn--round"
-      href="../geladeira/index.html"
-      aria-label="Abrir Minha Geladeira"
-      style="--icon:url('../../assets/geladeira.png')"
-    ><span class="sr-only">Geladeira</span></a>
-  </nav>
-  </footer>
-
-  <!-- Script -->
-  <script defer src="./home.js"></script>
+  <script src="./home.js" defer></script>
 </body>
 </html>
