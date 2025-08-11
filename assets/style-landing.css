@@ -6,6 +6,14 @@
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
+:root{
+  --header-h: 72px; /* altura do cabeçalho (mobile) */
+}
+
+@media (min-width: 960px){
+  :root{ --header-h: 80px; } /* altura no desktop */
+}
+
 body {
   margin: 0;
   font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
@@ -19,50 +27,55 @@ body {
 .section { padding: 56px 0; }
 .section__title { font-size: clamp(1.5rem, 2vw + 1rem, 2.25rem); font-weight: 800; margin: 0 0 24px; }
 
-/* ===== Cabeçalho dentro do hero ===== */
+/* ===== Cabeçalho fixo (agora a “linha branca” virou a faixa inteira) ===== */
 .site-header {
-  position: absolute;
+  position: fixed;
   top: 0; left: 0; right: 0;
-  padding: 12px 0;
-  background: transparent;
-  border-bottom: 2px solid #fff; /* linha branca no cabeçalho */
+  height: var(--header-h);
+  background: #fff;                    /* faixa branca */
+  border-bottom: 2px solid #fff;       /* mantém a “linha” branca */
+  z-index: 50;
+  display: flex;
+  align-items: center;                 /* elementos ficam verticalmente alinhados */
 }
 .header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 100%;
 }
-.site-logo img {
-  height: 34px;
-  width: auto;
-  display: block;
+.site-logo img { height: 36px; width: auto; display: block; }
+@media (min-width: 960px){
+  .site-logo img { height: 40px; }
 }
 
 /* ===== HERO (verde, 100% da tela) ===== */
 .hero {
   position: relative;
-  min-height: 100svh;           /* ocupa exatamente a tela (mobile-friendly) */
+  min-height: 100svh;                  /* ocupa exatamente a tela (mobile-friendly) */
   background: #c0ffa5;
   display: grid;
-  grid-template-rows: 1fr auto; /* centro + barra inferior do 'Saiba mais' */
+  grid-template-rows: 1fr auto;        /* centro + barra inferior do 'Saiba mais' */
   overflow: clip;
 }
 
-/* Centro do hero: tudo centralizado */
+/* Centro do hero: compensa o cabeçalho fixo e centraliza tudo */
 .hero__center {
   display: grid;
   place-items: center;
   text-align: center;
-  padding-top: 80px; /* espaço p/ cabeçalho não encostar */
+  padding-top: calc(var(--header-h) + 16px); /* espaço exato p/ não ficar sob o header */
+  padding-bottom: 24px;
 }
 
+/* Logo central MAIOR e mais perto do título */
 .hero__logo {
-  height: clamp(72px, 10vw, 110px); /* logo maior */
-  margin-bottom: 10px; /* mais perto do título */
+  height: clamp(90px, 12vw, 140px);
+  width: auto;
+  margin-bottom: 6px;                  /* mais perto do título */
 }
 
+/* Título com espaçamento menor para o subtítulo */
 .hero__title {
-  margin: 0 0 6px; /* espaço menor antes do subtítulo */
+  margin: 0 0 4px;                     /* espaço ainda menor antes do subtítulo */
   font-weight: 800;
   font-size: clamp(2rem, 3vw + 1rem, 3rem);
   line-height: 1.1;
@@ -75,7 +88,7 @@ body {
 }
 
 /* Botão central abaixo do texto */
-.hero__actions { margin-top: 28px; }
+.hero__actions { margin-top: 24px; }
 
 .btn {
   appearance: none;
@@ -174,5 +187,4 @@ body {
 }
 @media (min-width: 960px) {
   .features { grid-template-columns: repeat(4, 1fr); }
-  .hero__center { padding-top: 96px; }
 }
