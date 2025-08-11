@@ -2,121 +2,95 @@
    ESTILO LANDING PAGE
    ======================= */
 
-/* Reset básico */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #c0ffa5;
-  color: #492f70;
-}
-
-/* ======= HERO (primeira dobra) ======= */
-.hero {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  min-height: 100vh; /* garante que cubra toda a tela */
+/* Primeira dobra (área verde) ocupa exatamente a tela */
+.hero{
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100svh;          /* corrige em mobile (barra do navegador) */
   padding: 0 20px;
-}
-
-/* Limita conteúdo e remove padding extra */
-.hero__inner {
-  max-width: 600px;
-  padding-top: 0 !important;
-}
-
-/* Logo no topo */
-.logo-topo {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  height: 40px; /* um pouco maior */
-}
-
-/* Logo central acima do título */
-.logo-central {
-  display: block;
-  width: 220px; /* maior que antes */
-  margin: 0 auto 2px !important; /* cola mais no título */
-  padding: 0 !important;
-}
-
-/* Título principal */
-.hero__title {
-  font-size: 2.5em;
-  font-weight: bold;
-  margin: 0 !important;
-  padding: 0 !important;
-  line-height: 1.2;
-}
-
-/* Subtítulo */
-.hero__subtitle {
-  font-size: 1.1em;
-  margin-top: 15px !important; /* mais afastado do título */
-}
-
-/* Remove margens padrão */
-.hero h1, .hero p {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* Botão principal */
-.hero__btn {
-  display: inline-block;
-  margin-top: 25px; /* mais espaço do subtítulo para o botão */
-  padding: 12px 24px;
-  background-color: #492f70;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 30px;
-  transition: background-color 0.3s;
-}
-
-.hero__btn:hover {
-  background-color: #321f4d;
-}
-
-/* ======= SEÇÃO SOBRE ======= */
-.sobre {
-  background: white;
-  color: #492f70;
-  padding: 60px 20px;
   text-align: center;
 }
 
-.sobre h2 {
-  font-size: 2em;
-  margin-bottom: 20px;
-}
-
-.sobre p {
-  font-size: 1em;
-  line-height: 1.6;
-  max-width: 700px;
+/* Conteúdo central da dobra */
+.hero__inner{
+  max-width: 640px;
+  width: 100%;
   margin: 0 auto;
 }
 
-/* ======= RESPONSIVIDADE ======= */
-@media (min-width: 768px) {
-  .hero__title {
-    font-size: 3em;
-  }
-  .hero__subtitle {
-    font-size: 1.3em;
-    margin-top: 20px !important;
-  }
-  .logo-central {
-    width: 250px;
-    margin-bottom: 4px !important;
-  }
+/* Logo do topo (na barra) — opcional ajustar aqui também */
+.logo-topo{
+  height: 28px;
+}
+
+/* Logo central acima do título: maior e bem próxima do texto */
+.logo-central{
+  display: block;
+  width: clamp(180px, 24vw, 260px);
+  margin: 0 auto 4px;          /* distância logo → título (bem curta) */
+  padding: 0;
+}
+
+/* Título e subtítulo colados corretamente */
+.hero h1,
+.hero p{
+  margin: 0;                   /* zera margens padrão do navegador */
+  padding: 0;
+}
+.hero__title{
+  line-height: 1.18;
+  /* se quiser mudar tamanho base, use a global; aqui só garantimos o colado */
+}
+.hero__subtitle{
+  margin-top: 14px;            /* espaço título → subtítulo */
+}
+
+/* MAIS espaço entre o texto e o botão “Abrir WebApp” */
+.btn.btn--primary{
+  margin-top: clamp(28px, 4vh, 48px);
+}
+
+/* “Saiba mais” fixo no rodapé da área verde */
+.saiba-mais{
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--purple);
+}
+
+/* Rolagem suave até a seção de baixo */
+html{ scroll-behavior: smooth; }
+
+/* =======================
+   SEÇÃO SOBRE (abaixo da dobra)
+   ======================= */
+.sobre{
+  background: #fff;
+  color: var(--text);
+  padding: 64px 20px;
+}
+.sobre__inner{
+  max-width: 800px;
+  margin: 0 auto;
+}
+.sobre h2{
+  color: var(--purple);
+  font-size: clamp(22px, 3.2vw, 32px);
+  margin-bottom: 16px;
+}
+.sobre p{
+  font-size: clamp(14px, 1.4vw, 18px);
+  line-height: 1.65;
+}
+
+/* =======================
+   RESPONSIVO
+   ======================= */
+@media (min-width: 768px){
+  .hero__subtitle{ margin-top: 16px; }
+  .saiba-mais{ bottom: 20px; }
 }
