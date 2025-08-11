@@ -163,64 +163,73 @@ body {
   }
 }
 
-/* ===== Desktop: caber em 1 tela, sem rolagem ===== */
+/* ===== Desktop: caber em 1 tela, sem rolagem, caudas junto aos balões ===== */
 @media (min-width: 1024px) {
   /* palco geral */
-  .container{
+  .container {
     max-width: 1100px;
     min-height: 100vh;
     display: grid;
     grid-template-rows: auto auto auto; /* pergunta / emojis / resposta */
     align-content: start;
     justify-items: center;
-    gap: 16px;
-    padding-top: 32px;     /* respiro superior */
-    padding-bottom: 120px; /* espaço da curva fixa */
+    gap: 8px;                 /* aproxima blocos verticalmente */
+    padding-top: 24px;        /* respiro superior */
+    padding-bottom: 100px;    /* espaço da curva */
   }
 
-  /* balão da PERGUNTA no topo, alinhado à esquerda (canto) */
-  .balao.pergunta{
-    position: static;        /* sai do absoluto */
+  /* balão da PERGUNTA */
+  .balao.pergunta {
+    position: static;
     margin: 0;
-    justify-self: start;     /* cola à esquerda */
-    max-width: 520px;
-    padding: 22px 28px;      /* menor pra caber melhor */
-    font-size: 22px;         /* ↓ um pouco */
+    justify-self: start;
+    max-width: 500px;
+    padding: 20px 24px;
+    font-size: 20px;
   }
-  .balao.pergunta::after{
-    left: -8px; top: 28px;   /* mantém a cauda à esquerda */
+  .balao.pergunta::after {
+    left: -14px; /* encosta a cauda no corpo */
+    top: 20px;
     transform: rotate(100deg);
   }
 
-  /* EMOJIS centralizados no meio, em 2 linhas de 4 */
-  .emojis{
+  /* grade de emojis mais próxima da pergunta */
+  .emojis {
     grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin: 0;               /* remove grandes margens do mobile */
-    width: 680px;            /* largura fixa confortável */
-    max-width: 90vw;         /* segura em telas menores */
+    gap: 10px;
+    margin-top: 8px;         /* aproxima pergunta e emojis */
+    margin-bottom: 8px;      /* aproxima emojis e resposta */
+    width: 640px;
+    max-width: 90vw;
     justify-items: center;
   }
-  .emojis button{
-    font-size: 22px;         /* um pouco menor */
-    padding: 10px 12px;      /* compacto */
+  .emojis button {
+    font-size: 22px;
+    padding: 8px 10px;
     border-radius: 10px;
   }
 
-  /* balão da RESPOSTA logo abaixo dos emojis (sem absoluto) */
-  .balao.resposta{
+  /* balão da RESPOSTA logo abaixo dos emojis */
+  .balao.resposta {
     position: static;
     margin: 0;
-    max-width: 520px;
-    padding: 20px 24px;
-    font-size: 28px;         /* menor que no mobile */
+    max-width: 500px;
+    padding: 18px 22px;
+    font-size: 26px;
     align-self: start;
-    justify-self: end;       /* puxa levemente à direita */
+    justify-self: end;
   }
-  .balao.resposta::after{
-    right: -10px; top: 24px; /* cauda à direita */
+  .balao.resposta::after {
+    right: -14px; /* encosta a cauda no corpo */
+    top: 20px;
     transform: rotate(-50deg);
   }
+
+  /* curva inferior */
+  .curva {
+    height: 100px;
+  }
+}
 
   /* curva fixa no rodapé (mantém) */
   .curva{
