@@ -162,3 +162,63 @@ body {
     padding: 8px;
   }
 }
+
+/* ===== Layout para PC: balões nos cantos ===== */
+@media (min-width: 1024px) {
+  /* container vira “palco” para posicionar os balões */
+  .container {
+    max-width: 1200px;
+    min-height: 100vh;
+    position: relative;  /* importante para posicionar os balões */
+    padding-top: 140px;  /* espaço para os balões no topo */
+  }
+
+  /* balão da PERGUNTA no canto superior esquerdo */
+  .balao.pergunta {
+    position: absolute;
+    top: 80px;
+    left: 40px;
+    margin: 0;                /* remove margem padrão */
+    max-width: 420px;         /* limita largura para não invadir o centro */
+  }
+  .balao.pergunta::after {
+    left: -8px;               /* mantém a cauda do lado esquerdo */
+    top: 28px;
+    transform: rotate(100deg);
+  }
+
+  /* balão da RESPOSTA no canto superior direito (aparece após escolher o emoji) */
+  .balao.resposta {
+    position: absolute;
+    top: 80px;
+    right: 40px;
+    margin: 0;
+    max-width: 420px;
+  }
+  .balao.resposta::after {
+    right: -10px;             /* mantém a cauda do lado direito */
+    top: 28px;
+    transform: rotate(-50deg);
+  }
+
+  /* grade de emojis centralizada abaixo dos balões */
+  .emojis {
+    grid-template-columns: repeat(8, 1fr); /* todos em uma linha grande */
+    gap: 16px;
+    width: auto;
+    margin-top: 220px;        /* espaço para não bater nos balões */
+    margin-bottom: 100px;     /* respiro antes da curva */
+    justify-items: center;
+  }
+  /* se preferir 2 linhas no desktop, troque por repeat(6, 1fr) e ajuste o gap */
+
+  .emojis button {
+    font-size: 28px;
+    padding: 18px;
+  }
+
+  /* curva fixa continua, só garantimos que nada fique por baixo sem respiro */
+  .curva {
+    height: 110px;
+  }
+}
