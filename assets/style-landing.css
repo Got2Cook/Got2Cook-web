@@ -21,14 +21,22 @@ body {
 
 /* ===== Cabeçalho dentro do hero ===== */
 .site-header {
-  position: absolute;    /* fica por cima do verde */
+  position: absolute;
   top: 0; left: 0; right: 0;
-  padding-top: 16px;
+  padding: 12px 0;
+  background: transparent;
+  border-bottom: 2px solid #fff; /* linha branca no cabeçalho */
 }
 .header-inner {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.site-logo img { height: 34px; width: auto; display: block; }
+.site-logo img {
+  height: 34px;
+  width: auto;
+  display: block;
+}
 
 /* ===== HERO (verde, 100% da tela) ===== */
 .hero {
@@ -49,13 +57,12 @@ body {
 }
 
 .hero__logo {
-  height: clamp(56px, 8vw, 80px);
-  width: auto;
-  margin-bottom: 16px;
+  height: clamp(72px, 10vw, 110px); /* logo maior */
+  margin-bottom: 10px; /* mais perto do título */
 }
 
 .hero__title {
-  margin: 0 0 12px;
+  margin: 0 0 6px; /* espaço menor antes do subtítulo */
   font-weight: 800;
   font-size: clamp(2rem, 3vw + 1rem, 3rem);
   line-height: 1.1;
