@@ -4,33 +4,51 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Got2Cook — Receitas pelo seu humor</title>
-  <meta name="description" content="Got2Cook: combine seu humor com o que há na geladeira e receba receitas perfeitas. Simples, rápido e divertido." />
+  <meta name="description" content="Got2Cook: combine seu humor com os ingredientes da geladeira e receba receitas perfeitas." />
 
   <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/style-landing.css" />
+  <!-- CSS da landing -->
+  <link rel="stylesheet" href="assets/style-landing.css">
 </head>
 <body id="topo">
-  <!-- HEADER / HERO (primeira dobra) -->
-  <header class="hero" role="banner">
-    <!-- Logo no topo esquerdo -->
-    <a href="#topo" class="logo" aria-label="Voltar ao início">
-      <!-- Use seu arquivo local (logo.png). Alt descritivo para SEO/A11y -->
-      <img src="logo.png" alt="Logo Got2Cook" />
-    </a>
 
-    <div class="hero__inner">
+  <!-- HERO (primeira dobra, verde) -->
+  <header class="hero" role="banner">
+    <!-- Cabeçalho no topo: logo à esquerda + botão Login à direita -->
+    <div class="site-header">
+      <div class="container header-inner">
+        <a href="#topo" class="site-logo" aria-label="Ir para o início">
+          <img src="assets/logo.png" alt="Logo Got2Cook">
+        </a>
+        <nav aria-label="Acesso">
+          <a class="btn btn--ghost" href="#" aria-label="Fazer login">Login</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Conteúdo central do hero (tudo centralizado) -->
+    <div class="hero__center container">
+      <!-- Logo acima do texto -->
+      <img class="hero__logo" src="assets/logo.png" alt="Logo Got2Cook">
+
       <h1 class="hero__title">Cozinhe de acordo com seu humor</h1>
       <p class="hero__subtitle">Seu humor + sua geladeira = <strong>receita perfeita</strong>. Descubra opções rápidas e gostosas sem complicação.</p>
 
-      <!-- CTAs -->
+      <!-- Botão centralizado abaixo do texto -->
       <div class="hero__actions">
-        <!-- Deixe o href pronto para você trocar depois -->
         <a class="btn btn--primary" href="#" aria-label="Abrir o Web App do Got2Cook">Abrir Web App</a>
-        <a class="link-more" href="#sobre" aria-label="Saber mais sobre o Got2Cook">Saiba mais ↓</a>
       </div>
+    </div>
+
+    <!-- “Saiba mais” no rodapé da página verde, com pulsar e âncora para Sobre -->
+    <div class="hero__bottom">
+      <a class="link-more pulse" href="#sobre" aria-label="Saber mais sobre o Got2Cook">
+        Saiba mais
+        <span aria-hidden="true">↓</span>
+      </a>
     </div>
   </header>
 
@@ -40,7 +58,6 @@
       <div class="container">
         <h2 id="titulo-sobre" class="section__title">Sobre</h2>
 
-        <!-- Card simples -->
         <article class="card">
           <h3 class="card__title">A fórmula</h3>
           <p class="card__text">
