@@ -298,3 +298,81 @@ body {
   /* curva menor */
   .curva{ height: var(--curve-h); }
 }
+
+/* ===== Desktop (>=1024px): balões maiores, emojis maiores, espaçamento ajustado ===== */
+@media (min-width: 1024px) {
+  :root{
+    --desktop-container-w: 1160px;
+    --balloon-max-w: 640px;
+    --balloon-pad-y: 24px;
+    --balloon-pad-x: 28px;
+    --pergunta-fs: 24px;
+    --resposta-fs: 36px;
+    --emojis-w: 760px;
+    --emojis-gap: 12px;
+    --emoji-fs: 30px;
+    --emoji-pad-y: 12px;
+    --emoji-pad-x: 14px;
+    --curve-h: 80px;
+    --gap-pergunta-emojis: 20px;   /* espaço extra entre pergunta e emojis */
+    --gap-emojis-resposta: 20px;   /* espaço extra entre emojis e resposta */
+  }
+
+  .container{
+    max-width: var(--desktop-container-w);
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    align-content: start;
+    justify-items: center;
+    padding: 20px 20px calc(var(--curve-h) + 10px);
+    box-sizing: border-box;
+  }
+
+  /* PERGUNTA */
+  .balao.pergunta{
+    margin-bottom: var(--gap-pergunta-emojis);
+    justify-self: start;
+    max-width: min(var(--balloon-max-w), 95vw);
+    padding: var(--balloon-pad-y) var(--balloon-pad-x);
+    font-size: var(--pergunta-fs);
+    line-height: 1.35;
+  }
+  .balao.pergunta::after{
+    left: -12px;
+    top: 22px;
+    border-right: 15px solid var(--roxo-1);
+  }
+
+  /* EMOJIS */
+  .emojis{
+    width: min(var(--emojis-w), 92vw);
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--emojis-gap);
+    margin-bottom: var(--gap-emojis-resposta);
+    justify-items: center;
+  }
+  .emojis button{
+    font-size: var(--emoji-fs);
+    padding: var(--emoji-pad-y) var(--emoji-pad-x);
+    border-radius: 12px;
+  }
+
+  /* RESPOSTA */
+  .balao.resposta{
+    max-width: min(var(--balloon-max-w), 95vw);
+    padding: var(--balloon-pad-y) var(--balloon-pad-x);
+    font-size: var(--resposta-fs);
+    line-height: 1.2;
+    align-self: start;
+    justify-self: end;
+  }
+  .balao.resposta::after{
+    right: -12px;
+    top: 22px;
+    border-left: 15px solid var(--roxo-2);
+  }
+
+  /* curva menor */
+  .curva{ height: var(--curve-h); }
+}
