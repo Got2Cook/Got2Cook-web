@@ -1,96 +1,252 @@
-/* =======================
-   ESTILO LANDING PAGE
-   ======================= */
+/* ==========
+   Reset base
+   ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;              /* Rolagem suave para âncoras */
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }       /* Acessibilidade */
+}
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  color: #492f70;                        /* Roxo principal para texto */
+  background: #ffffff;
+  line-height: 1.6;
+}
 
-/* Primeira dobra (área verde) ocupa exatamente a tela */
-.hero{
+/* ==========
+   Utilitários
+   ========== */
+.container {
+  width: 100%;
+  max-width: 1100px;                     /* Largura máx. do conteúdo */
+  margin-inline: auto;
+  padding: 0 20px;                       /* Mobile-first paddings confortáveis */
+}
+.section {
+  padding: 56px 0;                       /* respiro entre blocos */
+}
+.section__title {
+  font-size: clamp(1.5rem, 2vw + 1rem, 2.25rem);
+  line-height: 1.2;
+  margin: 0 0 24px;
+  font-weight: 800;
+}
+
+/* ==========
+   HERO
+   ========== */
+.hero {
   position: relative;
+  min-height: 100svh;                    /* Ocupa 100% da tela (compatível mobile) */
+  background: #c0ffa5;                   /* Verde da identidade */
   display: grid;
-  place-items: center;
-  min-height: 100svh;          /* corrige em mobile (barra do navegador) */
-  padding: 0 20px;
+  align-items: center;                   /* Centraliza vertical */
+  isolation: isolate;
+  overflow: clip;
+}
+
+/* Logo no topo esquerdo */
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+.logo img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+.hero__inner {
+  width: 100%;
+  max-width: 1100px;
+  margin-inline: auto;
+  padding: 20px;                         /* evita colar nas bordas */
+}
+
+.hero__title {
+  font-size: clamp(2rem, 3vw + 1rem, 3rem);
+  line-height: 1.1;
+  margin: 0 0 12px;
+  font-weight: 800;
+}
+.hero__subtitle {
+  font-size: clamp(1rem, 0.6vw + 0.9rem, 1.25rem);
+  margin: 0;
+  max-width: 40ch;
+}
+
+/* Ações do Hero */
+.hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  /* Ajuste essencial: espaço generoso acima do botão principal */
+  margin-top: 28px;                      /* aumenta respiro entre texto e "Abrir Web App" */
+}
+
+/* Botão principal */
+.btn {
+  appearance: none;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-weight: 600;
+  font-size: 1rem;
+  outline: none;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);  /* sombra suave */
+}
+.btn:focus-visible {
+  outline: 3px solid rgba(73,47,112,0.35);  /* foco visível */
+  outline-offset: 3px;
+}
+.btn--primary {
+  background: #492f70;
+  color: #fff;
+}
+.btn--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+.btn--primary:active {
+  transform: translateY(0);
+}
+
+/* Link "Saiba mais" */
+.link-more {
+  font-weight: 600;
+  text-decoration: none;
+  color: #492f70;
+  padding: 8px 10px;
+  border-radius: 10px;
+  transition: background-color 120ms ease, transform 120ms ease;
+}
+.link-more:hover {
+  background: rgba(73,47,112,0.08);
+  transform: translateY(-1px);
+}
+.link-more:focus-visible {
+  outline: 3px solid rgba(73,47,112,0.35);
+  outline-offset: 3px;
+}
+
+/* ==========
+   SOBRE
+   ========== */
+.section--sobre {
+  background: #fff;
+}
+.card {
+  background: #ffffff;
+  border-radius: 16px;                   /* bordas arredondadas */
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* sombra suave */
+  border: 1px solid rgba(73,47,112,0.08);
+}
+.card__title {
+  margin: 0 0 10px;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+.card__text {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* ==========
+   RECURSOS
+   ========== */
+.section--recursos {
+  background: #f9f9ff;                   /* leve contraste para leitura */
+}
+.features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;                       /* sem bullets */
+}
+.feature {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid rgba(73,47,112,0.08);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+}
+.feature__title {
+  margin: 0 0 6px;
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+.feature__text {
+  margin: 0;
+  font-size: 0.975rem;
+}
+
+/* ==========
+   RODAPÉ
+   ========== */
+.footer {
+  background: #ffffff;
+  border-top: 1px solid rgba(73,47,112,0.12);
+  padding: 28px 20px;
   text-align: center;
 }
-
-/* Conteúdo central da dobra */
-.hero__inner{
-  max-width: 640px;
-  width: 100%;
-  margin: 0 auto;
+.footer__nav {
+  display: inline-flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
 }
-
-/* Logo do topo (na barra) — opcional ajustar aqui também */
-.logo-topo{
-  height: 28px;
-}
-
-/* Logo central acima do título: maior e bem próxima do texto */
-.logo-central{
-  display: block;
-  width: clamp(180px, 24vw, 260px);
-  margin: 0 auto 4px;          /* distância logo → título (bem curta) */
-  padding: 0;
-}
-
-/* Título e subtítulo colados corretamente */
-.hero h1,
-.hero p{
-  margin: 0;                   /* zera margens padrão do navegador */
-  padding: 0;
-}
-.hero__title{
-  line-height: 1.18;
-  /* se quiser mudar tamanho base, use a global; aqui só garantimos o colado */
-}
-.hero__subtitle{
-  margin-top: 14px;            /* espaço título → subtítulo */
-}
-
-/* MAIS espaço entre o texto e o botão “Abrir WebApp” */
-.btn.btn--primary{
-  margin-top: clamp(28px, 4vh, 48px);
-}
-
-/* “Saiba mais” fixo no rodapé da área verde */
-.saiba-mais{
-  position: absolute;
-  left: 50%;
-  bottom: 16px;
-  transform: translateX(-50%);
+.footer__link {
+  color: #492f70;
   text-decoration: none;
   font-weight: 600;
-  color: var(--purple);
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background-color 120ms ease, transform 120ms ease;
+}
+.footer__link:hover {
+  background: rgba(73,47,112,0.08);
+  transform: translateY(-1px);
+}
+.footer__link:focus-visible {
+  outline: 3px solid rgba(73,47,112,0.35);
+  outline-offset: 3px;
+}
+.footer__copy {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
 }
 
-/* Rolagem suave até a seção de baixo */
-html{ scroll-behavior: smooth; }
-
-/* =======================
-   SEÇÃO SOBRE (abaixo da dobra)
-   ======================= */
-.sobre{
-  background: #fff;
-  color: var(--text);
-  padding: 64px 20px;
-}
-.sobre__inner{
-  max-width: 800px;
-  margin: 0 auto;
-}
-.sobre h2{
-  color: var(--purple);
-  font-size: clamp(22px, 3.2vw, 32px);
-  margin-bottom: 16px;
-}
-.sobre p{
-  font-size: clamp(14px, 1.4vw, 18px);
-  line-height: 1.65;
-}
-
-/* =======================
+/* ==========
    RESPONSIVO
-   ======================= */
-@media (min-width: 768px){
-  .hero__subtitle{ margin-top: 16px; }
-  .saiba-mais{ bottom: 20px; }
+   ========== */
+@media (min-width: 640px) {
+  .hero__subtitle { max-width: 55ch; }
+  .features { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 960px) {
+  .hero__inner { padding: 40px; }
+  .features { grid-template-columns: repeat(4, 1fr); }
 }
