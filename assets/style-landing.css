@@ -6,12 +6,11 @@
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
-:root{
-  --header-h: 72px; /* altura do cabeçalho (mobile) */
+:root {
+  --header-h: 60px;            /* altura do cabeçalho (mobile) */
 }
-
 @media (min-width: 960px){
-  :root{ --header-h: 80px; } /* altura no desktop */
+  :root { --header-h: 68px; }  /* altura do cabeçalho (desktop) */
 }
 
 body {
@@ -27,55 +26,59 @@ body {
 .section { padding: 56px 0; }
 .section__title { font-size: clamp(1.5rem, 2vw + 1rem, 2.25rem); font-weight: 800; margin: 0 0 24px; }
 
-/* ===== Cabeçalho fixo (agora a “linha branca” virou a faixa inteira) ===== */
+/* ===== Cabeçalho fixo ===== */
 .site-header {
   position: fixed;
   top: 0; left: 0; right: 0;
   height: var(--header-h);
-  background: #fff;                    /* faixa branca */
-  border-bottom: 2px solid #fff;       /* mantém a “linha” branca */
+  background: #fff;
   z-index: 50;
   display: flex;
-  align-items: center;                 /* elementos ficam verticalmente alinhados */
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.10); /* sombra do cabeçalho */
 }
 .header-inner {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   height: 100%;
 }
-.site-logo img { height: 36px; width: auto; display: block; }
+.site-logo img {
+  height: 32px;
+  width: auto;
+  display: block;
+}
 @media (min-width: 960px){
-  .site-logo img { height: 40px; }
+  .site-logo img { height: 36px; }
 }
 
 /* ===== HERO (verde, 100% da tela) ===== */
 .hero {
   position: relative;
-  min-height: 100svh;                  /* ocupa exatamente a tela (mobile-friendly) */
+  min-height: 100svh;           /* ocupa exatamente a tela (mobile-friendly) */
   background: #c0ffa5;
   display: grid;
-  grid-template-rows: 1fr auto;        /* centro + barra inferior do 'Saiba mais' */
+  grid-template-rows: 1fr auto; /* centro + barra inferior do 'Saiba mais' */
   overflow: clip;
 }
 
-/* Centro do hero: compensa o cabeçalho fixo e centraliza tudo */
+/* Centro do hero: tudo centralizado e compensando o header fixo */
 .hero__center {
   display: grid;
   place-items: center;
   text-align: center;
-  padding-top: calc(var(--header-h) + 16px); /* espaço exato p/ não ficar sob o header */
-  padding-bottom: 24px;
+  padding-top: calc(var(--header-h) + 20px); /* não encostar no cabeçalho */
 }
 
 /* Logo central MAIOR e mais perto do título */
 .hero__logo {
   height: clamp(90px, 12vw, 140px);
   width: auto;
-  margin-bottom: 6px;                  /* mais perto do título */
+  margin-bottom: 6px; /* mais próxima do título */
 }
 
-/* Título com espaçamento menor para o subtítulo */
 .hero__title {
-  margin: 0 0 4px;                     /* espaço ainda menor antes do subtítulo */
+  margin: 0 0 4px; /* menor espaço antes do subtítulo */
   font-weight: 800;
   font-size: clamp(2rem, 3vw + 1rem, 3rem);
   line-height: 1.1;
