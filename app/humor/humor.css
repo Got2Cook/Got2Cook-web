@@ -218,3 +218,83 @@ body {
 
   .curva { height: 100px; }
 }
+
+/* ===== Desktop (>=1024px): balões maiores, emojis maiores, sem rolagem, curva menor ===== */
+@media (min-width: 1024px) {
+  /* knobs (fácil de ajustar) */
+  :root{
+    --desktop-container-w: 1160px;  /* largura máxima do palco */
+    --balloon-max-w: 640px;         /* largura máxima dos balões */
+    --balloon-pad-y: 24px;          /* padding vertical dos balões */
+    --balloon-pad-x: 28px;          /* padding horizontal dos balões */
+    --pergunta-fs: 24px;            /* tamanho do texto do balão pergunta */
+    --resposta-fs: 36px;            /* tamanho (emoji) do balão resposta */
+    --emojis-w: 760px;              /* largura do grid de emojis */
+    --emojis-gap: 12px;             /* espaço entre os botões */
+    --emoji-fs: 30px;               /* tamanho do emoji */
+    --emoji-pad-y: 12px;            /* padding do botão */
+    --emoji-pad-x: 14px;
+    --curve-h: 80px;                /* altura da curva (menor) */
+    --v-gap: 10px;                  /* espaço entre seções (pergunta/emojis/resposta) */
+  }
+
+  .container{
+    max-width: var(--desktop-container-w);
+    height: 100vh;                          /* trava em 1 tela */
+    display: grid;
+    grid-template-rows: auto auto auto;
+    align-content: start;
+    justify-items: center;
+    gap: var(--v-gap);
+    padding: 20px 20px calc(var(--curve-h) + 10px);
+    box-sizing: border-box;
+  }
+
+  /* PERGUNTA (topo/esquerda) — maior e “completa” */
+  .balao.pergunta{
+    margin: 0;
+    justify-self: start;
+    max-width: min(var(--balloon-max-w), 95vw);
+    padding: var(--balloon-pad-y) var(--balloon-pad-x);
+    font-size: var(--pergunta-fs);
+    line-height: 1.35;
+  }
+  .balao.pergunta::after{
+    left: -12px;
+    top: 22px;
+    border-right: 15px solid var(--roxo-1);
+  }
+
+  /* EMOJIS (maiores), 2x4, mais perto dos balões */
+  .emojis{
+    width: min(var(--emojis-w), 92vw);
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--emojis-gap);
+    margin: var(--v-gap) 0;
+    justify-items: center;
+  }
+  .emojis button{
+    font-size: var(--emoji-fs);
+    padding: var(--emoji-pad-y) var(--emoji-pad-x);
+    border-radius: 12px;
+  }
+
+  /* RESPOSTA (logo abaixo dos emojis) — maior e “completa” */
+  .balao.resposta{
+    margin: 0;
+    max-width: min(var(--balloon-max-w), 95vw);
+    padding: var(--balloon-pad-y) var(--balloon-pad-x);
+    font-size: var(--resposta-fs);
+    line-height: 1.2;
+    align-self: start;
+    justify-self: end; /* troque para 'center' se preferir centralizado */
+  }
+  .balao.resposta::after{
+    right: -12px;
+    top: 22px;
+    border-left: 15px solid var(--roxo-2);
+  }
+
+  /* curva menor */
+  .curva{ height: var(--curve-h); }
+}
