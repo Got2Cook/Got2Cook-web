@@ -287,3 +287,68 @@ header {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   background: linear-gradient(to right, #9dfd75, #b1ff91);
 }
+
+/* ====== Desktop layout (>= 1024px) ====== */
+@media (min-width: 1024px) {
+  /* ocupa mais largura e dá respiro nas bordas */
+  .container{
+    max-width: 1100px;
+    padding: 24px 28px 140px; /* mantém espaço pro rodapé curvo */
+  }
+
+  /* header encostado nas laterais do container */
+  header{
+    margin-bottom: 28px;
+  }
+  .icone{ width: 48px; height: 48px; }
+  .icone img{ width: 46px; height: 46px; }
+
+  /* fala “abre” para os cantos: chef à esquerda, balão à direita */
+  .fala{
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+  .cozinheiro{
+    width: 220px;
+    height: 220px;
+    margin-top: 50px;   /* sobe um pouco no desktop */
+    margin-right: 0;
+  }
+  .balao-fala{
+    max-width: 560px;
+    font-size: 22px;
+    padding: 26px 28px;
+  }
+
+  /* cards em linha, com rolagem horizontal */
+  .sugestoes h2{
+    text-align: left;
+    margin: 10px 0 12px 2px;
+  }
+  .sugestoes-grid{
+    display: flex;                 /* vira linha */
+    gap: 18px;
+    overflow-x: auto;              /* rolagem lateral */
+    overflow-y: hidden;
+    padding: 6px 2px 12px;
+    scroll-snap-type: x mandatory; /* snap agradável */
+    -webkit-overflow-scrolling: touch;
+  }
+  .card{
+    flex: 0 0 260px;               /* largura fixa para cada card */
+    scroll-snap-align: start;
+    border-width: 6px;             /* mantém seu estilo */
+  }
+  .card img{
+    height: 260px;                 /* altura fixa para ficar consistente */
+    aspect-ratio: auto;
+    object-fit: cover;
+  }
+
+  /* scrollbar discreta (opcional) */
+  .sugestoes-grid::-webkit-scrollbar{ height: 10px; }
+  .sugestoes-grid::-webkit-scrollbar-track{ background: #c0ffa5; border-radius: 8px; }
+  .sugestoes-grid::-webkit-scrollbar-thumb{ background: #7b7190; border-radius: 8px; }
+}
