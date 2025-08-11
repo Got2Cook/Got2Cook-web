@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <!-- SEO/A11y mínimos -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Got2Cook — Home</title>
+  <meta name="description" content="Página inicial do Got2Cook: sugestões de receitas baseadas no seu humor e ingredientes." />
+
+  <!-- Tipografia (Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+
+  <!-- Estilos da HOME -->
+  <link rel="stylesheet" href="./home.css" />
+</head>
+<body>
+  <!-- Wrapper da página -->
+  <div class="page">
+
+    <!-- Cabeçalho sticky -->
+    <header class="app-header" role="banner">
+      <div class="header-inner">
+        <!-- Logo volta para a landing -->
+        <a class="brand" href="../../index.html" aria-label="Voltar para a landing">
+          <img src="../../assets/logo.png" alt="Logo Got2Cook" class="brand__img" />
+          <span class="brand__text">Got2Cook</span>
+        </a>
+
+        <!-- Botão/menu (placeholder) -->
+        <button class="icon-btn" type="button" aria-label="Abrir menu" title="Menu">
+          <!-- Substituir por ícone PNG/SVG quando tiver -->
+          <!-- img aqui: menu.svg -->
+          <span class="icon-btn__bar" aria-hidden="true"></span>
+          <span class="icon-btn__bar" aria-hidden="true"></span>
+          <span class="icon-btn__bar" aria-hidden="true"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main id="conteudo" class="content" role="main">
+      <!-- Saudação com balão -->
+      <section class="greeting" aria-labelledby="titulo-saudacao">
+        <h1 id="titulo-saudacao" class="visually-hidden">Saudação</h1>
+        <div class="bubble">
+          <p class="bubble__text">
+            <span class="bubble__hello">Olá<span class="bubble__comma">,</span></span>
+            <span id="usuarioNome" class="bubble__name"></span>
+            <span id="usuarioEmoji" class="bubble__emoji" role="img" aria-label="Humor atual"></span>
+          </p>
+          <p class="bubble__question">o que vamos cozinhar hoje?</p>
+        </div>
+      </section>
+
+      <!-- Sugestões (cards) -->
+      <section class="suggestions" aria-labelledby="titulo-sugestoes">
+        <h2 id="titulo-sugestoes" class="suggestions__title">Sugestões para você</h2>
+
+        <div id="cardsGrid" class="cards" role="list">
+          <!-- Cards criados via JS. Estrutura de cada card:
+            <article class="card" role="listitem">
+              <div class="card__media" role="img" aria-label="Imagem da receita"><!-- img aqui --></div>
+              <div class="card__body">
+                <h3 class="card__title">Nome da Receita</h3>
+                <p class="card__meta">⏱ 20 min • 😊</p>
+                <a class="card__more" href="../minhas-receitas/index.html" aria-label="Ver mais sugestões">
+                  Ver mais <span aria-hidden="true">›</span>
+                </a>
+              </div>
+            </article>
+          -->
+        </div>
+
+        <!-- Link Ver mais geral -->
+        <div class="more-row">
+          <a class="more-row__link" href="../minhas-receitas/index.html" aria-label="Ver mais receitas">
+            Ver mais sugestões <span aria-hidden="true">›</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- Rodapé curvo com 3 botões -->
+    <footer class="app-footer" role="contentinfo" aria-label="Navegação principal inferior">
+      <nav class="footer-nav" aria-label="Ações rápidas">
+        <!-- Voltar (humor) -->
+        <a class="footer-btn" href="../humor/index.html" aria-label="Voltar para seleção de humor">
+          <!-- img aqui: back.svg -->
+          <span class="footer-btn__emoji" aria-hidden="true">↩️</span>
+          <span class="footer-btn__text">Humor</span>
+        </a>
+
+        <!-- Central (logo) → Gerar -->
+        <a class="footer-btn footer-btn--center" href="../gerar/index.html" aria-label="Abrir Gerar Receita">
+          <!-- img aqui: logo-mini.png -->
+          <span class="footer-btn__emoji" aria-hidden="true">🍳</span>
+          <span class="footer-btn__text">Gerar</span>
+        </a>
+
+        <!-- Geladeira -->
+        <a class="footer-btn" href="../geladeira/index.html" aria-label="Abrir Minha Geladeira">
+          <!-- img aqui: fridge.svg -->
+          <span class="footer-btn__emoji" aria-hidden="true">🧊</span>
+          <span class="footer-btn__text">Geladeira</span>
+        </a>
+      </nav>
+    </footer>
+  </div>
+
+  <!-- Script da HOME -->
+  <script defer src="./home.js"></script>
+</body>
+</html>
