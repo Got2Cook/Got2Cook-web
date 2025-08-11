@@ -1,12 +1,23 @@
+/* =========================
+   VARS E BASE
+========================= */
+:root{
+  --verde:  #c0ffa5;
+  --roxo-1: #7b7190; /* pergunta */
+  --roxo-2: #7758a6; /* resposta */
+  --shadow: 0 2px 6px rgba(0,0,0,.15);
+}
+
 /* Estilo do body */
 body {
-  background-color: #c0ffa5;
+  background-color: var(--verde);
   font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   flex-direction: column;
+  margin: 0;
 }
 
 /* Container principal */
@@ -15,7 +26,7 @@ body {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
-  padding-bottom: 120px;
+  padding-bottom: 120px;   /* espaço da curva fixa */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,76 +35,65 @@ body {
   box-sizing: border-box;
 }
 
-/* Balão da pergunta */
-.balao.pergunta {
-  background-color: #7b7190;
-  color: white;
-  padding: 40px 45px;
+/* =========================
+   BALÕES
+========================= */
+.balao {
+  color: #fff;
   border-radius: 30px;
   margin: 20px 0;
   text-align: left;
-  font-size: 30px;
-  max-width: 90%;
   position: relative;
   line-height: 1.4;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow);
 }
 
-/* "Risquinho" da fala (cauda) */
+.balao.pergunta {
+  background-color: var(--roxo-1);
+  padding: 40px 45px;
+  font-size: 30px;
+  max-width: 90%;
+}
+
+/* Cauda da pergunta (esquerda) */
 .balao.pergunta::after {
   content: "";
   position: absolute;
-  left: -8px;
+  left: -12px;               /* encosta no balão */
   top: 30px;
-  width: 0;
-  height: 0;
+  width: 0; height: 0;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  border-right: 15px solid #7b7190;
-  transform: rotate(100deg);
+  border-right: 15px solid var(--roxo-1);
 }
 
-/* Balão de resposta */
 .balao.resposta {
-  background-color: #7b7190;
-  color: white;
+  background-color: var(--roxo-2);
   padding: 40px 45px;
-  border-radius: 30px;
-  margin: 20px 0;
-  text-align: left;
-  font-size: 50px;
+  font-size: 50px;           /* grande p/ emoji */
   max-width: 90%;
-  position: relative;
   align-self: flex-end;
-  line-height: 1.4;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* "Risquinho" da fala (cauda) */
+/* Cauda da resposta (direita) */
 .balao.resposta::after {
   content: "";
   position: absolute;
-  right: -10px;
+  right: -12px;              /* encosta no balão */
   top: 30px;
-  width: 0;
-  height: 0;
+  width: 0; height: 0;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  border-right: 15px solid #7b7190;
-  transform: rotate(-50deg);
+  border-left: 15px solid var(--roxo-2);
 }
 
-.pergunta {
-  align-self: flex-start;
-  margin-top: 200px;
-}
+/* alinhamento mobile padrão */
+.pergunta { align-self: flex-start; margin-top: 200px; }
+.resposta { align-self: flex-end; }
 
-.resposta {
-  align-self: flex-end;
-  background-color: #7758a6;
-}
-
-/* Grade dos emojis */
+/* =========================
+   EMOJIS
+========================= */
 .emojis {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -108,131 +108,113 @@ body {
   border: #1d5c00 solid;
   border-radius: 12px;
   cursor: pointer;
-  background-color: white;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease;
+  background-color: #fff;
+  box-shadow: var(--shadow);
+  transition: transform .2s ease;
 }
+.emojis button:hover { transform: translateY(-2px); }
 
-/* Curva inferior com botão de pular */
+/* =========================
+   CURVA + PULAR
+========================= */
 .curva {
   width: 100%;
   height: 100px;
-  background-color: #7b7190;
+  background-color: var(--roxo-1);
   border-top-left-radius: 100% 50%;
   border-top-right-radius: 100% 50%;
   position: fixed;
-  bottom: 0;
-  left: 0;
+  bottom: 0; left: 0;
   z-index: 10;
 }
 
 .pular {
   position: absolute;
-  top: 20px;
-  left: 50%;
+  top: 20px; left: 50%;
   transform: translateX(-50%);
-  background-color: white;
+  background-color: #fff;
   border: none;
   padding: 10px 25px;
   border-radius: 20px;
-  color: #7b7190;
+  color: var(--roxo-1);
   font-weight: bold;
   cursor: pointer;
   z-index: 11;
 }
 
-/* ===== MEDIA QUERY PARA CELULAR ===== */
+/* =========================
+   MOBILE EXTRA
+========================= */
 @media (max-width: 400px) {
-  .logo {
-    width: 90%;
-  }
-
-  .perfil {
-    width: 80px;
-    height: 80px;
-  }
-
-  .login-btn {
-    padding: 14px;
-    font-size: 16px;
-  }
-
   .emojis button {
     font-size: 20px;
     padding: 8px;
   }
 }
 
-/* ===== Desktop: caber em 1 tela, sem rolagem, caudas junto aos balões ===== */
+/* =========================
+   DESKTOP (>=1024px)
+   - tudo em 1 tela (sem rolagem)
+   - pergunta topo/esq
+   - emojis no meio (2x4)
+   - resposta logo abaixo
+   - caudas encostadas
+========================= */
 @media (min-width: 1024px) {
-  /* palco geral */
   .container {
     max-width: 1100px;
-    min-height: 100vh;
+    height: 100vh;                    /* trava em 1 tela */
     display: grid;
     grid-template-rows: auto auto auto; /* pergunta / emojis / resposta */
     align-content: start;
     justify-items: center;
-    gap: 8px;                 /* aproxima blocos verticalmente */
-    padding-top: 24px;        /* respiro superior */
-    padding-bottom: 100px;    /* espaço da curva */
+    gap: 8px;                         /* aproxima blocos */
+    padding: 24px 20px 100px;         /* topo/laterais + curva fixa */
   }
 
-  /* balão da PERGUNTA */
+  /* PERGUNTA (topo, esquerda) */
   .balao.pergunta {
-    position: static;
     margin: 0;
     justify-self: start;
-    max-width: 500px;
-    padding: 20px 24px;
-    font-size: 20px;
+    max-width: 520px;
+    padding: 20px 26px;
+    font-size: 22px;
   }
   .balao.pergunta::after {
-    left: -14px; /* encosta a cauda no corpo */
-    top: 20px;
-    transform: rotate(100deg);
+    left: -12px;
+    top: 22px;
+    border-right: 15px solid var(--roxo-1);
   }
 
-  /* grade de emojis mais próxima da pergunta */
+  /* EMOJIS (centro, mais próximos) */
   .emojis {
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
-    margin-top: 8px;         /* aproxima pergunta e emojis */
-    margin-bottom: 8px;      /* aproxima emojis e resposta */
+    margin: 6px 0;                   /* aproxima da pergunta e da resposta */
     width: 640px;
     max-width: 90vw;
     justify-items: center;
   }
   .emojis button {
     font-size: 22px;
-    padding: 8px 10px;
+    padding: 10px 12px;
     border-radius: 10px;
   }
 
-  /* balão da RESPOSTA logo abaixo dos emojis */
+  /* RESPOSTA (logo abaixo dos emojis) */
   .balao.resposta {
-    position: static;
     margin: 0;
-    max-width: 500px;
-    padding: 18px 22px;
-    font-size: 26px;
+    max-width: 520px;
+    padding: 18px 24px;
+    font-size: 28px;
     align-self: start;
-    justify-self: end;
+    justify-self: end;               /* mude para 'center' se quiser centralizar */
   }
   .balao.resposta::after {
-    right: -14px; /* encosta a cauda no corpo */
-    top: 20px;
-    transform: rotate(-50deg);
+    right: -12px;
+    top: 22px;
+    border-left: 15px solid var(--roxo-2);
   }
 
-  /* curva inferior */
-  .curva {
-    height: 100px;
-  }
-}
-
-  /* curva fixa no rodapé (mantém) */
-  .curva{
-    height: 100px;
-  }
+  .curva { height: 100px; }
 }
