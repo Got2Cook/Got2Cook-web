@@ -159,66 +159,112 @@ body{
 .more-row__link:focus-visible{outline:3px solid rgba(73,47,112,.45);outline-offset:4px}
 
 /* ===== Rodapé curvo ===== */
-.app-footer{position:sticky; bottom:0; z-index:40; margin-top:24px}
-.footer-nav{
-  position:relative; max-width:var(--maxw); margin:0 auto;
-  padding:26px clamp(16px,4vw,32px);
-  display:grid; grid-template-columns:1fr auto 1fr;
-  align-items:end; gap:18px; color:var(--ink); isolation:isolate;
+/* ===== Rodapé curvo ===== */
+.app-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 40;
+  margin-top: 24px;
 }
-.footer-nav::before{
-  content:""; position:absolute; inset:-28px -8px 0;
+
+.footer-nav {
+  position: relative;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 18px clamp(12px, 4vw, 24px); /* menos altura para curva menor */
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  gap: 14px;
+  color: var(--ink);
+  isolation: isolate;
+}
+
+.footer-nav::before {
+  content: "";
+  position: absolute;
+  inset: -18px -6px 0; /* curva menor */
   background: var(--accent);
-  border-top-left-radius:100% 55%; border-top-right-radius:100% 55%;
-  box-shadow:var(--shadow); z-index:-1;
+  border-top-left-radius: 100% 45%;
+  border-top-right-radius: 100% 45%;
+  box-shadow: var(--shadow);
+  z-index: -1;
 }
 
-/* Botões redondos sem texto visível */
-.sr-only{
-  position:absolute !important; width:1px; height:1px; margin:-1px; padding:0; border:0;
-  clip:rect(0 0 0 0); clip-path:inset(50%); overflow:hidden;
+/* Texto só para leitores de tela */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
 }
 
-.footer-btn{
-  position:relative;
-  display:grid; place-items:center;
-  text-decoration:none; background:transparent; border:none;
+/* Botões redondos */
+.footer-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  background: transparent;
+  border: none;
 }
 
 /* Círculos laterais */
-.footer-btn--round{
-  width:72px; height:72px; border-radius:50%;
-  background:#fff; box-shadow:var(--shadow);
-  border:2px solid rgba(73,47,112,.2);
-  justify-self:start;   /* o da esquerda */
-}
-.footer-nav > .footer-btn--round:last-child{ justify-self:end; } /* o da direita */
-
-/* Círculo central MAIOR e levemente elevado */
-.footer-btn--center-big{
-  width:94px; height:94px; border-radius:50%;
-  background:#fff; box-shadow:0 10px 28px rgba(0,0,0,.18);
-  border:3px solid rgba(73,47,112,.35);
-  justify-self:center; transform:translateY(-10px);
+.footer-btn--round {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: var(--shadow);
+  border: 2px solid rgba(73,47,112,0.2);
+  justify-self: start;
 }
 
-/* Imagens preenchem o círculo */
+.footer-nav > .footer-btn--round:last-child {
+  justify-self: end;
+}
+
+/* Círculo central maior */
+.footer-btn--center-big {
+  width: 94px;
+  height: 94px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.18);
+  border: 3px solid rgba(73,47,112,0.35);
+  justify-self: center;
+  transform: translateY(-6px);
+}
+
+/* Imagens preenchem totalmente o círculo */
 .footer-btn--round img,
-.footer-btn--center-big img{
-  width:100%; height:100%; object-fit:contain; padding:10px; display:block;
+.footer-btn--center-big img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover; /* cobre todo o círculo */
 }
 
 /* Foco/Acessibilidade */
 .footer-btn--round:focus-visible,
-.footer-btn--center-big:focus-visible{
-  outline:3px solid rgba(255,255,255,.9); outline-offset:4px;
+.footer-btn--center-big:focus-visible {
+  outline: 3px solid rgba(255,255,255,0.9);
+  outline-offset: 4px;
 }
 
-/* Hover (se o usuário permitir animações) */
-@media (prefers-reduced-motion:no-preference){
-  .footer-btn--round,.footer-btn--center-big{ transition: transform .15s ease, box-shadow .15s ease; }
-  .footer-btn--round:hover{ transform:translateY(-2px); }
-  .footer-btn--center-big:hover{ transform:translateY(-12px); }
+/* Hover */
+@media (prefers-reduced-motion: no-preference) {
+  .footer-btn--round,
+  .footer-btn--center-big {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .footer-btn--round:hover { transform: translateY(-2px); }
+  .footer-btn--center-big:hover { transform: translateY(-8px); }
 }
 
 /* ===== Motion ===== */
