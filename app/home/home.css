@@ -29,9 +29,9 @@ header {
   height: 40px;
   padding: 0;
   cursor: pointer;
-  display: flex;           /* corrigido (antes: felx) */
+  display: flex;
   font-size: 28px;
-  align-items: center;     /* corrigido (antes: align-itens) */
+  align-items: center;
   justify-content: center;
 }
 
@@ -53,7 +53,7 @@ header {
 .fala {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 4px; /* mais perto do chef */
   margin-bottom: 30px;
 }
 
@@ -61,7 +61,7 @@ header {
   width: 180px;
   height: 180px;
   margin-top: 100px;
-  margin-right: 5px;
+  margin-right: 0; /* remove espaço extra */
 }
 
 .balao-fala {
@@ -69,7 +69,7 @@ header {
   color: white;
   padding: 30px 40px;
   border-radius: 20px;
-  max-width: 90%;
+  max-width: calc(100% - 180px);
   position: relative;
   font-size: 20px;
 }
@@ -79,8 +79,6 @@ header {
   position: absolute;
   left: -10px;
   top: 40px;
-  width: 0;
-  height: 0;
   border-top: 10px solid transparent;
   border-right: 15px solid #7b7190;
   border-bottom: 10px solid transparent;
@@ -97,7 +95,7 @@ header {
 
 .sugestoes-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* duas colunas */
+  grid-template-columns: repeat(2, 1fr);
   gap: 15px;
   padding-top: 10px;
 }
@@ -110,12 +108,12 @@ header {
 
 .card img {
   width: 100%;
-  aspect-ratio: 1 / 1; /* mantém imagem quadrada */
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   display: block;
 }
 
-/* ===== Rodapé curvo (igual ao seu app) ===== */
+/* Rodapé curvo */
 .curva {
   width: 100%;
   height: 70px;
@@ -128,11 +126,10 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 40px;                 /* corrigido: faltava ; */
+  gap: 40px;
   z-index: 10;
 }
 
-/* Botões do rodapé: círculos com imagem preenchendo o espaço */
 .btn-footer {
   background-color: transparent;
   border: none;
@@ -143,7 +140,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;          /* garante recorte perfeito do círculo */
+  overflow: hidden;
   cursor: pointer;
   transform: translateY(-10px);
   box-shadow: 0 6px 18px rgba(0,0,0,.18);
@@ -156,7 +153,6 @@ header {
   display: block;
 }
 
-/* Botão central maior (como no app) */
 .btn-footer.logo {
   width: 150px;
   height: 150px;
@@ -171,23 +167,27 @@ header {
   display: block;
 }
 
-/* Menu do perfil */
-.menu-perfil {
+/* Menus */
+.menu-perfil,
+.menu-principal {
   position: absolute;
-  top: 60px;
-  left: 10px;
-  width: 250px;
   background-color: #c9eb9e;
   border-radius: 20px;
-  padding: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  z-index: 30;
   animation: fadeIn 0.3s ease;
 }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-5px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+.menu-perfil {
+  top: 60px;
+  left: 10px;
+  width: 250px;
+  padding: 16px;
+  z-index: 30;
 }
 
 .menu-perfil .perfil-nome {
@@ -209,50 +209,68 @@ header {
   object-fit: cover;
 }
 
-.menu-perfil ul { list-style: none; padding: 0; margin: 0; }
+.menu-perfil ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 .menu-perfil li {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 12px; border-radius: 10px;
-  color: #492f70; font-weight: bold; font-size: 16px;
-  height: 40px; cursor: pointer; line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  color: #492f70;
+  font-weight: bold;
+  font-size: 16px;
+  height: 40px;
+  cursor: pointer;
+  line-height: 1;
   border-bottom: 2px solid #b5e593;
 }
+
 .menu-perfil li:last-child { border-bottom: none; }
 .menu-perfil li:hover { background-color: #a6e97c; }
 
-/* Menu principal (3 risquinhos) */
 .menu-principal {
-  position: absolute;
   top: 60px;
   right: 10px;
   width: 270px;
-  background-color: #c9eb9e;
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   padding: 12px 0;
   z-index: 40;
-  animation: fadeIn 0.3s ease;
 }
 
-.menu-principal ul { list-style: none; margin: 0; padding: 0; }
-.menu-principal li {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px 20px; font-size: 16px;
-  color: #492f70; font-weight: bold;
-  border-bottom: 2px solid #b5e593; cursor: pointer;
+.menu-principal ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
+
+.menu-principal li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  font-size: 16px;
+  color: #492f70;
+  font-weight: bold;
+  border-bottom: 2px solid #b5e593;
+  cursor: pointer;
+}
+
 .menu-principal li:last-child { border-bottom: none; }
 
 /* Util */
 .hidden { display: none; }
 
-/* Responsivo */
+/* Mobile */
 @media (max-width: 400px) {
   .balao-fala { font-size: 14px; padding: 12px; }
   .card img { aspect-ratio: 1 / 1; }
 }
- 
-/* Atalhos (abre ao clicar no botão central) */
+
+/* Atalhos rápidos */
 .acessos-rapidos {
   position: fixed;
   bottom: 90px;
@@ -288,67 +306,55 @@ header {
   background: linear-gradient(to right, #9dfd75, #b1ff91);
 }
 
-/* ====== Desktop layout (>= 1024px) ====== */
+/* Desktop layout */
 @media (min-width: 1024px) {
-  /* ocupa mais largura e dá respiro nas bordas */
-  .container{
+  .container {
     max-width: 1100px;
-    padding: 24px 28px 140px; /* mantém espaço pro rodapé curvo */
+    padding: 24px 28px 140px;
   }
+  header { margin-bottom: 28px; }
+  .icone { width: 48px; height: 48px; }
+  .icone img { width: 46px; height: 46px; }
 
-  /* header encostado nas laterais do container */
-  header{
-    margin-bottom: 28px;
-  }
-  .icone{ width: 48px; height: 48px; }
-  .icone img{ width: 46px; height: 46px; }
-
-  /* fala “abre” para os cantos: chef à esquerda, balão à direita */
-  .fala{
-    justify-content: space-between;
+  .fala {
+    justify-content: flex-start;
     align-items: flex-start;
-    gap: 24px;
+    gap: 8px; /* mais próximo no desktop */
     margin-bottom: 36px;
   }
-  .cozinheiro{
+  .cozinheiro {
     width: 220px;
     height: 220px;
-    margin-top: 50px;   /* sobe um pouco no desktop */
-    margin-right: 0;
+    margin-top: 50px;
   }
-  .balao-fala{
+  .balao-fala {
     max-width: 560px;
     font-size: 22px;
     padding: 26px 28px;
   }
 
-  /* cards em linha, com rolagem horizontal */
-  .sugestoes h2{
+  .sugestoes h2 {
     text-align: left;
     margin: 10px 0 12px 2px;
   }
-  .sugestoes-grid{
-    display: flex;                 /* vira linha */
+  .sugestoes-grid {
+    display: flex;
     gap: 18px;
-    overflow-x: auto;              /* rolagem lateral */
+    overflow-x: auto;
     overflow-y: hidden;
     padding: 6px 2px 12px;
-    scroll-snap-type: x mandatory; /* snap agradável */
+    scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
   }
-  .card{
-    flex: 0 0 260px;               /* largura fixa para cada card */
+  .card {
+    flex: 0 0 260px;
     scroll-snap-align: start;
-    border-width: 6px;             /* mantém seu estilo */
   }
-  .card img{
-    height: 260px;                 /* altura fixa para ficar consistente */
-    aspect-ratio: auto;
+  .card img {
+    height: 260px;
     object-fit: cover;
   }
-
-  /* scrollbar discreta (opcional) */
-  .sugestoes-grid::-webkit-scrollbar{ height: 10px; }
-  .sugestoes-grid::-webkit-scrollbar-track{ background: #c0ffa5; border-radius: 8px; }
-  .sugestoes-grid::-webkit-scrollbar-thumb{ background: #7b7190; border-radius: 8px; }
+  .sugestoes-grid::-webkit-scrollbar { height: 10px; }
+  .sugestoes-grid::-webkit-scrollbar-track { background: #c0ffa5; border-radius: 8px; }
+  .sugestoes-grid::-webkit-scrollbar-thumb { background: #7b7190; border-radius: 8px; }
 }
