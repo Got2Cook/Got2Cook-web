@@ -1,105 +1,64 @@
-// home.js — Lógica da HOME (sem cores; apenas manipulação de dados/DOM)
+// home.js — Adaptação para o site (sem cores no JS; só DOM/dados)
 
-// Util: tenta parsear JSON; se falhar, retorna string original
-function tryJsonParse(value) {
-  if (typeof value !== 'string') return value;
-  try { return JSON.parse(value); } catch { return value; }
+// Utilitário: tenta parsear JSON com segurança
+function safeParse(v){
+  if(typeof v!=='string') return v;
+  try{ return JSON.parse(v);}catch{ return v;}
 }
 
-// Lê dados do localStorage (nome/emoji/humor)
-// Esperados (se existirem):
-// - got2cook_nome: "Vitória"
-// - got2cook_humor: pode ser "😊" OU objeto { emoji:"😊", label:"Feliz" }
-// - historicoHumor: array de registros (opcional)
-function getUserState() {
+// Estado do usuário a partir do localStorage
+// Chaves esperadas (se existirem):
+//  - got2cook_nome: "Vitória"
+//  - got2cook_humor: "😊" OU { emoji:"😊", label:"Feliz" }
+function getUserState(){
   const nome = localStorage.getItem('got2cook_nome') || '';
   const humorRaw = localStorage.getItem('got2cook_humor');
-  const humorParsed = tryJsonParse(humorRaw);
+  const parsed = safeParse(humorRaw);
 
-  // Normaliza para { emoji, label }
-  let humor = { emoji: '', label: '' };
-  if (!humorRaw) {
-    humor = { emoji: '', label: '' };
-  } else if (typeof humorParsed === 'string') {
-    // Se for apenas o emoji
-    humor = { emoji: humorParsed, label: '' };
-  } else if (humorParsed && typeof humorParsed === 'object') {
-    humor = {
-      emoji: humorParsed.emoji || '',
-      label: humorParsed.label || ''
-    };
+  let humor = { emoji:'', label:'' };
+  if(typeof parsed === 'string'){
+    humor.emoji = parsed;
+  }else if(parsed && typeof parsed === 'object'){
+    humor.emoji = parsed.emoji || '';
+    humor.label = parsed.label || '';
   }
-
   return { nome, humor };
 }
 
-// (Opcional) Mock de receitas por humor para os 4 cards
-function getReceitasPorHumor(humor) {
+// (Opcional) Mock de receitas por humor
+function getReceitasPorHumor(humor){
   const e = humor?.emoji || '🍽️';
   const tag = humor?.label || 'Hoje';
-
-  // Retorna 4 itens mock com pequenos ajustes no título
   return [
-    {
-      id: 'r1',
-      titulo: `${tag} — Bowl Saudável`,
-      tempo: '20 min',
-      emoji: e,
-      // Trocar por imagem quando houver
-      imgAlt: 'Imagem ilustrativa de bowl saudável'
-    },
-    {
-      id: 'r2',
-      titulo: `${tag} — Massa Cremosa`,
-      tempo: '25 min',
-      emoji: e,
-      imgAlt: 'Imagem ilustrativa de massa cremosa'
-    },
-    {
-      id: 'r3',
-      titulo: `${tag} — Wrap Rápido`,
-      tempo: '15 min',
-      emoji: e,
-      imgAlt: 'Imagem ilustrativa de wrap'
-    },
-    {
-      id: 'r4',
-      titulo: `${tag} — Doce Prático`,
-      tempo: '10 min',
-      emoji: e,
-      imgAlt: 'Imagem ilustrativa de sobremesa fácil'
-    }
+    { id:'r1', titulo:`${tag} — Bowl Saudável`, tempo:'20 min', emoji:e, imgAlt:'Bowl saudável' },
+    { id:'r2', titulo:`${tag} — Massa Cremosa`, tempo:'25 min', emoji:e, imgAlt:'Massa cremosa' },
+    { id:'r3', titulo:`${tag} — Wrap Rápido`,   tempo:'15 min', emoji:e, imgAlt:'Wrap rápido' },
+    { id:'r4', titulo:`${tag} — Doce Prático`,  tempo:'10 min', emoji:e, imgAlt:'Sobremesa prática' }
   ];
 }
 
-// Renderiza saudação
-function renderGreeting({ nome, humor }) {
+// Render da saudação
+function renderGreeting(state){
   const nomeEl = document.getElementById('usuarioNome');
   const emojiEl = document.getElementById('usuarioEmoji');
 
-  // Nome (se houver) aparece entre “Olá,” e o emoji
-  nomeEl.textContent = nome ? ` ${nome}` : '';
-
-  // Emoji do humor (se houver)
-  emojiEl.textContent = humor?.emoji || '';
-  if (!emojiEl.textContent) {
-    // Se não houver humor salvo, mantém espaço limpo
-    emojiEl.setAttribute('aria-hidden', 'true');
-  }
+  nomeEl.textContent = state.nome ? ` ${state.nome}` : '';
+  emojiEl.textContent = state.humor?.emoji || '';
+  if(!emojiEl.textContent) emojiEl.setAttribute('aria-hidden','true');
 }
 
-// Cria DOM de um card de receita
-function createCard(item) {
+// Cria um card (placeholders visuais; troque por <img> quando tiver arquivo)
+function createCard(item){
   const article = document.createElement('article');
   article.className = 'card';
-  article.setAttribute('role', 'listitem');
+  article.setAttribute('role','listitem');
 
   const media = document.createElement('div');
   media.className = 'card__media';
-  media.setAttribute('role', 'img');
+  media.setAttribute('role','img');
   media.setAttribute('aria-label', item.imgAlt || 'Imagem da receita');
-  // Placeholder visual (pode substituir por <img> quando enviar PNG/SVG)
-  media.textContent = '🍽️';
+  // Substitua por <img src="../../assets/receita1.png" alt="..."> quando enviar imagens
+  media.textContent = '🍲';
 
   const body = document.createElement('div');
   body.className = 'card__body';
@@ -115,7 +74,7 @@ function createCard(item) {
   const link = document.createElement('a');
   link.className = 'card__more';
   link.href = '../minhas-receitas/index.html'; // placeholder
-  link.setAttribute('aria-label', 'Ver mais sugestões');
+  link.setAttribute('aria-label','Ver mais sugestões');
   link.innerHTML = 'Ver mais <span aria-hidden="true">›</span>';
 
   body.append(h3, meta, link);
@@ -123,33 +82,46 @@ function createCard(item) {
   return article;
 }
 
-// Renderiza os 4 cards na grade
-function renderCards(list) {
+function renderCards(list){
   const grid = document.getElementById('cardsGrid');
   grid.innerHTML = '';
-  list.slice(0, 4).forEach(item => grid.appendChild(createCard(item)));
+  list.slice(0,4).forEach(i => grid.appendChild(createCard(i)));
 }
 
-// (Opcional) Exemplifica como gravar um histórico de humor (desativado por padrão)
-// function appendHistorico(humor) {
-//   const key = 'historicoHumor';
-//   const atual = tryJsonParse(localStorage.getItem(key)) || [];
-//   const entry = { at: new Date().toISOString(), humor };
-//   atual.push(entry);
-//   localStorage.setItem(key, JSON.stringify(atual));
-// }
+// Menu simples (abrir/fechar)
+function setupMenu(){
+  const btn = document.getElementById('menuBtn');
+  const menu = document.getElementById('menu');
+  if(!btn || !menu) return;
 
-document.addEventListener('DOMContentLoaded', () => {
+  const close = (e)=>{
+    if(!menu.contains(e.target) && e.target !== btn){
+      menu.classList.remove('open');
+      document.removeEventListener('click', close);
+    }
+  };
+
+  btn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    menu.classList.toggle('open');
+    if(menu.classList.contains('open')){
+      setTimeout(()=>document.addEventListener('click', close), 0);
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
   const state = getUserState();
   renderGreeting(state);
 
   const receitas = getReceitasPorHumor(state.humor);
   renderCards(receitas);
 
-  // Navegações já estão nos hrefs:
-  // - Landing: ../../index.html
-  // - Humor: ../humor/index.html
-  // - Gerar: ../gerar/index.html (placeholder)
-  // - Geladeira: ../geladeira/index.html (placeholder)
-  // - Minhas Receitas (cards/ver mais): ../minhas-receitas/index.html (placeholder)
+  setupMenu();
+  // Navegação já está nos hrefs:
+  //  - Landing: ../../index.html (logo)
+  //  - Humor: ../humor/index.html
+  //  - Gerar: ../gerar/index.html (placeholder)
+  //  - Geladeira: ../geladeira/index.html (placeholder)
+  //  - Minhas Receitas: ../minhas-receitas/index.html (placeholder)
 });
