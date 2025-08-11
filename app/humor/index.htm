@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Como você está se sentindo?</title>
+  <link rel="stylesheet" href="humor.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="balao pergunta">Como você está se sentindo hoje?</div>
+
+    <div class="emojis">
+      <button onclick="selecionarHumor('😀')">😀</button>
+      <button onclick="selecionarHumor('😐')">😐</button>
+      <button onclick="selecionarHumor('😢')">😢</button>
+      <button onclick="selecionarHumor('😡')">😡</button>
+      <button onclick="selecionarHumor('😴')">😴</button>
+      <button onclick="selecionarHumor('🤢')">🤢</button>
+      <button onclick="selecionarHumor('😍')">😍</button>
+      <button onclick="selecionarHumor('🤯')">🤯</button>
+    </div>
+
+    <div id="humorSelecionado" class="balao resposta" style="display:none;"></div>
+
+    <div class="curva">
+      <button class="pular" onclick="pularHumor()">Pular</button>
+    </div>
+  </div>
+
+  <script src="humor.js"></script>
+</body>
+</html>
