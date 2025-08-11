@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <!-- SEO / A11y -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Got2Cook — Home</title>
@@ -12,29 +11,27 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 
-  <!-- Estilos da Home -->
+  <!-- Estilos -->
   <link rel="stylesheet" href="./home.css" />
 </head>
 <body>
   <div class="page">
 
-    <!-- Cabeçalho sticky: logo (volta para landing) + menu -->
+    <!-- Cabeçalho -->
     <header class="app-header" role="banner">
       <div class="header-inner">
+        <!-- Logo → Volta para landing -->
         <a href="../../index.html" class="brand" aria-label="Voltar para a landing">
-          <!-- img aqui: logo.png -->
           <img class="brand__img" src="../../assets/logo.png" alt="Logo Got2Cook" />
           <span class="brand__text">Got2Cook</span>
         </a>
 
+        <!-- Botão menu -->
         <button class="icon-btn" type="button" aria-label="Abrir menu" id="menuBtn" title="Menu">
-          <!-- img aqui: menu.svg -->
-          <span class="icon-btn__bar" aria-hidden="true"></span>
-          <span class="icon-btn__bar" aria-hidden="true"></span>
-          <span class="icon-btn__bar" aria-hidden="true"></span>
+          <img src="../../assets/menu.png" alt="Abrir menu" width="20" height="20" />
         </button>
 
-        <!-- Menu principal (placeholder simples) -->
+        <!-- Menu principal -->
         <nav class="menu" id="menu" aria-label="Menu principal">
           <ul>
             <li><a href="../minhas-receitas/index.html">Minhas receitas</a></li>
@@ -48,7 +45,7 @@
 
     <!-- Conteúdo -->
     <main class="content" role="main">
-      <!-- Saudação em balão -->
+      <!-- Saudação -->
       <section class="greeting" aria-labelledby="titulo-saudacao">
         <h1 id="titulo-saudacao" class="visually-hidden">Saudação</h1>
         <div class="bubble">
@@ -61,18 +58,17 @@
         </div>
       </section>
 
-      <!-- Personagem (opcional) -->
-      <div class="chef-wrap" aria-hidden="true">
-        <!-- img aqui: cozinheiro.png -->
-        <div class="chef-placeholder">👨‍🍳</div>
+      <!-- Personagem -->
+      <div class="chef-wrap">
+        <img src="../../assets/cozinheiro.png" alt="Personagem cozinheiro" class="chef-img" />
       </div>
 
-      <!-- Sugestões (4 cards) -->
+      <!-- Sugestões -->
       <section class="suggestions" aria-labelledby="titulo-sugestoes">
         <h2 id="titulo-sugestoes" class="suggestions__title">Sugestões baseadas no seu humor</h2>
 
         <div id="cardsGrid" class="cards" role="list">
-          <!-- Cards criados por JS -->
+          <!-- Cards renderizados pelo JS -->
         </div>
 
         <div class="more-row">
@@ -83,27 +79,24 @@
       </section>
     </main>
 
-    <!-- Rodapé curvo com 3 botões -->
+    <!-- Rodapé -->
     <footer class="app-footer" role="contentinfo" aria-label="Navegação inferior">
       <nav class="footer-nav" aria-label="Ações rápidas">
-        <!-- Voltar (Humor) -->
+        <!-- Voltar humor -->
         <a class="footer-btn" href="../humor/index.html" aria-label="Voltar para seleção de humor">
-          <!-- img aqui: humor.png -->
-          <span class="footer-btn__emoji" aria-hidden="true">↩️</span>
+          <img src="../../assets/humor.png" alt="Ícone Humor" width="24" height="24" />
           <span class="footer-btn__text">Humor</span>
         </a>
 
-        <!-- Central (Gerar) -->
+        <!-- Gerar receita -->
         <a class="footer-btn footer-btn--center" href="../gerar/index.html" aria-label="Abrir Gerar Receita">
-          <!-- img aqui: logo-mini.png -->
-          <span class="footer-btn__emoji" aria-hidden="true">🍳</span>
+          <img src="../../assets/logocentral.png" alt="Ícone Gerar Receita" width="28" height="28" />
           <span class="footer-btn__text">Gerar</span>
         </a>
 
         <!-- Geladeira -->
         <a class="footer-btn" href="../geladeira/index.html" aria-label="Abrir Minha Geladeira">
-          <!-- img aqui: geladeira.png -->
-          <span class="footer-btn__emoji" aria-hidden="true">🧊</span>
+          <img src="../../assets/geladeira.png" alt="Ícone Geladeira" width="24" height="24" />
           <span class="footer-btn__text">Geladeira</span>
         </a>
       </nav>
