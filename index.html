@@ -1,46 +1,96 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Got2Cook — Landing</title>
+  <title>Got2Cook — Receitas pelo seu humor</title>
+  <meta name="description" content="Got2Cook: combine seu humor com o que há na geladeira e receba receitas perfeitas. Simples, rápido e divertido." />
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/style.css" />
-  <link rel="stylesheet" href="/assets/style-landing.css?v=2" />
+
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <!-- topo -->
-  <header class="topbar">
-    <div class="topbar__inner">
-      <a class="brand" href="/">
-        <img src="/assets/logo.png" alt="Got2Cook Logo" class="logo-topo">
-      </a>
-      <a class="btn btn--ghost" href="/app/">Login</a>
+<body id="topo">
+  <!-- HEADER / HERO (primeira dobra) -->
+  <header class="hero" role="banner">
+    <!-- Logo no topo esquerdo -->
+    <a href="#topo" class="logo" aria-label="Voltar ao início">
+      <!-- Use seu arquivo local (logo.png). Alt descritivo para SEO/A11y -->
+      <img src="logo.png" alt="Logo Got2Cook" />
+    </a>
+
+    <div class="hero__inner">
+      <h1 class="hero__title">Cozinhe de acordo com seu humor</h1>
+      <p class="hero__subtitle">Seu humor + sua geladeira = <strong>receita perfeita</strong>. Descubra opções rápidas e gostosas sem complicação.</p>
+
+      <!-- CTAs -->
+      <div class="hero__actions">
+        <!-- Deixe o href pronto para você trocar depois -->
+        <a class="btn btn--primary" href="#" aria-label="Abrir o Web App do Got2Cook">Abrir Web App</a>
+        <a class="link-more" href="#sobre" aria-label="Saber mais sobre o Got2Cook">Saiba mais ↓</a>
+      </div>
     </div>
   </header>
 
-  <!-- hero -->
-  <main class="hero">
-    <div class="hero__inner" style="padding-top: 0;">
-      <img src="/assets/logo.png" alt="Got2Cook" class="logo-central" style="display:block; margin:0 auto 5px; padding:0; max-width:170px;">
-      <h1 class="hero__title" style="margin:0; padding:0; line-height:1.2;">Receitas que combinam com seu humor 🔎</h1>
-      <p class="hero__subtitle" style="margin-top:8px;">Use os ingredientes da sua geladeira e descubra pratos perfeitos para o momento.</p>
-      <a class="btn btn--primary" href="/app/">Abrir WebApp</a>
-      <br>
-      <a href="#sobre" class="saiba-mais">↓ Saiba mais</a>
-    </div>
+  <main id="conteudo" role="main">
+    <!-- SOBRE -->
+    <section id="sobre" class="section section--sobre" aria-labelledby="titulo-sobre">
+      <div class="container">
+        <h2 id="titulo-sobre" class="section__title">Sobre</h2>
+
+        <!-- Card simples -->
+        <article class="card">
+          <h3 class="card__title">A fórmula</h3>
+          <p class="card__text">
+            <strong>Seu humor</strong> + <strong>sua geladeira</strong> = <strong>receita perfeita</strong>.
+            Diga como você está, selecione os ingredientes que tem em casa e receba sugestões prontas para preparar.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- RECURSOS -->
+    <section id="recursos" class="section section--recursos" aria-labelledby="titulo-recursos">
+      <div class="container">
+        <h2 id="titulo-recursos" class="section__title">Recursos</h2>
+
+        <ul class="features" role="list">
+          <li class="feature">
+            <h3 class="feature__title">Humor</h3>
+            <p class="feature__text">Escolha como você se sente e veja receitas que combinam com o momento.</p>
+          </li>
+
+          <li class="feature">
+            <h3 class="feature__title">Minha Geladeira</h3>
+            <p class="feature__text">Adicione os ingredientes que você tem para receber sugestões realistas.</p>
+          </li>
+
+          <li class="feature">
+            <h3 class="feature__title">Minhas Receitas</h3>
+            <p class="feature__text">Salve suas favoritas e acesse quando quiser.</p>
+          </li>
+
+          <li class="feature">
+            <h3 class="feature__title">Histórico</h3>
+            <p class="feature__text">Acompanhe o que você mais curte e seus hábitos na cozinha.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
   </main>
 
-  <!-- seção sobre -->
-  <section id="sobre" class="sobre">
-    <div class="sobre__inner">
-      <h2>Sobre o Got2Cook</h2>
-      <p>O Got2Cook é um web app que sugere receitas de acordo com seu humor e ingredientes disponíveis em casa.
-         Personalize sua experiência culinária, descubra novos sabores e aproveite o que já tem na geladeira!</p>
-    </div>
-  </section>
+  <!-- RODAPÉ -->
+  <footer class="footer" role="contentinfo">
+    <nav class="footer__nav" aria-label="Navegação do rodapé">
+      <a href="#topo" class="footer__link">Início</a>
+      <a href="#sobre" class="footer__link">Sobre</a>
+      <a href="#recursos" class="footer__link">Recursos</a>
+    </nav>
+    <p class="footer__copy">© <span id="year"></span> Got2Cook. Todos os direitos reservados.</p>
+  </footer>
 
-  <!-- rodapé -->
-  <footer class="footer"><small>© Got2Cook 2025</small></footer>
+  <script src="main.js"></script>
 </body>
 </html>
