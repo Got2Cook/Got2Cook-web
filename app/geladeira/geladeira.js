@@ -162,3 +162,16 @@ addManualBtn.addEventListener('click', () => {
 // init
 renderIngredientes();
 renderGaleria();
+
+// ===== Navegação dos botões do rodapé =====
+document.getElementById("btnVoltar").addEventListener("click", () => {
+  window.location.href = "../humor/index.html"; // voltar para escolha de humor
+});
+
+document.getElementById("btnLogo").addEventListener("click", () => {
+  window.location.href = "../home/index.html"; // gerar receita (ou menu central)
+});
+
+document.getElementById("btnGeladeira").addEventListener("click", () => {
+  window.location.href = "../geladeira/index.html"; // já está na geladeira
+});
