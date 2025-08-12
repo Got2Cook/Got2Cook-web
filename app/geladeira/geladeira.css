@@ -180,3 +180,103 @@ body {
   .conteudo { padding: 24px; }
   .galeria { grid-template-columns: repeat(6, 1fr); gap: 12px; }
 }
+
+/* ===== Geladeira com porta animada e interior ===== */
+.fridge {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  margin: 12px auto 0;
+  perspective: 1200px;
+}
+
+.fridge__door {
+  position: relative;
+  z-index: 2;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  width: 100%;
+  transform-origin: left center;
+  transition: transform 450ms ease, opacity 250ms ease;
+  outline: none;
+}
+.fridge__door img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 20px;
+  box-shadow: 0 8px 22px rgba(0,0,0,.18);
+}
+.fridge__door:focus-visible { outline: 3px solid #7b7190; border-radius: 22px; }
+
+/* Interior com “prateleiras” */
+.fridge__interior {
+  position: relative;
+  z-index: 1;
+  margin-top: -6px; /* encosta na porta */
+  background: #ffffff;
+  border: 4px solid #492f70;
+  border-radius: 22px;
+  padding: 16px 12px 12px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.12);
+}
+
+.shelves {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  pointer-events: none;
+  /* listras horizontais = prateleiras */
+  background:
+    linear-gradient(#e8f7e4 0 0) padding-box,
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 56px,
+      rgba(121, 121, 121, .15) 56px 58px,
+      transparent 58px 59px
+    );
+  opacity: .9;
+}
+
+/* Grade dos ingredientes */
+.conteudo-geladeira {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+@media (min-width: 480px) {
+  .conteudo-geladeira { grid-template-columns: repeat(4, 1fr); }
+}
+.conteudo-geladeira .ingrediente-wrapper {
+  width: 78px;
+  height: 78px;
+  margin: 0 auto;
+}
+.conteudo-geladeira img { width: 100%; height: 100%; object-fit: contain; }
+
+.fridge__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 12px;
+}
+.manual.secundario { background: #fff; }
+
+/* Porta aberta: gira (some visual da porta “fechada”) */
+.fridge--open .fridge__door {
+  transform: rotateY(-72deg) translateX(-6%);
+  opacity: .15; /* fica quase invisível, simulando que só a moldura permaneceu */
+}
+/* Interior aparece quando abre */
+.fridge--open .fridge__interior {}
+
+/* Estado expandido */
+.fridge--expanded { max-width: 520px; }
+@media (min-height: 700px) {
+  .fridge--expanded .fridge__interior { max-height: 70vh; overflow: auto; }
+}
+
+/* Botão de adicionar existente já cobre o estilo (.manual) */
