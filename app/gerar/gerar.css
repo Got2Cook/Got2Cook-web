@@ -260,6 +260,8 @@ main {
   }
 }
 
-/* Centralizar "MINHA GELADEIRA" */
-.geladeira { max-width: 600px; margin: 0 auto; }
-.geladeira h2 { text-align: center; margin: 16px 0 8px; }
+/* Centralizar SOMENTE o título da seção "Minha Geladeira" */
+section.geladeira h2 {
+  text-align: center;
+  margin: 16px 0 8px;
+}
