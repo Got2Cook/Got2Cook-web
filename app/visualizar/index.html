@@ -2,54 +2,59 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Visualizar Receita - Got2Cook</title>
-  <link rel="stylesheet" href="visualizar.css" />
+  <link rel="stylesheet" href="visualizarreceita.css" />
 </head>
 <body>
-  <!-- Sem header: título dentro do <main> -->
+
+  <!-- sem header: título dentro do main -->
   <main id="conteudo">
     <h1 id="tituloReceita" tabindex="-1">Carregando…</h1>
 
+    <!-- Capa com borda roxa arredondada -->
     <figure class="cover-wrap">
       <img id="coverReceita" src="receita_exemplo.png" alt="Imagem da receita" />
     </figure>
 
+    <!-- Metas (tempo • dificuldade • porções) -->
     <div class="meta">
       <span id="metaTempo">⏱️ —</span>
       <span id="metaDificuldade">• —</span>
       <span id="metaPorcoes">• —</span>
     </div>
 
-    <section class="bloco" aria-labelledby="secIngredientes">
-      <h2 id="secIngredientes" class="sec-title">
-        <img class="ico" src="lapis.png" alt="" aria-hidden="true" />
+    <!-- Ingredientes -->
+    <section class="bloco">
+      <h2 class="sec-title">
+        <img class="ico" src="lapis.png" alt="" aria-hidden="true">
         Ingredientes
       </h2>
 
-      <ul id="listaIngredientes" role="list" class="ingredientes"></ul>
+      <ul id="listaIngredientes" class="ingredientes" role="list"></ul>
+
       <div class="legenda">
         <span class="tag tem">Tenho</span>
         <span class="tag falta">Faltando</span>
       </div>
     </section>
 
-    <section class="bloco" aria-labelledby="secPreparo">
-      <h2 id="secPreparo" class="sec-title">Modo de Preparo</h2>
+    <!-- Modo de Preparo -->
+    <section class="bloco">
+      <h2 class="sec-title">Modo de Preparo</h2>
 
       <ol id="listaPassos" class="passos" data-collapsed="true"></ol>
 
-      <button id="btnLerMais"
-              class="btn-lermais"
-              type="button"
-              aria-controls="listaPassos"
-              aria-expanded="false">
+      <button id="btnLerMais" class="btn-lermais" type="button"
+              aria-controls="listaPassos" aria-expanded="false">
         Ler mais
       </button>
     </section>
 
+    <!-- Ações -->
     <div class="acoes">
-      <button id="btnSalvar" class="btn-coracao" type="button" aria-pressed="false" aria-label="Salvar receita">
+      <button id="btnSalvar" class="btn-coracao" type="button"
+              aria-pressed="false" aria-label="Salvar receita">
         <span class="coracao" aria-hidden="true">♡</span>
       </button>
 
@@ -60,7 +65,7 @@
     </div>
   </main>
 
-  <!-- Rodapé curvo padrão (igual ao seu) -->
+  <!-- Rodapé curvo (igual ao seu) -->
   <footer class="curva">
     <button class="btn-footer voltar" id="btnVoltar">
       <img src="humor.png" alt="Humor" />
@@ -73,7 +78,7 @@
     </button>
   </footer>
 
-  <!-- Navegação igual ao seu gerareceita.html -->
+  <!-- Navegação igual ao seu padrão -->
   <script>
     document.getElementById("btnVoltar")?.addEventListener("click", () => {
       window.location.href = "humor.html";
@@ -86,6 +91,8 @@
     });
   </script>
 
-  <script src="visualizar.js"></script>
+  <!-- mantém a ordem como você usa -->
+  <script src="global.js"></script>
+  <script src="visualizarreceita.js"></script>
 </body>
 </html>
