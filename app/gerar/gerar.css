@@ -313,3 +313,10 @@ h1 {
 
 /* Garante que nada “empurre” pro lado por conta do header removido */
 html, body { overflow-x: hidden; }
+
+/* Centralizar o título desta página */
+main > h1{
+  max-width: 600px;
+  margin: 16px auto 8px !important; /* centraliza o bloco */
+  text-align: center;                /* centraliza o texto */
+}
