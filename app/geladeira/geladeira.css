@@ -12,6 +12,7 @@ body {
   background-color: #c0ffa5;
   color: #492f70;
 }
+
 .sr-only {
   position: absolute !important;
   width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
@@ -37,7 +38,7 @@ body {
 .icone img { width: 100%; height: 100%; object-fit: contain; }
 .icone:focus-visible { outline: 3px solid #7b7190; outline-offset: 2px; }
 
-/* Pesquisa */
+/* Busca */
 .pesquisa-container { padding: 0 0 10px; margin-top: 8px; }
 .barra-pesquisa {
   background-color: #7ed957;
@@ -50,358 +51,132 @@ body {
 }
 .lupa { width: 20px; height: 20px; }
 
-/* Geladeira */
-.geladeira-container { padding: 0 0; margin-top: 10px; text-align: center; }
-
-/* Porta (botão) */
-.porta-imagem {
-  border: 0; background: none; cursor: pointer; padding: 0;
-  display: block; width: 100%; max-width: 350px; margin: 0 auto;
-  transition: transform .5s ease; border-radius: 20px; transform-origin: left center;
+/* =========================================
+   GELADEIRA — fechada e aberta no MESMO lugar
+   ========================================= */
+#geladeiraWrap{
+  position: relative;
+  width: min(90vw, 350px);
+  aspect-ratio: 3 / 5;             /* garante altura mesmo com filhos absolutos */
+  margin: 30px auto 0;
 }
-.porta-imagem:focus-visible { outline: 3px solid #7b7190; }
-.porta-imagem img { width: 100%; height: auto; display: block; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,.12); }
-.porta--aberta { transform: rotateY(-18deg) translateX(-4px); }
 
-/* Interior */
-.geladeira-aberta {
+/* Porta (fechada) e Interior (aberta) ocupam o MESMO retângulo */
+#geladeiraWrap .porta-imagem,
+#geladeiraWrap .geladeira-aberta{
+  position: absolute;
+  inset: 0;
+  transition: opacity .25s ease, visibility .25s ease;
+}
+
+/* Porta visível por padrão */
+#geladeiraWrap .porta-imagem{
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+/* Interior começa invisível */
+#geladeiraWrap .geladeira-aberta{
+  opacity: 0;
+  visibility: hidden;
   background-color: #e6ffe1;
   border: 4px solid #492f70;
-  border-radius: 25px;
-  padding: 20px;
-  margin: 12px auto 0;
-  max-width: 350px; width: 100%;
+  border-radius: 20px;
+  padding: 16px 12px 12px;
+  overflow: auto;
 }
-.conteudo-geladeira {
+
+/* Ao abrir: porta some, interior aparece — sem mexer no layout */
+#geladeiraWrap.is-open .porta-imagem{
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+#geladeiraWrap.is-open .geladeira-aberta{
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Conteúdo interno (grade de itens) */
+.conteudo-geladeira{
   display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;
 }
-.conteudo-geladeira img { width: 70px; height: 70px; object-fit: contain; }
-
-/* Card/Wrapper do ingrediente */
-.ingrediente-wrapper { position: relative; width: 70px; height: 70px; }
-.ingrediente-wrapper img { width: 100%; height: 100%; object-fit: contain; }
-.btn-remover {
+.ingrediente-wrapper{ position: relative; width: 70px; height: 70px; }
+.ingrediente-wrapper img{ width: 100%; height: 100%; object-fit: contain; }
+.btn-remover{
   position: absolute; top: -8px; right: -8px;
-  background-color: #ff4d4d; color: #fff; border: none;
-  border-radius: 50%; width: 20px; height: 20px; font-size: 12px; cursor: pointer;
+  background-color: #ff4d4d; color: #fff; border: none; border-radius: 50%;
+  width: 20px; height: 20px; font-size: 12px; cursor: pointer;
   display: flex; align-items: center; justify-content: center; line-height: 1; padding: 0;
   box-shadow: 0 0 4px rgba(0,0,0,.2);
 }
 
-/* Botão flutuante de adicionar (dentro da geladeira) */
-.manual {
+/* Botões dentro do interior */
+.manual{
   margin-top: 15px; background-color: #c0ffa5; border: 2px solid #492f70; color: #492f70;
   border-radius: 20px; padding: 10px 16px; font-weight: bold; cursor: pointer;
 }
-.manual.secundario { background: #fff; }
+.manual.secundario{ background:#fff; }
 
-/* Modal / Popup acessível */
-.modal-backdrop {
-  position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 80;
+/* =========================================
+   Modal / Popup acessível
+   ========================================= */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 80; }
+.popup[open]{ display:block; }
+.popup{
+  border: 3px solid #225c18; border-radius: 20px; padding: 0;
+  width: min(92vw, 640px); max-height: 80vh; overflow: hidden; z-index: 90;
 }
-.popup[open] { display: block; }
-.popup {
-  border: 3px solid #225c18; border-radius: 20px; padding: 0; width: min(92vw, 640px); max-height: 80vh; overflow: hidden; z-index: 90;
+.popup::backdrop{ background: rgba(0,0,0,.35); }
+.popup__header{ display:flex; align-items:center; justify-content:space-between; padding:12px 14px; border-bottom:2px solid #225c18; background:#fff; }
+.popup__footer{ display:flex; gap:8px; justify-content:flex-end; padding:10px 14px; border-top:2px solid #225c18; background:#fff; }
+.fechar{
+  border:2px solid #492f70; background:#fff; color:#492f70; border-radius:999px; width:36px; height:36px; cursor:pointer; font-size:18px;
 }
-.popup::backdrop { background: rgba(0,0,0,.35); }
-.popup__header { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 2px solid #225c18; background: #fff; }
-.popup__footer { display: flex; gap: 8px; justify-content: flex-end; padding: 10px 14px; border-top: 2px solid #225c18; background: #fff; }
-.fechar {
-  border: 2px solid #492f70; background: #fff; color: #492f70; border-radius: 999px; width: 36px; height: 36px; cursor: pointer; font-size: 18px;
-}
-.fechar:focus-visible { outline: 3px solid #7b7190; outline-offset: 2px; }
+.fechar:focus-visible{ outline:3px solid #7b7190; outline-offset:2px; }
 
-.galeria {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 12px; background: #fff;
+.galeria{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:10px; padding:12px; background:#fff;
 }
-.galeria img {
-  width: 60px; height: 60px; object-fit: contain; cursor: pointer; transition: transform .2s ease; border-radius: 10px;
-  border: 2px solid transparent;
+.galeria img{
+  width:60px; height:60px; object-fit:contain; cursor:pointer; transition:transform .2s ease; border-radius:10px;
+  border:2px solid transparent;
 }
-.galeria img:hover { transform: scale(1.08); }
-.galeria img.selecionado { border-color: #7b7190; box-shadow: 0 0 0 2px #7b7190 inset; }
+.galeria img:hover{ transform:scale(1.08); }
+.galeria img.selecionado{ border-color:#7b7190; box-shadow:0 0 0 2px #7b7190 inset; }
 
-/* Rodapé curvo */
-.curva {
-  width: 100%;
-  height: 70px;
-  background-color: #7b7190;
-  border-top-left-radius: 100% 50%;
-  border-top-right-radius: 100% 50%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-  z-index: 10;
+/* =========================================
+   Rodapé curvo (mantido como no seu arquivo)
+   ========================================= */
+.curva{
+  width:100%;
+  height:70px;
+  background-color:#7b7190;
+  border-top-left-radius:100% 50%;
+  border-top-right-radius:100% 50%;
+  position:fixed; bottom:0; left:0; right:0;
+  display:flex; justify-content:center; align-items:center; gap:40px;
+  z-index:10;
 }
+.btn-footer{
+  background-color:transparent; border:none; border-radius:50%;
+  width:55px; height:55px; padding:0;
+  display:flex; justify-content:center; align-items:center; overflow:hidden; cursor:pointer;
+  transform:translateY(-10px); box-shadow:0 6px 18px rgba(0,0,0,.18);
+}
+.btn-footer img{ width:250%; height:250%; object-fit:contain; display:block; }
+.btn-footer.logo{
+  width:150px; height:150px; transform:translateY(-20px);
+  box-shadow:0 10px 26px rgba(0,0,0,.22);
+}
+.btn-footer.logo img{ width:150%; height:150%; object-fit:contain; display:block; }
 
-.btn-footer {
-  background-color: transparent;
-  border: none;
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  cursor: pointer;
-  transform: translateY(-10px);
-  box-shadow: 0 6px 18px rgba(0,0,0,.18);
-}
-
-.btn-footer img {
-  width: 250%;
-  height: 250%;
-  object-fit: contain;
-  display: block;
-}
-
-.btn-footer.logo {
-  width: 150px;
-  height: 150px;
-  transform: translateY(-20px);
-  box-shadow: 0 10px 26px rgba(0,0,0,.22);
-}
-
-.btn-footer.logo img {
-  width: 150%;
-  height: 150%;
-  object-fit: contain;
-  display: block;
-}
-
-/* Desktop (≥1024px): mais respiro lateral / mesma estética */
-@media (min-width: 1024px) {
-  .conteudo { padding: 24px; }
-  .galeria { grid-template-columns: repeat(6, 1fr); gap: 12px; }
-}
-
-/* ===== Geladeira com porta animada e interior ===== */
-.fridge {
-  position: relative;
-  width: 100%;
-  max-width: 350px;
-  margin: 12px auto 0;
-  perspective: 1200px;
-}
-
-.fridge__door {
-  position: relative;
-  z-index: 2;
-  border: 0;
-  background: none;
-  padding: 0;
-  cursor: pointer;
-  width: 100%;
-  transform-origin: left center;
-  transition: transform 450ms ease, opacity 250ms ease;
-  outline: none;
-}
-.fridge__door img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 20px;
-  box-shadow: 0 8px 22px rgba(0,0,0,.18);
-}
-.fridge__door:focus-visible { outline: 3px solid #7b7190; border-radius: 22px; }
-
-/* Interior com “prateleiras” */
-.fridge__interior {
-  position: relative;
-  z-index: 1;
-  margin-top: -6px; /* encosta na porta */
-  background: #ffffff;
-  border: 4px solid #492f70;
-  border-radius: 22px;
-  padding: 16px 12px 12px;
-  box-shadow: 0 10px 28px rgba(0,0,0,.12);
-}
-
-.shelves {
-  position: absolute;
-  inset: 0;
-  border-radius: 18px;
-  pointer-events: none;
-  /* listras horizontais = prateleiras */
-  background:
-    linear-gradient(#e8f7e4 0 0) padding-box,
-    repeating-linear-gradient(
-      to bottom,
-      transparent 0 56px,
-      rgba(121, 121, 121, .15) 56px 58px,
-      transparent 58px 59px
-    );
-  opacity: .9;
-}
-
-/* Grade dos ingredientes */
-.conteudo-geladeira {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-@media (min-width: 480px) {
-  .conteudo-geladeira { grid-template-columns: repeat(4, 1fr); }
-}
-.conteudo-geladeira .ingrediente-wrapper {
-  width: 78px;
-  height: 78px;
-  margin: 0 auto;
-}
-.conteudo-geladeira img { width: 100%; height: 100%; object-fit: contain; }
-
-.fridge__actions {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin-top: 12px;
-}
-.manual.secundario { background: #fff; }
-
-/* Porta aberta: gira (some visual da porta “fechada”) */
-.fridge--open .fridge__door {
-  transform: rotateY(-72deg) translateX(-6%);
-  opacity: .15; /* fica quase invisível, simulando que só a moldura permaneceu */
-}
-/* Interior aparece quando abre */
-.fridge--open .fridge__interior {}
-
-/* Estado expandido */
-.fridge--expanded { max-width: 520px; }
-@media (min-height: 700px) {
-  .fridge--expanded .fridge__interior { max-height: 70vh; overflow: auto; }
-}
-
-/* Botão de adicionar existente já cobre o estilo (.manual) */
-
-/* Mesma área para fechada e aberta */
-.fridge {
-  position: relative;
-  width: 100%;
-  max-width: 350px;
-  margin: 12px auto 0;
-}
-.fridge__door,
-.fridge__interior {
-  position: absolute;
-  inset: 0;            /* ocupa exatamente o mesmo retângulo */
-}
-.fridge__door {
-  z-index: 2;
-  border: 0;
-  background: none;
-  padding: 0;
-  cursor: pointer;
-}
-.fridge__door img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 20px;
-}
-
-/* Interior começa invisível, no MESMO lugar */
-.fridge__interior {
-  z-index: 1;
-  background: #ffffff;
-  border: 4px solid #492f70;
-  border-radius: 20px;
-  padding: 16px 12px 12px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity .25s ease, visibility .25s ease;
-}
-
-/* Quando abrir: some a porta, aparece o interior — sem deslocar nada */
-.fridge.is-open .fridge__door {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity .2s ease, visibility .2s ease;
-}
-.fridge.is-open .fridge__interior {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* —— Porta e interior ocupando o MESMO lugar — sem pular layout —— */
-.geladeira-container {
-  position: relative;              /* chave para sobrepor os dois estados */
-  width: 100%;
-  max-width: 350px;
-  margin: 30px auto 0;             /* mantém seu espaçamento atual */
-}
-
-.geladeira-container .porta-imagem,
-.geladeira-container .geladeira-aberta {
-  position: absolute;
-  inset: 0;                        /* ocupa exatamente o mesmo retângulo */
-}
-
-/* Porta visível por padrão */
-.geladeira-container .porta-imagem {
-  cursor: pointer;
-  transition: opacity .2s ease, visibility .2s ease;
-}
-
-/* Interior começa invisível */
-.geladeira-container .geladeira-aberta {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity .25s ease, visibility .25s ease;
-}
-
-/* Ao abrir: some a porta, aparece o interior (no MESMO lugar) */
-.geladeira-container.is-open .porta-imagem {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-.geladeira-container.is-open .geladeira-aberta {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Modo expandido */
-.geladeira-container.is-expanded { max-width: 520px; }
-@media (min-height: 700px) {
-  .geladeira-container.is-expanded .geladeira-aberta { max-height: 70vh; overflow: auto; }
-}
-
-/* Botão secundário (já usa sua classe .manual) */
-.manual.secundario { background: #fff; }
-
-.geladeira-container {
-  position: relative;
-  max-width: 350px;
-  margin: 30px auto 0;
-}
-
-.porta-imagem,
-.geladeira-aberta {
-  position: absolute;
-  inset: 0;
-  transition: opacity .25s ease, visibility .25s ease;
-}
-
-.geladeira-aberta {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.geladeira-container.is-open .porta-imagem {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.geladeira-container.is-open .geladeira-aberta {
-  opacity: 1;
-  visibility: visible;
+/* Desktop */
+@media (min-width:1024px){
+  .conteudo{ padding:24px; }
+  .galeria{ grid-template-columns:repeat(6,1fr); gap:12px; }
 }
