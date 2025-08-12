@@ -1,0 +1,187 @@
+/* Base */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #c0ffa5;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #492f70;
+}
+img { display: block; max-width: 100%; }
+
+#conteudo {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px 16px 110px; /* espaço p/ rodapé curvo */
+}
+
+/* Título */
+#tituloReceita {
+  text-align: center;
+  margin: 8px 0 14px;
+  color: #225c18;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+/* Capa */
+.cover-wrap { margin: 0; }
+#coverReceita {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 24px;
+  border: 6px solid #492f70;
+}
+
+/* Metas */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin: 12px 0 8px;
+  font-weight: bold;
+}
+
+/* Blocos */
+.bloco {
+  position: relative;
+  background: #e0f6c9;
+  border-radius: 20px;
+  padding: 16px 16px 52px; /* espaço pro 'Ler mais' */
+  margin-top: 14px;
+}
+
+.sec-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #225c18;
+  font-size: 18px;
+  margin: 0 0 10px;
+}
+.sec-title .ico { width: 18px; height: 18px; object-fit: contain; }
+
+/* Ingredientes (simples) */
+.ingredientes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+.ingredientes li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #c0ffa5;
+  border-radius: 14px;
+  padding: 8px 10px;
+  font-weight: bold;
+}
+.ingredientes li::before {
+  content: "•";
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Passos + ler mais */
+.passos {
+  margin: 0;
+  padding-left: 22px;
+  max-height: 140px;
+  overflow: hidden;
+}
+.passos[data-collapsed="false"] { max-height: none; overflow: visible; }
+.passos li { margin: 8px 0; font-weight: 600; }
+
+.btn-lermais {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  border: none;
+  background: #8ed660;
+  color: #000;
+  font-weight: bold;
+  border-radius: 16px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.btn-lermais:focus-visible { outline: 3px solid #225c18; outline-offset: 2px; }
+
+/* Ações (coração) */
+.acoes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 14px;
+}
+.btn-coracao {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #492f70;
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.btn-coracao:focus-visible { outline: 3px solid #225c18; outline-offset: 2px; }
+.btn-coracao[aria-pressed="true"] { background: #492f70; color: #fff; }
+.coracao { font-size: 20px; line-height: 1; }
+
+/* A11y helper */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  border: 0;
+}
+
+/* Rodapé curvo padrão */
+.curva {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 70px;
+  background: #7b7190;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;          /* espaçamento entre botões */
+  z-index: 10;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.btn-footer {
+  width: 55px; height: 55px;
+  background: #fff0; /* transparente como no seu */
+  border-radius: 50%;
+  border: none;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  overflow: hidden;
+  transform: translateY(-10px);
+}
+.btn-footer img {
+  width: 250%; height: 250%;
+  object-fit: contain;
+}
+
+.btn-central {
+  width: 150px;
+  height: 150px;
+  transform: translateY(-20px);
+  border-radius: 50%;
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  #conteudo { padding: 24px 24px 120px; }
+  #coverReceita { height: 300px; }
+}
