@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerar Receita - Got2Cook</title>
+  <link rel="stylesheet" href="gerar.css" />
+  <link rel="icon" href="../../assets/logo.png" />
+</head>
+<body>
+  <header>
+    <img src="../../assets/perfil.png" alt="Perfil" class="icone-canto esquerdo">
+    <h1>GERAR RECEITA</h1>
+    <img src="../../assets/menu.png" alt="Menu" class="icone-canto direito">
+  </header>
+
+  <main>
+    <div class="filtros">
+      <button class="btn-filtro" onclick="selecionarTipo('doce')">DOCE</button>
+      <button class="btn-filtro" onclick="selecionarTipo('salgado')">SALGADO</button>
+    </div>
+
+    <div class="container-lista-total">
+      <div class="busca">
+        <img src="../../assets/lupa.png" class="icone-lupa" alt="Buscar">
+        <input type="text" placeholder="EX: Arroz, frango e batata" />
+      </div>
+
+      <div class="container-lista-e-botao">
+        <div class="lista-compras" id="lista-compras"></div>
+        <div class="btn-gerar" onclick="gerarReceita()">
+          <img src="../../assets/seta.png" alt="Gerar Receita">
+        </div>
+      </div>
+    </div>
+
+    <section class="geladeira">
+      <h2>MINHA GELADEIRA:</h2>
+      <div class="geladeira-scroll" id="geladeira-scroll"></div>
+    </section>
+  </main>
+
+  <footer class="curva">
+    <button class="btn-footer voltar" id="btnVoltar">
+      <img src="../../assets/humor.png" alt="Humor" />
+    </button>
+    <button class="btn-footer logo" id="btnLogo">
+      <img src="../../assets/logocentral.png" alt="Logo" />
+    </button>
+    <button class="btn-footer geladeira" id="btnGeladeira">
+      <img src="../../assets/geladeira.png" alt="Geladeira" />
+    </button>
+  </footer>
+
+  <!-- (opcional) script global do site -->
+  <script src="../../assets/main.js"></script>
+  <script src="gerar.js"></script>
+</body>
+</html>
