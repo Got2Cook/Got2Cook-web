@@ -320,3 +320,6 @@ main > h1{
   margin: 16px auto 8px !important; /* centraliza o bloco */
   text-align: center;                /* centraliza o texto */
 }
+
+/* Alternativa responsiva */
+main > h1{ margin: clamp(60px, 14vh, 120px) auto 8px !important; }
