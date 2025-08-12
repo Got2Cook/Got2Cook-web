@@ -31,19 +31,20 @@ da<!DOCTYPE html>
         </div>
       </section>
 
-      <div class="geladeira-container">
-  <section class="fridge" id="fridge" aria-label="Geladeira" aria-expanded="false">
-    <!-- Porta fechada (mesmo lugar da aberta) -->
-    <button id="portaBtn" class="fridge__door" aria-label="Abrir/fechar geladeira">
-      <img src="geladeira.png" alt="Porta da geladeira" />
-    </button>
+      <!-- Geladeira visual (substitua este bloco) -->
+<div class="geladeira-container" id="geladeiraWrap">
+  <!-- Porta (fechada) - fica exatamente no mesmo lugar da aberta -->
+  <img src="geladeira-fechada.png" alt="Geladeira Fechada" class="porta-imagem" id="portaImagem" />
 
-    <!-- Interior (fica invisível até abrir) -->
-    <div id="geladeiraAberta" class="fridge__interior" aria-hidden="true">
-      <div class="conteudo-geladeira" id="conteudoGeladeira" aria-live="polite"></div>
-      <button class="manual" id="abrirGaleria" aria-haspopup="dialog" aria-controls="modalGaleria">+ Adicionar ingrediente</button>
+  <!-- Interior (aberta) - mesmo retângulo da porta, inicia invisível -->
+  <div class="geladeira-aberta" id="geladeiraAberta" aria-hidden="true">
+    <div class="conteudo-geladeira" id="conteudoGeladeira"></div>
+
+    <div style="display:flex; gap:10px; justify-content:center; margin-top:12px;">
+      <button class="manual" onclick="abrirPopup()">+ Adicionar Ingrediente</button>
+      <button class="manual secundario" id="btnExpandir" aria-pressed="false">↕ Expandir</button>
     </div>
-  </section>
+  </div>
 </div>
 
     <!-- Modal: Galeria de ingredientes -->
