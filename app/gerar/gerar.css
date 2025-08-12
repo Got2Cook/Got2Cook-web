@@ -1,3 +1,11 @@
+/* =========================
+   GERAR RECEITA — CSS COMPLETO
+   Stack: HTML/CSS/JS puros
+   ========================= */
+
+/* Base */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
 body {
   margin: 0;
   background-color: #c0ffa5;
@@ -5,46 +13,42 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  color: #492f70;
 }
 
+/* Cabeçalho */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px;
 }
-
 h1 {
   font-size: 35px;
   color: #225c18;
   margin: 0;
-  margin-bottom: -160px;
+  margin-bottom: -160px; /* mantém o posicionamento do seu layout */
 }
+.icone-canto { width: 40px; height: 40px; }
 
-.icone-canto {
-  width: 40px;
-  height: 40px;
-}
-
+/* Conteúdo */
 main {
   flex: 1;
   display: flex;
   flex-direction: column;
   padding: 0 16px;
-  overflow: hidden;
+  overflow: visible; /* libera rolagem quando precisar */
 }
 
-/* Filtros com largura máxima para grandes telas */
+/* Filtros */
 .filtros {
   display: flex;
   gap: 12px;
-  margin: 20px auto 10px;
-  margin-top: 100px;
+  margin: 100px auto 10px;
   max-width: 600px;
   width: 100%;
   flex-wrap: wrap;
 }
-
 .btn-filtro {
   background-color: #8ed660;
   color: #000;
@@ -53,42 +57,41 @@ main {
   padding: 10px 20px;
   font-weight: bold;
   font-size: 16px;
+  cursor: pointer;
 }
-
 .btn-filtro.ativo {
   background-color: #492f70;
-  color: white;
+  color: #fff;
   transform: scale(1.05);
 }
 
-/* Barra de busca */
+/* Busca */
 .busca {
   position: relative;
   width: 100%;
   max-width: 600px;
   margin: 0 auto 12px;
 }
-
 .busca input {
   width: 100%;
+  height: 40px;
   padding: 10px 12px 10px 38px;
   border: none;
   border-radius: 20px;
   background-color: #8ed660;
   color: #492f70;
   font-size: 16px;
-  height: 40px;
-  box-sizing: border-box;
+  outline: none;
 }
-
 .icone-lupa {
   position: absolute;
   left: 10px;
   top: 10px;
   width: 18px;
+  height: 18px;
 }
 
-/* Container lista + botão */
+/* Lista de compras + botão seta */
 .container-lista-e-botao {
   display: flex;
   justify-content: center;
@@ -99,19 +102,16 @@ main {
   flex-wrap: wrap;
   margin: 0 auto 20px;
 }
-
 .lista-compras {
   background-color: #e0f6c9;
   border-radius: 0 0 30px 30px;
   padding: 20px;
   min-height: 80px;
-  flex: 1;
+  flex: 1 1 0;
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  box-sizing: border-box;
 }
-
 .lista-compras p {
   background-color: #c0ffa5;
   padding: 6px 10px;
@@ -121,7 +121,6 @@ main {
   font-weight: bold;
   margin: 0;
 }
-
 .btn-gerar {
   display: flex;
   align-items: center;
@@ -131,333 +130,136 @@ main {
   flex-shrink: 0;
   cursor: pointer;
 }
+.btn-gerar img { width: 36px; height: 36px; object-fit: contain; }
 
-.btn-gerar img {
-  width: 36px;
-}
-
+/* Minha geladeira */
+.geladeira { max-width: 600px; margin: 12px auto 0; }
 .geladeira h2 {
   color: #225c18;
-  margin: 8px 0;
   font-size: 18px;
+  text-align: center;  /* centralizado */
+  margin: 14px 0 8px;
 }
-
-/* repete para garantir consistência em algumas engines */
-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 0 16px;
-  overflow: hidden;
-}
-
-/* Garante que a seção ocupe bem o espaço */
 .geladeira-scroll {
-  max-height: 300px;
+  margin-top: 16px;          /* baixa os alimentos */
+  max-height: 42vh;          /* área rolável */
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   display: flex;
   flex-wrap: wrap;
   gap: 18px;
   justify-content: center;
-  padding-bottom: 100px; /* espaço extra antes do rodapé */
+  padding-bottom: 140px;     /* proteção contra o rodapé curvo */
+  scroll-behavior: smooth;
 }
+/* scrollbar discreta (opcional) */
+.geladeira-scroll::-webkit-scrollbar { width: 6px; }
+.geladeira-scroll::-webkit-scrollbar-thumb { background: #7b7190; border-radius: 6px; }
 
+/* Card do ingrediente */
 .ingrediente {
   position: relative;
   width: 120px;
   height: 120px;
   cursor: pointer;
 }
-
 .ingrediente img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-
 .check {
   position: absolute;
-  top: -10px;
-  right: -10px;
-  width: 30px;
-  height: 30px;
+  top: -10px; right: -10px;
+  width: 30px; height: 30px;
   background-color: #4CAF50;
   border-radius: 50%;
   display: none;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
+.check::before { content: '✔'; color: #fff; font-size: 18px; }
+.ingrediente.selected .check { display: flex; }
 
-.check::before {
-  content: '✔';
-  color: white;
-  font-size: 18px;
-}
+/* ==============================
+   RODAPÉ CURVO — PADRÃO EXATO
+   ============================== */
+.curva, .curva * { box-sizing: border-box; }
 
-.ingrediente.selected .check {
-  display: flex;
-}
-
-/* Rodapé curvo — medidas EXATAS */
-.curva {
-  width: 100%;
+.curva{
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
   height: 70px;
-  background-color: #7b7190;
+  background: #7b7190;
   border-top-left-radius: 100% 50%;
   border-top-right-radius: 100% 50%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  display: flex;
+
+  /* Grid fixo: 55px | 150px | 55px com 40px entre eles */
+  display: grid;
+  grid-template-columns: 55px 150px 55px;
+  column-gap: 40px;
   justify-content: center;
   align-items: center;
-  gap: 40px; /* (fix) faltava ; no original */
-  z-index: 10;
+
+  z-index: 9999;
+  overflow: visible;
 }
 
-.btn-footer {
-  background-color: transparent;
-  border: none;
+/* Botões do rodapé */
+.btn-footer{
+  width: 55px; height: 55px;
   border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  padding: 0;
+  border: 0;
+  background: transparent;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  padding: 0;
+  transform: translateY(-10px); /* laterais elevadas */
   overflow: hidden;
   cursor: pointer;
-  transform: translateY(-10px);
 }
-
-.btn-footer img {
+.btn-footer img{
   width: 250%;
   height: 250%;
   object-fit: contain;
 }
 
-.btn-footer.logo {
+/* Botão central maior e mais alto */
+.btn-footer.logo{
   width: 150px;
   height: 150px;
-  transform: translateY(-20px);
+  transform: translateY(-35px);
 }
-
-.btn-footer.logo img {
+.btn-footer.logo img{
   width: 150%;
   height: 150%;
-  object-fit: contain;
 }
 
-/* responsivo simples (desktop) */
-@media (min-width: 1024px) {
-  .filtros,
-  .busca,
-  .container-lista-e-botao,
-  .geladeira-scroll {
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
+/* Posições fixas */
+.btn-footer.voltar    { grid-column: 1; }
+.btn-footer.logo      { grid-column: 2; }
+.btn-footer.geladeira { grid-column: 3; }
 
-/* === AJUSTES SOLICITADOS === */
-
-/* 1) "MINHA GELADEIRA" mais central */
-.geladeira { 
-  max-width: 600px; 
-  margin: 12px auto 0; 
-}
-.geladeira h2 {
-  text-align: center;
-  margin: 14px 0 8px;
-}
-
-/* 2) Parte dos alimentos mais baixa + 3) área rolável */
-main { overflow: visible; } /* libera rolagem interna, se estava travada */
-.geladeira-scroll {
-  margin-top: 16px;              /* baixa um pouco os alimentos */
-  max-height: 42vh;              /* vira um quadro rolável */
-  overflow-y: auto;              /* rolagem vertical */
-  -webkit-overflow-scrolling: touch;
-  padding-bottom: 120px;         /* evita colisão com o rodapé curvo */
-  scroll-behavior: smooth;
-}
-
-/* (opcional) scrollbar discreta */
-.geladeira-scroll::-webkit-scrollbar { width: 6px; }
-.geladeira-scroll::-webkit-scrollbar-thumb { background: #7b7190; border-radius: 6px; }
-
-/* === FIX RODAPÉ CURVO (padrão) === */
-.curva{
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
-  height: 70px !important;
-  background: #7b7190 !important;
-  border-top-left-radius: 100% 50%;
-  border-top-right-radius: 100% 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 40px !important;
-  z-index: 9999;
-  overflow: visible;
-}
-
-.btn-footer{
-  width: 55px; height: 55px;
-  border: 0; border-radius: 50%;
-  background: transparent;
-  display: flex; align-items: center; justify-content: center;
-  padding: 0;
-  transform: translateY(-10px);
-}
-
-.btn-footer img{ width: 250%; height: 250%; object-fit: contain; }
-
-.btn-footer.logo, .btn-footer.btn-central{
-  width: 150px; height: 150px;
-  transform: translateY(-35px); /* central elevado */
-}
-
-.btn-footer.logo img, .btn-footer.btn-central img{
-  width: 150%; height: 150%;
-}
-
-/* Reserva de espaço p/ nada ficar atrás do rodapé */
+/* Espaço para o conteúdo não ficar atrás do rodapé */
 main, #conteudo, .pagina{
-  padding-bottom: 220px !important;
+  padding-bottom: 220px;
 }
-
-/* Safe-area (iOS) */
 @supports (padding: max(0px)){
   main, #conteudo, .pagina{
     padding-bottom: max(220px, env(safe-area-inset-bottom));
   }
 }
 
-/* ==== RODAPÉ CURVO — FORÇAR PADRÃO EXATO ==== */
-.curva, .curva * { box-sizing: border-box; }
-
-.curva {
-  position: fixed !important;
-  left: 0 !important; right: 0 !important; bottom: 0 !important;
-  height: 70px !important;
-  background: #7b7190 !important;
-  border-top-left-radius: 100% 50% !important;
-  border-top-right-radius: 100% 50% !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 40px !important;              /* 40px ENTRE ELES */
-  z-index: 9999 !important;
-  overflow: visible !important;
-}
-
-/* Zera qualquer posicionamento/offset herdado */
-.curva .btn-footer {
-  position: static !important;
-  margin: 0 !important;
-  background: transparent !important;
-  border: 0 !important;
-  width: 55px !important;
-  height: 55px !important;
-  border-radius: 50% !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 0 !important;
-  transform: translateY(-10px) !important; /* laterais elevadas */
-  overflow: hidden !important;
-  cursor: pointer;
-}
-
-.curva .btn-footer img {
-  width: 250% !important;
-  height: 250% !important;
-  object-fit: contain !important;
-}
-
-/* Botão central maior e mais alto */
-.curva .btn-footer.logo {
-  width: 150px !important;
-  height: 150px !important;
-  transform: translateY(-35px) !important;  /* central mais elevado */
-}
-
-/* Ordem e espaçamento exatos: L - 40px - C - 40px - R */
-.curva .btn-footer.voltar   { order: 1 !important; }
-.curva .btn-footer.logo     { order: 2 !important; margin: 0 40px !important; }
-.curva .btn-footer.geladeira{ order: 3 !important; }
-
-/* Reserva de espaço para o conteúdo não ficar atrás do rodapé */
-main, #conteudo, .pagina {
-  padding-bottom: 220px !important;
-}
-
-/* Se algum main anterior travar rolagem, libera aqui */
-main { overflow: visible !important; }
-
-/* ==== RODAPÉ CURVO — PADRÃO FIXO COM GRID ==== */
-.curva, .curva * { box-sizing: border-box; }
-
-.curva{
-  position: fixed !important;
-  left: 0 !important; right: 0 !important; bottom: 0 !important;
-  height: 70px !important;
-  background: #7b7190 !important;
-  border-top-left-radius: 100% 50% !important;
-  border-top-right-radius: 100% 50% !important;
-
-  /* grid com 3 colunas: 55 | 150 | 55 e 40px de espaçamento */
-  display: grid !important;
-  grid-template-columns: 55px 150px 55px !important;
-  column-gap: 40px !important;
-  justify-content: center !important;
-  align-items: center !important;
-
-  z-index: 9999 !important;
-  overflow: visible !important;
-}
-
-/* Botões */
-.curva .btn-footer{
-  width: 55px !important;
-  height: 55px !important;
-  border-radius: 50% !important;
-  border: 0 !important;
-  background: transparent !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 0 !important;
-  transform: translateY(-10px) !important; /* laterais elevadas */
-  overflow: hidden !important;
-}
-
-.curva .btn-footer img{
-  width: 250% !important;
-  height: 250% !important;
-  object-fit: contain !important;
-}
-
-/* Central maior e mais alto */
-.curva .btn-footer.logo{
-  width: 150px !important;
-  height: 150px !important;
-  transform: translateY(-35px) !important;
-}
-
-/* Posições fixas nas colunas 1 | 2 | 3 */
-.curva .btn-footer.voltar    { grid-column: 1 !important; }
-.curva .btn-footer.logo      { grid-column: 2 !important; }
-.curva .btn-footer.geladeira { grid-column: 3 !important; }
-
-/* Espaço para não sobrepor conteúdo */
-main, #conteudo, .pagina{
-  padding-bottom: 220px !important;
-}
-@supports (padding: max(0px)){
-  main, #conteudo, .pagina{
-    padding-bottom: max(220px, env(safe-area-inset-bottom)) !important;
+/* Desktop (≥1024px) — mantém largura máxima de 600px centralizada */
+@media (min-width: 1024px) {
+  .filtros,
+  .busca,
+  .container-lista-e-botao,
+  .geladeira,
+  .geladeira-scroll {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
