@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Minha Geladeira — Got2Cook</title>
+  <meta name="description" content="Gerencie os ingredientes da sua geladeira no Got2Cook. Adicione, marque como acabou e organize os itens com praticidade." />
+
+  <link rel="stylesheet" href="./geladeira.css" />
+</head>
+<body>
+  <!-- Container geral -->
+  <div class="page">
+
+    <!-- Cabeçalho simples (mesmo padrão da HOME: perfil à esquerda, menu à direita) -->
+    <header class="topo-icones" aria-label="Cabeçalho do aplicativo">
+      <a class="icone perfil" href="../home/index.html" aria-label="Voltar para Home">
+        <!-- Substitua por ícone/imagem real se desejar -->
+        <span aria-hidden="true">👤</span>
+      </a>
+      <a class="icone menu" href="../home/index.html" aria-label="Abrir menu principal">
+        <span aria-hidden="true">☰</span>
+      </a>
+    </header>
+
+    <main id="conteudo" class="conteudo" tabindex="-1">
+      <h1 class="titulo">Minha Geladeira</h1>
+
+      <!-- Bloco da geladeira (porta + interior) -->
+      <section class="geladeira" aria-label="Geladeira">
+        <!-- Porta -->
+        <button id="portaBtn" class="porta" aria-expanded="false" aria-controls="interior" aria-label="Abrir a porta da geladeira">
+          <img src="../../assets/geladeira.png" alt="Porta da geladeira" />
+        </button>
+
+        <!-- Interior (grade de ingredientes) -->
+        <div id="interior" class="interior" hidden>
+          <div class="interior__top">
+            <h2 class="sr-only">Ingredientes na geladeira</h2>
+            <button id="abrirGaleria" class="btn-plus" aria-haspopup="dialog" aria-controls="modalGaleria" aria-label="Adicionar ingredientes">+</button>
+          </div>
+
+          <ul id="gradeGeladeira" class="grade" aria-live="polite" aria-label="Lista de ingredientes na geladeira">
+            <!-- Itens renderizados via JS -->
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal da galeria de ingredientes -->
+    <div id="modalBackdrop" class="modal-backdrop" hidden></div>
+    <dialog id="modalGaleria" class="modal" aria-labelledby="modalTitulo">
+      <div class="modal__header">
+        <h2 id="modalTitulo">Adicionar ingredientes</h2>
+        <button id="fecharModal" class="modal__close" aria-label="Fechar">×</button>
+      </div>
+      <div class="modal__body">
+        <ul id="gradeGaleria" class="grade grade--galeria" aria-label="Galeria de ingredientes disponíveis">
+          <!-- Renderizado via JS -->
+        </ul>
+      </div>
+      <div class="modal__footer">
+        <button id="concluirSelecao" class="btn-primario" aria-label="Concluir seleção">Concluir</button>
+      </div>
+    </dialog>
+
+    <!-- Região de anúncios de acessibilidade -->
+    <div class="sr-only" aria-live="polite" id="ariaAnnouncer"></div>
+
+    <!-- Rodapé curvo fixo (EXATO conforme especificação) -->
+    <footer class="curva" aria-label="Navegação principal">
+      <nav class="curva__nav">
+        <!-- Botão esquerdo: Humor -->
+        <a class="btn-footer btn-footer--left" href="../humor/index.html" aria-label="Voltar para Humor">
+          <!-- img aqui -->
+          <img src="../../assets/emoji-humor.png" alt="Humor" onerror="this.style.display='none';" />
+        </a>
+
+        <!-- Botão central (150px) abre Gerar Receita -->
+        <a class="btn-footer btn-footer--center" href="../gerar/index.html" aria-label="Gerar Receita">
+          <img src="../../assets/logo.png" alt="Gerar Receita" />
+        </a>
+
+        <!-- Botão direito: Geladeira (esta página) -->
+        <a class="btn-footer btn-footer--right ativo" href="./index.html" aria-label="Minha Geladeira">
+          <!-- img aqui -->
+          <img src="../../assets/geladeira.png" alt="Minha Geladeira" />
+        </a>
+      </nav>
+    </footer>
+  </div>
+
+  <script src="./geladeira.js" defer></script>
+</body>
+</html>
