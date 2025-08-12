@@ -1,3 +1,6 @@
+// ===== util: normaliza texto p/ busca (sem acentos, minúsculas) =====
+const norm = s => (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
 // ===== referências =====
 const lista = document.getElementById('lista-compras');
 const geladeiraScroll = document.getElementById('geladeira-scroll');
@@ -41,6 +44,8 @@ ingredientes.forEach((item) => {
   const url = item?.url || item?.img || '';
   const div = document.createElement("div");
   div.className = "ingrediente";
+  div.dataset.nome = nome;
+  div.dataset.norm = norm(nome);
   div.onclick = () => toggleIngrediente(div, nome);
 
   const img = document.createElement("img");
@@ -60,7 +65,7 @@ function toggleIngrediente(elem, nome) {
   elem.classList.toggle('selected');
 
   if (elem.classList.contains('selected')) {
-    selecionados.push(nome);
+    if (!selecionados.includes(nome)) selecionados.push(nome);
     const itemChip = document.createElement('p');
     itemChip.textContent = nome + ' ✔';
     itemChip.classList.add('ingrediente-item');
@@ -81,6 +86,23 @@ btnFiltros.forEach(btn => {
     tipoReceita = btn.textContent.toLowerCase(); // "doce" | "salgado"
   });
 });
+
+// ===== BUSCA: filtra visualmente os cards da geladeira =====
+const inputBusca = document.querySelector('.busca input');
+if (inputBusca && geladeiraScroll) {
+  const cards = Array.from(geladeiraScroll.querySelectorAll('.ingrediente'));
+  const aplicarFiltro = () => {
+    const q = norm(inputBusca.value);
+    const tokens = q.split(/[,\s]+/).filter(Boolean); // suporta "arroz, frango batata"
+    cards.forEach(card => {
+      const n = card.dataset.norm || "";
+      const ok = tokens.length === 0 || tokens.every(t => n.includes(t)); // AND entre termos
+      card.style.display = ok ? "" : "none";
+    });
+  };
+  inputBusca.addEventListener('input', aplicarFiltro);
+  inputBusca.addEventListener('change', aplicarFiltro);
+}
 
 // ===== gerar receita (placeholder) =====
 function gerarReceita() {
