@@ -286,3 +286,51 @@ main { overflow: visible; } /* libera rolagem interna, se estava travada */
 /* (opcional) scrollbar discreta */
 .geladeira-scroll::-webkit-scrollbar { width: 6px; }
 .geladeira-scroll::-webkit-scrollbar-thumb { background: #7b7190; border-radius: 6px; }
+
+/* === FIX RODAPÉ CURVO (padrão) === */
+.curva{
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 70px !important;
+  background: #7b7190 !important;
+  border-top-left-radius: 100% 50%;
+  border-top-right-radius: 100% 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px !important;
+  z-index: 9999;
+  overflow: visible;
+}
+
+.btn-footer{
+  width: 55px; height: 55px;
+  border: 0; border-radius: 50%;
+  background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0;
+  transform: translateY(-10px);
+}
+
+.btn-footer img{ width: 250%; height: 250%; object-fit: contain; }
+
+.btn-footer.logo, .btn-footer.btn-central{
+  width: 150px; height: 150px;
+  transform: translateY(-35px); /* central elevado */
+}
+
+.btn-footer.logo img, .btn-footer.btn-central img{
+  width: 150%; height: 150%;
+}
+
+/* Reserva de espaço p/ nada ficar atrás do rodapé */
+main, #conteudo, .pagina{
+  padding-bottom: 220px !important;
+}
+
+/* Safe-area (iOS) */
+@supports (padding: max(0px)){
+  main, #conteudo, .pagina{
+    padding-bottom: max(220px, env(safe-area-inset-bottom));
+  }
+}
