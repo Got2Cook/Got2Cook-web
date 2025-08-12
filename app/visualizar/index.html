@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Visualizar Receita - Got2Cook</title>
+  <link rel="stylesheet" href="visualizar.css" />
+</head>
+<body>
+  <main id="conteudo">
+    <h2 id="tituloReceita" tabindex="-1">RECEITA GERADA</h2>
+
+    <figure class="cover-wrap">
+      <img id="coverReceita" src="../../assets/receita_exemplo.png" alt="Imagem da receita" />
+    </figure>
+
+    <div class="meta">
+      <span id="metaTempo">⏱️ —</span>
+      <span id="metaDificuldade">• —</span>
+      <span id="metaPorcoes">• —</span>
+    </div>
+
+    <section class="bloco" aria-labelledby="tituloIngredientes">
+      <h3 id="tituloIngredientes" class="sec-title">
+        <img class="ico" src="../../assets/lapis.png" alt="" aria-hidden="true" />
+        Ingredientes
+      </h3>
+      <ul id="listaIngredientes" class="ingredientes" role="list"></ul>
+    </section>
+
+    <section class="bloco" aria-labelledby="tituloPreparo">
+      <h3 id="tituloPreparo" class="sec-title">Modo de Preparo</h3>
+      <ol id="listaPassos" class="passos" data-collapsed="true"></ol>
+      <button id="btnLerMais" class="btn-lermais" type="button"
+              aria-controls="listaPassos" aria-expanded="false">
+        Ler mais
+      </button>
+    </section>
+
+    <div class="acoes">
+      <button id="btnSalvar" class="btn-coracao" type="button"
+              aria-pressed="false" aria-label="Salvar receita">
+        <span class="coracao" aria-hidden="true">♡</span>
+      </button>
+      <div id="liveMsg" class="sr-only" aria-live="polite"></div>
+    </div>
+  </main>
+
+  <!-- Rodapé curvo padrão -->
+  <nav class="curva" aria-label="Navegação principal">
+    <button class="btn-footer" id="btnVoltar" aria-label="Humor">
+      <img src="../../assets/icone-humor.png" alt="Humor" />
+    </button>
+    <button class="btn-footer btn-central" id="btnLogo" aria-label="Gerar Receita">
+      <img src="../../assets/logo.png" alt="Gerar Receita" />
+    </button>
+    <button class="btn-footer" id="btnGeladeira" aria-label="Minha Geladeira">
+      <img src="../../assets/icone-geladeira.png" alt="Minha Geladeira" />
+    </button>
+  </nav>
+
+  <script src="visualizar.js" defer></script>
+</body>
+</html>
