@@ -1,0 +1,261 @@
+/* Base igual ao seu estilo */
+body {
+  margin: 0;
+  background-color: #c0ffa5;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  box-sizing: border-box;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto 100px; /* espaço antes do rodapé curvo */
+}
+
+h1 {
+  font-size: 28px;
+  color: #225c18;
+  text-align: center;
+  margin: 12px 0 14px;
+}
+
+/* Capa com borda roxa arredondada */
+.cover-wrap {
+  margin: 0;
+  padding: 0;
+}
+#coverReceita {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 24px;
+  border: 6px solid #492f70;
+  display: block;
+}
+
+/* Meta (tempo, dificuldade, porções) */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin: 12px 0 8px;
+  color: #492f70;
+  font-weight: bold;
+}
+
+/* Blocos de seção */
+.bloco {
+  position: relative;
+  background: #e0f6c9;
+  border-radius: 20px;
+  padding: 16px 16px 52px; /* espaço pro botão "Ler mais" */
+  margin-top: 14px;
+}
+
+.sec-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #225c18;
+  font-size: 18px;
+  margin: 0 0 10px;
+}
+.sec-title .ico {
+  width: 18px; height: 18px; object-fit: contain;
+}
+
+/* Ingredientes */
+.ingredientes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+.ingredientes li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #c0ffa5;
+  border-radius: 14px;
+  padding: 8px 10px;
+  font-weight: bold;
+  color: #492f70;
+}
+.ingredientes li::before {
+  content: "•";
+  font-size: 18px;
+  line-height: 1;
+}
+.ingredientes li.tem {
+  outline: 2px solid #4caf50;
+}
+.ingredientes li.tem .badge { background: #4caf50; color: #fff; }
+.ingredientes li.falta {
+  outline: 2px solid #d32f2f;
+  opacity: 0.9;
+}
+.ingredientes li.falta .badge { background: #d32f2f; color: #fff; }
+
+.badge {
+  margin-left: auto;
+  font-size: 12px;
+  border-radius: 999px;
+  padding: 3px 8px;
+}
+
+/* Legenda */
+.legenda {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+.tag {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-weight: bold;
+}
+.tag.tem { background: #4caf50; color: #fff; }
+.tag.falta { background: #d32f2f; color: #fff; }
+
+/* Passos com colapso/expandir */
+.passos {
+  margin: 0;
+  padding-left: 22px;
+  max-height: 140px;
+  overflow: hidden;
+}
+.passos[data-collapsed="false"] {
+  max-height: none;
+  overflow: visible;
+}
+.passos li {
+  margin: 8px 0;
+  color: #492f70;
+  font-weight: 600;
+}
+
+/* Botão Ler mais no canto inferior direito */
+.btn-lermais {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  border: none;
+  background: #8ed660;
+  color: #000;
+  font-weight: bold;
+  border-radius: 16px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* Ações: coração, compartilhar, voltar */
+.acoes {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-coracao {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #492f70;
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.btn-coracao:focus { outline: 3px solid #225c18; outline-offset: 2px; }
+.btn-coracao[aria-pressed="true"] {
+  background: #492f70;
+  color: #fff;
+}
+.coracao { font-size: 20px; line-height: 1; }
+
+.btn-acao {
+  border: none;
+  background: #8ed660;
+  color: #000;
+  font-weight: bold;
+  border-radius: 16px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+.btn-acao:focus { outline: 3px solid #225c18; outline-offset: 2px; }
+
+/* Acessibilidade */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  border: 0;
+}
+
+/* Rodapé curvo – igual ao seu (com o ; no gap) */
+.curva {
+  width: 100%;
+  height: 70px;
+  background-color: #7b7190;
+  border-top-left-radius: 100% 50%;
+  border-top-right-radius: 100% 50%;
+  position: fixed;
+  bottom: 0; left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  z-index: 10;
+}
+
+.btn-footer {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 55px; height: 55px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  transform: translateY(-10px);
+}
+
+.btn-footer img {
+  width: 250%;
+  height: 250%;
+  object-fit: contain;
+}
+
+.btn-footer.logo {
+  width: 150px;
+  height: 150px;
+  transform: translateY(-20px);
+}
+
+.btn-footer.logo img {
+  width: 150%;
+  height: 150%;
+  object-fit: contain;
+}
+
+/* Responsivo: mantém centralizado até ~600px (desktop ≥1024px) */
+@media (min-width: 1024px) {
+  main { margin-bottom: 120px; }
+}
