@@ -259,3 +259,7 @@ main {
     margin-right: auto;
   }
 }
+
+/* Centralizar "MINHA GELADEIRA" */
+.geladeira { max-width: 600px; margin: 0 auto; }
+.geladeira h2 { text-align: center; margin: 16px 0 8px; }
