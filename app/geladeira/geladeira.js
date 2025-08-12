@@ -41,12 +41,49 @@ const catalogo = [
   { id:'pao',     nome:'Pão',     img:'../../assets/pao.png' }
 ];
 
-// ===== Renderiza a grade com 2 colunas e N linhas =====
-function renderIngredientes(filtro=''){
-  conteudo.innerHTML = '';
-  conteudo.classList.add('conteudo-geladeira'); // garante classe correta
+// ===== Renderiza a grade (2 colunas, linhas automáticas) =====
+function renderIngredientes(filtro = '') {
+  if (!conteudo) return;
 
-  const lista = ingredientes.filter(i => normalizar(i.nome).includes(normalizar(filtro)));
+  // garante a classe da grade
+  conteudo.classList.add('conteudo-geladeira');
+  conteudo.innerHTML = '';
+
+  const f = normalizar(filtro);
+  const lista = ingredientes.filter(i => normalizar(i.nome).includes(f));
+
+  lista.forEach((item, index) => {
+    const cell = document.createElement('div');
+    cell.className = 'celula';
+
+    const img = document.createElement('img');
+    img.src = item.url;
+    img.alt = item.nome;
+    img.onerror = () => { img.style.display = 'none'; };
+
+    const btn = document.createElement('button');
+    btn.className = 'btn-remover';
+    btn.textContent = '✕';
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      ingredientes.splice(index, 1);
+      localStorage.setItem(LS_ITENS, JSON.stringify(ingredientes));
+      renderIngredientes(campoBusca?.value || '');
+      marcarSelecionadosGaleria && marcarSelecionadosGaleria();
+    });
+
+    cell.appendChild(img);
+    cell.appendChild(btn);
+    conteudo.appendChild(cell);
+  });
+
+  // (opcional) mantém número par de células por estética:
+  // if (lista.length % 2 === 1) {
+  //   const vazio = document.createElement('div');
+  //   vazio.className = 'celula';
+  //   conteudo.appendChild(vazio);
+  // }
+}
 
   // cria uma célula para cada ingrediente
 lista.forEach((item, index) => {
