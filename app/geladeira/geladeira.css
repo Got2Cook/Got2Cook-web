@@ -377,3 +377,31 @@ body {
 
 /* Botão secundário (já usa sua classe .manual) */
 .manual.secundario { background: #fff; }
+
+.geladeira-container {
+  position: relative;
+  max-width: 350px;
+  margin: 30px auto 0;
+}
+
+.porta-imagem,
+.geladeira-aberta {
+  position: absolute;
+  inset: 0;
+  transition: opacity .25s ease, visibility .25s ease;
+}
+
+.geladeira-aberta {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.geladeira-container.is-open .porta-imagem {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.geladeira-container.is-open .geladeira-aberta {
+  opacity: 1;
+  visibility: visible;
+}
