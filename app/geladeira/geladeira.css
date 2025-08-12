@@ -121,30 +121,79 @@ body {
 .galeria img:hover { transform: scale(1.08); }
 .galeria img.selecionado { border-color: #7b7190; box-shadow: 0 0 0 2px #7b7190 inset; }
 
-/* Rodapé curvo — EXATO (altura, cores, tamanhos e espaçamento) */
+/* Rodapé curvo padrão */
 .curva {
-  width: 100%; height: 70px; background-color: #7b7190;
-  position: fixed; bottom: 0; left: 0; right: 0;
-  display: flex; justify-content: center; align-items: center; z-index: 70;
-  border-top-left-radius: 100% 50%; border-top-right-radius: 100% 50%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 70px; /* EXATO */
+  background: #7b7190; /* EXATO */
+  z-index: 60;
+  display: grid;
+  place-items: center;
 }
-.curva__nav { position: relative; width: 100%; max-width: 600px; height: 70px; }
+
+.curva__nav {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 70px;
+}
+
+/* Botões */
 .btn-footer {
-  background-color: transparent; border: none; border-radius: 50%;
-  width: 55px; height: 55px; padding: 0;
-  display: flex; justify-content: center; align-items: center; overflow: hidden; cursor: pointer;
-  position: absolute; bottom: 8px; transform: translateY(-10px);
-  outline: none; border: 2px solid #492f70; background: #fff;
+  position: absolute;
+  bottom: 8px;
+  display: grid;
+  place-items: center;
+  background: #ffffff;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 2px solid #492f70;
+  outline: none;
+  cursor: pointer;
 }
-.btn-footer img { width: 250%; height: 250%; object-fit: contain; }
-.btn-footer.logo {
-  width: 150px; height: 150px; transform: translate(-50%, -20px);
-  left: 50%; bottom: -25px; box-shadow: 0 8px 24px rgba(0,0,0,.25);
+
+.btn-footer img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
-.btn-footer.voltar { left: calc(50% - 150px - 40px - 27.5px); }
-.btn-footer.geladeira { right: calc(50% - 150px - 40px - 27.5px); }
-.btn-footer.geladeira.ativo { box-shadow: inset 0 0 0 3px #7b7190; }
-.btn-footer:focus-visible { outline: 3px solid #c0ffa5; outline-offset: 2px; }
+
+/* Botão central (150px, elevado) */
+.btn-footer--center {
+  width: 150px;
+  height: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -25px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* Laterais (55px) com espaçamento de 40px do central */
+.btn-footer--left {
+  width: 55px;
+  height: 55px;
+  left: calc(50% - 150px - 40px - 27.5px);
+}
+
+.btn-footer--right {
+  width: 55px;
+  height: 55px;
+  right: calc(50% - 150px - 40px - 27.5px);
+}
+
+/* Estado ativo */
+.btn-footer.ativo {
+  box-shadow: inset 0 0 0 3px #7b7190;
+}
+
+/* Foco visível */
+.btn-footer:focus-visible {
+  outline: 3px solid #c0ffa5;
+  outline-offset: 2px;
+}
 
 /* Desktop (≥1024px): mais respiro lateral / mesma estética */
 @media (min-width: 1024px) {
