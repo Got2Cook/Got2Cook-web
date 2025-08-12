@@ -49,31 +49,31 @@ function renderIngredientes(filtro=''){
   const lista = ingredientes.filter(i => normalizar(i.nome).includes(normalizar(filtro)));
 
   // cria uma célula para cada ingrediente
-lista.forEach((item, index) => {
-  const cell = document.createElement('div');
-  cell.className = 'celula';
+  lista.forEach((item, index) => {
+    const cell = document.createElement('div');
+    cell.className = 'celula';
 
-  const img = document.createElement('img');
-  img.src = item.url;
-  img.alt = item.nome;
-  img.onerror = () => { img.style.display = 'none'; };
+    const img = document.createElement('img');
+    img.src = item.url;
+    img.alt = item.nome;
+    img.onerror = () => { img.style.display = 'none'; };
 
-  // botão remover
-  const btn = document.createElement('button');
-  btn.className = 'btn-remover';
-  btn.textContent = '✕';
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    ingredientes.splice(index, 1);
-    salvar();
-    renderIngredientes(campoBusca.value);
-    marcarSelecionadosGaleria();
+    // botão remover
+    const btn = document.createElement('button');
+    btn.className = 'btn-remover';
+    btn.textContent = '✕';
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      ingredientes.splice(index, 1);
+      salvar();
+      renderIngredientes(campoBusca.value);
+      marcarSelecionadosGaleria();
+    });
+
+    cell.appendChild(img);
+    cell.appendChild(btn);
+    conteudo.appendChild(cell);
   });
-
-  cell.appendChild(img);
-  cell.appendChild(btn);
-  conteudo.appendChild(cell);
-});
 
   // se quiser manter sempre número par de células (estética), descomente:
   // if (lista.length % 2 === 1) {
