@@ -280,3 +280,53 @@ body {
 }
 
 /* Botão de adicionar existente já cobre o estilo (.manual) */
+
+/* Mesma área para fechada e aberta */
+.fridge {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  margin: 12px auto 0;
+}
+.fridge__door,
+.fridge__interior {
+  position: absolute;
+  inset: 0;            /* ocupa exatamente o mesmo retângulo */
+}
+.fridge__door {
+  z-index: 2;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+.fridge__door img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 20px;
+}
+
+/* Interior começa invisível, no MESMO lugar */
+.fridge__interior {
+  z-index: 1;
+  background: #ffffff;
+  border: 4px solid #492f70;
+  border-radius: 20px;
+  padding: 16px 12px 12px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .25s ease, visibility .25s ease;
+}
+
+/* Quando abrir: some a porta, aparece o interior — sem deslocar nada */
+.fridge.is-open .fridge__door {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .2s ease, visibility .2s ease;
+}
+.fridge.is-open .fridge__interior {
+  opacity: 1;
+  visibility: visible;
+}
