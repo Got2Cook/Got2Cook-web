@@ -1,0 +1,261 @@
+body {
+  margin: 0;
+  background-color: #c0ffa5;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+}
+
+h1 {
+  font-size: 35px;
+  color: #225c18;
+  margin: 0;
+  margin-bottom: -160px;
+}
+
+.icone-canto {
+  width: 40px;
+  height: 40px;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+  overflow: hidden;
+}
+
+/* Filtros com largura máxima para grandes telas */
+.filtros {
+  display: flex;
+  gap: 12px;
+  margin: 20px auto 10px;
+  margin-top: 100px;
+  max-width: 600px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.btn-filtro {
+  background-color: #8ed660;
+  color: #000;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.btn-filtro.ativo {
+  background-color: #492f70;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Barra de busca */
+.busca {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 12px;
+}
+
+.busca input {
+  width: 100%;
+  padding: 10px 12px 10px 38px;
+  border: none;
+  border-radius: 20px;
+  background-color: #8ed660;
+  color: #492f70;
+  font-size: 16px;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.icone-lupa {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 18px;
+}
+
+/* Container lista + botão */
+.container-lista-e-botao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 600px;
+  flex-wrap: wrap;
+  margin: 0 auto 20px;
+}
+
+.lista-compras {
+  background-color: #e0f6c9;
+  border-radius: 0 0 30px 30px;
+  padding: 20px;
+  min-height: 80px;
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  box-sizing: border-box;
+}
+
+.lista-compras p {
+  background-color: #c0ffa5;
+  padding: 6px 10px;
+  border-radius: 16px;
+  color: #492f70;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.btn-gerar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.btn-gerar img {
+  width: 36px;
+}
+
+.geladeira h2 {
+  color: #225c18;
+  margin: 8px 0;
+  font-size: 18px;
+}
+
+/* repete para garantir consistência em algumas engines */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
+  overflow: hidden;
+}
+
+/* Garante que a seção ocupe bem o espaço */
+.geladeira-scroll {
+  max-height: 300px;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: center;
+  padding-bottom: 100px; /* espaço extra antes do rodapé */
+}
+
+.ingrediente {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+}
+
+.ingrediente img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.check {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 30px;
+  height: 30px;
+  background-color: #4CAF50;
+  border-radius: 50%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.check::before {
+  content: '✔';
+  color: white;
+  font-size: 18px;
+}
+
+.ingrediente.selected .check {
+  display: flex;
+}
+
+/* Rodapé curvo — medidas EXATAS */
+.curva {
+  width: 100%;
+  height: 70px;
+  background-color: #7b7190;
+  border-top-left-radius: 100% 50%;
+  border-top-right-radius: 100% 50%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px; /* (fix) faltava ; no original */
+  z-index: 10;
+}
+
+.btn-footer {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  transform: translateY(-10px);
+}
+
+.btn-footer img {
+  width: 250%;
+  height: 250%;
+  object-fit: contain;
+}
+
+.btn-footer.logo {
+  width: 150px;
+  height: 150px;
+  transform: translateY(-20px);
+}
+
+.btn-footer.logo img {
+  width: 150%;
+  height: 150%;
+  object-fit: contain;
+}
+
+/* responsivo simples (desktop) */
+@media (min-width: 1024px) {
+  .filtros,
+  .busca,
+  .container-lista-e-botao,
+  .geladeira-scroll {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
