@@ -65,25 +65,36 @@
     <!-- Região para mensagens de acessibilidade -->
     <div class="sr-only" aria-live="polite" id="ariaAnnouncer"></div>
 
-    <!-- Rodapé curvo — EXATO como combinado -->
-    <footer class="curva" aria-label="Navegação principal">
-      <nav class="curva__nav">
-        <!-- Esquerda: Humor -->
-        <a class="btn-footer voltar" href="../humor/index.html" aria-label="Voltar para Humor">
-          <img src="../../assets/emoji-humor.png" alt="Humor">
-        </a>
+    <footer class="curva">
+  <nav class="curva__nav">
+    <!-- Botão esquerdo: Humor -->
+    <button class="btn-footer btn-footer--left" id="btnVoltar" aria-label="Voltar para Humor">
+      <img src="humor.png" alt="Humor" />
+    </button>
 
-        <!-- Centro: Gerar Receita -->
-        <a class="btn-footer logo" href="../gerar/index.html" aria-label="Gerar Receita">
-          <img src="../../assets/logo.png" alt="Gerar Receita">
-        </a>
+    <!-- Botão central (150px): Logo / Gerar -->
+    <button class="btn-footer btn-footer--center" id="btnLogo" aria-label="Gerar Receita">
+      <img src="logocentral.png" alt="Logo" />
+    </button>
 
-        <!-- Direita: Geladeira (atual) -->
-        <a class="btn-footer geladeira ativo" href="./index.html" aria-label="Minha Geladeira">
-          <img src="../../assets/geladeira.png" alt="Minha Geladeira">
-        </a>
-      </nav>
-    </footer>
+    <!-- Botão direito: Geladeira -->
+    <button class="btn-footer btn-footer--right ativo" id="btnGeladeira" aria-label="Minha Geladeira">
+      <img src="geladeira.png" alt="Geladeira" />
+    </button>
+  </nav>
+</footer>
+
+<script>
+  document.getElementById("btnVoltar").addEventListener("click", () => {
+    window.location.href = "humor.html";
+  });
+  document.getElementById("btnLogo").addEventListener("click", () => {
+    window.location.href = "home.html";
+  });
+  document.getElementById("btnGeladeira").addEventListener("click", () => {
+    window.location.href = "minhageladeira.html";
+  });
+</script>
   </div>
 
   <script src="./geladeira.js" defer></script>
