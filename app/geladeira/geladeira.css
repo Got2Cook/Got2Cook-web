@@ -1,0 +1,351 @@
+/* =========================
+   MINHA GELADEIRA — Got2Cook
+   Stack: HTML + CSS + JS puros
+   Mobile-first • A11y • Sem cores no JS
+   ========================= */
+
+/* Reset básico */
+* {
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #492f70;
+  background: #c0ffa5; /* fundo padrão do app */
+}
+
+/* Acessibilidade */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  overflow: hidden; clip: rect(0 0 0 0);
+}
+
+/* Layout geral */
+.page {
+  min-height: 100%;
+  padding-bottom: 120px; /* espaço pro rodapé */
+}
+.conteudo {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px 16px 24px;
+}
+.titulo {
+  font-size: 1.4rem;
+  margin: 64px 0 12px;
+  text-align: center;
+}
+
+/* Cabeçalho simples (mesmo da HOME) */
+.topo-icones {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  z-index: 50;
+}
+.icone {
+  width: 40px; height: 40px;
+  border: 2px solid #492f70;
+  background: #fff;
+  color: #492f70;
+  display: grid; place-items: center;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 18px;
+  outline: none;
+}
+.icone:focus-visible {
+  outline: 3px solid #7b7190;
+  outline-offset: 2px;
+}
+
+/* Bloco da geladeira */
+.geladeira {
+  position: relative;
+  margin-top: 8px;
+}
+
+/* Porta da geladeira (imagem clicável) */
+.porta {
+  width: 100%;
+  max-width: 520px;
+  border: 0;
+  background: none;
+  padding: 0;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  transform-origin: left center;
+  transition: transform 400ms ease;
+  outline: none;
+}
+.porta img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.12);
+}
+.porta:focus-visible {
+  outline: 3px solid #7b7190;
+}
+
+/* Estado da porta aberta (classe aplicada no body via JS) */
+.porta--aberta {
+  transform: rotateY(-18deg) translateX(-4px);
+}
+
+/* Interior da geladeira (fica escondido até abrir) */
+.interior {
+  margin-top: 14px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.1);
+  padding: 12px;
+}
+.interior__top {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Botão + (adicionar ingredientes) */
+.btn-plus {
+  width: 42px; height: 42px;
+  border-radius: 999px;
+  border: 2px solid #492f70;
+  background: #fff;
+  color: #492f70;
+  font-size: 24px;
+  line-height: 1;
+  display: grid; place-items: center;
+  cursor: pointer;
+}
+.btn-plus:focus-visible {
+  outline: 3px solid #7b7190;
+  outline-offset: 2px;
+}
+
+/* Grade de ingredientes (interior e galeria) */
+.grade {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+@media (min-width: 480px) {
+  .grade { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 1024px) {
+  .conteudo { padding: 24px; }
+  .grade { grid-template-columns: repeat(6, 1fr); gap: 10px; }
+}
+
+/* Card de ingrediente */
+.card {
+  background: #fff;
+  border: 2px solid #492f70;
+  border-radius: 12px;
+  padding: 8px;
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 6px;
+  min-height: 110px;
+}
+.card__thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  background: #f3f3f3;
+  display: grid; place-items: center;
+  overflow: hidden;
+}
+.card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.card__nome {
+  font-size: .85rem;
+  text-align: center;
+  color: #492f70;
+  word-break: break-word;
+}
+.card__acoes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.badge {
+  border: 1.5px solid #492f70;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: .75rem;
+  background: #fff;
+  color: #492f70;
+}
+.card.acabou {
+  opacity: .55;
+  filter: grayscale(.35);
+}
+.btn-trash {
+  background: none;
+  border: none;
+  color: #492f70;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+.btn-trash:focus-visible {
+  outline: 3px solid #7b7190;
+  outline-offset: 2px;
+}
+
+/* Seleção na galeria */
+.card--selecionado {
+  box-shadow: inset 0 0 0 3px #7b7190;
+}
+
+/* =========================
+   Modal (dialog) + Backdrop
+   ========================= */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  z-index: 80;
+}
+.modal {
+  border: 2px solid #492f70;
+  border-radius: 16px;
+  width: min(92vw, 640px);
+  max-height: 80vh;
+  padding: 0;
+  overflow: hidden;
+  z-index: 90;
+}
+.modal::backdrop { /* caso o dialog nativo use backdrop */
+  background: rgba(0,0,0,.35);
+}
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 12px 10px;
+  background: #ffffff;
+  border-bottom: 1.5px solid #492f70;
+}
+.modal__header h2 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+.modal__close {
+  width: 36px; height: 36px;
+  border-radius: 999px;
+  border: 2px solid #492f70;
+  background: #fff;
+  color: #492f70;
+  font-size: 18px;
+  cursor: pointer;
+}
+.modal__close:focus-visible { outline: 3px solid #7b7190; outline-offset: 2px; }
+.modal__body {
+  padding: 12px;
+  background: #fff;
+}
+.modal__footer {
+  padding: 10px 12px 12px;
+  border-top: 1.5px solid #492f70;
+  background: #fff;
+  display: flex;
+  justify-content: flex-end;
+}
+.btn-primario {
+  border: 2px solid #492f70;
+  background: #fff;
+  color: #492f70;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-primario:focus-visible { outline: 3px solid #7b7190; outline-offset: 2px; }
+
+/* =========================
+   Rodapé curvo — EXATO
+   ========================= */
+.curva {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 70px; /* EXATO */
+  background: #7b7190; /* EXATO */
+  z-index: 60;
+  display: grid;
+  place-items: center;
+}
+.curva__nav {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 70px;
+}
+/* Botões redondos */
+.btn-footer {
+  position: absolute;
+  bottom: 8px;
+  display: grid;
+  place-items: center;
+  background: #ffffff;
+  border-radius: 999px;
+  overflow: hidden;
+  text-decoration: none;
+  border: 2px solid #492f70;
+  outline: none;
+}
+.btn-footer img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+}
+
+/* Laterais: 55px, Central: 150px, espaçamento 40px */
+.btn-footer--left {
+  width: 55px; height: 55px; /* EXATO */
+  left: calc(50% - 150px - 40px - 27.5px); /* centro - (metade do central) - espaço - raio do lateral */
+}
+.btn-footer--right {
+  width: 55px; height: 55px; /* EXATO */
+  right: calc(50% - 150px - 40px - 27.5px);
+}
+.btn-footer--center {
+  width: 150px; height: 150px; /* EXATO */
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -25px; /* elevado */
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+
+/* Estado ativo no botão atual (opcional) */
+.btn-footer.ativo {
+  box-shadow: 0 0 0 3px #7b7190 inset;
+}
+
+/* Foco visível */
+.btn-footer:focus-visible {
+  outline: 3px solid #c0ffa5;
+  outline-offset: 2px;
+}
