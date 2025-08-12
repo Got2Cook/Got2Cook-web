@@ -31,20 +31,27 @@ da<!DOCTYPE html>
         </div>
       </section>
 
-      <!-- Geladeira visual -->
-      <section class="geladeira-container" aria-label="Geladeira">
-        <!-- Porta -->
-        <button id="portaBtn" class="porta-imagem" aria-expanded="false" aria-controls="geladeiraAberta" aria-label="Abrir a porta da geladeira">
-          <img src="../../assets/geladeira-fechada.png" alt="Porta da geladeira" />
-        </button>
+      <!-- Geladeira visual (substitua este bloco) -->
+<div class="geladeira-container">
+  <section class="fridge" id="fridge" aria-label="Geladeira" aria-expanded="false">
+    <!-- Porta (sobreposta) -->
+    <button class="fridge__door" id="fridgeDoor" aria-label="Abrir/fechar porta">
+      <img src="geladeira.png" alt="Porta da geladeira" />
+    </button>
 
-        <!-- Interior -->
-        <div class="geladeira-aberta" id="geladeiraAberta" hidden>
-          <div class="conteudo-geladeira" id="conteudoGeladeira" aria-live="polite"></div>
-          <button class="manual" id="abrirGaleria" aria-haspopup="dialog" aria-controls="modalGaleria">+ Adicionar ingrediente</button>
-        </div>
-      </section>
-    </main>
+    <!-- Interior (com prateleiras) -->
+    <div class="fridge__interior" id="geladeiraAberta" hidden>
+      <div class="shelves" aria-hidden="true"></div>
+
+      <div class="conteudo-geladeira" id="conteudoGeladeira" aria-live="polite"></div>
+
+      <div class="fridge__actions">
+        <button class="manual" onclick="abrirPopup()">+ Adicionar Ingrediente</button>
+        <button class="manual secundario" id="toggleExpand" aria-pressed="false" aria-label="Expandir geladeira">↕ Expandir</button>
+      </div>
+    </div>
+  </section>
+</div>
 
     <!-- Modal: Galeria de ingredientes -->
     <div id="modalBackdrop" class="modal-backdrop" hidden></div>
