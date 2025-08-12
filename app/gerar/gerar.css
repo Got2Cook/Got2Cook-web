@@ -259,3 +259,30 @@ main {
     margin-right: auto;
   }
 }
+
+/* === AJUSTES SOLICITADOS === */
+
+/* 1) "MINHA GELADEIRA" mais central */
+.geladeira { 
+  max-width: 600px; 
+  margin: 12px auto 0; 
+}
+.geladeira h2 {
+  text-align: center;
+  margin: 14px 0 8px;
+}
+
+/* 2) Parte dos alimentos mais baixa + 3) área rolável */
+main { overflow: visible; } /* libera rolagem interna, se estava travada */
+.geladeira-scroll {
+  margin-top: 16px;              /* baixa um pouco os alimentos */
+  max-height: 42vh;              /* vira um quadro rolável */
+  overflow-y: auto;              /* rolagem vertical */
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 120px;         /* evita colisão com o rodapé curvo */
+  scroll-behavior: smooth;
+}
+
+/* (opcional) scrollbar discreta */
+.geladeira-scroll::-webkit-scrollbar { width: 6px; }
+.geladeira-scroll::-webkit-scrollbar-thumb { background: #7b7190; border-radius: 6px; }
