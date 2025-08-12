@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Visualizar Receita - Got2Cook</title>
+  <link rel="stylesheet" href="visualizar.css" />
+</head>
+<body>
+  <!-- Sem header: título dentro do <main> -->
+  <main id="conteudo">
+    <h1 id="tituloReceita" tabindex="-1">Carregando…</h1>
+
+    <figure class="cover-wrap">
+      <img id="coverReceita" src="receita_exemplo.png" alt="Imagem da receita" />
+    </figure>
+
+    <div class="meta">
+      <span id="metaTempo">⏱️ —</span>
+      <span id="metaDificuldade">• —</span>
+      <span id="metaPorcoes">• —</span>
+    </div>
+
+    <section class="bloco" aria-labelledby="secIngredientes">
+      <h2 id="secIngredientes" class="sec-title">
+        <img class="ico" src="lapis.png" alt="" aria-hidden="true" />
+        Ingredientes
+      </h2>
+
+      <ul id="listaIngredientes" role="list" class="ingredientes"></ul>
+      <div class="legenda">
+        <span class="tag tem">Tenho</span>
+        <span class="tag falta">Faltando</span>
+      </div>
+    </section>
+
+    <section class="bloco" aria-labelledby="secPreparo">
+      <h2 id="secPreparo" class="sec-title">Modo de Preparo</h2>
+
+      <ol id="listaPassos" class="passos" data-collapsed="true"></ol>
+
+      <button id="btnLerMais"
+              class="btn-lermais"
+              type="button"
+              aria-controls="listaPassos"
+              aria-expanded="false">
+        Ler mais
+      </button>
+    </section>
+
+    <div class="acoes">
+      <button id="btnSalvar" class="btn-coracao" type="button" aria-pressed="false" aria-label="Salvar receita">
+        <span class="coracao" aria-hidden="true">♡</span>
+      </button>
+
+      <button id="btnCompartilhar" class="btn-acao" type="button">Compartilhar</button>
+      <button id="btnVoltarTopo" class="btn-acao" type="button" onclick="history.back()">Voltar</button>
+
+      <div id="liveMsg" class="sr-only" aria-live="polite"></div>
+    </div>
+  </main>
+
+  <!-- Rodapé curvo padrão (igual ao seu) -->
+  <footer class="curva">
+    <button class="btn-footer voltar" id="btnVoltar">
+      <img src="humor.png" alt="Humor" />
+    </button>
+    <button class="btn-footer logo" id="btnLogo">
+      <img src="logocentral.png" alt="Logo" />
+    </button>
+    <button class="btn-footer geladeira" id="btnGeladeira">
+      <img src="geladeira.png" alt="Geladeira" />
+    </button>
+  </footer>
+
+  <!-- Navegação igual ao seu gerareceita.html -->
+  <script>
+    document.getElementById("btnVoltar")?.addEventListener("click", () => {
+      window.location.href = "humor.html";
+    });
+    document.getElementById("btnLogo")?.addEventListener("click", () => {
+      window.location.href = "home.html";
+    });
+    document.getElementById("btnGeladeira")?.addEventListener("click", () => {
+      window.location.href = "minhageladeira.html";
+    });
+  </script>
+
+  <script src="visualizar.js"></script>
+</body>
+</html>
