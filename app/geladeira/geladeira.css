@@ -330,3 +330,50 @@ body {
   opacity: 1;
   visibility: visible;
 }
+
+/* —— Porta e interior ocupando o MESMO lugar — sem pular layout —— */
+.geladeira-container {
+  position: relative;              /* chave para sobrepor os dois estados */
+  width: 100%;
+  max-width: 350px;
+  margin: 30px auto 0;             /* mantém seu espaçamento atual */
+}
+
+.geladeira-container .porta-imagem,
+.geladeira-container .geladeira-aberta {
+  position: absolute;
+  inset: 0;                        /* ocupa exatamente o mesmo retângulo */
+}
+
+/* Porta visível por padrão */
+.geladeira-container .porta-imagem {
+  cursor: pointer;
+  transition: opacity .2s ease, visibility .2s ease;
+}
+
+/* Interior começa invisível */
+.geladeira-container .geladeira-aberta {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .25s ease, visibility .25s ease;
+}
+
+/* Ao abrir: some a porta, aparece o interior (no MESMO lugar) */
+.geladeira-container.is-open .porta-imagem {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.geladeira-container.is-open .geladeira-aberta {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Modo expandido */
+.geladeira-container.is-expanded { max-width: 520px; }
+@media (min-height: 700px) {
+  .geladeira-container.is-expanded .geladeira-aberta { max-height: 70vh; overflow: auto; }
+}
+
+/* Botão secundário (já usa sua classe .manual) */
+.manual.secundario { background: #fff; }
