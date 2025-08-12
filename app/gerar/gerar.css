@@ -265,3 +265,26 @@ section.geladeira h2 {
   text-align: center;
   margin: 16px 0 8px;
 }
+
+/* Baixar os alimentos e tornar a sessão rolável (sem afetar o rodapé) */
+main { overflow: visible; } /* libera a rolagem */
+
+section.geladeira { max-width: 600px; margin: 0 auto; }
+
+section.geladeira .geladeira-scroll{
+  margin-top: 18px;        /* afasta do título */
+  padding-top: 14px;       /* espaço para o ✔ não cortar */
+  max-height: 42vh;        /* área rolável */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 120px;   /* não colide com o rodapé curvo */
+  scroll-behavior: smooth;
+}
+
+section.geladeira .ingrediente{
+  margin-top: 6px;         /* micro ajuste extra para baixo */
+}
+
+/* opcional: scrollbar discreta */
+section.geladeira .geladeira-scroll::-webkit-scrollbar { width: 6px; }
+section.geladeira .geladeira-scroll::-webkit-scrollbar-thumb { background: #7b7190; border-radius: 6px; }
