@@ -396,3 +396,68 @@ main, #conteudo, .pagina {
 
 /* Se algum main anterior travar rolagem, libera aqui */
 main { overflow: visible !important; }
+
+/* ==== RODAPÉ CURVO — PADRÃO FIXO COM GRID ==== */
+.curva, .curva * { box-sizing: border-box; }
+
+.curva{
+  position: fixed !important;
+  left: 0 !important; right: 0 !important; bottom: 0 !important;
+  height: 70px !important;
+  background: #7b7190 !important;
+  border-top-left-radius: 100% 50% !important;
+  border-top-right-radius: 100% 50% !important;
+
+  /* grid com 3 colunas: 55 | 150 | 55 e 40px de espaçamento */
+  display: grid !important;
+  grid-template-columns: 55px 150px 55px !important;
+  column-gap: 40px !important;
+  justify-content: center !important;
+  align-items: center !important;
+
+  z-index: 9999 !important;
+  overflow: visible !important;
+}
+
+/* Botões */
+.curva .btn-footer{
+  width: 55px !important;
+  height: 55px !important;
+  border-radius: 50% !important;
+  border: 0 !important;
+  background: transparent !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  transform: translateY(-10px) !important; /* laterais elevadas */
+  overflow: hidden !important;
+}
+
+.curva .btn-footer img{
+  width: 250% !important;
+  height: 250% !important;
+  object-fit: contain !important;
+}
+
+/* Central maior e mais alto */
+.curva .btn-footer.logo{
+  width: 150px !important;
+  height: 150px !important;
+  transform: translateY(-35px) !important;
+}
+
+/* Posições fixas nas colunas 1 | 2 | 3 */
+.curva .btn-footer.voltar    { grid-column: 1 !important; }
+.curva .btn-footer.logo      { grid-column: 2 !important; }
+.curva .btn-footer.geladeira { grid-column: 3 !important; }
+
+/* Espaço para não sobrepor conteúdo */
+main, #conteudo, .pagina{
+  padding-bottom: 220px !important;
+}
+@supports (padding: max(0px)){
+  main, #conteudo, .pagina{
+    padding-bottom: max(220px, env(safe-area-inset-bottom)) !important;
+  }
+}
