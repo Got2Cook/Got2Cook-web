@@ -65,24 +65,18 @@
     <!-- Região para mensagens de acessibilidade -->
     <div class="sr-only" aria-live="polite" id="ariaAnnouncer"></div>
 
-   <footer class="curva" aria-label="Navegação principal">
-  <nav class="curva__nav">
-    <!-- Botão esquerdo -->
-    <a class="btn-footer btn-footer--left" href="humor.html" aria-label="Voltar para Humor">
-      <img src="humor.png" alt="Humor">
-    </a>
-
-    <!-- Botão central -->
-    <a class="btn-footer btn-footer--center" href="home.html" aria-label="Página Inicial">
-      <img src="logocentral.png" alt="Logo Got2Cook">
-    </a>
-
-    <!-- Botão direito -->
-    <a class="btn-footer btn-footer--right ativo" href="minhageladeira.html" aria-label="Minha Geladeira">
-      <img src="geladeira.png" alt="Geladeira">
-    </a>
-  </nav>
-</footer>
+    <!-- Rodapé curvo com 3 botões (igual ao do seu app) -->
+    <footer class="curva">
+      <button class="btn-footer voltar" id="btnVoltar" aria-label="Selecionar humor novamente">
+        <img src="../../assets/humor.png" alt="" />
+      </button>
+      <button class="btn-footer logo" id="btnLogo" aria-label="Abrir atalhos rápidos">
+        <img src="../../assets/logocentral.png" alt="" />
+      </button>
+      <button class="btn-footer geladeira" id="btnGeladeira" aria-label="Abrir Minha Geladeira">
+        <img src="../../assets/geladeira.png" alt="" />
+      </button>
+    </footer>
 
 <script>
   document.getElementById("btnVoltar").addEventListener("click", () => {
