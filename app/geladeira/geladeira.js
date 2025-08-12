@@ -5,8 +5,10 @@
        got2cook_geladeira: [{ id, nome, img, quantidade, status }]
        got2cook_ingredientesDisponiveis: catálogo para galeria
        got2cook_portaGeladeiraAberta: true/false
+       got2cook_geladeiraExpandida: true/false
    - Funcional:
-       • Porta com persistência
+       • Porta com persistência (abre/fecha e revela interior)
+       • Modo expandir/recolher (persistente)
        • Busca
        • Modal acessível (Esc + focus trap)
        • Toggle status (clique) / remover (long-press ou lixeira)
@@ -15,7 +17,8 @@
 const LS = {
   itens: 'got2cook_geladeira',
   catalogo: 'got2cook_ingredientesDisponiveis',
-  porta: 'got2cook_portaGeladeiraAberta'
+  porta: 'got2cook_portaGeladeiraAberta',
+  expand: 'got2cook_geladeiraExpandida'
 };
 
 const getLS = (k, fb) => {
@@ -28,8 +31,9 @@ const setLS = (k, v) => localStorage.setItem(k, JSON.stringify(v));
 let geladeira = getLS(LS.itens, []);
 let catalogo = getLS(LS.catalogo, []);
 let portaAberta = getLS(LS.porta, false) === true;
+let expandida  = getLS(LS.expand, false) === true;
 
-/* Se não houver catálogo, cria mock padrão (ajuste para suas imagens reais em ../../assets/...) */
+/* Mock de catálogo, caso vazio */
 if (!Array.isArray(catalogo) || catalogo.length === 0) {
   catalogo = [
     { id: 'tomate', nome: 'Tomate', img: '../../assets/tomate.png' },
@@ -56,8 +60,9 @@ const normalize = (t) =>
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase();
 
-/* DOM refs */
-const portaBtn = document.getElementById('portaBtn');
+/* DOM refs (mantém compatível com sua página) */
+const fridge = document.getElementById('fridge');            // wrapper opcional (se existir)
+const portaBtn = document.getElementById('portaBtn') || document.getElementById('fridgeDoor');
 const interior = document.getElementById('geladeiraAberta');
 const conteudoGeladeira = document.getElementById('conteudoGeladeira');
 const abrirGaleriaBtn = document.getElementById('abrirGaleria');
@@ -70,37 +75,61 @@ const concluirSelecaoBtn = document.getElementById('concluirSelecao');
 const adicionarManualBtn = document.getElementById('adicionarManual');
 const galeria = document.getElementById('galeriaIngredientes');
 
+const expandBtn = document.getElementById('toggleExpand');   // botão ↕ (se existir)
 const announcer = document.getElementById('ariaAnnouncer');
 
-/* ===== Porta com persistência ===== */
+/* ===== Porta com persistência (abre/fecha e mostra interior) ===== */
 function applyDoorUI() {
+  // classe visual na porta
   if (portaAberta) {
-    portaBtn.classList.add('porta--aberta');
-    portaBtn.setAttribute('aria-expanded', 'true');
-    interior.hidden = false;
-    portaBtn.querySelector('img').style.opacity = '0.9';
+    portaBtn?.classList.add('porta--aberta');
   } else {
-    portaBtn.classList.remove('porta--aberta');
-    portaBtn.setAttribute('aria-expanded', 'false');
-    interior.hidden = true;
-    portaBtn.querySelector('img').style.opacity = '1';
+    portaBtn?.classList.remove('porta--aberta');
+  }
+  // atributo de acessibilidade
+  portaBtn?.setAttribute('aria-expanded', portaAberta ? 'true' : 'false');
+
+  // interior visível quando aberta
+  if (interior) interior.hidden = !portaAberta;
+
+  // wrapper opcional (para animações CSS como .fridge--open)
+  if (fridge) fridge.classList.toggle('fridge--open', portaAberta);
+
+  // foco ao abrir (acessível)
+  if (portaAberta && interior) {
+    const foco = interior.querySelector('.manual, button, [tabindex]');
+    foco && foco.focus();
   }
 }
-portaBtn.addEventListener('click', () => {
+
+portaBtn?.addEventListener('click', () => {
   portaAberta = !portaAberta;
   setLS(LS.porta, portaAberta);
   applyDoorUI();
-  announcer.textContent = portaAberta ? 'Porta aberta.' : 'Porta fechada.';
+  if (announcer) announcer.textContent = portaAberta ? 'Porta aberta.' : 'Porta fechada.';
+});
+
+/* ===== Expandir / Recolher (persistente) ===== */
+function applyExpandUI() {
+  if (fridge) fridge.classList.toggle('fridge--expanded', expandida);
+  if (expandBtn) {
+    expandBtn.setAttribute('aria-pressed', expandida ? 'true' : 'false');
+    expandBtn.textContent = expandida ? '↕ Recolher' : '↕ Expandir';
+  }
+}
+expandBtn?.addEventListener('click', () => {
+  expandida = !expandida;
+  setLS(LS.expand, expandida);
+  applyExpandUI();
 });
 
 /* ===== Render da geladeira ===== */
 function renderGeladeira(filtro = '') {
   conteudoGeladeira.innerHTML = '';
 
-  const ids = new Set(geladeira.map(i => i.id));
   const lista = geladeira.filter(i => normalize(i.nome).includes(normalize(filtro)));
 
-  lista.forEach((item, index) => {
+  lista.forEach((item) => {
     const wrap = document.createElement('div');
     wrap.className = 'ingrediente-wrapper';
     wrap.setAttribute('data-id', item.id);
@@ -132,7 +161,7 @@ function renderGeladeira(filtro = '') {
     const start = () => { timer = setTimeout(() => remover(item.id), 650); };
     const cancel = () => { clearTimeout(timer); };
     wrap.addEventListener('mousedown', start);
-    wrap.addEventListener('touchstart', start);
+    wrap.addEventListener('touchstart', start, { passive: true });
     ['mouseup', 'mouseleave', 'touchend', 'touchcancel'].forEach(ev => wrap.addEventListener(ev, cancel));
 
     wrap.appendChild(img);
@@ -153,40 +182,44 @@ function toggleStatus(id) {
   setLS(LS.itens, geladeira);
   renderGeladeira(campoBusca.value);
   const n = (geladeira.find(i => i.id === id) || {}).nome || 'Ingrediente';
-  announcer.textContent = `Status alterado: ${n}.`;
+  announcer && (announcer.textContent = `Status alterado: ${n}.`);
 }
+
 function remover(id) {
   const item = geladeira.find(i => i.id === id);
   geladeira = geladeira.filter(i => i.id !== id);
   setLS(LS.itens, geladeira);
   renderGeladeira(campoBusca.value);
-  // desmarca na galeria
   marcarSelecionadosGaleria();
-  announcer.textContent = item ? `${item.nome} removido.` : 'Ingrediente removido.';
+  announcer && (announcer.textContent = item ? `${item.nome} removido.` : 'Ingrediente removido.');
 }
 
 /* ===== Modal ===== */
 function openModal() {
-  backdrop.hidden = false;
-  if (typeof modal.showModal === 'function') modal.showModal();
-  else modal.setAttribute('open', '');
+  if (backdrop) backdrop.hidden = false;
+  if (modal) {
+    if (typeof modal.showModal === 'function') modal.showModal();
+    else modal.setAttribute('open', '');
+  }
   // foco inicial
   setTimeout(() => {
-    const f = galeria.querySelector('img,button,[tabindex]');
+    const f = galeria?.querySelector('img,button,[tabindex]');
     if (f) f.focus();
   }, 0);
   document.addEventListener('keydown', trapKeys);
 }
 function closeModal() {
   document.removeEventListener('keydown', trapKeys);
-  backdrop.hidden = true;
-  if (typeof modal.close === 'function') modal.close();
-  else modal.removeAttribute('open');
-  abrirGaleriaBtn.focus();
+  if (backdrop) backdrop.hidden = true;
+  if (modal) {
+    if (typeof modal.close === 'function') modal.close();
+    else modal.removeAttribute('open');
+  }
+  abrirGaleriaBtn && abrirGaleriaBtn.focus();
 }
 function trapKeys(e) {
   if (e.key === 'Escape') { e.preventDefault(); closeModal(); return; }
-  if (e.key === 'Tab') {
+  if (e.key === 'Tab' && modal) {
     const focusables = modal.querySelectorAll('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])');
     const f = Array.from(focusables).filter(el => !el.disabled && el.offsetParent !== null);
     if (f.length === 0) return;
@@ -195,13 +228,14 @@ function trapKeys(e) {
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
 }
-abrirGaleriaBtn.addEventListener('click', openModal);
-fecharModalBtn.addEventListener('click', closeModal);
-backdrop.addEventListener('click', closeModal);
-concluirSelecaoBtn.addEventListener('click', closeModal);
+abrirGaleriaBtn?.addEventListener('click', openModal);
+fecharModalBtn?.addEventListener('click', closeModal);
+backdrop?.addEventListener('click', closeModal);
+concluirSelecaoBtn?.addEventListener('click', closeModal);
 
 /* Render galeria (com seleção) */
 function renderGaleria() {
+  if (!galeria) return;
   galeria.innerHTML = '';
   catalogo.forEach(item => {
     const img = document.createElement('img');
@@ -220,6 +254,7 @@ function renderGaleria() {
   marcarSelecionadosGaleria();
 }
 function marcarSelecionadosGaleria() {
+  if (!galeria) return;
   const ids = new Set(geladeira.map(i => i.id));
   Array.from(galeria.children).forEach((el, idx) => {
     const cat = catalogo[idx];
@@ -232,10 +267,10 @@ function toggleSelectCatalog(item) {
   const existe = geladeira.some(i => i.id === item.id);
   if (existe) {
     geladeira = geladeira.filter(i => i.id !== item.id);
-    announcer.textContent = `${item.nome} removido.`;
+    announcer && (announcer.textContent = `${item.nome} removido.`);
   } else {
     geladeira.push({ id: item.id, nome: item.nome, img: item.img, quantidade: 1, status: 'ok' });
-    announcer.textContent = `${item.nome} adicionado.`;
+    announcer && (announcer.textContent = `${item.nome} adicionado.`);
   }
   setLS(LS.itens, geladeira);
   renderGeladeira(campoBusca.value);
@@ -243,7 +278,7 @@ function toggleSelectCatalog(item) {
 }
 
 /* Adição manual rápida (placeholder simples) */
-adicionarManualBtn.addEventListener('click', () => {
+adicionarManualBtn?.addEventListener('click', () => {
   const nome = prompt('Digite o nome do ingrediente:');
   const url = prompt('Cole o caminho/arquivo da imagem (PNG/SVG):');
   if (nome && url) {
@@ -252,16 +287,17 @@ adicionarManualBtn.addEventListener('click', () => {
     setLS(LS.itens, geladeira);
     renderGeladeira(campoBusca.value);
     marcarSelecionadosGaleria();
-    announcer.textContent = `${nome} adicionado.`;
+    announcer && (announcer.textContent = `${nome} adicionado.`);
   }
 });
 
 /* Busca */
-campoBusca.addEventListener('input', () => renderGeladeira(campoBusca.value));
+campoBusca?.addEventListener('input', () => renderGeladeira(campoBusca.value));
 
 /* ===== Inicialização ===== */
 function init() {
   applyDoorUI();
+  applyExpandUI();
   renderGeladeira('');
   renderGaleria();
 }
