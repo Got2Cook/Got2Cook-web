@@ -296,3 +296,20 @@ section.geladeira .ingrediente{ margin-top: 6px; }
 /* (opcional) esconder qq scroll horizontal da página */
 html, body { overflow-x: hidden; }
 
+/* Remover qualquer traço do header nesta página */
+header { display: none !important; }
+
+/* Título agora fora do header: zera o offset antigo */
+h1 {
+  margin: 16px 0 8px !important;   /* antes tinha margin-bottom: -160px */
+  font-size: 35px;
+  color: #225c18;
+}
+
+/* Filtros não precisam mais compensar o header */
+.filtros {
+  margin-top: 12px !important;     /* antes: 100px */
+}
+
+/* Garante que nada “empurre” pro lado por conta do header removido */
+html, body { overflow-x: hidden; }
