@@ -2,98 +2,63 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Visualizar Receita - Got2Cook</title>
-  <link rel="stylesheet" href="visualizarreceita.css" />
+  <link rel="stylesheet" href="visualizar.css" />
 </head>
 <body>
-
-  <!-- sem header: título dentro do main -->
   <main id="conteudo">
-    <h1 id="tituloReceita" tabindex="-1">Carregando…</h1>
+    <h2 id="tituloReceita" tabindex="-1">RECEITA GERADA</h2>
 
-    <!-- Capa com borda roxa arredondada -->
     <figure class="cover-wrap">
-      <img id="coverReceita" src="receita_exemplo.png" alt="Imagem da receita" />
+      <img id="coverReceita" src="../../assets/receita_exemplo.png" alt="Imagem da receita" />
     </figure>
 
-    <!-- Metas (tempo • dificuldade • porções) -->
     <div class="meta">
       <span id="metaTempo">⏱️ —</span>
       <span id="metaDificuldade">• —</span>
       <span id="metaPorcoes">• —</span>
     </div>
 
-    <!-- Ingredientes -->
-    <section class="bloco">
-      <h2 class="sec-title">
-        <img class="ico" src="lapis.png" alt="" aria-hidden="true">
+    <section class="bloco" aria-labelledby="tituloIngredientes">
+      <h3 id="tituloIngredientes" class="sec-title">
+        <img class="ico" src="../../assets/lapis.png" alt="" aria-hidden="true" />
         Ingredientes
-      </h2>
-
+      </h3>
       <ul id="listaIngredientes" class="ingredientes" role="list"></ul>
-
-      <div class="legenda">
-        <span class="tag tem">Tenho</span>
-        <span class="tag falta">Faltando</span>
-      </div>
     </section>
 
-    <!-- Modo de Preparo -->
-    <section class="bloco">
-      <h2 class="sec-title">Modo de Preparo</h2>
-
+    <section class="bloco" aria-labelledby="tituloPreparo">
+      <h3 id="tituloPreparo" class="sec-title">Modo de Preparo</h3>
       <ol id="listaPassos" class="passos" data-collapsed="true"></ol>
-
       <button id="btnLerMais" class="btn-lermais" type="button"
               aria-controls="listaPassos" aria-expanded="false">
         Ler mais
       </button>
     </section>
 
-    <!-- Ações -->
     <div class="acoes">
       <button id="btnSalvar" class="btn-coracao" type="button"
               aria-pressed="false" aria-label="Salvar receita">
         <span class="coracao" aria-hidden="true">♡</span>
       </button>
-
-      <button id="btnCompartilhar" class="btn-acao" type="button">Compartilhar</button>
-      <button id="btnVoltarTopo" class="btn-acao" type="button" onclick="history.back()">Voltar</button>
-
       <div id="liveMsg" class="sr-only" aria-live="polite"></div>
     </div>
   </main>
 
-  <!-- Rodapé curvo (igual ao seu) -->
-  <footer class="curva">
-    <button class="btn-footer voltar" id="btnVoltar">
-      <img src="humor.png" alt="Humor" />
+  <!-- Rodapé curvo padrão -->
+  <nav class="curva" aria-label="Navegação principal">
+    <button class="btn-footer" id="btnVoltar" aria-label="Humor">
+      <img src="../../assets/icone-humor.png" alt="Humor" />
     </button>
-    <button class="btn-footer logo" id="btnLogo">
-      <img src="logocentral.png" alt="Logo" />
+    <button class="btn-footer btn-central" id="btnLogo" aria-label="Gerar Receita">
+      <img src="../../assets/logo.png" alt="Gerar Receita" />
     </button>
-    <button class="btn-footer geladeira" id="btnGeladeira">
-      <img src="geladeira.png" alt="Geladeira" />
+    <button class="btn-footer" id="btnGeladeira" aria-label="Minha Geladeira">
+      <img src="../../assets/icone-geladeira.png" alt="Minha Geladeira" />
     </button>
-  </footer>
+  </nav>
 
-  <!-- Navegação igual ao seu padrão -->
-  <script>
-    document.getElementById("btnVoltar")?.addEventListener("click", () => {
-      window.location.href = "humor.html";
-    });
-    document.getElementById("btnLogo")?.addEventListener("click", () => {
-      window.location.href = "home.html";
-    });
-    document.getElementById("btnGeladeira")?.addEventListener("click", () => {
-      window.location.href = "minhageladeira.html";
-    });
-  </script>
-
-  <!-- mantém a ordem como você usa -->
-  <script src="global.js"></script>
-  <script src="visualizarreceita.js"></script>
+  <script src="visualizar.js" defer></script>
 </body>
 </html>
-
