@@ -54,73 +54,63 @@ body {
 /* =========================================
    GELADEIRA — fechada e aberta no MESMO lugar
    ========================================= */
+/* ===== GELADEIRA — porta e interior no MESMO lugar; interior expande para baixo ===== */
 #geladeiraWrap{
-  position: relative;
-  width: min(90vw, 350px);
-  aspect-ratio: 3 / 5;             /* garante altura mesmo com filhos absolutos */
-  margin: 30px auto 0;
+  width:min(90vw, 350px);
+  margin:30px auto 0;
 }
 
-/* Porta (fechada) e Interior (aberta) ocupam o MESMO retângulo */
-#geladeiraWrap .porta-imagem,
-#geladeiraWrap .geladeira-aberta{
-  position: absolute;
-  inset: 0;
-  transition: opacity .25s ease, visibility .25s ease;
-}
-
-/* Porta visível por padrão */
+/* Porta fechada (visível por padrão) */
 #geladeiraWrap .porta-imagem{
-  cursor: pointer;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 20px;
+  cursor:pointer;
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:20px;
 }
 
-/* Interior começa invisível */
+/* Interior começa escondido; quando abrir, vira bloco e cresce conforme conteúdo */
 #geladeiraWrap .geladeira-aberta{
-  opacity: 0;
-  visibility: hidden;
-  background-color: #e6ffe1;
-  border: 4px solid #492f70;
-  border-radius: 20px;
-  padding: 16px 12px 12px;
-  overflow: auto;
+  display:none;
+  background:#e6ffe1;
+  border:4px solid #492f70;
+  border-radius:20px;
+  padding:12px;
 }
+#geladeiraWrap.is-open .porta-imagem{ display:none; }
+#geladeiraWrap.is-open .geladeira-aberta{ display:block; }
 
-/* Ao abrir: porta some, interior aparece — sem mexer no layout */
-#geladeiraWrap.is-open .porta-imagem{
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-#geladeiraWrap.is-open .geladeira-aberta{
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Conteúdo interno (grade de itens) */
+/* Grade com divisórias (duas colunas; quadrados) */
 .conteudo-geladeira{
-  display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;
-}
-.ingrediente-wrapper{ position: relative; width: 70px; height: 70px; }
-.ingrediente-wrapper img{ width: 100%; height: 100%; object-fit: contain; }
-.btn-remover{
-  position: absolute; top: -8px; right: -8px;
-  background-color: #ff4d4d; color: #fff; border: none; border-radius: 50%;
-  width: 20px; height: 20px; font-size: 12px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; line-height: 1; padding: 0;
-  box-shadow: 0 0 4px rgba(0,0,0,.2);
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 100px;            /* altura de cada “prateleira”/quadrado */
+  gap:0;                            /* linhas criadas pelas bordas */
+  border:2px solid #cfe9c8;         /* moldura externa */
+  border-radius:12px;
+  overflow:hidden;
 }
 
-/* Botões dentro do interior */
-.manual{
-  margin-top: 15px; background-color: #c0ffa5; border: 2px solid #492f70; color: #492f70;
-  border-radius: 20px; padding: 10px 16px; font-weight: bold; cursor: pointer;
+/* cada célula cria as “linhas” da geladeira */
+.celula{
+  border:2px solid #cfe9c8;         /* divisória entre células */
+  display:flex; align-items:center; justify-content:center;
+  background:#fff;
 }
-.manual.secundario{ background:#fff; }
+.celula img{
+  max-width:84%; max-height:84%; object-fit:contain;
+}
+
+/* botão remover (opcional) dentro da célula */
+.celula .btn-remover{
+  position:absolute; top:6px; right:6px;
+  background:#ff4d4d; color:#fff; border:none; border-radius:999px;
+  width:22px; height:22px; font-size:12px; cursor:pointer;
+  box-shadow:0 0 4px rgba(0,0,0,.2);
+}
+
+/* botão “+ Adicionar ingrediente” abaixo da grade */
+.geladeira-aberta .manual{ margin-top:12px; }
 
 /* =========================================
    Modal / Popup acessível
