@@ -358,3 +358,43 @@ header {
   .sugestoes-grid::-webkit-scrollbar-track { background: #c0ffa5; border-radius: 8px; }
   .sugestoes-grid::-webkit-scrollbar-thumb { background: #7b7190; border-radius: 8px; }
 }
+
+/* Itens com ícone ao lado (perfil e menu principal) */
+.menu-perfil ul, .menu-principal ul { list-style: none; padding: 0; margin: 0; }
+.menu-perfil li, .menu-principal li {
+  display: grid;
+  grid-template-columns: 24px 1fr; /* ícone + texto */
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  font-size: 16px;
+  color: #492f70;
+  font-weight: bold;
+  cursor: pointer;
+  border-bottom: 2px solid #b5e593;
+}
+.menu-perfil li:last-child, .menu-principal li:last-child { border-bottom: none; }
+.menu-perfil li:hover, .menu-principal li:hover { background-color: #a6e97c; border-radius: 10px; }
+
+.item-ico {
+  width: 24px; height: 24px;
+  display: inline-grid; place-items: center;
+  font-size: 18px; line-height: 1;
+}
+
+/* Se preferir PNG em vez de emoji, troque o conteúdo do span por <img>:
+   <img src="../../assets/icone-dados.png" alt="">
+   E adicione:
+*/
+.menu-perfil li img, .menu-principal li img {
+  width: 22px; height: 22px; object-fit: contain; display: block;
+}
+
+/* Cabeçalho acessível em telas grandes (mantém nos cantos) */
+@media (min-width: 1024px) {
+  header { margin-bottom: 28px; }
+  .icone { width: 48px; height: 48px; }
+  .icone img { width: 46px; height: 46px; }
+  .menu-perfil { top: 68px; left: 0; }
+  .menu-principal { top: 68px; right: 0; }
+}
