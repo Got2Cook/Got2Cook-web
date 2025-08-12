@@ -121,14 +121,14 @@ body {
 .galeria img:hover { transform: scale(1.08); }
 .galeria img.selecionado { border-color: #7b7190; box-shadow: 0 0 0 2px #7b7190 inset; }
 
-/* Rodapé curvo padrão */
+/* Rodapé curvo — padrão salvo */
 .curva {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 70px; /* EXATO */
-  background: #7b7190; /* EXATO */
+  height: 70px;
+  background: #7b7190;
   z-index: 60;
   display: grid;
   place-items: center;
@@ -152,7 +152,6 @@ body {
   overflow: hidden;
   border: 2px solid #492f70;
   outline: none;
-  cursor: pointer;
 }
 
 .btn-footer img {
@@ -161,7 +160,7 @@ body {
   object-fit: contain;
 }
 
-/* Botão central (150px, elevado) */
+/* Central (150px, elevado) */
 .btn-footer--center {
   width: 150px;
   height: 150px;
@@ -171,7 +170,7 @@ body {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
-/* Laterais (55px) com espaçamento de 40px do central */
+/* Laterais (55px) com espaço de 40px do central */
 .btn-footer--left {
   width: 55px;
   height: 55px;
@@ -184,7 +183,7 @@ body {
   right: calc(50% - 150px - 40px - 27.5px);
 }
 
-/* Estado ativo */
+/* Ativo */
 .btn-footer.ativo {
   box-shadow: inset 0 0 0 3px #7b7190;
 }
