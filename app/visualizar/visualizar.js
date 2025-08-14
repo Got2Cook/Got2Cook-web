@@ -1,3 +1,4 @@
+console.log("visualizar.js build", Date.now());
 // ===== Utilitários =====
 const $ = (sel) => document.querySelector(sel);
 function getLS(key, fallback) {
