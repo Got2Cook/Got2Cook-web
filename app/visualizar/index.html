@@ -4,50 +4,55 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Visualizar Receita - Got2Cook</title>
-  <!-- não mudei nomes -->
-  <link rel="stylesheet" href="visualizar.css?v=10" />
+  <link rel="stylesheet" href="visualizar.css?v=11" />
 </head>
 <body>
   <main id="conteudo">
-    <h2 id="tituloReceita" tabindex="-1">RECEITA GERADA</h2>
+    <div class="grid-web">
+      <!-- Coluna da imagem -->
+      <figure class="cover-wrap">
+        <img id="coverReceita" src="../../assets/receita_exemplo.png" alt="Imagem da receita" />
+      </figure>
 
-    <figure class="cover-wrap">
-      <img id="coverReceita" src="../../assets/receita_exemplo.png" alt="Imagem da receita" />
-    </figure>
+      <!-- Coluna do texto -->
+      <div class="lado-texto">
+        <h2 id="tituloReceita" tabindex="-1">RECEITA GERADA</h2>
 
-    <div class="meta" role="group" aria-label="Informações da receita">
-      <span id="metaTempo" class="chip">⏱️ —</span>
-      <span id="metaDificuldade" class="chip">—</span>
-      <span id="metaPorcoes" class="chip">—</span>
-    </div>
+        <div class="meta" role="group" aria-label="Informações da receita">
+          <span id="metaTempo" class="chip">⏱️ —</span>
+          <span id="metaDificuldade" class="chip">Dificuldade —</span>
+          <span id="metaPorcoes" class="chip">Porções —</span>
+        </div>
 
-    <section class="bloco" aria-labelledby="tituloIngredientes">
-      <h3 id="tituloIngredientes" class="sec-title">
-        <img class="ico" src="../../assets/lapis.png" alt="" aria-hidden="true" />
-        Ingredientes
-      </h3>
-      <ul id="listaIngredientes" class="ingredientes" role="list"></ul>
-    </section>
+        <section class="bloco" aria-labelledby="tituloIngredientes">
+          <h3 id="tituloIngredientes" class="sec-title">
+            <img class="ico" src="../../assets/lapis.png" alt="" aria-hidden="true" />
+            Ingredientes
+          </h3>
+          <ul id="listaIngredientes" class="ingredientes" role="list"></ul>
+        </section>
 
-    <section class="bloco" aria-labelledby="tituloPreparo">
-      <h3 id="tituloPreparo" class="sec-title">Modo de Preparo</h3>
-      <ol id="listaPassos" class="passos" data-collapsed="true"></ol>
-      <button id="btnLerMais" class="btn-lermais" type="button"
-              aria-controls="listaPassos" aria-expanded="false">
-        Ler mais
-      </button>
-    </section>
+        <section class="bloco" aria-labelledby="tituloPreparo">
+          <h3 id="tituloPreparo" class="sec-title">Modo de Preparo</h3>
+          <ol id="listaPassos" class="passos" data-collapsed="true"></ol>
+          <button id="btnLerMais" class="btn-lermais" type="button"
+                  aria-controls="listaPassos" aria-expanded="false">
+            Ler mais
+          </button>
+        </section>
 
-    <div class="acoes">
-      <button id="btnSalvar" class="btn-coracao" type="button"
-              aria-pressed="false" aria-label="Salvar receita">
-        <span class="coracao" aria-hidden="true">♡</span>
-      </button>
-      <div id="liveMsg" class="sr-only" aria-live="polite"></div>
+        <div class="acoes">
+          <button id="btnSalvar" class="btn-coracao" type="button"
+                  aria-pressed="false" aria-label="Salvar receita">
+            <span class="coracao" aria-hidden="true">♡</span>
+          </button>
+          <div id="liveMsg" class="sr-only" aria-live="polite"></div>
+        </div>
+      </div>
     </div>
   </main>
 
-  <!-- Rodapé curvo padrão (70px / #7b7190 / 55|150|55 / gap 40px / central elevado) -->
+  <!-- Rodapé curvo padrão -->
   <nav class="curva" aria-label="Navegação principal">
     <button class="btn-footer" id="btnVoltar" aria-label="Humor">
       <img src="../../assets/humor.png" alt="Humor" />
