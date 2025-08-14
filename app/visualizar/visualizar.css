@@ -206,7 +206,7 @@ img { display: block; max-width: 100%; }
   /* o padding lateral do container = gutter */
   #conteudo {
     max-width: 1000px;
-    padding: 24px var(--gutter) 130px;
+    padding: 24px var(--gutter) 70px;
   }
 
   /* a distância entre imagem e texto = gutter */
