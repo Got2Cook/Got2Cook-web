@@ -1,4 +1,3 @@
-console.log("visualizar.js build", Date.now());
 // ===== Utilitários =====
 const $ = (sel) => document.querySelector(sel);
 function getLS(key, fallback) {
@@ -14,24 +13,22 @@ const imgCover  = $("#coverReceita");
 const metaTempo = $("#metaTempo");
 const metaDif   = $("#metaDificuldade");
 const metaPor   = $("#metaPorcoes");
-
 const ulIng   = $("#listaIngredientes");
 const olPasso = $("#listaPassos");
 const btnMais = $("#btnLerMais");
-
 const btnSalvar = $("#btnSalvar");
 const liveMsg   = $("#liveMsg");
 
-// Rodapé (padrão)
-const btnVoltar    = $("#btnVoltar");
-const btnLogo      = $("#btnLogo");
-const btnGeladeira = $("#btnGeladeira");
+// Navegação rodapé (mesmo padrão)
+$("#btnVoltar")?.addEventListener("click", ()=>{ window.location.href="../humor/"; });
+$("#btnLogo")?.addEventListener("click",   ()=>{ window.location.href="../gerar/"; });
+$("#btnGeladeira")?.addEventListener("click", ()=>{ window.location.href="../geladeira/"; });
 
 // ===== Dados =====
 function getReceita() {
   const r = getLS("receita_temp", null);
   if (r && typeof r === "object") return r;
-  // Fallback simples para teste
+  // Fallback simples
   return {
     id: "mock-001",
     titulo: "Receita Gerada",
@@ -91,8 +88,8 @@ function render(){
   imgCover.src = r.coverImg || r.imagem || "../../assets/receita_exemplo.png";
   imgCover.alt = `Imagem da receita ${r.titulo||""}`;
   metaTempo.textContent = `⏱️ ${r.tempo || "—"}`;
-  metaDif.textContent   = `• ${r.dificuldade || "—"}`;
-  metaPor.textContent   = `• ${r.porcoes || "—"}`;
+  metaDif.textContent   = r.dificuldade || "—";
+  metaPor.textContent   = r.porcoes || "—";
 
   // Ingredientes (sem status)
   ulIng.innerHTML = "";
@@ -136,11 +133,6 @@ function live(msg){
   liveMsg.textContent="";
   setTimeout(()=>liveMsg.textContent=msg, 30);
 }
-
-// ===== Navegação do rodapé =====
-btnVoltar?.addEventListener("click", ()=>{ window.location.href="../humor/index.html"; });
-btnLogo?.addEventListener("click",   ()=>{ window.location.href="../gerar/index.html"; });
-btnGeladeira?.addEventListener("click", ()=>{ window.location.href="../geladeira/index.html"; });
 
 // ===== Eventos =====
 document.addEventListener("DOMContentLoaded", ()=>{
