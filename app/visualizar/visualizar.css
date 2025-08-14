@@ -26,7 +26,7 @@ img { display: block; max-width: 100%; }
   text-align: center;
   margin: 8px 0 14px;
   color: #225c18;
-  font-size: 24px;
+  font-size: 28px;   /* antes 24px */
   letter-spacing: .5px;
 }
 
@@ -170,57 +170,40 @@ img { display: block; max-width: 100%; }
 .btn-footer img { width: 250%; height: 250%; object-fit: contain; }
 .btn-central { width: 150px; height: 150px; transform: translateY(-20px); border-radius: 50%; }
 
-/* ===== Desktop: 2 colunas ===== */
+/* ===== Desktop: 2 colunas com gutter igual às bordas ===== */
 @media (min-width: 1024px) {
-  #conteudo { max-width: 1000px; padding: 24px 24px 130px; }
-  .grid-web {
-    display: grid;
-    grid-template-columns: 58% 42%; /* imagem maior à esquerda */
-    gap: 24px;
-    align-items: start;
-  }
-  /* imagem maior, sem ultrapassar o container */
-  #coverReceita { height: 100%; min-height: 480px; max-height: 780px; }
-  /* título e meta alinhados à esquerda no desktop */
-  #tituloReceita { text-align: left; margin-top: 0; }
-  .meta { justify-content: start; }
-}
+  :root { --gutter: 32px; } /* ajuste aqui se quiser mais/menos espaço */
 
-/* ===== Desktop: mais espaço entre imagem e texto ===== */
-@media (min-width: 1024px) {
-  .grid-web {
-    gap: 60px;              /* antes 24px: deixa mais afastado */
-  }
-  .cover-wrap {
-    margin-bottom: 0;       /* evita “grudar” no texto ao lado */
-  }
-  .lado-texto {
-    padding-left: 8px;      /* um respiro extra do lado do texto */
-  }
-}
-
-/* ===== Desktop: gutter único igual às bordas ===== */
-@media (min-width: 1024px) {
-  :root { --gutter: 24px; } /* ajuste aqui se quiser mais/menos */
-
-  /* o padding lateral do container = gutter */
+  /* container centralizado, bordas = gutter */
   #conteudo {
-    max-width: 1000px;
-    padding: 24px var(--gutter) 70px;
+    max-width: 1100px;
+    padding: 24px var(--gutter) 130px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  /* a distância entre imagem e texto = gutter */
+  /* grid: imagem menor (40%) + texto maior (60%), gap = gutter */
   .grid-web {
     display: grid;
-    grid-template-columns: 58% 42%;
+    grid-template-columns: 40% 60%;
     column-gap: var(--gutter);
-    align-items: start;
+    align-items: center;     /* centraliza verticalmente os dois blocos */
+    justify-content: center; /* garante centralização horizontal do grid */
   }
 
-  /* sem margens/paddings extras que quebrem a simetria */
-  .cover-wrap { margin: 0; }
+  /* zera margens extras pra manter simetria do gutter */
+  .cover-wrap { margin: 0; align-self: center; }
   .lado-texto { padding: 0; }
 
-  /* mantém a imagem grande sem sair do container */
-  #coverReceita { height: 100%; min-height: 480px; max-height: 780px; }
+  /* imagem menor e controlada, sem passar da página */
+  #coverReceita {
+    width: 100%;
+    aspect-ratio: 4 / 5;  /* retrato controlado */
+    height: auto;
+    max-height: 560px;    /* evita ficar muito alta */
+  }
+
+  /* títulos/metas alinhados à esquerda no desktop */
+  #tituloReceita { text-align: left; font-size: 28px; }
+  .meta { justify-content: start; }
 }
