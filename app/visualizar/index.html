@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Visualizar Receita - Got2Cook</title>
-  <link rel="stylesheet" href="visualizar.css?v=9999">
+  <!-- não mudei nomes -->
+  <link rel="stylesheet" href="visualizar.css?v=10" />
 </head>
 <body>
   <main id="conteudo">
@@ -14,10 +15,10 @@
       <img id="coverReceita" src="../../assets/receita_exemplo.png" alt="Imagem da receita" />
     </figure>
 
-    <div class="meta">
-      <span id="metaTempo">⏱️ —</span>
-      <span id="metaDificuldade">• —</span>
-      <span id="metaPorcoes">• —</span>
+    <div class="meta" role="group" aria-label="Informações da receita">
+      <span id="metaTempo" class="chip">⏱️ —</span>
+      <span id="metaDificuldade" class="chip">—</span>
+      <span id="metaPorcoes" class="chip">—</span>
     </div>
 
     <section class="bloco" aria-labelledby="tituloIngredientes">
@@ -46,20 +47,19 @@
     </div>
   </main>
 
-  <!-- Rodapé curvo padrão -->
+  <!-- Rodapé curvo padrão (70px / #7b7190 / 55|150|55 / gap 40px / central elevado) -->
   <nav class="curva" aria-label="Navegação principal">
     <button class="btn-footer" id="btnVoltar" aria-label="Humor">
-      <img src="../../assets/icone-humor.png" alt="Humor" />
+      <img src="../../assets/humor.png" alt="Humor" />
     </button>
     <button class="btn-footer btn-central" id="btnLogo" aria-label="Gerar Receita">
-      <img src="../../assets/logo.png" alt="Gerar Receita" />
+      <img src="../../assets/logocentral.png" alt="Gerar Receita" />
     </button>
     <button class="btn-footer" id="btnGeladeira" aria-label="Minha Geladeira">
-      <img src="../../assets/icone-geladeira.png" alt="Minha Geladeira" />
+      <img src="../../assets/geladeira.png" alt="Minha Geladeira" />
     </button>
   </nav>
 
-  <script src="visualizar.js?v=9999" defer></script>
+  <script src="visualizar.js?v=10" defer></script>
 </body>
 </html>
-<!-- bump v=9999 -->
