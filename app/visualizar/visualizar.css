@@ -189,7 +189,7 @@ img { display: block; max-width: 100%; }
 /* ===== Desktop: mais espaço entre imagem e texto ===== */
 @media (min-width: 1024px) {
   .grid-web {
-    gap: 40px;              /* antes 24px: deixa mais afastado */
+    gap: 60px;              /* antes 24px: deixa mais afastado */
   }
   .cover-wrap {
     margin-bottom: 0;       /* evita “grudar” no texto ao lado */
