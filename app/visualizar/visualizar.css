@@ -207,3 +207,65 @@ img { display: block; max-width: 100%; }
   #tituloReceita { text-align: left; font-size: 28px; }
   .meta { justify-content: start; }
 }
+
+/* ===== Desktop: ingredientes em colunas, container mais baixo e texto maior ===== */
+@media (min-width: 1024px) {
+  :root {
+    --gutter: 32px;       /* mesmo espaço das bordas e entre coluna/coluna */
+    --ing-height: 280px;  /* altura máxima do container de ingredientes */
+  }
+
+  /* mantém o container centralizado e o gutter igual nas bordas */
+  #conteudo {
+    max-width: 1100px;
+    padding: 24px var(--gutter) 130px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* grid 2 colunas (img | texto) – já tínhamos; aqui só garantimos o gap=gutter */
+  .grid-web {
+    display: grid;
+    grid-template-columns: 40% 60%; /* imagem menor, texto mais largo */
+    column-gap: var(--gutter);
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* INGREDIENTES: troca de grid → multi-coluna vertical */
+  .ingredientes {
+    display: block;             /* sobrescreve o grid do mobile */
+    columns: 2;                 /* 2 colunas (aumente p/ 3 se quiser) */
+    column-gap: var(--gutter);  /* distância entre colunas igual às bordas */
+    max-height: var(--ing-height);
+    overflow: auto;             /* se passar, cria scroll interno */
+    padding-right: 4px;         /* respiro p/ scrollbar não “comer” o conteúdo */
+  }
+  .ingredientes li {
+    break-inside: avoid;        /* evita quebras no meio do item */
+    margin: 6px 0;              /* espaçamento vertical entre itens */
+    font-size: 1.06rem;         /* texto MAIOR nos ingredientes */
+    line-height: 1.25;
+  }
+
+  /* Passos também com texto um pouco maior, pra equilibrar */
+  .passos li {
+    font-size: 1.05rem;
+    line-height: 1.35;
+  }
+
+  /* Título maior, mesmo tamanho das outras telas que você usa */
+  #tituloReceita {
+    font-size: 28px;
+    text-align: left;           /* mantém alinhado ao bloco de texto */
+  }
+
+  /* Imagem menor para caber confortável, centralizada verticalmente */
+  #coverReceita {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    height: auto;
+    max-height: 520px;          /* ajuste aqui se quiser ainda menor/maior */
+    align-self: center;
+  }
+}
