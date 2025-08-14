@@ -8,13 +8,18 @@ html, body {
   color: #492f70;
 }
 img { display: block; max-width: 100%; }
+:root { --rox: #492f70; }
 
 #conteudo {
   width: 100%;
-  max-width: 600px;
+  max-width: 600px;         /* mobile */
   margin: 0 auto;
   padding: 16px 16px 120px; /* respiro do rodapé curvo */
 }
+
+/* ===== GRID só no desktop ===== */
+.grid-web { display: block; }
+.lado-texto { display: block; }
 
 /* ===== Título ===== */
 #tituloReceita {
@@ -26,14 +31,15 @@ img { display: block; max-width: 100%; }
 }
 
 /* ===== Capa ===== */
-.cover-wrap { margin: 0; }
+.cover-wrap { margin: 0 0 12px; }
 #coverReceita {
   width: 100%;
   height: 240px;
   object-fit: cover;
   border-radius: 22px;
-  border: 5px solid #492f70; /* roxo do app */
+  border: 5px solid var(--rox);
   box-shadow: 0 6px 18px rgba(73,47,112,.25);
+  background: #fff;
 }
 
 /* ===== Metas (chips) ===== */
@@ -42,29 +48,27 @@ img { display: block; max-width: 100%; }
   grid-template-columns: repeat(3, max-content);
   justify-content: center;
   gap: 10px;
-  margin: 12px 0 4px;
+  margin: 12px 0 6px;
 }
 .chip {
   background: #fff;
-  border: 2px solid #492f70;
+  border: 2px solid var(--rox);
   border-radius: 999px;
   padding: 6px 12px;
   font-weight: 700;
   font-size: .95rem;
-  color: #492f70;
+  color: var(--rox);
 }
 
 /* ===== Blocos ===== */
 .bloco {
   position: relative;
   background: #fff;
-  border: 2px solid #492f70;
+  border: 2px solid var(--rox);
   border-radius: 16px;
-  padding: 14px 14px 56px; /* espaço para o 'Ler mais' */
+  padding: 14px 14px 56px;
   margin-top: 14px;
 }
-
-/* Título da seção */
 .sec-title {
   display: flex;
   align-items: center;
@@ -75,7 +79,7 @@ img { display: block; max-width: 100%; }
 }
 .sec-title .ico { width: 18px; height: 18px; object-fit: contain; }
 
-/* ===== Ingredientes (sem status) ===== */
+/* ===== Ingredientes ===== */
 .ingredientes {
   list-style: none;
   padding: 0;
@@ -102,7 +106,7 @@ img { display: block; max-width: 100%; }
   color: #1f9d3a;
 }
 
-/* ===== Passos + colapso com fade ===== */
+/* ===== Passos + colapso ===== */
 .passos {
   margin: 0;
   padding-left: 22px;
@@ -110,121 +114,74 @@ img { display: block; max-width: 100%; }
   overflow: hidden;
   position: relative;
 }
-.passos li {
-  margin: 8px 0;
-  font-weight: 600;
-  color: #3a2a5a;
-}
-
-/* efeito de máscara quando colapsado */
+.passos li { margin: 8px 0; font-weight: 600; color: #3a2a5a; }
 .passos[data-collapsed="true"]::after {
   content: "";
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 56px;
-  pointer-events: none;
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 56px; pointer-events: none;
   background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #fff 70%);
-  border-bottom-left-radius: 14px;
-  border-bottom-right-radius: 14px;
+  border-bottom-left-radius: 14px; border-bottom-right-radius: 14px;
 }
 .passos[data-collapsed="false"] { max-height: none; }
 
-/* Botão Ler mais no canto */
+/* ===== Ler mais ===== */
 .btn-lermais {
   position: absolute;
-  right: 12px;
-  bottom: 10px;
-  border: 2px solid #492f70;
-  background: #fff;
-  color: #492f70;
-  font-weight: 700;
-  border-radius: 999px;
-  padding: 7px 14px;
-  cursor: pointer;
+  right: 12px; bottom: 10px;
+  border: 2px solid var(--rox);
+  background: #fff; color: var(--rox);
+  font-weight: 700; border-radius: 999px;
+  padding: 7px 14px; cursor: pointer;
 }
 .btn-lermais:focus-visible { outline: 3px solid #225c18; outline-offset: 2px; }
 
-/* ===== Coração (embaixo, maior) ===== */
-.acoes {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 16px;
-}
+/* ===== Coração ===== */
+.acoes { display: flex; justify-content: center; margin-top: 16px; }
 .btn-coracao {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 3px solid #492f70;
-  background: #ffffff;
-  color: #492f70;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 3px solid var(--rox); background: #fff; color: var(--rox);
+  cursor: pointer; display: grid; place-items: center;
   transition: background .15s ease, color .15s ease, transform .05s ease;
 }
 .btn-coracao:hover { transform: translateY(-1px); }
 .btn-coracao:active { transform: translateY(0); }
 .btn-coracao:focus-visible { outline: 3px solid #225c18; outline-offset: 2px; }
-.btn-coracao[aria-pressed="true"] {
-  background: #492f70;
-  color: #fff;
-}
+.btn-coracao[aria-pressed="true"] { background: var(--rox); color: #fff; }
 .coracao { font-size: 22px; line-height: 1; }
 
-/* A11y helper */
+/* ===== A11y ===== */
 .sr-only {
   position: absolute !important;
   width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0,0,0,0);
-  border: 0;
+  padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
 }
 
-/* ===== Rodapé curvo padrão ===== */
+/* ===== Rodapé curvo ===== */
 .curva {
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
-  height: 70px;
-  background: #7b7190;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
-  z-index: 10;
-  padding-bottom: env(safe-area-inset-bottom);
+  position: fixed; left: 0; right: 0; bottom: 0;
+  height: 70px; background: #7b7190;
+  display: flex; align-items: center; justify-content: center;
+  gap: 40px; z-index: 10; padding-bottom: env(safe-area-inset-bottom);
 }
-
 .btn-footer {
-  width: 55px;
-  height: 55px;
-  background: transparent;
-  border-radius: 999px;
-  border: none;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  overflow: hidden;
-  transform: translateY(-10px);
+  width: 55px; height: 55px; background: transparent; border-radius: 999px; border: none;
+  display: grid; place-items: center; cursor: pointer; overflow: hidden; transform: translateY(-10px);
 }
-.btn-footer img {
-  width: 250%;
-  height: 250%;
-  object-fit: contain;
-}
+.btn-footer img { width: 250%; height: 250%; object-fit: contain; }
+.btn-central { width: 150px; height: 150px; transform: translateY(-20px); border-radius: 50%; }
 
-.btn-central {
-  width: 150px;
-  height: 150px;
-  transform: translateY(-20px);
-  border-radius: 50%;
-}
-
-/* ===== Responsivo ===== */
-@media (min-width: 768px) {
-  #coverReceita { height: 280px; }
-}
+/* ===== Desktop: 2 colunas ===== */
 @media (min-width: 1024px) {
-  #conteudo { padding: 24px 24px 130px; }
-  #coverReceita { height: 320px; }
+  #conteudo { max-width: 1000px; padding: 24px 24px 130px; }
+  .grid-web {
+    display: grid;
+    grid-template-columns: 58% 42%; /* imagem maior à esquerda */
+    gap: 24px;
+    align-items: start;
+  }
+  /* imagem maior, sem ultrapassar o container */
+  #coverReceita { height: 100%; min-height: 480px; max-height: 780px; }
+  /* título e meta alinhados à esquerda no desktop */
+  #tituloReceita { text-align: left; margin-top: 0; }
+  .meta { justify-content: start; }
 }
