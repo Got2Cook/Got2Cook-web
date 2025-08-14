@@ -1,4 +1,4 @@
-/* Base */
+/* ===== Base ===== */
 * { box-sizing: border-box; }
 html, body {
   margin: 0;
@@ -13,59 +13,69 @@ img { display: block; max-width: 100%; }
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  padding: 16px 16px 110px; /* espaço p/ rodapé curvo */
+  padding: 16px 16px 120px; /* respiro do rodapé curvo */
 }
 
-/* Título */
+/* ===== Título ===== */
 #tituloReceita {
   text-align: center;
   margin: 8px 0 14px;
   color: #225c18;
   font-size: 24px;
-  line-height: 1.2;
+  letter-spacing: .5px;
 }
 
-/* Capa */
+/* ===== Capa ===== */
 .cover-wrap { margin: 0; }
 #coverReceita {
   width: 100%;
-  height: 230px;
+  height: 240px;
   object-fit: cover;
-  border-radius: 24px;
-  border: 6px solid #492f70;
+  border-radius: 22px;
+  border: 5px solid #492f70; /* roxo do app */
+  box-shadow: 0 6px 18px rgba(73,47,112,.25);
 }
 
-/* Metas */
+/* ===== Metas (chips) ===== */
 .meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
   justify-content: center;
-  align-items: center;
-  margin: 12px 0 8px;
-  font-weight: bold;
+  gap: 10px;
+  margin: 12px 0 4px;
+}
+.chip {
+  background: #fff;
+  border: 2px solid #492f70;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 700;
+  font-size: .95rem;
+  color: #492f70;
 }
 
-/* Blocos */
+/* ===== Blocos ===== */
 .bloco {
   position: relative;
-  background: #e0f6c9;
-  border-radius: 20px;
-  padding: 16px 16px 52px; /* espaço pro 'Ler mais' */
+  background: #fff;
+  border: 2px solid #492f70;
+  border-radius: 16px;
+  padding: 14px 14px 56px; /* espaço para o 'Ler mais' */
   margin-top: 14px;
 }
 
+/* Título da seção */
 .sec-title {
   display: flex;
   align-items: center;
   gap: 8px;
   color: #225c18;
   font-size: 18px;
-  margin: 0 0 10px;
+  margin: 0 0 8px;
 }
 .sec-title .ico { width: 18px; height: 18px; object-fit: contain; }
 
-/* Ingredientes (simples) */
+/* ===== Ingredientes (sem status) ===== */
 .ingredientes {
   list-style: none;
   padding: 0;
@@ -78,61 +88,89 @@ img { display: block; max-width: 100%; }
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #c0ffa5;
-  border-radius: 14px;
+  background: #eefddd;
+  border: 1.5px solid #9ccf7e;
+  border-radius: 12px;
   padding: 8px 10px;
-  font-weight: bold;
+  font-weight: 600;
+  color: #3a2a5a;
 }
 .ingredientes li::before {
   content: "•";
   font-size: 18px;
   line-height: 1;
+  color: #1f9d3a;
 }
 
-/* Passos + ler mais */
+/* ===== Passos + colapso com fade ===== */
 .passos {
   margin: 0;
   padding-left: 22px;
-  max-height: 140px;
+  max-height: 150px;
   overflow: hidden;
+  position: relative;
 }
-.passos[data-collapsed="false"] { max-height: none; overflow: visible; }
-.passos li { margin: 8px 0; font-weight: 600; }
+.passos li {
+  margin: 8px 0;
+  font-weight: 600;
+  color: #3a2a5a;
+}
 
+/* efeito de máscara quando colapsado */
+.passos[data-collapsed="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 56px;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #fff 70%);
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
+.passos[data-collapsed="false"] { max-height: none; }
+
+/* Botão Ler mais no canto */
 .btn-lermais {
   position: absolute;
   right: 12px;
   bottom: 10px;
-  border: none;
-  background: #8ed660;
-  color: #000;
-  font-weight: bold;
-  border-radius: 16px;
-  padding: 8px 12px;
+  border: 2px solid #492f70;
+  background: #fff;
+  color: #492f70;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 7px 14px;
   cursor: pointer;
 }
 .btn-lermais:focus-visible { outline: 3px solid #225c18; outline-offset: 2px; }
 
-/* Ações (coração) */
+/* ===== Coração (embaixo, maior) ===== */
 .acoes {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 14px;
+  margin-top: 16px;
 }
 .btn-coracao {
-  width: 44px;
-  height: 44px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  border: 2px solid #492f70;
-  background: transparent;
+  border: 3px solid #492f70;
+  background: #ffffff;
+  color: #492f70;
   cursor: pointer;
   display: grid;
   place-items: center;
+  transition: background .15s ease, color .15s ease, transform .05s ease;
 }
+.btn-coracao:hover { transform: translateY(-1px); }
+.btn-coracao:active { transform: translateY(0); }
 .btn-coracao:focus-visible { outline: 3px solid #225c18; outline-offset: 2px; }
-.btn-coracao[aria-pressed="true"] { background: #492f70; color: #fff; }
-.coracao { font-size: 20px; line-height: 1; }
+.btn-coracao[aria-pressed="true"] {
+  background: #492f70;
+  color: #fff;
+}
+.coracao { font-size: 22px; line-height: 1; }
 
 /* A11y helper */
 .sr-only {
@@ -143,7 +181,7 @@ img { display: block; max-width: 100%; }
   border: 0;
 }
 
-/* Rodapé curvo padrão */
+/* ===== Rodapé curvo padrão ===== */
 .curva {
   position: fixed;
   left: 0; right: 0; bottom: 0;
@@ -152,15 +190,16 @@ img { display: block; max-width: 100%; }
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 40px;          /* espaçamento entre botões */
+  gap: 40px;
   z-index: 10;
   padding-bottom: env(safe-area-inset-bottom);
 }
 
 .btn-footer {
-  width: 55px; height: 55px;
-  background: #fff0; /* transparente como no seu */
-  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  background: transparent;
+  border-radius: 999px;
   border: none;
   display: grid;
   place-items: center;
@@ -169,7 +208,8 @@ img { display: block; max-width: 100%; }
   transform: translateY(-10px);
 }
 .btn-footer img {
-  width: 250%; height: 250%;
+  width: 250%;
+  height: 250%;
   object-fit: contain;
 }
 
@@ -180,9 +220,11 @@ img { display: block; max-width: 100%; }
   border-radius: 50%;
 }
 
-/* Desktop */
-@media (min-width: 1024px) {
-  #conteudo { padding: 24px 24px 120px; }
-  #coverReceita { height: 300px; }
+/* ===== Responsivo ===== */
+@media (min-width: 768px) {
+  #coverReceita { height: 280px; }
 }
-/*oi*/
+@media (min-width: 1024px) {
+  #conteudo { padding: 24px 24px 130px; }
+  #coverReceita { height: 320px; }
+}
