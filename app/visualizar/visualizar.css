@@ -185,3 +185,16 @@ img { display: block; max-width: 100%; }
   #tituloReceita { text-align: left; margin-top: 0; }
   .meta { justify-content: start; }
 }
+
+/* ===== Desktop: mais espaço entre imagem e texto ===== */
+@media (min-width: 1024px) {
+  .grid-web {
+    gap: 40px;              /* antes 24px: deixa mais afastado */
+  }
+  .cover-wrap {
+    margin-bottom: 0;       /* evita “grudar” no texto ao lado */
+  }
+  .lado-texto {
+    padding-left: 8px;      /* um respiro extra do lado do texto */
+  }
+}
