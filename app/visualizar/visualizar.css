@@ -198,3 +198,29 @@ img { display: block; max-width: 100%; }
     padding-left: 8px;      /* um respiro extra do lado do texto */
   }
 }
+
+/* ===== Desktop: gutter único igual às bordas ===== */
+@media (min-width: 1024px) {
+  :root { --gutter: 24px; } /* ajuste aqui se quiser mais/menos */
+
+  /* o padding lateral do container = gutter */
+  #conteudo {
+    max-width: 1000px;
+    padding: 24px var(--gutter) 130px;
+  }
+
+  /* a distância entre imagem e texto = gutter */
+  .grid-web {
+    display: grid;
+    grid-template-columns: 58% 42%;
+    column-gap: var(--gutter);
+    align-items: start;
+  }
+
+  /* sem margens/paddings extras que quebrem a simetria */
+  .cover-wrap { margin: 0; }
+  .lado-texto { padding: 0; }
+
+  /* mantém a imagem grande sem sair do container */
+  #coverReceita { height: 100%; min-height: 480px; max-height: 780px; }
+}
