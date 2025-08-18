@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Visualizar Receita - Got2Cook</title>
-  <link rel="stylesheet" href="visualizar.css?v=22" />
+  <link rel="stylesheet" href="visualizar.css?v=23" />
 </head>
 <body>
   <main id="conteudo">
@@ -14,7 +14,7 @@
         <img id="coverReceita" src="../../assets/receita_exemplo.png" alt="Imagem da receita" />
       </figure>
 
-      <!-- Coluna do texto (mesma altura da imagem no desktop) -->
+      <!-- Coluna do texto -->
       <div class="lado-texto">
         <h1 id="tituloReceita" tabindex="-1">RECEITA GERADA</h1>
 
@@ -28,18 +28,19 @@
         <section class="bloco" aria-labelledby="tituloReceitaBloco">
           <h3 id="tituloReceitaBloco" class="sec-title">Receita</h3>
 
-          <!-- Container rolável (a página não rola; só este bloco quando "Ler mais") -->
+          <!-- Container com rolagem interna (ativada via "Ler mais") -->
           <div id="textoReceita" class="texto-receita" data-scroll="off">
-            <!-- Ingredientes (emoji no início) -->
+            <!-- Ingredientes: emoji ANTES + título; lista abaixo -->
             <h4 class="sub-title">
               <span class="emoji start" role="img" aria-label="ingredientes">🥣</span>
-              Ingredientes
+              Ingredientes:
             </h4>
             <ol id="listaIngredientes" class="lista"></ol>
 
-            <!-- Modo de Preparo (emoji do outro lado da frase) -->
+            <!-- Modo de Preparo: emoji ANTES + título; lista abaixo -->
             <h4 class="sub-title">
-              Modo de Preparo <span class="emoji" role="img" aria-label="frigideira">🍳</span>
+              <span class="emoji start" role="img" aria-label="frigideira">🍳</span>
+              Modo de preparo:
             </h4>
             <ol id="listaPassos" class="lista"></ol>
           </div>
@@ -84,6 +85,6 @@
     </button>
   </nav>
 
-  <script src="visualizar.js?v=22" defer></script>
+  <script src="visualizar.js?v=23" defer></script>
 </body>
 </html>
