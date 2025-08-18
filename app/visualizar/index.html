@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Visualizar Receita - Got2Cook</title>
-  <link rel="stylesheet" href="visualizar.css?v=17" />
+  <link rel="stylesheet" href="visualizar.css?v=18" />
 </head>
 <body>
   <main id="conteudo">
@@ -14,7 +14,7 @@
         <img id="coverReceita" src="../../assets/receita_exemplo.png" alt="Imagem da receita" />
       </figure>
 
-      <!-- Coluna do texto -->
+      <!-- Coluna do texto (mesma altura da imagem no desktop) -->
       <div class="lado-texto">
         <h2 id="tituloReceita" tabindex="-1">RECEITA GERADA</h2>
 
@@ -28,16 +28,15 @@
         <section class="bloco" aria-labelledby="tituloReceitaBloco">
           <h3 id="tituloReceitaBloco" class="sec-title">Receita</h3>
 
-          <!-- Container rolável (ativado pelo "Ler mais") -->
+          <!-- Container rolável (a página não rola; só este bloco) -->
           <div id="textoReceita" class="texto-receita" data-scroll="off">
-            <!-- Ingredientes em LISTA (mesmo formato dos passos) -->
+            <!-- Ingredientes em LISTA (mesmo estilo dos passos) -->
             <h4 class="sub-title">
               <img class="ico" src="../../assets/lapis.png" alt="" aria-hidden="true" />
               Ingredientes
             </h4>
             <ol id="listaIngredientes" class="lista"></ol>
 
-            <!-- Passos -->
             <h4 class="sub-title">Modo de Preparo</h4>
             <ol id="listaPassos" class="lista"></ol>
           </div>
@@ -80,6 +79,6 @@
     </button>
   </nav>
 
-  <script src="visualizar.js?v=17" defer></script>
+  <script src="visualizar.js?v=18" defer></script>
 </body>
 </html>
