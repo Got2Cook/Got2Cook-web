@@ -72,13 +72,22 @@
     </div>
   </main>
 
- <nav class="curva">
-  <button class="btn-footer" id="btnVoltar"><img src="../../assets/humor.png" alt="Humor"></button>
-  <button class="btn-footer" id="btnLogo"><img src="../../assets/logocentral.png" alt="Gerar Receita"></button>
-  <button class="btn-footer" id="btnGeladeira"><img src="../../assets/geladeira.png" alt="Minha Geladeira"></button>
+ <nav class="curva" aria-label="Navegação principal">
+  <button class="btn-footer" id="btnVoltar" aria-label="Humor">
+    <img src="../../assets/humor.png" alt="Humor" />
+  </button>
+
+  <!-- força 150x150 e elevação, não tem como ficar pequeno -->
+  <button class="btn-footer" id="btnLogo" aria-label="Gerar Receita"
+          style="width:150px!important;height:150px!important;border-radius:50%!important;transform:translateY(-20px)!important;flex:0 0 150px!important;">
+    <img src="../../assets/logocentral.png" alt="Gerar Receita"
+         style="width:150%!important;height:150%!important;object-fit:contain!important;" />
+  </button>
+
+  <button class="btn-footer" id="btnGeladeira" aria-label="Minha Geladeira">
+    <img src="../../assets/geladeira.png" alt="Minha Geladeira" />
+  </button>
 </nav>
-
-
 
   <script src="visualizar.js?v=24" defer></script>
 </body>
