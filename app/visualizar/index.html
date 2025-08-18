@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Visualizar Receita - Got2Cook</title>
-  <link rel="stylesheet" href="visualizar.css?v=16" />
+  <link rel="stylesheet" href="visualizar.css?v=17" />
 </head>
 <body>
   <main id="conteudo">
@@ -21,26 +21,32 @@
         <div class="meta" role="group" aria-label="Informações da receita">
           <span id="metaTempo" class="chip">⏱️ —</span>
           <span id="metaDificuldade" class="chip">Dificuldade —</span>
-          <span id="metaPorcoes" class="chip">Porções —</span>
+          <span id="metaPorcoes" class="chip">Humor —</span>
         </div>
 
-        <!-- ÚNICO BLOCO: Ingredientes + Modo de Preparo -->
+        <!-- BLOCO ÚNICO: Ingredientes + Modo de Preparo -->
         <section class="bloco" aria-labelledby="tituloReceitaBloco">
           <h3 id="tituloReceitaBloco" class="sec-title">Receita</h3>
 
-          <!-- Subtítulo Ingredientes (agora dentro do mesmo bloco) -->
-          <h4 class="sub-title">
-            <img class="ico" src="../../assets/lapis.png" alt="" aria-hidden="true" />
-            Ingredientes
-          </h4>
-          <ul id="listaIngredientes" class="ingredientes" role="list"></ul>
+          <!-- Container rolável (ativado pelo "Ler mais") -->
+          <div id="textoReceita" class="texto-receita" data-scroll="off">
+            <!-- Ingredientes em LISTA (mesmo formato dos passos) -->
+            <h4 class="sub-title">
+              <img class="ico" src="../../assets/lapis.png" alt="" aria-hidden="true" />
+              Ingredientes
+            </h4>
+            <ol id="listaIngredientes" class="lista"></ol>
 
-          <!-- Subtítulo Modo de Preparo -->
-          <h4 class="sub-title">Modo de Preparo</h4>
-          <ol id="listaPassos" class="passos" data-collapsed="true"></ol>
+            <!-- Passos -->
+            <h4 class="sub-title">Modo de Preparo</h4>
+            <ol id="listaPassos" class="lista"></ol>
+          </div>
 
-          <button id="btnLerMais" class="btn-lermais" type="button"
-                  aria-controls="listaPassos" aria-expanded="false">
+          <button id="btnLerMais"
+                  class="btn-lermais"
+                  type="button"
+                  aria-controls="textoReceita"
+                  aria-expanded="false">
             Ler mais
           </button>
         </section>
@@ -74,6 +80,6 @@
     </button>
   </nav>
 
-  <script src="visualizar.js?v=16" defer></script>
+  <script src="visualizar.js?v=17" defer></script>
 </body>
 </html>
