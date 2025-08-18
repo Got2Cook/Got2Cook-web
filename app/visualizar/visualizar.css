@@ -47,7 +47,7 @@ img { display: block; max-width: 100%; }
   object-fit: cover;
   border-radius: 22px;
   border: 5px solid var(--rox);
-  box-shadow: 0 6px 18px rgba(73,47,112,.25);
+  box-shadow: 0 10px 26px rgba(0,0,0,.12); /* sombra suavizada */
   background: #fff;
 }
 
@@ -59,27 +59,29 @@ img { display: block; max-width: 100%; }
   gap: 10px;
   margin: 12px 0 8px;
 }
-.chip {
-  background: #fff;
-  border: 2px solid var(--rox);
+.chip{
+  background: var(--btn-bg);
+  border: 2px solid var(--btn-bd);
+  color: var(--btn-fg);
   border-radius: 999px;
   padding: 6px 12px;
   font-weight: 700;
   font-size: .95rem;
-  color: var(--rox);
+  box-shadow: 0 2px 6px rgba(47, 90, 29, .12);
 }
 
 /* ===== Bloco único (Ingredientes + Passos) ===== */
 .bloco {
   position: relative;
-  background: var(--container);  /* << NOVA COR DO CONTAINER */
-  border: 2px solid var(--rox);
+  background: var(--container);
+  border: 2px solid var(--btn-bd);   /* contorno igual ao Ler mais */
   border-radius: 16px;
   padding: 14px 14px 56px;
   margin-top: 14px;
   display: flex;
   flex-direction: column;
   min-height: 0;
+  box-shadow: 0 8px 22px rgba(0,0,0,.10);
 }
 .sec-title {
   display: flex;
@@ -164,7 +166,7 @@ img { display: block; max-width: 100%; }
 .btn-gerar:hover { filter: brightness(0.98); }
 .btn-gerar:focus-visible { outline: 3px solid #225c18; outline-offset: 2px; }
 
-/* "Ler mais" — também com a MESMA cor do container */
+/* "Ler mais" — mesma cor do container */
 .btn-lermais {
   position: absolute;
   right: 12px; bottom: 10px;
@@ -186,23 +188,58 @@ img { display: block; max-width: 100%; }
   padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
 }
 
-/* ===== Rodapé curvo padrão ===== */
-.curva {
-  position: fixed; left: 0; right: 0; bottom: 0;
-  height: 70px; background: #7b7190;
-  display: flex; align-items: center; justify-content: center;
-  gap: 40px; z-index: 10; padding-bottom: env(safe-area-inset-bottom);
+/* ===== Rodapé — EXATO como na tela GERAR ===== */
+.curva{
+  width: 100%;
+  height: 70px;
+  background-color: #7b7190;
+  border-top-left-radius: 100% 50%;
+  border-top-right-radius: 100% 50%;
+  position: fixed;
+  bottom: 0; left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  z-index: 10;
 }
-.btn-footer {
-  width: 55px; height: 55px;
-  background: var(--container);   /* << mesma cor do container */
-  border-radius: 999px; border: none;
-  display: grid; place-items: center;
-  cursor: pointer; overflow: hidden;
+
+.btn-footer{
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
   transform: translateY(-10px);
 }
-.btn-footer img { width: 250%; height: 250%; object-fit: contain; }
-.btn-central { width: 150px; height: 150px; transform: translateY(-20px); border-radius: 50%; }
+.btn-footer img{
+  width: 250%;
+  height: 250%;
+  object-fit: contain;
+}
+
+/* Central 150x150 — cobrindo os 3 jeitos possíveis */
+#btnLogo,
+.btn-footer.logo,
+.btn-footer.btn-central{
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  transform: translateY(-20px);
+}
+#btnLogo img,
+.btn-footer.logo img,
+.btn-footer.btn-central img{
+  width: 150%;
+  height: 150%;
+  object-fit: contain;
+}
 
 /* ===== Desktop (≥1024px): colunas com ALTURA IGUAL e página sem scroll ===== */
 @media (min-width: 1024px) {
@@ -235,231 +272,4 @@ img { display: block; max-width: 100%; }
   .bloco { flex: 1; min-height: 0; display: flex; flex-direction: column; }
   .texto-receita { flex: 1; min-height: 0; max-height: none; overflow: hidden; }
   .texto-receita[data-scroll="on"] { overflow: auto; }
-}
-/* ===== Ajustes solicitados (chips, contornos e sombras) ===== */
-:root{
-  --container: #c9eb9e;     /* cor do container */
-  --btn-bg:    #c9eb9e;     /* mesma cor nos chips e no Ler mais */
-  --btn-bd:    #7fb14e;     /* contorno do Ler mais (e do container) */
-  --btn-fg:    #2c5a1d;     /* texto nos chips/Ler mais */
-}
-
-/* Chips do topo (tempo/dificuldade/humor) com a cor do container */
-.chip{
-  background: var(--btn-bg);
-  border: 2px solid var(--btn-bd);
-  color: var(--btn-fg);
-  box-shadow: 0 2px 6px rgba(47, 90, 29, .12);
-}
-
-/* Container da receita: contorno igual ao do botão Ler mais + sombra leve */
-.bloco{
-  background: var(--container);
-  border-color: var(--btn-bd);
-  box-shadow: 0 8px 22px rgba(0,0,0,.10);
-}
-
-/* Botão Ler mais – manter harmonia com o container */
-.btn-lermais{
-  background: var(--btn-bg);
-  border-color: var(--btn-bd);
-  color: var(--btn-fg);
-}
-
-/* Imagem com sombra um pouco mais suave */
-#coverReceita{
-  box-shadow: 0 10px 26px rgba(0,0,0,.12);
-}
-
-/* Rodapé curvo — medidas EXATAS */
-.curva {
-  width: 100%;
-  height: 70px;
-  background-color: #7b7190;
-  border-top-left-radius: 100% 50%;
-  border-top-right-radius: 100% 50%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px; /* (fix) faltava ; no original */
-  z-index: 10;
-}
-
-.btn-footer {
-  background-color: transparent;
-  border: none;
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  cursor: pointer;
-  transform: translateY(-10px);
-}
-
-.btn-footer img {
-  width: 250%;
-  height: 250%;
-  object-fit: contain;
-}
-
-.btn-footer.logo {
-  width: 150px;
-  height: 150px;
-  transform: translateY(-20px);
-}
-
-.btn-footer.logo img {
-  width: 150%;
-  height: 150%;
-  object-fit: contain;
-}
-
-/* ===== Rodapé igual ao da tela GERAR (força tamanhos) ===== */
-.curva{
-  height: 70px;
-  background: #7b7190;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
-  z-index: 10;
-}
-
-.curva .btn-footer{
-  width: 55px !important;
-  height: 55px !important;
-  border: none;
-  background: transparent;
-  border-radius: 50%;
-  padding: 0;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  transform: translateY(-10px);
-}
-
-.curva .btn-footer img{
-  width: 250%;
-  height: 250%;
-  object-fit: contain;
-}
-
-/* central grande e mais alto */
-.curva .btn-central{
-  width: 150px !important;
-  height: 150px !important;
-  border-radius: 50%;
-  transform: translateY(-20px);
-}
-/* Rodapé curvo — medidas EXATAS (igual à tela GERAR) */
-.curva{
-  width: 100% !important;
-  height: 70px !important;
-  background-color: #7b7190 !important;
-  border-top-left-radius: 100% 50% !important;
-  border-top-right-radius: 100% 50% !important;
-  position: fixed !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  gap: 40px !important;
-  z-index: 10 !important;
-}
-
-.btn-footer{
-  background-color: transparent !important;
-  border: none !important;
-  border-radius: 50% !important;
-  width: 55px !important;
-  height: 55px !important;
-  padding: 0 !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  overflow: hidden !important;
-  cursor: pointer !important;
-  transform: translateY(-10px) !important;
-}
-
-.btn-footer img{
-  width: 250% !important;
-  height: 250% !important;
-  object-fit: contain !important;
-}
-
-/* Botão central grande e mais alto */
-.btn-footer.logo{
-  width: 150px !important;
-  height: 150px !important;
-  transform: translateY(-20px) !important;
-}
-.btn-footer.logo img{
-  width: 150% !important;
-  height: 150% !important;
-  object-fit: contain !important;
-}
-
-/* (caso a versão antiga use 'btn-central', garanta compatibilidade) */
-.btn-footer.btn-central{
-  width: 150px !important;
-  height: 150px !important;
-  transform: translateY(-20px) !important;
-}
-
-/* === Rodapé EXATO (forçando o botão central pelo ID) === */
-.curva{
-  width: 100% !important;
-  height: 70px !important;
-  background-color: #7b7190 !important;
-  border-top-left-radius: 100% 50% !important;
-  border-top-right-radius: 100% 50% !important;
-  position: fixed !important;
-  bottom: 0 !important; left: 0 !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  gap: 40px !important;
-  z-index: 10 !important;
-}
-
-/* laterais 55x55 */
-.curva .btn-footer{
-  width: 55px !important;
-  height: 55px !important;
-  background: transparent !important;
-  border: none !important;
-  border-radius: 50% !important;
-  padding: 0 !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  overflow: hidden !important;
-  transform: translateY(-10px) !important;
-}
-.curva .btn-footer img{
-  width: 250% !important;
-  height: 250% !important;
-  object-fit: contain !important;
-}
-
-/* CENTRAL 150x150 — força pelo ID (#btnLogo) */
-.curva #btnLogo{
-  width: 150px !important;
-  height: 150px !important;
-  border-radius: 50% !important;
-  transform: translateY(-20px) !important;
-}
-.curva #btnLogo img{
-  width: 150% !important;
-  height: 150% !important;
-  object-fit: contain !important;
 }
