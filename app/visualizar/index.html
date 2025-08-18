@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Visualizar Receita - Got2Cook</title>
-  <link rel="stylesheet" href="visualizar.css?v=18" />
+  <link rel="stylesheet" href="visualizar.css?v=20" />
 </head>
 <body>
   <main id="conteudo">
@@ -16,7 +16,7 @@
 
       <!-- Coluna do texto (mesma altura da imagem no desktop) -->
       <div class="lado-texto">
-        <h2 id="tituloReceita" tabindex="-1">RECEITA GERADA</h2>
+        <h1 id="tituloReceita" tabindex="-1">RECEITA GERADA</h1>
 
         <div class="meta" role="group" aria-label="Informações da receita">
           <span id="metaTempo" class="chip">⏱️ —</span>
@@ -28,16 +28,18 @@
         <section class="bloco" aria-labelledby="tituloReceitaBloco">
           <h3 id="tituloReceitaBloco" class="sec-title">Receita</h3>
 
-          <!-- Container rolável (a página não rola; só este bloco) -->
+          <!-- Container rolável (a página não rola; só este bloco quando "Ler mais") -->
           <div id="textoReceita" class="texto-receita" data-scroll="off">
-            <!-- Ingredientes em LISTA (mesmo estilo dos passos) -->
+            <!-- Ingredientes em LISTA (mesmo estilo dos passos, com quantidades) -->
             <h4 class="sub-title">
               <img class="ico" src="../../assets/lapis.png" alt="" aria-hidden="true" />
               Ingredientes
             </h4>
             <ol id="listaIngredientes" class="lista"></ol>
 
-            <h4 class="sub-title">Modo de Preparo</h4>
+            <h4 class="sub-title">
+              Modo de Preparo <span class="emoji" role="img" aria-label="frigideira">🍳</span>
+            </h4>
             <ol id="listaPassos" class="lista"></ol>
           </div>
 
@@ -56,7 +58,7 @@
             <span class="coracao" aria-hidden="true">♡</span>
           </button>
 
-          <button id="btnGerarNovamente" class="btn-gerar" type="button">
+          <button id="btnGerarNovamente" class="btn-gerar" type="button" aria-label="Gerar novamente">
             Gerar novamente
           </button>
 
@@ -79,6 +81,6 @@
     </button>
   </nav>
 
-  <script src="visualizar.js?v=18" defer></script>
+  <script src="visualizar.js?v=20" defer></script>
 </body>
 </html>
