@@ -72,17 +72,21 @@
     </div>
   </main>
 
- <footer class="curva">
-    <button class="btn-footer voltar" id="btnVoltar">
-      <img src="../../assets/humor.png" alt="Humor" />
-    </button>
-    <button class="btn-footer logo" id="btnLogo">
-      <img src="../../assets/logocentral.png" alt="Logo" />
-    </button>
-    <button class="btn-footer geladeira" id="btnGeladeira">
-      <img src="../../assets/geladeira.png" alt="Geladeira" />
-    </button>
-  </footer>
+ <nav class="curva" aria-label="Navegação principal">
+  <button class="btn-footer" id="btnVoltar" aria-label="Humor">
+    <img src="../../assets/humor.png" alt="Humor" />
+  </button>
+
+  <!-- ADICIONE a classe logo aqui -->
+  <button class="btn-footer logo" id="btnLogo" aria-label="Gerar Receita">
+    <img src="../../assets/logocentral.png" alt="Gerar Receita" />
+  </button>
+
+  <button class="btn-footer" id="btnGeladeira" aria-label="Minha Geladeira">
+    <img src="../../assets/geladeira.png" alt="Minha Geladeira" />
+  </button>
+</nav>
+
 
   <script src="visualizar.js?v=24" defer></script>
 </body>
