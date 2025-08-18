@@ -27,7 +27,7 @@ img { display: block; max-width: 100%; }
   text-align: center;
   margin: 8px 0 14px;
   color: #225c18;
-  font-size: 32px;     /* maior */
+  font-size: 32px;
   letter-spacing: .5px;
 }
 
@@ -64,12 +64,12 @@ img { display: block; max-width: 100%; }
 /* ===== Bloco único (Ingredientes + Passos) ===== */
 .bloco {
   position: relative;
-  background: #fff;
+  background: #c9eb9e;          /* NOVA COR DO CONTAINER */
   border: 2px solid var(--rox);
   border-radius: 16px;
-  padding: 14px 14px 56px;      /* espaço pro botão */
+  padding: 14px 14px 56px;
   margin-top: 14px;
-  display: flex;                /* para o container interno crescer */
+  display: flex;
   flex-direction: column;
   min-height: 0;
 }
@@ -78,48 +78,46 @@ img { display: block; max-width: 100%; }
   align-items: center;
   gap: 8px;
   color: #225c18;
-  font-size: 20px;              /* maior */
+  font-size: 20px;
   margin: 0 0 10px;
 }
 .sub-title {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 12px 0 8px;
+  margin: 12px 0 4px;           /* lista vem logo ABAIXO do título */
   color: #492f70;
   font-size: 16px;
 }
-.sub-title .emoji { margin-left: 6px; }
+.sub-title .emoji { margin-left: 0; margin-right: 8px; }
 .sub-title .emoji.start { margin-left: 0; margin-right: 8px; }
 
-.sub-title .ico,
-.sec-title .ico { width: 18px; height: 18px; object-fit: contain; }
-
 /* ===== Texto da receita (ingredientes + passos) ===== */
-/* Altura fixa; "Ler mais" só liga/desliga o scroll */
 .texto-receita {
-  max-height: 360px;
+  max-height: 360px;            /* altura fixa; rola só dentro */
   overflow: hidden;
-  min-height: 0;                /* importante p/ flex container */
+  min-height: 0;
 }
 .texto-receita[data-scroll="on"] {
-  overflow: auto;               /* página não rola; só este bloco */
+  overflow: auto;
   padding-right: 6px;
 }
 
-/* Listas padronizadas */
+/* Listas padronizadas – bullets como no exemplo */
 .lista {
-  margin: 0;
+  margin: 0 0 8px 0;
   padding-left: 22px;
-  list-style: decimal;
+  list-style: disc;             /* bolinhas em vez de números */
 }
 .lista li {
-  margin: 8px 0;
+  margin: 6px 0;
   font-weight: 650;
-  color: #3a2a5a;
+  color: #225c18;               /* texto verde escuro, como no exemplo */
   font-size: 1.08rem;
   line-height: 1.35;
 }
+/* cor das bolinhas */
+.lista li::marker { color: #1f9d3a; }
 
 /* "Ler mais" */
 .btn-lermais {
@@ -142,7 +140,7 @@ img { display: block; max-width: 100%; }
   flex-wrap: wrap;
 }
 
-/* Coração sem círculo (apenas o ícone), maior */
+/* Coração sem círculo (apenas o ícone), MAIOR */
 .btn-coracao {
   border: none;
   background: transparent;
@@ -151,16 +149,12 @@ img { display: block; max-width: 100%; }
 }
 .btn-coracao:focus-visible { outline: 3px solid #225c18; outline-offset: 2px; }
 .coracao {
-  font-size: 40px;             /* maior */
+  font-size: 44px;             /* maior ainda */
   line-height: 1;
   color: #e53935;              /* vermelho */
 }
-.btn-coracao[aria-pressed="true"] .coracao { /* ♥ preenchido */
-  color: #e53935;
-}
-.btn-coracao[aria-pressed="false"] .coracao { /* ♡ contorno */
-  color: #e53935;
-}
+.btn-coracao[aria-pressed="true"] .coracao { color: #e53935; } /* ♥ */
+.btn-coracao[aria-pressed="false"] .coracao { color: #e53935; } /* ♡ */
 
 /* Botão Gerar novamente */
 .btn-gerar {
@@ -199,10 +193,10 @@ img { display: block; max-width: 100%; }
 @media (min-width: 1024px) {
   :root { --gutter: 32px; } /* bordas = gap */
 
-  /* A página não rola no desktop; só o container .texto-receita */
+  /* página não rola; só o container .texto-receita */
   html, body { height: 100%; overflow: hidden; }
 
-  /* Altura útil da área acima do rodapé: 100vh - 70px */
+  /* altura útil acima do rodapé */
   #conteudo {
     max-width: 1100px;
     height: calc(100vh - 70px);
@@ -211,49 +205,28 @@ img { display: block; max-width: 100%; }
     margin-right: auto;
   }
 
-  /* Grid ocupa toda a altura; colunas com mesma altura */
   .grid-web {
     display: grid;
     grid-template-columns: 40% 60%;   /* imagem menor, texto maior */
     column-gap: var(--gutter);
-    align-items: stretch;              /* MESMA ALTURA nas duas colunas */
+    align-items: stretch;
     height: 100%;
   }
 
-  /* Coluna da imagem preenche a altura */
   .cover-wrap { margin: 0; height: 100%; }
-  #coverReceita {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  #coverReceita { width: 100%; height: 100%; object-fit: cover; }
 
-  /* Coluna do texto com a mesma altura da imagem */
   .lado-texto {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: 0;
+    display: flex; flex-direction: column; height: 100%; padding: 0;
   }
-
-  /* Título e chips alinhados com a imagem */
   #tituloReceita { text-align: left; }
   .meta { justify-content: start; }
 
-  /* Bloco ocupa o restante, e seu conteúdo (texto-receita) rola dentro */
   .bloco {
-    flex: 1;
-    min-height: 0;                     /* habilita overflow no filho */
-    display: flex;
-    flex-direction: column;
+    flex: 1; min-height: 0; display: flex; flex-direction: column;
   }
   .texto-receita {
-    flex: 1;                           /* cresce para preencher */
-    min-height: 0;                     /* necessário p/ overflow funcionar */
-    max-height: none;                  /* controlado pelo flex no desktop */
-    overflow: hidden;                  /* off por padrão */
+    flex: 1; min-height: 0; max-height: none; overflow: hidden;
   }
-  .texto-receita[data-scroll="on"] {
-    overflow: auto;                    /* só este bloco rola */
-  }
+  .texto-receita[data-scroll="on"] { overflow: auto; }
 }
