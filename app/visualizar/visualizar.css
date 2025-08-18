@@ -358,3 +358,59 @@ img { display: block; max-width: 100%; }
   border-radius: 50%;
   transform: translateY(-20px);
 }
+/* Rodapé curvo — medidas EXATAS (igual à tela GERAR) */
+.curva{
+  width: 100% !important;
+  height: 70px !important;
+  background-color: #7b7190 !important;
+  border-top-left-radius: 100% 50% !important;
+  border-top-right-radius: 100% 50% !important;
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 40px !important;
+  z-index: 10 !important;
+}
+
+.btn-footer{
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 50% !important;
+  width: 55px !important;
+  height: 55px !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  overflow: hidden !important;
+  cursor: pointer !important;
+  transform: translateY(-10px) !important;
+}
+
+.btn-footer img{
+  width: 250% !important;
+  height: 250% !important;
+  object-fit: contain !important;
+}
+
+/* Botão central grande e mais alto */
+.btn-footer.logo{
+  width: 150px !important;
+  height: 150px !important;
+  transform: translateY(-20px) !important;
+}
+.btn-footer.logo img{
+  width: 150% !important;
+  height: 150% !important;
+  object-fit: contain !important;
+}
+
+/* (caso a versão antiga use 'btn-central', garanta compatibilidade) */
+.btn-footer.btn-central{
+  width: 150px !important;
+  height: 150px !important;
+  transform: translateY(-20px) !important;
+}
