@@ -10,12 +10,12 @@ html, body {
 img { display: block; max-width: 100%; }
 :root { --rox:#492f70; }
 
-/* Container principal */
+/* Container principal (mobile) */
 #conteudo {
   width: 100%;
-  max-width: 600px;         /* mobile */
+  max-width: 600px;
   margin: 0 auto;
-  padding: 16px 16px 120px; /* respiro do rodapé curvo */
+  padding: 16px 16px 120px;  /* respiro do rodapé curvo */
 }
 
 /* Grid (desktop ativa) */
@@ -27,7 +27,7 @@ img { display: block; max-width: 100%; }
   text-align: center;
   margin: 8px 0 14px;
   color: #225c18;
-  font-size: 32px;          /* maior */
+  font-size: 32px;     /* maior, como pediu */
   letter-spacing: .5px;
 }
 
@@ -61,21 +61,24 @@ img { display: block; max-width: 100%; }
   color: var(--rox);
 }
 
-/* ===== Bloco único ===== */
+/* ===== Bloco único (Ingredientes + Passos) ===== */
 .bloco {
   position: relative;
   background: #fff;
   border: 2px solid var(--rox);
   border-radius: 16px;
-  padding: 14px 14px 56px; /* espaço pro botão */
+  padding: 14px 14px 56px;      /* espaço pro botão */
   margin-top: 14px;
+  display: flex;                /* para o container interno crescer */
+  flex-direction: column;
+  min-height: 0;
 }
 .sec-title {
   display: flex;
   align-items: center;
   gap: 8px;
   color: #225c18;
-  font-size: 20px;          /* maior */
+  font-size: 20px;              /* maior */
   margin: 0 0 10px;
 }
 .sub-title {
@@ -90,17 +93,18 @@ img { display: block; max-width: 100%; }
 .sec-title .ico { width: 18px; height: 18px; object-fit: contain; }
 
 /* ===== Texto da receita (ingredientes + passos) ===== */
-/* Altura fixa por padrão; "Ler mais" só habilita rolagem */
+/* Altura fixa; "Ler mais" só liga/desliga o scroll */
 .texto-receita {
   max-height: 360px;
   overflow: hidden;
+  min-height: 0;                /* importante p/ flex container */
 }
 .texto-receita[data-scroll="on"] {
-  overflow: auto;           /* altura fica a mesma, só passa a rolar */
+  overflow: auto;               /* página não rola; só este bloco */
   padding-right: 6px;
 }
 
-/* Listas (ingredientes e passos) no MESMO formato */
+/* Listas padronizadas */
 .lista {
   margin: 0;
   padding-left: 22px;
@@ -110,7 +114,7 @@ img { display: block; max-width: 100%; }
   margin: 8px 0;
   font-weight: 650;
   color: #3a2a5a;
-  font-size: 1.08rem;       /* texto maior */
+  font-size: 1.08rem;
   line-height: 1.35;
 }
 
@@ -125,7 +129,7 @@ img { display: block; max-width: 100%; }
 }
 .btn-lermais:focus-visible { outline: 3px solid #225c18; outline-offset: 2px; }
 
-/* ===== Ações: coração + gerar novamente ===== */
+/* ===== Ações ===== */
 .acoes {
   display: flex;
   justify-content: center;
@@ -161,11 +165,10 @@ img { display: block; max-width: 100%; }
 .sr-only {
   position: absolute !important;
   width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0,0,0,0); border: 0;
+  padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
 }
 
-/* ===== Rodapé curvo padrão ===== */
+/* ===== Rodapé curvo ===== */
 .curva {
   position: fixed; left: 0; right: 0; bottom: 0;
   height: 70px; background: #7b7190;
@@ -179,38 +182,65 @@ img { display: block; max-width: 100%; }
 .btn-footer img { width: 250%; height: 250%; object-fit: contain; }
 .btn-central { width: 150px; height: 150px; transform: translateY(-20px); border-radius: 50%; }
 
-/* ===== Desktop (≥1024px): 2 colunas centralizadas ===== */
+/* ===== Desktop (≥1024px): colunas com ALTURA IGUAL e página sem scroll ===== */
 @media (min-width: 1024px) {
   :root { --gutter: 32px; } /* bordas = gap */
 
+  /* A página não rola no desktop; só o container .texto-receita */
+  html, body { height: 100%; overflow: hidden; }
+
+  /* Altura útil da área acima do rodapé: 100vh - 70px */
   #conteudo {
     max-width: 1100px;
-    padding: 24px var(--gutter) 130px;
+    height: calc(100vh - 70px);
+    padding: 24px var(--gutter) 24px;
     margin-left: auto;
     margin-right: auto;
   }
 
+  /* Grid ocupa toda a altura; colunas com mesma altura */
   .grid-web {
     display: grid;
-    grid-template-columns: 40% 60%;  /* imagem menor, texto mais largo */
+    grid-template-columns: 40% 60%;   /* imagem menor, texto maior */
     column-gap: var(--gutter);
-    align-items: center;             /* centraliza verticalmente com a imagem */
-    justify-content: center;
+    align-items: stretch;              /* MESMA ALTURA nas duas colunas */
+    height: 100%;
   }
 
-  .cover-wrap { margin: 0; }
-  .lado-texto { padding: 0; }
-
+  /* Coluna da imagem preenche a altura */
+  .cover-wrap { margin: 0; height: 100%; }
   #coverReceita {
     width: 100%;
-    aspect-ratio: 4 / 5;
-    height: auto;
-    max-height: 520px;              /* imagem menor */
-    align-self: center;
+    height: 100%;                      /* imagem define a referência */
+    object-fit: cover;
   }
 
-  /* aumenta o tamanho do container da receita no desktop */
+  /* Coluna do texto com a mesma altura da imagem */
+  .lado-texto {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0;
+  }
+
+  /* Título e chips alinhados com a imagem */
+  #tituloReceita { text-align: left; }
+  .meta { justify-content: start; }
+
+  /* Bloco ocupa o restante, e seu conteúdo (texto-receita) rola dentro */
+  .bloco {
+    flex: 1;
+    min-height: 0;                     /* habilita overflow no filho */
+    display: flex;
+    flex-direction: column;
+  }
   .texto-receita {
-    max-height: 440px;              /* maior; "Ler mais" só ativa rolagem */
+    flex: 1;                           /* cresce para preencher */
+    min-height: 0;                     /* necessário p/ overflow funcionar */
+    max-height: none;                  /* controlado pelo flex no desktop */
+    overflow: hidden;                  /* off por padrão */
+  }
+  .texto-receita[data-scroll="on"] {
+    overflow: auto;                    /* só este bloco rola */
   }
 }
