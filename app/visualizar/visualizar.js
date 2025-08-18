@@ -51,16 +51,31 @@ function getReceita(){
   };
 }
 
-// ===== Helpers =====
+// ===== Helpers (favoritar) =====
 const KEY_SALVAS = "got2cook_minhasReceitas";
 function getSalvas(){ const a=getLS(KEY_SALVAS,[]); return Array.isArray(a)?a:[]; }
 function mesmaReceita(a,b){ if(!a||!b) return false; if(a.id&&b.id) return a.id===b.id; return norm(a.titulo||a.nome)===norm(b.titulo||b.nome); }
 function isSalva(r){ return getSalvas().some(x=>mesmaReceita(x,r)); }
-function syncHeart(r){ const on=isSalva(r); btnSalvar.setAttribute("aria-pressed", on?"true":"false"); btnSalvar.querySelector(".coracao").textContent = on?"♥":"♡"; }
+function syncHeart(r){
+  const on = isSalva(r);
+  btnSalvar.setAttribute("aria-pressed", on ? "true" : "false");
+  btnSalvar.querySelector(".coracao").textContent = on ? "♥" : "♡";
+}
 function toggleSalvar(r){
-  const arr=getSalvas(); const i=arr.findIndex(x=>mesmaReceita(x,r));
-  if(i>=0){ arr.splice(i,1); setLS(KEY_SALVAS,arr); syncHeart(r); live("Removida de Minhas Receitas."); }
-  else { if(!r.id) r.id=`r-${Date.now()}`; arr.push(r); setLS(KEY_SALVAS,arr); syncHeart(r); live("Salva em Minhas Receitas."); }
+  const arr = getSalvas();
+  const i = arr.findIndex(x=>mesmaReceita(x,r));
+  if(i>=0){
+    arr.splice(i,1);
+    setLS(KEY_SALVAS,arr);
+    syncHeart(r);
+    live("Receita removida de Minhas Receitas.");
+  }else{
+    if(!r.id) r.id=`r-${Date.now()}`;
+    arr.push(r);
+    setLS(KEY_SALVAS,arr);
+    syncHeart(r);
+    live("Receita salva em Minhas Receitas.");
+  }
 }
 
 function fmtIngrediente(it){
@@ -95,7 +110,7 @@ function render(){
   else humorTxt = r.humor || "—";
   metaPor.textContent = `Humor ${humorTxt}`;
 
-  // Ingredientes (lista numerada, mesmo estilo dos passos)
+  // Ingredientes (lista numerada)
   olIng.innerHTML = "";
   const listaIng = Array.isArray(r.ingredientes) ? r.ingredientes : [];
   listaIng.forEach(item => {
@@ -131,7 +146,7 @@ function toggleLerMais(){
 }
 
 // ===== A11y =====
-function live(msg){ if(!liveMsg) return; liveMsg.textContent=""; setTimeout(()=>liveMsg.textContent=msg, 30); }
+function live(msg){ const el = document.getElementById("liveMsg"); if(!el) return; el.textContent=""; setTimeout(()=>el.textContent=msg, 30); }
 
 // ===== Eventos =====
 document.addEventListener("DOMContentLoaded", ()=>{
@@ -144,7 +159,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggleSalvar(getReceita()); }
   });
 
+  // Gerar novamente → levar para tela de gerar (ajuste se estiver em outra pasta)
   btnGerar?.addEventListener("click", ()=>{
-    window.location.href = "../gerar/"; // troque para ../home/ se preferir
+    window.location.href = "../gerar/";
   });
 });
