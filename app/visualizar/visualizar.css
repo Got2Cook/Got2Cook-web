@@ -27,7 +27,7 @@ img { display: block; max-width: 100%; }
   text-align: center;
   margin: 8px 0 14px;
   color: #225c18;
-  font-size: 32px;     /* maior, como pediu */
+  font-size: 32px;     /* maior */
   letter-spacing: .5px;
 }
 
@@ -91,6 +91,7 @@ img { display: block; max-width: 100%; }
 }
 .sub-title .ico,
 .sec-title .ico { width: 18px; height: 18px; object-fit: contain; }
+.sub-title .emoji { margin-left: 6px; }
 
 /* ===== Texto da receita (ingredientes + passos) ===== */
 /* Altura fixa; "Ler mais" só liga/desliga o scroll */
@@ -134,22 +135,32 @@ img { display: block; max-width: 100%; }
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   margin-top: 16px;
   flex-wrap: wrap;
 }
-.btn-coracao {
-  width: 56px; height: 56px; border-radius: 50%;
-  border: 3px solid var(--rox); background: #fff; color: var(--rox);
-  cursor: pointer; display: grid; place-items: center;
-  transition: background .15s ease, color .15s ease, transform .05s ease;
-}
-.btn-coracao:hover { transform: translateY(-1px); }
-.btn-coracao:active { transform: translateY(0); }
-.btn-coracao:focus-visible { outline: 3px solid #225c18; outline-offset: 2px; }
-.btn-coracao[aria-pressed="true"] { background: var(--rox); color: #fff; }
-.coracao { font-size: 22px; line-height: 1; }
 
+/* Coração sem círculo (apenas o ícone) */
+.btn-coracao {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 6px;
+}
+.btn-coracao:focus-visible { outline: 3px solid #225c18; outline-offset: 2px; }
+.coracao {
+  font-size: 34px;
+  line-height: 1;
+  color: #e53935;              /* vermelho */
+}
+.btn-coracao[aria-pressed="true"] .coracao { /* ♥ preenchido */
+  color: #e53935;
+}
+.btn-coracao[aria-pressed="false"] .coracao { /* ♡ contorno */
+  color: #e53935;
+}
+
+/* Botão Gerar novamente */
 .btn-gerar {
   border: 2px solid var(--rox);
   background: #fff;
@@ -211,7 +222,7 @@ img { display: block; max-width: 100%; }
   .cover-wrap { margin: 0; height: 100%; }
   #coverReceita {
     width: 100%;
-    height: 100%;                      /* imagem define a referência */
+    height: 100%;
     object-fit: cover;
   }
 
