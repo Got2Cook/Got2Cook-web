@@ -236,3 +236,42 @@ img { display: block; max-width: 100%; }
   .texto-receita { flex: 1; min-height: 0; max-height: none; overflow: hidden; }
   .texto-receita[data-scroll="on"] { overflow: auto; }
 }
+/* ===== Ajustes solicitados (chips, contornos e sombras) ===== */
+:root{
+  --container: #c9eb9e;     /* cor do container */
+  --btn-bg:    #c9eb9e;     /* mesma cor nos chips e no Ler mais */
+  --btn-bd:    #7fb14e;     /* contorno do Ler mais (e do container) */
+  --btn-fg:    #2c5a1d;     /* texto nos chips/Ler mais */
+}
+
+/* Chips do topo (tempo/dificuldade/humor) com a cor do container */
+.chip{
+  background: var(--btn-bg);
+  border: 2px solid var(--btn-bd);
+  color: var(--btn-fg);
+  box-shadow: 0 2px 6px rgba(47, 90, 29, .12);
+}
+
+/* Container da receita: contorno igual ao do botão Ler mais + sombra leve */
+.bloco{
+  background: var(--container);
+  border-color: var(--btn-bd);
+  box-shadow: 0 8px 22px rgba(0,0,0,.10);
+}
+
+/* Botão Ler mais – manter harmonia com o container */
+.btn-lermais{
+  background: var(--btn-bg);
+  border-color: var(--btn-bd);
+  color: var(--btn-fg);
+}
+
+/* Imagem com sombra um pouco mais suave */
+#coverReceita{
+  box-shadow: 0 10px 26px rgba(0,0,0,.12);
+}
+
+/* Rodapé: voltar ao estilo anterior (transparentes) */
+.btn-footer{
+  background: transparent !important;
+}
