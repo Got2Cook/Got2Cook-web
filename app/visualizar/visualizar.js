@@ -1,44 +1,46 @@
 // ===== Utilitários =====
 const $ = (sel) => document.querySelector(sel);
-function getLS(key, fallback){ try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } }
+function getLS(key, fb){ try { return JSON.parse(localStorage.getItem(key)) ?? fb; } catch { return fb; } }
 function setLS(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
 function norm(s){ return (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toLowerCase(); }
 
 // ===== Refs =====
-const hTitulo   = $("#tituloReceita");
-const imgCover  = $("#coverReceita");
+const hTitulo = $("#tituloReceita");
+const imgCover = $("#coverReceita");
 const metaTempo = $("#metaTempo");
-const metaDif   = $("#metaDificuldade");
-const metaPor   = $("#metaPorcoes");
-const ulIng     = $("#listaIngredientes");
-const olPasso   = $("#listaPassos");
-const btnMais   = $("#btnLerMais");
+const metaDif = $("#metaDificuldade");
+const metaPor = $("#metaPorcoes"); // agora mostra Humor
+const textoReceita = $("#textoReceita");
+const olIng = $("#listaIngredientes");  // agora <ol>
+const olPasso = $("#listaPassos");
+const btnMais = $("#btnLerMais");
 const btnSalvar = $("#btnSalvar");
-const btnGerar  = $("#btnGerarNovamente");
-const liveMsg   = $("#liveMsg");
+const btnGerar = $("#btnGerarNovamente");
+const liveMsg = $("#liveMsg");
 
-// Rodapé
-$("#btnVoltar")?.addEventListener("click", ()=>{ window.location.href="../humor/"; });
-$("#btnLogo")?.addEventListener("click",   ()=>{ window.location.href="../gerar/"; });
-$("#btnGeladeira")?.addEventListener("click", ()=>{ window.location.href="../geladeira/"; });
+// Navegação rodapé
+$("#btnVoltar")?.addEventListener("click", () => { window.location.href = "../humor/"; });
+$("#btnLogo")?.addEventListener("click",   () => { window.location.href = "../gerar/"; });
+$("#btnGeladeira")?.addEventListener("click", () => { window.location.href = "../geladeira/"; });
 
 // ===== Dados =====
 function getReceita(){
   const r = getLS("receita_temp", null);
   if (r && typeof r === "object") return r;
-  // Fallback simples
+
+  // Fallback simples (com quantidades)
   return {
     id: "mock-001",
     titulo: "Receita Gerada",
     tempo: "30 min",
     dificuldade: "Fácil",
-    porcoes: "2 porções",
+    humor: "Conforto 😊",
     coverImg: "../../assets/receita_exemplo.png",
     ingredientes: [
-      { nome: "Farinha", quantidade: "2 xícaras" },
-      { nome: "Leite", quantidade: "200 ml" },
+      { nome: "Farinha", quantidade: "2", unidade: "xícaras" },
+      { nome: "Leite", quantidade: "200", unidade: "ml" },
       { nome: "Ovos", quantidade: "2" },
-      "Sal a gosto"
+      { nome: "Sal", quantidade: "1", unidade: "pitada" }
     ],
     passos: [
       "Misture os ingredientes secos.",
@@ -61,17 +63,13 @@ function toggleSalvar(r){
   else { if(!r.id) r.id=`r-${Date.now()}`; arr.push(r); setLS(KEY_SALVAS,arr); syncHeart(r); live("Salva em Minhas Receitas."); }
 }
 
-function fmtIngrediente(item){
-  if (typeof item === "string") return item;
-
-  const nome = item.nome || item.name || item.ingrediente || item.item || "";
-  const qtd  = item.quantidade || item.qtd || item.qtde || item.amount || item.qtdade || "";
-  const unit = item.unidade || item.unit || item.medida || item.measure || "";
-
-  // monta "quantidade + unidade + nome" quando disponível
-  const hasQtd = (qtd && String(qtd).trim().length > 0);
-  const hasUnit = (unit && String(unit).trim().length > 0);
-
+function fmtIngrediente(it){
+  if (typeof it === "string") return it;
+  const nome = it.nome || it.name || it.ingrediente || it.item || "";
+  const qtd  = it.quantidade || it.qtd || it.qtde || it.amount || it.qtdade || "";
+  const unit = it.unidade || it.unit || it.medida || it.measure || "";
+  const hasQtd = (qtd && String(qtd).trim());
+  const hasUnit = (unit && String(unit).trim());
   if (hasQtd && hasUnit) return `${qtd} ${unit} ${nome}`.replace(/\s+/g," ").trim();
   if (hasQtd)            return `${qtd} ${nome}`.replace(/\s+/g," ").trim();
   if (hasUnit)           return `${unit} ${nome}`.replace(/\s+/g," ").trim();
@@ -90,28 +88,25 @@ function render(){
   imgCover.alt = `Imagem da receita ${r.titulo || ""}`;
   metaTempo.textContent = `⏱️ ${r.tempo || "—"}`;
   metaDif.textContent   = `Dificuldade ${r.dificuldade || "—"}`;
-  metaPor.textContent   = `Porções ${r.porcoes || "—"}`;
 
-  // Ingredientes (agora no mesmo bloco da receita, com quantidades)
-  ulIng.innerHTML = "";
-  const listaR = Array.isArray(r.ingredientes) ? r.ingredientes : [];
-  listaR.forEach(it => {
+  // Humor (no lugar de Porções)
+  let humorTxt = "";
+  if (Array.isArray(r.humores)) humorTxt = r.humores.join(", ");
+  else humorTxt = r.humor || "—";
+  metaPor.textContent = `Humor ${humorTxt}`;
+
+  // Ingredientes em lista (mesmo formato dos passos)
+  olIng.innerHTML = "";
+  const listaIng = Array.isArray(r.ingredientes) ? r.ingredientes : [];
+  listaIng.forEach(item => {
     const li = document.createElement("li");
-    const txt = fmtIngrediente(it);
-    // separa quantidade e nome para estilizar (opcional)
-    if (typeof it === "object" && (it.quantidade || it.qtd || it.qtde || it.amount || it.qtdade || it.unidade || it.unit || it.medida || it.measure)) {
-      const nome = it.nome || it.name || it.ingrediente || it.item || "";
-      const qtd  = (it.quantidade || it.qtd || it.qtde || it.amount || it.qtdade || "") + " " + (it.unidade || it.unit || it.medida || it.measure || "");
-      li.innerHTML = `<span class="qtd">${qtd.trim()}</span><span class="nome">${nome}</span>`;
-    } else {
-      li.textContent = txt;
-    }
-    ulIng.appendChild(li);
+    li.textContent = fmtIngrediente(item);
+    olIng.appendChild(li);
   });
 
   // Passos
   olPasso.innerHTML = "";
-  const passos = Array.isArray(r.passos)&&r.passos.length
+  const passos = Array.isArray(r.passos) && r.passos.length
     ? r.passos
     : (r.modoPreparo ? [r.modoPreparo] : ["Siga os passos básicos de preparo."]);
   passos.forEach(p => {
@@ -120,19 +115,19 @@ function render(){
     olPasso.appendChild(li);
   });
 
-  // Estado coração
+  // Coração
   syncHeart(r);
 
   // Foco acessível
-  setTimeout(()=>hTitulo.focus(),0);
+  setTimeout(() => hTitulo.focus(), 0);
 }
 
-// ===== Ler mais =====
+// ===== Ler mais: só ativa/desativa rolagem do container =====
 function toggleLerMais(){
-  const open = olPasso.getAttribute("data-collapsed")==="false";
-  olPasso.setAttribute("data-collapsed", open ? "true" : "false");
-  btnMais.setAttribute("aria-expanded", open ? "false" : "true");
-  btnMais.textContent = open ? "Ler mais" : "Ler menos";
+  const on = textoReceita.getAttribute("data-scroll") === "on";
+  textoReceita.setAttribute("data-scroll", on ? "off" : "on");
+  btnMais.setAttribute("aria-expanded", on ? "false" : "true");
+  btnMais.textContent = on ? "Ler mais" : "Ler menos";
 }
 
 // ===== A11y =====
@@ -149,8 +144,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggleSalvar(getReceita()); }
   });
 
-  // Gerar novamente → leva para a tela de gerar
   btnGerar?.addEventListener("click", ()=>{
-    window.location.href = "../gerar/";  // ajuste para ../home/ se ainda não existir a pasta gerar
+    window.location.href = "../gerar/"; // troque para ../home/ se preferir
   });
 });
