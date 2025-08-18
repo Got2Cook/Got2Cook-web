@@ -5,24 +5,30 @@ function setLS(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
 function norm(s){ return (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toLowerCase(); }
 
 // ===== Refs =====
-const hTitulo = $("#tituloReceita");
-const imgCover = $("#coverReceita");
-const metaTempo = $("#metaTempo");
-const metaDif = $("#metaDificuldade");
-const metaPor = $("#metaPorcoes"); // exibe Humor
+const hTitulo      = $("#tituloReceita");
+const imgCover     = $("#coverReceita");
+const metaTempo    = $("#metaTempo");
+const metaDif      = $("#metaDificuldade");
+const metaPor      = $("#metaPorcoes"); // exibe Humor
 const textoReceita = $("#textoReceita");
-const olIng = $("#listaIngredientes");
-const olPasso = $("#listaPassos");
-const btnMais = $("#btnLerMais");
-const btnSalvar = $("#btnSalvar");
-const btnGerar = $("#btnGerarNovamente");
+const olIng        = $("#listaIngredientes");
+const olPasso      = $("#listaPassos");
+const btnMais      = $("#btnLerMais");
+const btnSalvar    = $("#btnSalvar");
+const btnGerar     = $("#btnGerarNovamente");
+
+// Rodapé
+const navCurva     = document.querySelector("nav.curva");
+const btnVoltar    = document.getElementById("btnVoltar");
+const btnLogo      = document.getElementById("btnLogo");
+const btnGeladeira = document.getElementById("btnGeladeira");
 
 // ===== navegação do rodapé (estrutura nova) =====
 btnVoltar?.addEventListener('click', () => {
   window.location.href = '../humor/index.html';
 });
 btnLogo?.addEventListener('click', () => {
-  window.location.href = '../home/index.html';
+  window.location.href = '../home/index.html'; // conforme você definiu
 });
 btnGeladeira?.addEventListener('click', () => {
   window.location.href = '../geladeira/index.html';
@@ -116,6 +122,61 @@ function toggleLerMais(){
   btnMais.textContent = on ? "Ler mais" : "Ler menos";
 }
 
+/* ===== Fix de rodapé: força medidas exatas da tela GERAR =====
+   Usamos style.setProperty(..., 'important') para vencer QUALQUER CSS. */
+function fixFooter(){
+  const setImp = (el, prop, val) => el?.style.setProperty(prop, val, 'important');
+
+  // nav.curva (curvatura/altura)
+  if (navCurva){
+    setImp(navCurva, 'width', '100%');
+    setImp(navCurva, 'height', '70px');
+    setImp(navCurva, 'background-color', '#7b7190');
+    setImp(navCurva, 'border-top-left-radius', '100% 50%');
+    setImp(navCurva, 'border-top-right-radius', '100% 50%');
+    setImp(navCurva, 'position', 'fixed');
+    setImp(navCurva, 'left', '0');
+    setImp(navCurva, 'bottom', '0');
+    setImp(navCurva, 'display', 'flex');
+    setImp(navCurva, 'justify-content', 'center');
+    setImp(navCurva, 'align-items', 'center');
+    setImp(navCurva, 'gap', '40px');
+    setImp(navCurva, 'z-index', '10');
+  }
+
+  // laterais 55x55
+  [btnVoltar, btnGeladeira].forEach(b=>{
+    if(!b) return;
+    setImp(b, 'width', '55px');
+    setImp(b, 'height', '55px');
+    setImp(b, 'border-radius', '50%');
+    setImp(b, 'padding', '0');
+    setImp(b, 'transform', 'translateY(-10px)');
+    setImp(b, 'flex', '0 0 55px');
+    const bi = b.querySelector('img');
+    if (bi){
+      setImp(bi, 'width', '250%');
+      setImp(bi, 'height', '250%');
+      setImp(bi, 'object-fit', 'contain');
+    }
+  });
+
+  // central 150x150
+  if (btnLogo){
+    setImp(btnLogo, 'width', '150px');
+    setImp(btnLogo, 'height', '150px');
+    setImp(btnLogo, 'border-radius', '50%');
+    setImp(btnLogo, 'transform', 'translateY(-20px)');
+    setImp(btnLogo, 'flex', '0 0 150px');
+    const img = btnLogo.querySelector('img');
+    if (img){
+      setImp(img, 'width', '150%');
+      setImp(img, 'height', '150%');
+      setImp(img, 'object-fit', 'contain');
+    }
+  }
+}
+
 // ===== Eventos =====
 document.addEventListener("DOMContentLoaded", ()=>{
   render();
@@ -131,4 +192,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
   btnGerar?.addEventListener("click", ()=>{
     window.location.href = "../gerar/"; // ajuste se sua tela de gerar estiver em outro caminho
   });
+
+  // Força o rodapé a ficar EXATO
+  fixFooter();
 });
