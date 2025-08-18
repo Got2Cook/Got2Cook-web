@@ -188,9 +188,10 @@ img { display: block; max-width: 100%; }
   padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
 }
 
-/* === RODAPÉ — ÚNICO BLOCO, EXATO COMO NA TELA GERAR === */
+/* === RODAPÉ — EXATO COMO A TELA GERAR (único bloco) === */
 nav.curva{
-  width:100%; height:70px;
+  width:100%;
+  height:70px;
   background:#7b7190;
   border-top-left-radius:100% 50%;
   border-top-right-radius:100% 50%;
@@ -205,19 +206,19 @@ nav.curva .btn-footer{
   display:flex; justify-content:center; align-items:center;
   overflow:hidden; cursor:pointer;
   transform:translateY(-10px);
-  flex:0 0 55px;               /* não encolhe */
+  flex:0 0 55px;              /* não encolhe */
 }
 nav.curva .btn-footer img{
   width:250%; height:250%; object-fit:contain;
 }
 
-/* CENTRAL 150x150 — cobre id e possíveis classes antigas */
+/* central 150x150 (cobre id e classes antigas) */
 nav.curva #btnLogo,
 nav.curva .btn-footer.logo,
 nav.curva .btn-footer.btn-central{
   width:150px; height:150px; border-radius:50%;
   transform:translateY(-20px);
-  flex:0 0 150px;             /* fixa a largura no flex */
+  flex:0 0 150px;            /* largura fixa no flex */
 }
 nav.curva #btnLogo img,
 nav.curva .btn-footer.logo img,
