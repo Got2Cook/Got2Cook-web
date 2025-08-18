@@ -9,10 +9,10 @@ const hTitulo = $("#tituloReceita");
 const imgCover = $("#coverReceita");
 const metaTempo = $("#metaTempo");
 const metaDif = $("#metaDificuldade");
-const metaPor = $("#metaPorcoes"); // agora mostra Humor
+const metaPor = $("#metaPorcoes"); // agora exibe Humor
 const textoReceita = $("#textoReceita");
-const olIng = $("#listaIngredientes");  // agora <ol>
-const olPasso = $("#listaPassos");
+const olIng = $("#listaIngredientes");   // <ol>
+const olPasso = $("#listaPassos");       // <ol>
 const btnMais = $("#btnLerMais");
 const btnSalvar = $("#btnSalvar");
 const btnGerar = $("#btnGerarNovamente");
@@ -28,7 +28,7 @@ function getReceita(){
   const r = getLS("receita_temp", null);
   if (r && typeof r === "object") return r;
 
-  // Fallback simples (com quantidades)
+  // Fallback simples com quantidades e humor
   return {
     id: "mock-001",
     titulo: "Receita Gerada",
@@ -95,7 +95,7 @@ function render(){
   else humorTxt = r.humor || "—";
   metaPor.textContent = `Humor ${humorTxt}`;
 
-  // Ingredientes em lista (mesmo formato dos passos)
+  // Ingredientes (lista numerada, mesmo estilo dos passos)
   olIng.innerHTML = "";
   const listaIng = Array.isArray(r.ingredientes) ? r.ingredientes : [];
   listaIng.forEach(item => {
