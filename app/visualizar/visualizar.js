@@ -9,15 +9,15 @@ const hTitulo = $("#tituloReceita");
 const imgCover = $("#coverReceita");
 const metaTempo = $("#metaTempo");
 const metaDif = $("#metaDificuldade");
-const metaPor = $("#metaPorcoes"); // mostra Humor
+const metaPor = $("#metaPorcoes"); // exibe Humor
 const textoReceita = $("#textoReceita");
-const olIng = $("#listaIngredientes");   // <ol>
-const olPasso = $("#listaPassos");       // <ol>
+const olIng = $("#listaIngredientes");
+const olPasso = $("#listaPassos");
 const btnMais = $("#btnLerMais");
 const btnSalvar = $("#btnSalvar");
 const btnGerar = $("#btnGerarNovamente");
 
-// Rodapé
+// Rodapé (navegação)
 $("#btnVoltar")?.addEventListener("click", () => { window.location.href = "../humor/"; });
 $("#btnLogo")?.addEventListener("click",   () => { window.location.href = "../gerar/"; });
 $("#btnGeladeira")?.addEventListener("click", () => { window.location.href = "../geladeira/"; });
@@ -68,25 +68,20 @@ function toggleSalvar(r){
 function render(){
   const r = getReceita();
 
-  // Título fixo
   hTitulo.textContent = "RECEITA GERADA";
 
-  // Capa e metas
   imgCover.src = r.coverImg || r.imagem || "../../assets/receita_exemplo.png";
   imgCover.alt = `Imagem da receita ${r.titulo || ""}`;
   metaTempo.textContent = `⏱️ ${r.tempo || "—"}`;
   metaDif.textContent   = `Dificuldade ${r.dificuldade || "—"}`;
 
   // Humor (no lugar de Porções)
-  let humorTxt = "";
-  if (Array.isArray(r.humores)) humorTxt = r.humores.join(", ");
-  else humorTxt = r.humor || "—";
+  const humorTxt = Array.isArray(r.humores) ? r.humores.join(", ") : (r.humor || "—");
   metaPor.textContent = `Humor ${humorTxt}`;
 
   // Ingredientes
   olIng.innerHTML = "";
-  const listaIng = Array.isArray(r.ingredientes) ? r.ingredientes : [];
-  listaIng.forEach(item => {
+  (Array.isArray(r.ingredientes) ? r.ingredientes : []).forEach(item => {
     const li = document.createElement("li");
     li.textContent = typeof item === "string" ? item : (item.nome || "");
     olIng.appendChild(li);
@@ -111,15 +106,15 @@ function render(){
 function toggleLerMais(){
   const on = textoReceita.getAttribute("data-scroll") === "on";
   textoReceita.setAttribute("data-scroll", on ? "off" : "on");
-  document.getElementById("btnLerMais").setAttribute("aria-expanded", on ? "false" : "true");
-  document.getElementById("btnLerMais").textContent = on ? "Ler mais" : "Ler menos";
+  btnMais.setAttribute("aria-expanded", on ? "false" : "true");
+  btnMais.textContent = on ? "Ler mais" : "Ler menos";
 }
 
 // ===== Eventos =====
 document.addEventListener("DOMContentLoaded", ()=>{
   render();
 
-  document.getElementById("btnLerMais")?.addEventListener("click", toggleLerMais);
+  btnMais?.addEventListener("click", toggleLerMais);
 
   btnSalvar?.addEventListener("click", ()=>toggleSalvar(getReceita()));
   btnSalvar?.addEventListener("keydown", e=>{
@@ -127,7 +122,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
   });
 
   // Gerar novamente
-  document.getElementById("btnGerarNovamente")?.addEventListener("click", ()=>{
-    window.location.href = "../gerar/"; // ajuste p/ ../home/ se preferir
+  btnGerar?.addEventListener("click", ()=>{
+    window.location.href = "../gerar/"; // ajuste se sua tela de gerar estiver em outro caminho
   });
 });
