@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Visualizar Receita - Got2Cook</title>
-  <link rel="stylesheet" href="visualizar.css?v=11" />
+  <link rel="stylesheet" href="visualizar.css?v=16" />
 </head>
 <body>
   <main id="conteudo">
@@ -24,17 +24,21 @@
           <span id="metaPorcoes" class="chip">Porções —</span>
         </div>
 
-        <section class="bloco" aria-labelledby="tituloIngredientes">
-          <h3 id="tituloIngredientes" class="sec-title">
+        <!-- ÚNICO BLOCO: Ingredientes + Modo de Preparo -->
+        <section class="bloco" aria-labelledby="tituloReceitaBloco">
+          <h3 id="tituloReceitaBloco" class="sec-title">Receita</h3>
+
+          <!-- Subtítulo Ingredientes (agora dentro do mesmo bloco) -->
+          <h4 class="sub-title">
             <img class="ico" src="../../assets/lapis.png" alt="" aria-hidden="true" />
             Ingredientes
-          </h3>
+          </h4>
           <ul id="listaIngredientes" class="ingredientes" role="list"></ul>
-        </section>
 
-        <section class="bloco" aria-labelledby="tituloPreparo">
-          <h3 id="tituloPreparo" class="sec-title">Modo de Preparo</h3>
+          <!-- Subtítulo Modo de Preparo -->
+          <h4 class="sub-title">Modo de Preparo</h4>
           <ol id="listaPassos" class="passos" data-collapsed="true"></ol>
+
           <button id="btnLerMais" class="btn-lermais" type="button"
                   aria-controls="listaPassos" aria-expanded="false">
             Ler mais
@@ -46,6 +50,11 @@
                   aria-pressed="false" aria-label="Salvar receita">
             <span class="coracao" aria-hidden="true">♡</span>
           </button>
+
+          <button id="btnGerarNovamente" class="btn-gerar" type="button">
+            Gerar novamente
+          </button>
+
           <div id="liveMsg" class="sr-only" aria-live="polite"></div>
         </div>
       </div>
@@ -65,6 +74,6 @@
     </button>
   </nav>
 
-  <script src="visualizar.js?v=10" defer></script>
+  <script src="visualizar.js?v=16" defer></script>
 </body>
 </html>
