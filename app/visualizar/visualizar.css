@@ -188,57 +188,41 @@ img { display: block; max-width: 100%; }
   padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
 }
 
-/* ===== Rodapé — EXATO como na tela GERAR ===== */
-.curva{
-  width: 100%;
-  height: 70px;
-  background-color: #7b7190;
-  border-top-left-radius: 100% 50%;
-  border-top-right-radius: 100% 50%;
-  position: fixed;
-  bottom: 0; left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-  z-index: 10;
+/* === RODAPÉ — ÚNICO BLOCO, EXATO COMO NA TELA GERAR === */
+nav.curva{
+  width:100%; height:70px;
+  background:#7b7190;
+  border-top-left-radius:100% 50%;
+  border-top-right-radius:100% 50%;
+  position:fixed; left:0; bottom:0;
+  display:flex; justify-content:center; align-items:center;
+  gap:40px; z-index:10;
 }
 
-.btn-footer{
-  background-color: transparent;
-  border: none;
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  cursor: pointer;
-  transform: translateY(-10px);
+nav.curva .btn-footer{
+  background:transparent; border:none; border-radius:50%;
+  width:55px; height:55px; padding:0;
+  display:flex; justify-content:center; align-items:center;
+  overflow:hidden; cursor:pointer;
+  transform:translateY(-10px);
+  flex:0 0 55px;               /* não encolhe */
 }
-.btn-footer img{
-  width: 250%;
-  height: 250%;
-  object-fit: contain;
+nav.curva .btn-footer img{
+  width:250%; height:250%; object-fit:contain;
 }
 
-/* Central 150x150 — cobrindo os 3 jeitos possíveis */
-#btnLogo,
-.btn-footer.logo,
-.btn-footer.btn-central{
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  transform: translateY(-20px);
+/* CENTRAL 150x150 — cobre id e possíveis classes antigas */
+nav.curva #btnLogo,
+nav.curva .btn-footer.logo,
+nav.curva .btn-footer.btn-central{
+  width:150px; height:150px; border-radius:50%;
+  transform:translateY(-20px);
+  flex:0 0 150px;             /* fixa a largura no flex */
 }
-#btnLogo img,
-.btn-footer.logo img,
-.btn-footer.btn-central img{
-  width: 150%;
-  height: 150%;
-  object-fit: contain;
+nav.curva #btnLogo img,
+nav.curva .btn-footer.logo img,
+nav.curva .btn-footer.btn-central img{
+  width:150%; height:150%; object-fit:contain;
 }
 
 /* ===== Desktop (≥1024px): colunas com ALTURA IGUAL e página sem scroll ===== */
