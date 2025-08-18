@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Visualizar Receita - Got2Cook</title>
-  <link rel="stylesheet" href="visualizar.css?v=23" />
+  <link rel="stylesheet" href="visualizar.css?v=24" />
 </head>
 <body>
   <main id="conteudo">
@@ -30,14 +30,14 @@
 
           <!-- Container com rolagem interna (ativada via "Ler mais") -->
           <div id="textoReceita" class="texto-receita" data-scroll="off">
-            <!-- Ingredientes: emoji ANTES + título; lista abaixo -->
+            <!-- Ingredientes -->
             <h4 class="sub-title">
               <span class="emoji start" role="img" aria-label="ingredientes">🥣</span>
               Ingredientes:
             </h4>
             <ol id="listaIngredientes" class="lista"></ol>
 
-            <!-- Modo de Preparo: emoji ANTES + título; lista abaixo -->
+            <!-- Modo de preparo -->
             <h4 class="sub-title">
               <span class="emoji start" role="img" aria-label="frigideira">🍳</span>
               Modo de preparo:
@@ -55,13 +55,13 @@
         </section>
 
         <div class="acoes">
-          <!-- Favoritar: coração sem círculo -->
+          <!-- Favoritar: coração sem círculo (vermelho) -->
           <button id="btnSalvar" class="btn-coracao" type="button"
                   aria-pressed="false" aria-label="Salvar receita">
             <span class="coracao" aria-hidden="true">♡</span>
           </button>
 
-          <!-- Gerar novamente ao lado -->
+          <!-- Gerar novamente (mesma cor dos demais botões) -->
           <button id="btnGerarNovamente" class="btn-gerar" type="button" aria-label="Gerar novamente">
             Gerar novamente
           </button>
@@ -85,6 +85,6 @@
     </button>
   </nav>
 
-  <script src="visualizar.js?v=23" defer></script>
+  <script src="visualizar.js?v=24" defer></script>
 </body>
 </html>
