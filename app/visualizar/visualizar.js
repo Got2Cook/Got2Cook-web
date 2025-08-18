@@ -17,10 +17,16 @@ const btnMais = $("#btnLerMais");
 const btnSalvar = $("#btnSalvar");
 const btnGerar = $("#btnGerarNovamente");
 
-// Rodapé (navegação)
-$("#btnVoltar")?.addEventListener("click", () => { window.location.href = "../humor/"; });
-$("#btnLogo")?.addEventListener("click",   () => { window.location.href = "../gerar/"; });
-$("#btnGeladeira")?.addEventListener("click", () => { window.location.href = "../geladeira/"; });
+// ===== navegação do rodapé (estrutura nova) =====
+btnVoltar?.addEventListener('click', () => {
+  window.location.href = '../humor/index.html';
+});
+btnLogo?.addEventListener('click', () => {
+  window.location.href = '../home/index.html';
+});
+btnGeladeira?.addEventListener('click', () => {
+  window.location.href = '../geladeira/index.html';
+});
 
 // ===== Dados =====
 function getReceita(){
