@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Visualizar Receita - Got2Cook</title>
   <!-- bump pra limpar cache -->
-  <link rel="stylesheet" href="visualizar.css?v=37" />
+  <link rel="stylesheet" href="visualizar.css?v=42" />
 </head>
 <body>
   <main id="conteudo">
@@ -25,33 +25,24 @@
           <span id="metaPorcoes" class="chip">Humor —</span>
         </div>
 
-        <!-- BLOCO ÚNICO: Ingredientes + Modo de Preparo -->
         <section class="bloco" aria-labelledby="tituloReceitaBloco">
           <h3 id="tituloReceitaBloco" class="sec-title">Receita</h3>
 
           <div id="textoReceita" class="texto-receita" data-scroll="off">
-            <h4 class="sub-title">
-              <span class="emoji start" role="img" aria-label="ingredientes">🥣</span>
-              Ingredientes:
-            </h4>
+            <h4 class="sub-title"><span class="emoji start" aria-hidden="true">🥣</span>Ingredientes:</h4>
             <ol id="listaIngredientes" class="lista"></ol>
 
-            <h4 class="sub-title">
-              <span class="emoji start" role="img" aria-label="frigideira">🍳</span>
-              Modo de preparo:
-            </h4>
+            <h4 class="sub-title"><span class="emoji start" aria-hidden="true">🍳</span>Modo de preparo:</h4>
             <ol id="listaPassos" class="lista"></ol>
           </div>
 
-          <button id="btnLerMais" class="btn-lermais" type="button"
-                  aria-controls="textoReceita" aria-expanded="false">
+          <button id="btnLerMais" class="btn-lermais" type="button" aria-controls="textoReceita" aria-expanded="false">
             Ler mais
           </button>
         </section>
 
         <div class="acoes">
-          <button id="btnSalvar" class="btn-coracao" type="button"
-                  aria-pressed="false" aria-label="Salvar receita">
+          <button id="btnSalvar" class="btn-coracao" type="button" aria-pressed="false" aria-label="Salvar receita">
             <span class="coracao" aria-hidden="true">♡</span>
           </button>
 
@@ -71,7 +62,7 @@
       <img src="../../assets/humor.png" alt="Humor" />
     </button>
 
-    <!-- INLINE forçando 150x150 (vence qualquer CSS externo) -->
+    <!-- Força 150x150 e elevação (inline vence qualquer CSS externo) -->
     <button class="btn-footer" id="btnLogo" aria-label="Gerar Receita"
             style="width:150px;height:150px;border-radius:50%;transform:translateY(-20px);flex:0 0 150px;">
       <img src="../../assets/logocentral.png" alt="Gerar Receita"
