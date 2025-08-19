@@ -137,19 +137,10 @@ img { display: block; max-width: 100%; }
   flex-wrap: wrap;
 }
 
-/* Coração sem círculo (apenas o ícone), vermelho e MAIOR */
-.btn-coracao {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 6px;
-}
+/* Coração sem círculo, vermelho e MAIOR */
+.btn-coracao { border: none; background: transparent; cursor: pointer; padding: 6px; }
 .btn-coracao:focus-visible { outline: 3px solid #225c18; outline-offset: 2px; }
-.coracao {
-  font-size: 44px;
-  line-height: 1;
-  color: #e53935;
-}
+.coracao { font-size: 44px; line-height: 1; color: #e53935; }
 .btn-coracao[aria-pressed="true"] .coracao,
 .btn-coracao[aria-pressed="false"] .coracao { color: #e53935; }
 
@@ -200,7 +191,7 @@ nav.curva{
   gap:40px; z-index:10;
 }
 
-/* laterais 55x55 e não encolhem */
+/* laterais 55x55 — não encolhem */
 nav.curva .btn-footer{
   background:transparent; border:none; border-radius:50%;
   width:55px; height:55px; padding:0;
@@ -259,4 +250,3 @@ nav.curva .btn-footer.btn-central img{
   .texto-receita { flex: 1; min-height: 0; max-height: none; overflow: hidden; }
   .texto-receita[data-scroll="on"] { overflow: auto; }
 }
-
