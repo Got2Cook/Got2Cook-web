@@ -23,16 +23,10 @@ const btnVoltar    = document.getElementById("btnVoltar");
 const btnLogo      = document.getElementById("btnLogo");
 const btnGeladeira = document.getElementById("btnGeladeira");
 
-// ===== navegação do rodapé (estrutura nova) =====
-btnVoltar?.addEventListener('click', () => {
-  window.location.href = '../humor/index.html';
-});
-btnLogo?.addEventListener('click', () => {
-  window.location.href = '../home/index.html'; // conforme você definiu
-});
-btnGeladeira?.addEventListener('click', () => {
-  window.location.href = '../geladeira/index.html';
-});
+// ===== Navegação do rodapé =====
+btnVoltar?.addEventListener('click', () => { window.location.href = '../humor/index.html'; });
+btnLogo?.addEventListener('click',   () => { window.location.href = '../home/index.html'; });
+btnGeladeira?.addEventListener('click', () => { window.location.href = '../geladeira/index.html'; });
 
 // ===== Dados =====
 function getReceita(){
@@ -122,59 +116,49 @@ function toggleLerMais(){
   btnMais.textContent = on ? "Ler mais" : "Ler menos";
 }
 
-/* ===== Fix de rodapé: força medidas exatas da tela GERAR =====
-   Usamos style.setProperty(..., 'important') para vencer QUALQUER CSS. */
-function fixFooter(){
-  const setImp = (el, prop, val) => el?.style.setProperty(prop, val, 'important');
-
-  // nav.curva (curvatura/altura)
-  if (navCurva){
-    setImp(navCurva, 'width', '100%');
-    setImp(navCurva, 'height', '70px');
-    setImp(navCurva, 'background-color', '#7b7190');
-    setImp(navCurva, 'border-top-left-radius', '100% 50%');
-    setImp(navCurva, 'border-top-right-radius', '100% 50%');
-    setImp(navCurva, 'position', 'fixed');
-    setImp(navCurva, 'left', '0');
-    setImp(navCurva, 'bottom', '0');
-    setImp(navCurva, 'display', 'flex');
-    setImp(navCurva, 'justify-content', 'center');
-    setImp(navCurva, 'align-items', 'center');
-    setImp(navCurva, 'gap', '40px');
-    setImp(navCurva, 'z-index', '10');
+/* ===== Fix de rodapé: medidas exatas e proteção contra sobrescritas ===== */
+function forceStyle(el, map){
+  if (!el) return;
+  for (const [prop, val] of Object.entries(map)){
+    el.style.setProperty(prop, val, 'important'); // inline + !important
   }
+}
+function sizeFooter(){
+  // nav.curva
+  forceStyle(navCurva, {
+    width:'100%', height:'70px', background:'#7b7190',
+    'border-top-left-radius':'100% 50%', 'border-top-right-radius':'100% 50%',
+    position:'fixed', left:'0', bottom:'0',
+    display:'flex', 'justify-content':'center', 'align-items':'center',
+    gap:'40px', 'z-index':'10'
+  });
 
   // laterais 55x55
   [btnVoltar, btnGeladeira].forEach(b=>{
-    if(!b) return;
-    setImp(b, 'width', '55px');
-    setImp(b, 'height', '55px');
-    setImp(b, 'border-radius', '50%');
-    setImp(b, 'padding', '0');
-    setImp(b, 'transform', 'translateY(-10px)');
-    setImp(b, 'flex', '0 0 55px');
-    const bi = b.querySelector('img');
-    if (bi){
-      setImp(bi, 'width', '250%');
-      setImp(bi, 'height', '250%');
-      setImp(bi, 'object-fit', 'contain');
-    }
+    forceStyle(b, { width:'55px', height:'55px', 'border-radius':'50%',
+      padding:'0', transform:'translateY(-10px)', flex:'0 0 55px' });
+    const bi = b?.querySelector('img');
+    forceStyle(bi, { width:'250%', height:'250%', 'object-fit':'contain' });
   });
 
   // central 150x150
-  if (btnLogo){
-    setImp(btnLogo, 'width', '150px');
-    setImp(btnLogo, 'height', '150px');
-    setImp(btnLogo, 'border-radius', '50%');
-    setImp(btnLogo, 'transform', 'translateY(-20px)');
-    setImp(btnLogo, 'flex', '0 0 150px');
-    const img = btnLogo.querySelector('img');
-    if (img){
-      setImp(img, 'width', '150%');
-      setImp(img, 'height', '150%');
-      setImp(img, 'object-fit', 'contain');
-    }
-  }
+  forceStyle(btnLogo, { width:'150px', height:'150px', 'border-radius':'50%',
+    transform:'translateY(-20px)', flex:'0 0 150px' });
+  const img = btnLogo?.querySelector('img');
+  forceStyle(img, { width:'150%', height:'150%', 'object-fit':'contain' });
+}
+function guardFooter(){
+  sizeFooter();
+  // re-aplica se alguma lib trocar class/style
+  const obs = new MutationObserver(sizeFooter);
+  [navCurva, btnVoltar, btnLogo, btnGeladeira].forEach(el=>{
+    if (el) obs.observe(el, { attributes:true, attributeFilter:['style','class'] });
+  });
+  window.addEventListener('resize', sizeFooter, { passive:true });
+  // reaplica em diferentes momentos do ciclo
+  setTimeout(sizeFooter, 0);
+  setTimeout(sizeFooter, 250);
+  setTimeout(sizeFooter, 1000);
 }
 
 // ===== Eventos =====
@@ -190,9 +174,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
   // Gerar novamente
   btnGerar?.addEventListener("click", ()=>{
-    window.location.href = "../gerar/"; // ajuste se sua tela de gerar estiver em outro caminho
+    window.location.href = "../gerar/"; // ajuste se estiver em outro caminho
   });
 
-  // Força o rodapé a ficar EXATO
-  fixFooter();
+  // Rodapé: força e vigia sobrescritas
+  guardFooter();
 });
+
+window.addEventListener('load', sizeFooter);
