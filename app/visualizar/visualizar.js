@@ -1,10 +1,12 @@
-// ===== Utilitários =====
+"use strict";
+
+/* ===== Utilitários ===== */
 const $ = (sel) => document.querySelector(sel);
 function getLS(key, fb){ try { return JSON.parse(localStorage.getItem(key)) ?? fb; } catch { return fb; } }
 function setLS(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
 function norm(s){ return (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toLowerCase(); }
 
-// ===== Refs =====
+/* ===== Refs ===== */
 const hTitulo      = $("#tituloReceita");
 const imgCover     = $("#coverReceita");
 const metaTempo    = $("#metaTempo");
@@ -17,28 +19,28 @@ const btnMais      = $("#btnLerMais");
 const btnSalvar    = $("#btnSalvar");
 const btnGerar     = $("#btnGerarNovamente");
 
-// Rodapé
-const navCurva     = document.querySelector("nav.curva");
+/* ===== Refs do rodapé (somente navegação; sem alterar estilo/HTML) ===== */
 const btnVoltar    = document.getElementById("btnVoltar");
 const btnLogo      = document.getElementById("btnLogo");
 const btnGeladeira = document.getElementById("btnGeladeira");
 
-// ===== navegação do rodapé (estrutura nova) =====
-btnVoltar?.addEventListener('click', () => {
-  window.location.href = '../humor/index.html';
+/* ===== Navegação do rodapé (NÃO muda classes/estilos/atributos) ===== */
+btnVoltar?.addEventListener("click", () => {
+  window.location.href = "../humor/index.html";
 });
-btnLogo?.addEventListener('click', () => {
-  // Se preferir ir para gerar: '../gerar/index.html'
-  window.location.href = '../home/index.html';
+btnLogo?.addEventListener("click", () => {
+  // se quiser voltar para gerar, troque para: "../gerar/index.html"
+  window.location.href = "../home/index.html";
 });
-btnGeladeira?.addEventListener('click', () => {
-  window.location.href = '../geladeira/index.html';
+btnGeladeira?.addEventListener("click", () => {
+  window.location.href = "../geladeira/index.html";
 });
 
-// ===== Dados =====
+/* ===== Dados ===== */
 function getReceita(){
   const r = getLS("receita_temp", null);
   if (r && typeof r === "object") return r;
+  // MOCK para teste
   return {
     id: "mock-001",
     titulo: "Receita Gerada",
@@ -60,117 +62,84 @@ function getReceita(){
   };
 }
 
-// ===== Favoritar =====
+/* ===== Favoritar ===== */
 const KEY_SALVAS = "got2cook_minhasReceitas";
 function getSalvas(){ const a=getLS(KEY_SALVAS,[]); return Array.isArray(a)?a:[]; }
-function mesmaReceita(a,b){ if(!a||!b) return false; if(a.id&&b.id) return a.id===b.id; return norm(a.titulo||a.nome)===norm(b.titulo||b.nome); }
+function mesmaReceita(a,b){
+  if(!a||!b) return false;
+  if(a.id&&b.id) return a.id===b.id;
+  return norm(a.titulo||a.nome)===norm(b.titulo||b.nome);
+}
 function isSalva(r){ return getSalvas().some(x=>mesmaReceita(x,r)); }
 function syncHeart(r){
   const on = isSalva(r);
-  btnSalvar?.setAttribute("aria-pressed", on ? "true" : "false");
-  const span = btnSalvar?.querySelector(".coracao");
+  if (!btnSalvar) return;
+  btnSalvar.setAttribute("aria-pressed", on ? "true" : "false");
+  const span = btnSalvar.querySelector(".coracao");
   if (span) span.textContent = on ? "♥" : "♡";
 }
 function toggleSalvar(r){
   const arr = getSalvas();
   const i = arr.findIndex(x=>mesmaReceita(x,r));
-  if(i>=0){ arr.splice(i,1); setLS(KEY_SALVAS,arr); syncHeart(r); }
-  else { if(!r.id) r.id=`r-${Date.now()}`; arr.push(r); setLS(KEY_SALVAS,arr); syncHeart(r); }
+  if(i>=0){ arr.splice(i,1); setLS(KEY_SALVAS,arr); }
+  else { if(!r.id) r.id=`r-${Date.now()}`; arr.push(r); setLS(KEY_SALVAS,arr); }
+  syncHeart(r);
 }
 
-// ===== Render =====
+/* ===== Render ===== */
 function render(){
   const r = getReceita();
 
-  hTitulo.textContent = "RECEITA GERADA";
+  if (hTitulo) hTitulo.textContent = "RECEITA GERADA";
 
-  imgCover.src = r.coverImg || r.imagem || "../../assets/receita_exemplo.png";
-  imgCover.alt = `Imagem da receita ${r.titulo || ""}`;
-  metaTempo.textContent = `⏱️ ${r.tempo || "—"}`;
-  metaDif.textContent   = `Dificuldade ${r.dificuldade || "—"}`;
+  if (imgCover){
+    imgCover.src = r.coverImg || r.imagem || "../../assets/receita_exemplo.png";
+    imgCover.alt = `Imagem da receita ${r.titulo || ""}`;
+  }
+  if (metaTempo) metaTempo.textContent = `⏱️ ${r.tempo || "—"}`;
+  if (metaDif)   metaDif.textContent   = `Dificuldade ${r.dificuldade || "—"}`;
 
   // Humor (no lugar de Porções)
   const humorTxt = Array.isArray(r.humores) ? r.humores.join(", ") : (r.humor || "—");
-  metaPor.textContent = `Humor ${humorTxt}`;
+  if (metaPor) metaPor.textContent = `Humor ${humorTxt}`;
 
   // Ingredientes
-  olIng.innerHTML = "";
-  (Array.isArray(r.ingredientes) ? r.ingredientes : []).forEach(item => {
-    const li = document.createElement("li");
-    li.textContent = typeof item === "string" ? item : (item.nome || "");
-    olIng.appendChild(li);
-  });
+  if (olIng){
+    olIng.innerHTML = "";
+    (Array.isArray(r.ingredientes) ? r.ingredientes : []).forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = typeof item === "string" ? item : (item.nome || "");
+      olIng.appendChild(li);
+    });
+  }
 
   // Passos
-  olPasso.innerHTML = "";
-  const passos = Array.isArray(r.passos) && r.passos.length
-    ? r.passos
-    : (r.modoPreparo ? [r.modoPreparo] : ["Siga os passos básicos de preparo."]);
-  passos.forEach(p => {
-    const li = document.createElement("li");
-    li.textContent = p;
-    olPasso.appendChild(li);
-  });
+  if (olPasso){
+    olPasso.innerHTML = "";
+    const passos = Array.isArray(r.passos) && r.passos.length
+      ? r.passos
+      : (r.modoPreparo ? [r.modoPreparo] : ["Siga os passos básicos de preparo."]);
+    passos.forEach(p => {
+      const li = document.createElement("li");
+      li.textContent = p;
+      olPasso.appendChild(li);
+    });
+  }
 
   syncHeart(r);
-  setTimeout(() => hTitulo.focus(), 0);
+  setTimeout(() => hTitulo?.focus(), 0);
 }
 
-// ===== Ler mais =====
+/* ===== Ler mais ===== */
 function toggleLerMais(){
+  if (!textoReceita || !btnMais) return;
   const on = textoReceita.getAttribute("data-scroll") === "on";
   textoReceita.setAttribute("data-scroll", on ? "off" : "on");
   btnMais.setAttribute("aria-expanded", on ? "false" : "true");
   btnMais.textContent = on ? "Ler mais" : "Ler menos";
 }
 
-/* ===== Fix de rodapé: medidas exatas + proteção contra sobrescritas ===== */
-function forceStyle(el, map){
-  if (!el) return;
-  for (const [prop, val] of Object.entries(map)){
-    el.style.setProperty(prop, val, 'important'); // inline + !important
-  }
-}
-function sizeFooter(){
-  // nav.curva (curvatura/altura)
-  forceStyle(navCurva, {
-    width:'100%', height:'70px', background:'#7b7190',
-    'border-top-left-radius':'100% 50%', 'border-top-right-radius':'100% 50%',
-    position:'fixed', left:'0', bottom:'0',
-    display:'flex', 'justify-content':'center', 'align-items':'center',
-    gap:'40px', 'z-index':'10'
-  });
-
-  // laterais 55x55
-  [btnVoltar, btnGeladeira].forEach(b=>{
-    forceStyle(b, { width:'55px', height:'55px', 'border-radius':'50%',
-      padding:'0', transform:'translateY(-10px)', flex:'0 0 55px' });
-    const bi = b?.querySelector('img');
-    forceStyle(bi, { width:'250%', height:'250%', 'object-fit':'contain' });
-  });
-
-  // central 150x150
-  forceStyle(btnLogo, { width:'150px', height:'150px', 'border-radius':'50%',
-    transform:'translateY(-20px)', flex:'0 0 150px' });
-  const img = btnLogo?.querySelector('img');
-  forceStyle(img, { width:'150%', height:'150%', 'object-fit':'contain' });
-}
-function guardFooter(){
-  sizeFooter();
-  // Reaplica se algum script trocar class/style
-  const obs = new MutationObserver(sizeFooter);
-  [navCurva, btnVoltar, btnLogo, btnGeladeira].forEach(el=>{
-    if (el) obs.observe(el, { attributes:true, attributeFilter:['style','class'] });
-  });
-  // Reaplica em resize / load e após curtos delays (SPA/caches)
-  window.addEventListener('resize', sizeFooter, { passive:true });
-  window.addEventListener('load', sizeFooter, { once:true });
-  setTimeout(sizeFooter, 0);
-  setTimeout(sizeFooter, 200);
-  setTimeout(sizeFooter, 800);
-}
-
-// ===== Eventos =====
+/* ===== Eventos ===== */
 document.addEventListener("DOMContentLoaded", ()=>{
   render();
 
@@ -178,14 +147,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
   btnSalvar?.addEventListener("click", ()=>toggleSalvar(getReceita()));
   btnSalvar?.addEventListener("keydown", e=>{
-    if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggleSalvar(getReceita()); }
+    if(e.key==="Enter"||e.key===" "){
+      e.preventDefault();
+      toggleSalvar(getReceita());
+    }
   });
 
   // Gerar novamente
   btnGerar?.addEventListener("click", ()=>{
-    window.location.href = "../gerar/"; // ajuste se preferir outro destino
+    window.location.href = "../gerar/";
   });
-
-  // Rodapé: trava tamanhos e vigia sobrescritas
-  guardFooter();
 });
