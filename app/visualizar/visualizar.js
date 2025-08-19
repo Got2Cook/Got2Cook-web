@@ -23,10 +23,17 @@ const btnVoltar    = document.getElementById("btnVoltar");
 const btnLogo      = document.getElementById("btnLogo");
 const btnGeladeira = document.getElementById("btnGeladeira");
 
-// ===== Navegação do rodapé =====
-btnVoltar?.addEventListener('click', () => { window.location.href = '../humor/index.html'; });
-btnLogo?.addEventListener('click',   () => { window.location.href = '../home/index.html'; });
-btnGeladeira?.addEventListener('click', () => { window.location.href = '../geladeira/index.html'; });
+// ===== navegação do rodapé (estrutura nova) =====
+btnVoltar?.addEventListener('click', () => {
+  window.location.href = '../humor/index.html';
+});
+btnLogo?.addEventListener('click', () => {
+  // Se preferir ir para gerar: '../gerar/index.html'
+  window.location.href = '../home/index.html';
+});
+btnGeladeira?.addEventListener('click', () => {
+  window.location.href = '../geladeira/index.html';
+});
 
 // ===== Dados =====
 function getReceita(){
@@ -60,8 +67,9 @@ function mesmaReceita(a,b){ if(!a||!b) return false; if(a.id&&b.id) return a.id=
 function isSalva(r){ return getSalvas().some(x=>mesmaReceita(x,r)); }
 function syncHeart(r){
   const on = isSalva(r);
-  btnSalvar.setAttribute("aria-pressed", on ? "true" : "false");
-  btnSalvar.querySelector(".coracao").textContent = on ? "♥" : "♡";
+  btnSalvar?.setAttribute("aria-pressed", on ? "true" : "false");
+  const span = btnSalvar?.querySelector(".coracao");
+  if (span) span.textContent = on ? "♥" : "♡";
 }
 function toggleSalvar(r){
   const arr = getSalvas();
@@ -116,7 +124,7 @@ function toggleLerMais(){
   btnMais.textContent = on ? "Ler mais" : "Ler menos";
 }
 
-/* ===== Fix de rodapé: medidas exatas e proteção contra sobrescritas ===== */
+/* ===== Fix de rodapé: medidas exatas + proteção contra sobrescritas ===== */
 function forceStyle(el, map){
   if (!el) return;
   for (const [prop, val] of Object.entries(map)){
@@ -124,7 +132,7 @@ function forceStyle(el, map){
   }
 }
 function sizeFooter(){
-  // nav.curva
+  // nav.curva (curvatura/altura)
   forceStyle(navCurva, {
     width:'100%', height:'70px', background:'#7b7190',
     'border-top-left-radius':'100% 50%', 'border-top-right-radius':'100% 50%',
@@ -149,16 +157,17 @@ function sizeFooter(){
 }
 function guardFooter(){
   sizeFooter();
-  // re-aplica se alguma lib trocar class/style
+  // Reaplica se algum script trocar class/style
   const obs = new MutationObserver(sizeFooter);
   [navCurva, btnVoltar, btnLogo, btnGeladeira].forEach(el=>{
     if (el) obs.observe(el, { attributes:true, attributeFilter:['style','class'] });
   });
+  // Reaplica em resize / load e após curtos delays (SPA/caches)
   window.addEventListener('resize', sizeFooter, { passive:true });
-  // reaplica em diferentes momentos do ciclo
+  window.addEventListener('load', sizeFooter, { once:true });
   setTimeout(sizeFooter, 0);
-  setTimeout(sizeFooter, 250);
-  setTimeout(sizeFooter, 1000);
+  setTimeout(sizeFooter, 200);
+  setTimeout(sizeFooter, 800);
 }
 
 // ===== Eventos =====
@@ -174,11 +183,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
   // Gerar novamente
   btnGerar?.addEventListener("click", ()=>{
-    window.location.href = "../gerar/"; // ajuste se estiver em outro caminho
+    window.location.href = "../gerar/"; // ajuste se preferir outro destino
   });
 
-  // Rodapé: força e vigia sobrescritas
+  // Rodapé: trava tamanhos e vigia sobrescritas
   guardFooter();
 });
-
-window.addEventListener('load', sizeFooter);
