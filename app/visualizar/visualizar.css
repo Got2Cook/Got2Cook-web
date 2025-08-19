@@ -19,176 +19,83 @@ img { display: block; max-width: 100%; }
 }
 
 /* Container principal (mobile) */
-#conteudo {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 16px 16px 120px;
-}
+#conteudo { width: 100%; max-width: 600px; margin: 0 auto; padding: 16px 16px 120px; }
 
 /* Grid (desktop ativa) */
 .grid-web { display: block; }
 .lado-texto { display: block; }
 
 /* ===== Título ===== */
-#tituloReceita {
-  text-align: center;
-  margin: 8px 0 14px;
-  color: #225c18;
-  font-size: 32px;
-  letter-spacing: .5px;
-}
+#tituloReceita { text-align: center; margin: 8px 0 14px; color: #225c18; font-size: 32px; letter-spacing: .5px; }
 
 /* ===== Capa ===== */
 .cover-wrap { margin: 0 0 12px; }
 #coverReceita {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
-  border-radius: 22px;
-  border: 5px solid var(--rox);
-  box-shadow: 0 10px 26px rgba(0,0,0,.12);
-  background: #fff;
+  width: 100%; height: 240px; object-fit: cover; border-radius: 22px;
+  border: 5px solid var(--rox); box-shadow: 0 10px 26px rgba(0,0,0,.12); background: #fff;
 }
 
 /* ===== Metas (chips) ===== */
-.meta {
-  display: grid;
-  grid-template-columns: repeat(3, max-content);
-  justify-content: center;
-  gap: 10px;
-  margin: 12px 0 8px;
-}
+.meta { display: grid; grid-template-columns: repeat(3, max-content); justify-content: center; gap: 10px; margin: 12px 0 8px; }
 .chip{
-  background: var(--btn-bg);
-  border: 2px solid var(--btn-bd);
-  color: var(--btn-fg);
-  border-radius: 999px;
-  padding: 6px 12px;
-  font-weight: 700;
-  font-size: .95rem;
-  box-shadow: 0 2px 6px rgba(47, 90, 29, .12);
+  background: var(--btn-bg); border: 2px solid var(--btn-bd); color: var(--btn-fg);
+  border-radius: 999px; padding: 6px 12px; font-weight: 700; font-size: .95rem; box-shadow: 0 2px 6px rgba(47,90,29,.12);
 }
 
 /* ===== Bloco único (Ingredientes + Passos) ===== */
-.bloco {
-  position: relative;
-  background: var(--container);
-  border: 2px solid var(--btn-bd);
-  border-radius: 16px;
-  padding: 14px 14px 56px;
-  margin-top: 14px;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  box-shadow: 0 8px 22px rgba(0,0,0,.10);
+.bloco{
+  position: relative; background: var(--container); border: 2px solid var(--btn-bd);
+  border-radius: 16px; padding: 14px 14px 56px; margin-top: 14px; display: flex; flex-direction: column;
+  min-height: 0; box-shadow: 0 8px 22px rgba(0,0,0,.10);
 }
-.sec-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #225c18;
-  font-size: 20px;
-  margin: 0 0 10px;
-}
-.sub-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 12px 0 4px;
-  color: #492f70;
-  font-size: 16px;
-}
+.sec-title { display: flex; align-items: center; gap: 8px; color: #225c18; font-size: 20px; margin: 0 0 10px; }
+.sub-title { display: flex; align-items: center; gap: 8px; margin: 12px 0 4px; color: #492f70; font-size: 16px; }
 .sub-title .emoji { margin-right: 8px; }
 
 /* ===== Texto da receita ===== */
-.texto-receita {
-  max-height: 360px;
-  overflow: hidden;
-  min-height: 0;
-}
-.texto-receita[data-scroll="on"] {
-  overflow: auto;
-  padding-right: 6px;
-}
+.texto-receita { max-height: 360px; overflow: hidden; min-height: 0; }
+.texto-receita[data-scroll="on"] { overflow: auto; padding-right: 6px; }
 
 /* Listas padronizadas */
-.lista {
-  margin: 0 0 8px 0;
-  padding-left: 22px;
-  list-style: disc;
-}
-.lista li {
-  margin: 6px 0;
-  font-weight: 650;
-  color: #225c18;
-  font-size: 1.08rem;
-  line-height: 1.35;
-}
+.lista { margin: 0 0 8px 0; padding-left: 22px; list-style: disc; }
+.lista li { margin: 6px 0; font-weight: 650; color: #225c18; font-size: 1.08rem; line-height: 1.35; }
 .lista li::marker { color: #1f9d3a; }
 
 /* ===== Ações / Botões ===== */
-.acoes {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  margin-top: 16px;
-  flex-wrap: wrap;
-}
+.acoes { display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
 
 /* Coração sem círculo, vermelho e MAIOR */
 .btn-coracao { border: none; background: transparent; cursor: pointer; padding: 6px; }
 .btn-coracao:focus-visible { outline: 3px solid #225c18; outline-offset: 2px; }
 .coracao { font-size: 44px; line-height: 1; color: #e53935; }
-.btn-coracao[aria-pressed="true"] .coracao,
-.btn-coracao[aria-pressed="false"] .coracao { color: #e53935; }
+.btn-coracao[aria-pressed="true"] .coracao, .btn-coracao[aria-pressed="false"] .coracao { color: #e53935; }
 
 /* Botão "Gerar novamente" — mesma cor do container */
-.btn-gerar {
-  border: 2px solid var(--btn-bd);
-  background: var(--btn-bg);
-  color: var(--btn-fg);
-  font-weight: 700;
-  border-radius: 999px;
-  padding: 10px 16px;
-  cursor: pointer;
+.btn-gerar{
+  border: 2px solid var(--btn-bd); background: var(--btn-bg); color: var(--btn-fg);
+  font-weight: 700; border-radius: 999px; padding: 10px 16px; cursor: pointer;
 }
 .btn-gerar:hover { filter: brightness(0.98); }
 .btn-gerar:focus-visible { outline: 3px solid #225c18; outline-offset: 2px; }
 
 /* "Ler mais" — mesma cor do container */
-.btn-lermais {
-  position: absolute;
-  right: 12px; bottom: 10px;
-  border: 2px solid var(--btn-bd);
-  background: var(--btn-bg);
-  color: var(--btn-fg);
-  font-weight: 700;
-  border-radius: 999px;
-  padding: 7px 14px;
-  cursor: pointer;
+.btn-lermais{
+  position: absolute; right: 12px; bottom: 10px;
+  border: 2px solid var(--btn-bd); background: var(--btn-bg); color: var(--btn-fg);
+  font-weight: 700; border-radius: 999px; padding: 7px 14px; cursor: pointer;
 }
 .btn-lermais:hover { filter: brightness(0.98); }
 .btn-lermais:focus-visible { outline: 3px solid #225c18; outline-offset: 2px; }
 
 /* ===== A11y ===== */
-.sr-only {
-  position: absolute !important;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;
-}
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 
 /* === RODAPÉ — EXATO COMO A TELA GERAR (bloco único) === */
 nav.curva{
-  width:100%;
-  height:70px;
-  background:#7b7190;
-  border-top-left-radius:100% 50%;
-  border-top-right-radius:100% 50%;
+  width:100%; height:70px; background:#7b7190;
+  border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
   position:fixed; left:0; bottom:0;
-  display:flex; justify-content:center; align-items:center;
-  gap:40px; z-index:10;
+  display:flex; justify-content:center; align-items:center; gap:40px; z-index:10;
 }
 
 /* laterais 55x55 — não encolhem */
@@ -200,11 +107,9 @@ nav.curva .btn-footer{
   transform:translateY(-10px);
   flex:0 0 55px;
 }
-nav.curva .btn-footer img{
-  width:250%; height:250%; object-fit:contain;
-}
+nav.curva .btn-footer img{ width:250%; height:250%; object-fit:contain; }
 
-/* central 150x150 — cobre id e classes antigas e NÃO encolhe */
+/* central 150x150 — cobre id/classes e NÃO encolhe */
 nav.curva #btnLogo,
 nav.curva .btn-footer.logo,
 nav.curva .btn-footer.btn-central{
@@ -218,34 +123,18 @@ nav.curva .btn-footer.btn-central img{
   width:150%; height:150%; object-fit:contain;
 }
 
-/* ===== Desktop (≥1024px): colunas com ALTURA IGUAL e página sem scroll ===== */
+/* ===== Desktop (≥1024px) ===== */
 @media (min-width: 1024px) {
   :root { --gutter: 32px; }
   html, body { height: 100%; overflow: hidden; }
 
-  #conteudo {
-    max-width: 1100px;
-    height: calc(100vh - 70px);
-    padding: 24px var(--gutter) 24px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .grid-web {
-    display: grid;
-    grid-template-columns: 40% 60%;
-    column-gap: var(--gutter);
-    align-items: stretch;
-    height: 100%;
-  }
-
+  #conteudo { max-width: 1100px; height: calc(100vh - 70px); padding: 24px var(--gutter) 24px; margin-left: auto; margin-right: auto; }
+  .grid-web { display: grid; grid-template-columns: 40% 60%; column-gap: var(--gutter); align-items: stretch; height: 100%; }
   .cover-wrap { margin: 0; height: 100%; }
   #coverReceita { width: 100%; height: 100%; object-fit: cover; }
-
   .lado-texto { display: flex; flex-direction: column; height: 100%; padding: 0; }
   #tituloReceita { text-align: left; }
   .meta { justify-content: start; }
-
   .bloco { flex: 1; min-height: 0; display: flex; flex-direction: column; }
   .texto-receita { flex: 1; min-height: 0; max-height: none; overflow: hidden; }
   .texto-receita[data-scroll="on"] { overflow: auto; }
