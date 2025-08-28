@@ -1,0 +1,157 @@
+/* ===== Reset / base ===== */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #c0ffa5;
+  color: #333;
+}
+img { display: block; max-width: 100%; }
+
+/* Acessibilidade básica */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+:focus-visible {
+  outline: 3px solid #492f70;
+  outline-offset: 2px;
+}
+
+/* ===== Container / título ===== */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px 16px 120px; /* espaço pro rodapé */
+}
+.titulo {
+  margin: 12px 0 8px;
+  font-size: 32px;
+  color: #492f70;
+  text-align: center;
+}
+
+/* ===== Layout perfil ===== */
+.perfil-grid {
+  display: grid;
+  gap: 16px;
+}
+.perfil-foto { display: flex; justify-content: center; }
+.foto-wrap {
+  position: relative;
+  width: 220px; height: 220px;
+}
+#fotoPerfil {
+  width: 100%; height: 100%; object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #225c18;
+  background: #fff;
+}
+#emojiHumor {
+  position: absolute; right: -12px; bottom: -8px;
+  font-size: 56px; line-height: 1;
+}
+#btnEditarFoto.btn-lapis {
+  position: absolute; left: -10px; top: -10px;
+}
+
+/* ===== Campos ===== */
+.perfil-dados { background: #c9eb9e; border-radius: 24px; padding: 16px; }
+.linha-campo { display: grid; gap: 8px; margin-bottom: 14px; }
+.linha-campo:last-child { margin-bottom: 0; }
+label, .rotulo { font-weight: 700; color: #492f70; }
+
+.campo-editavel {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+.campo-texto {
+  padding: 10px 12px;
+  background: #fff; border-radius: 12px; min-height: 42px;
+  display: flex; align-items: center;
+}
+.campo-input {
+  display: none;
+  width: 100%;
+  padding: 10px 12px;
+  background: #fff; border: 2px solid #7b7190; border-radius: 12px;
+}
+
+/* Botão lápis padrão */
+.btn-lapis {
+  background: #7b7190;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.btn-lapis:focus-visible { outline-color: #225c18; }
+
+/* Preferências */
+.preferencias { display: grid; gap: 10px; }
+.chips {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  list-style: none; padding: 0; margin: 0;
+}
+.chips li {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #c0ffa5; color: #492f70; font-weight: 700;
+  border: 2px solid #492f70; border-radius: 20px; padding: 6px 12px;
+}
+.chips button.remover {
+  background: transparent; border: none; cursor: pointer; font-size: 16px;
+}
+.preferencias-acoes { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+.preferencias-acoes input {
+  padding: 10px 12px; border-radius: 12px; border: 2px solid #7b7190; background: #fff;
+}
+.btn {
+  background: #7b7190; color: #fff; border: none; border-radius: 12px; padding: 10px 14px; cursor: pointer;
+}
+
+/* Nível culinário */
+.niveis { display: flex; flex-wrap: wrap; gap: 10px; }
+.nivel-btn {
+  padding: 8px 16px; border: 2px solid #492f70; border-radius: 22px;
+  background: #c0ffa5; color: #492f70; font-weight: 700; cursor: pointer;
+}
+.nivel-btn[aria-pressed="true"] {
+  background: #a0f47d; border-color: #4CAF50;
+}
+
+/* ===== Rodapé curvo padrão ===== */
+.curva {
+  position: fixed; left: 0; bottom: 0; width: 100%; height: 70px;
+  background: #7b7190;
+  border-top-left-radius: 100% 50%;
+  border-top-right-radius: 100% 50%;
+  display: flex; justify-content: center; align-items: center;
+  gap: 40px; /* (corrigido ; que faltava no CSS antigo) */
+  z-index: 10;
+}
+.btn-footer {
+  background: transparent; border: none; border-radius: 50%;
+  width: 55px; height: 55px; padding: 0; display: grid; place-items: center;
+  transform: translateY(-10px); cursor: pointer; overflow: hidden;
+}
+.btn-footer img { width: 250%; height: 250%; object-fit: contain; }
+.btn-footer.btn-central { width: 150px; height: 150px; transform: translateY(-20px); }
+.btn-footer.btn-central img { width: 150%; height: 150%; }
+
+/* ===== Desktop (≥1024px) ===== */
+@media (min-width: 1024px) {
+  .container { max-width: 980px; }
+  .perfil-grid {
+    grid-template-columns: 280px 1fr;
+    align-items: start;
+    gap: 24px;
+  }
+  .perfil-foto { justify-content: flex-start; }
+  .titulo { text-align: left; }
+}
