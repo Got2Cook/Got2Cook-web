@@ -10,20 +10,18 @@
   <main id="conteudo" class="container">
     <h1 class="titulo">Dados Pessoais</h1>
 
-    <!-- GRID: foto à esquerda, dados à direita (empilha no mobile) -->
     <section class="perfil-grid">
-      <!-- COLUNA FOTO -->
+      <!-- FOTO -->
       <div class="perfil-topo">
         <div class="foto-perfil">
           <img id="fotoPerfil" src="../assets/perfil.png" alt="Foto de perfil" />
           <span id="emojiHumor">😀</span>
         </div>
-
-        <input type="file" id="inputFoto" accept="image/*" style="display:none" />
+        <input type="file" id="inputFoto" accept="image/*" hidden />
         <button class="alterar-foto" id="btnAlterarFoto" aria-label="Alterar foto">Alterar Foto</button>
       </div>
 
-      <!-- COLUNA DADOS (MESMO VISUAL DO QUE VOCÊ MANDOU) -->
+      <!-- DADOS -->
       <div class="bloco-dados">
         <div class="linha">
           <span class="emoji">👤</span>
@@ -45,7 +43,6 @@
           <span class="emoji">🍽️</span>
           <span><strong>Preferência alimentar:</strong></span>
           <div class="tags" id="preferencias">
-            <!-- mesmas tags base do seu arquivo -->
             <label><input type="checkbox" class="tag-checkbox" value="VEGETARIANO" /> VEGETARIANO</label>
             <label><input type="checkbox" class="tag-checkbox" value="VEGANO" /> VEGANO</label>
             <label><input type="checkbox" class="tag-checkbox" value="CELÍACO" /> CELÍACO</label>
@@ -74,7 +71,7 @@
     </section>
   </main>
 
-  <!-- RODAPÉ PADRÃO -->
+  <!-- RODAPÉ -->
   <footer class="curva">
     <button class="btn-footer" id="btnVoltar" aria-label="Ir para Humor">
       <img src="../assets/humor.png" alt="" />
@@ -86,6 +83,18 @@
       <img src="../assets/geladeira.png" alt="" />
     </button>
   </footer>
+
+  <!-- MINI-WIDGET DE EDIÇÃO -->
+  <div id="editorModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="editorTitulo">
+    <div class="modal-content">
+      <h2 id="editorTitulo" class="modal-titulo">Editar</h2>
+      <input id="editorInput" type="text" />
+      <div class="modal-acoes">
+        <button id="editorCancelar" class="btn-terciario">Cancelar</button>
+        <button id="editorSalvar" class="btn">Salvar</button>
+      </div>
+    </div>
+  </div>
 
   <script src="dados-pessoais.js"></script>
 </body>
