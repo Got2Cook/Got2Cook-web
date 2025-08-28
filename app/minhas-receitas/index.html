@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Minhas Receitas - Got2Cook</title>
+  <link rel="stylesheet" href="./minhas-receitas.css" />
+</head>
+<body>
+  <main id="conteudo" class="container" tabindex="-1">
+    <!-- Cabeçalho simples (sem menus) -->
+    <h1 class="titulo">Minhas Receitas</h1>
+
+    <!-- Filtros e busca -->
+    <section class="filtros" aria-label="Busca e filtros">
+      <div class="busca">
+        <img src="../../assets/lupa.png" alt="" class="lupa" aria-hidden="true" />
+        <input id="campoBusca" type="search" inputmode="search"
+               placeholder="Buscar receita..." autocomplete="off"
+               aria-label="Buscar por título da receita" />
+      </div>
+
+      <div class="selects">
+        <label class="sr-only" for="filtroDificuldade">Filtrar por dificuldade</label>
+        <select id="filtroDificuldade">
+          <option value="">Dificuldade (todas)</option>
+          <option value="BÁSICO">BÁSICO</option>
+          <option value="INTERMEDIÁRIO">INTERMEDIÁRIO</option>
+          <option value="AVANÇADO">AVANÇADO</option>
+        </select>
+
+        <label class="sr-only" for="filtroHumor">Filtrar por humor</label>
+        <select id="filtroHumor">
+          <option value="">Humor (todos)</option>
+          <option value="😄">😄</option>
+          <option value="😋">😋</option>
+          <option value="🤤">🤤</option>
+          <option value="🥰">🥰</option>
+          <option value="😌">😌</option>
+          <option value="🙂">🙂</option>
+        </select>
+
+        <button id="btnLimparFiltros" type="button" class="btn">Limpar</button>
+      </div>
+    </section>
+
+    <!-- Feedback vivo para ações (favoritar/excluir) -->
+    <div id="ariaFeedback" class="sr-only" aria-live="polite"></div>
+
+    <!-- Lista/grid -->
+    <section aria-label="Receitas salvas">
+      <div id="listaReceitas" class="grid"></div>
+
+      <!-- Estado vazio -->
+      <div id="estadoVazio" class="vazio" hidden>
+        <img src="../../assets/empty-recipes.png" alt="" aria-hidden="true" />
+        <h2>Você ainda não salvou receitas</h2>
+        <p>Gere uma receita e salve nos favoritos para aparecer aqui.</p>
+        <a class="cta" href="../gerar/index.html" role="button">Gerar receita</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Rodapé curvo padrão (exato) -->
+  <footer class="curva" aria-label="Navegação principal">
+    <nav class="curva__nav">
+      <a id="btnVoltar" class="btn-footer" href="../humor/index.html" aria-label="Voltar para Humor">
+        <img src="../../assets/humor.png" alt="" />
+      </a>
+
+      <a id="btnLogo" class="btn-footer btn-central" href="../gerar/index.html" aria-label="Gerar receita (logo)">
+        <img src="../../assets/logocentral.png" alt="" />
+      </a>
+
+      <a id="btnGeladeira" class="btn-footer" href="../geladeira/index.html" aria-label="Ir para Minha Geladeira">
+        <img src="../../assets/geladeira.png" alt="" />
+      </a>
+    </nav>
+  </footer>
+
+  <script src="./minhas-receitas.js" defer></script>
+</body>
+</html>
