@@ -195,3 +195,56 @@ body{
 .card-meta {
   border-color: #3e6529 !important;
 }
+
+/* ===== HARMONIA DE CORES (mantendo identidade) ===== */
+
+/* Barra de busca no mesmo tom dos filtros/cards */
+.busca{
+  background:#c9eb9e !important;
+  border:2px solid #3e6529 !important;
+  box-shadow: 0 2px 6px rgba(62,101,41,.15) !important;
+}
+
+/* Filtros (selects + botão limpar) */
+.selects select,
+.btn{
+  background:#c9eb9e !important;
+  border-color:#3e6529 !important;
+  color:#1c3f13 !important;           /* texto um pouco mais escuro p/ contraste */
+  box-shadow: 0 2px 6px rgba(62,101,41,.12) !important;
+}
+
+/* Cards de receita */
+.card-receita{
+  background:#c9eb9e !important;
+  border-color:#3e6529 !important;
+  box-shadow: 0 3px 10px rgba(62,101,41,.12) !important;
+}
+
+/* Moldura da imagem do card */
+.card-cover{
+  background:#c9eb9e !important;
+  border:4px solid #3e6529 !important;
+}
+
+/* Chips/meta – mantém identidade mas com borda da paleta */
+.card-meta{
+  background:#eaf6d6 !important;      /* levemente mais claro */
+  border-color:#3e6529 !important;
+  color:#1c3f13 !important;
+}
+
+/* Título dos cards mais legível sobre o verde claro */
+.card-titulo{ color:#1c3f13 !important; }
+
+/* Botões do card mantêm branco p/ contraste, só ajusta borda/sombra */
+.btn-excluir, .card-link{
+  border-color:#3e6529 !important;
+  box-shadow: 0 2px 6px rgba(62,101,41,.10) !important;
+}
+
+/* Opcional: título da página com leve sombra para encaixar no fundo */
+.titulo{
+  color:#1c3f13 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
