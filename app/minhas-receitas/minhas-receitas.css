@@ -37,6 +37,7 @@ body{
   display:grid;
   gap:10px;
   margin-bottom:12px;
+  color: #c9eb9e
 }
 .busca{
   background-color: #7ed957;
@@ -108,7 +109,7 @@ select:focus-visible,
   border-radius:12px;
   object-fit:cover;
   border:6px solid var(--roxo);
-  background:#fff;
+  background:#c9eb9e;
 }
 .card-titulo{
   margin:0;
@@ -165,7 +166,7 @@ select:focus-visible,
 /* estado favorito → só o coração muda */
 .btn-favorito[aria-pressed="true"] {
   background: #fff;     /* não pinta o fundo */
-  color: #d63384;       /* cor do coração */
+  color: #FF0000;       /* cor do coração */
 }
 
 /* lixeira */
