@@ -65,15 +65,17 @@ body{
   display:flex;
   gap:8px;
 }
+/* ===== Busca e filtros ===== */
 .selects select, .btn{
   font-size:14px;
   padding:10px 12px;
   border-radius:12px;
-  border:2px solid var(--roxo);
-  background:#c7e89c;   /* cor dos filtros alterada */
+  border:2px solid #3e6529;   /* borda alterada */
+  background:#c7e89c;         
   color:var(--verde);
   cursor:pointer;
 }
+.btn{background:#c7e89c; border:2px solid #3e6529;} /* borda alterada também */
 .btn{background:#c7e89c;} /* também aplica ao botão limpar */
 .btn:focus-visible,
 select:focus-visible,
@@ -97,8 +99,8 @@ select:focus-visible,
   display:flex;
   flex-direction:column;
   gap:8px;
-  background:#c7e89c;   /* cor do card alterada */
-  border:3px solid var(--roxo);
+  background:#c7e89c;   
+  border:3px solid #3e6529;   /* borda alterada */
   border-radius:18px;
   padding:10px;
 }
