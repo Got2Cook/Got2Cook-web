@@ -1,23 +1,23 @@
-/* ===== Chaves de storage ===== */
-const LS_DADOS = 'got2cook_dadosPessoais';
+// ===== Chaves =====
+const LS = 'got2cook_dadosPessoais';
 const LS_HUMOR = 'got2cook_humor';
 
-/* ===== Referências ===== */
+// ===== Refs =====
 const fotoPerfil = document.getElementById('fotoPerfil');
-const emojiHumor = document.getElementById('emojiHumor');
 const inputFoto  = document.getElementById('inputFoto');
-const btnEditarFoto = document.getElementById('btnEditarFoto');
+const btnAlterarFoto = document.getElementById('btnAlterarFoto');
 
-const campoNomeSpan  = document.getElementById('campoNome');
-const campoEmailSpan = document.getElementById('campoEmail');
-const inputNome  = document.getElementById('inputNome');
-const inputEmail = document.getElementById('inputEmail');
+const campoNome  = document.getElementById('campoNome');
+const campoEmail = document.getElementById('campoEmail');
 const btnEditarNome  = document.getElementById('btnEditarNome');
 const btnEditarEmail = document.getElementById('btnEditarEmail');
 
-const listaPrefs = document.getElementById('preferenciasLista');
+const emojiHumor = document.getElementById('emojiHumor');
+
+const preferenciasWrap = document.getElementById('preferencias');
 const inputPref  = document.getElementById('preferenciaNova');
 const btnAddPref = document.getElementById('btnAddPreferencia');
+const listaPrefs = document.getElementById('preferenciasLista');
 
 const nivelBtns = Array.from(document.querySelectorAll('.nivel-btn'));
 
@@ -25,124 +25,128 @@ const btnVoltar    = document.getElementById('btnVoltar');
 const btnLogo      = document.getElementById('btnLogo');
 const btnGeladeira = document.getElementById('btnGeladeira');
 
-/* ===== Util ===== */
-const getData = () => JSON.parse(localStorage.getItem(LS_DADOS) || '{}');
-const setData = (obj) => localStorage.setItem(LS_DADOS, JSON.stringify(obj));
+// ===== Storage utils =====
+const getData = () => JSON.parse(localStorage.getItem(LS) || '{}');
+const setData = (obj) => localStorage.setItem(LS, JSON.stringify(obj));
+const save = (partial) => { const n = { ...getData(), ...partial }; setData(n); return n; };
 
-function mergeSave(partial) {
-  const curr = getData();
-  const next = { ...curr, ...partial };
-  setData(next);
-  return next;
-}
-
-/* ===== Render ===== */
-function renderPreferencias(prefs = []) {
+// ===== Render =====
+function renderPreferencias(persistidas = [], marcadas = []) {
+  // Persistidas (livres)
   listaPrefs.innerHTML = '';
-  prefs.forEach((p, idx) => {
+  persistidas.forEach((p, i) => {
     const li = document.createElement('li');
-    li.innerHTML = `
-      <span>${p}</span>
-      <button class="remover" aria-label="Remover ${p}" title="Remover" data-idx="${idx}">×</button>
-    `;
+    li.innerHTML = `<span>${p}</span><button class="remover" data-idx="${i}" aria-label="Remover ${p}">×</button>`;
     listaPrefs.appendChild(li);
+  });
+
+  // Marcadas (checkboxes do bloco base)
+  const setMarcadas = new Set(marcadas);
+  document.querySelectorAll('.tag-checkbox').forEach(cb => {
+    cb.checked = setMarcadas.has(cb.value);
   });
 }
 
 function renderNivel(nivel) {
-  nivelBtns.forEach(btn => {
-    const active = btn.dataset.nivel === nivel;
-    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-  });
+  nivelBtns.forEach(b => b.classList.toggle('selecionado', b.dataset.nivel === nivel));
 }
 
 function renderAll() {
-  const data = getData();
+  const d = getData();
 
-  // Foto
-  if (data.foto) fotoPerfil.src = data.foto;
+  if (d.foto) fotoPerfil.src = d.foto;
 
-  // Humor (prioriza storage global se existir)
-  const humor = localStorage.getItem(LS_HUMOR) || data.humor || '😀';
+  const humor = localStorage.getItem(LS_HUMOR) || d.humor || '😀';
   emojiHumor.textContent = humor;
 
-  // Campos
-  campoNomeSpan.textContent  = data.nome  || 'Usuário';
-  campoEmailSpan.textContent = data.email || 'email@exemplo.com';
+  campoNome.textContent  = d.nome  || 'Usuário';
+  campoEmail.textContent = d.email || 'email@exemplo.com';
 
-  // Preferências
-  renderPreferencias(Array.isArray(data.preferencias) ? data.preferencias : []);
-
-  // Nível
-  renderNivel(data.nivel || '');
+  renderPreferencias(d.preferenciasLivres || [], d.preferenciasMarcadas || []);
+  renderNivel(d.nivel || '');
 }
 
-/* ===== Edição inline (troca span ↔ input) ===== */
-function editarCampo(spanEl, inputEl, key) {
-  inputEl.value = spanEl.textContent.trim();
-  spanEl.style.display = 'none';
-  inputEl.style.display = 'block';
-  inputEl.focus();
-  inputEl.select();
-
-  const commit = () => {
-    const val = inputEl.value.trim();
-    spanEl.textContent = val || spanEl.textContent;
-    inputEl.style.display = 'none';
-    spanEl.style.display = 'flex';
-    mergeSave({ [key]: val });
-    inputEl.removeEventListener('keydown', onKey);
-    inputEl.removeEventListener('blur', commit);
-  };
-
-  const onKey = (e) => {
-    if (e.key === 'Enter') commit();
-    if (e.key === 'Escape') { // cancelar
-      inputEl.style.display = 'none';
-      spanEl.style.display = 'flex';
-    }
-  };
-
-  inputEl.addEventListener('keydown', onKey);
-  inputEl.addEventListener('blur', commit);
+// ===== Editar inline (span → prompt simples para manter seu visual) =====
+function editarTexto(spanEl, key, tipo = 'text') {
+  const atual = spanEl.textContent.trim();
+  const novo = window.prompt('Editar:', atual);
+  if (novo === null) return;
+  const val = novo.trim();
+  if (!val) return;
+  spanEl.textContent = val;
+  save({ [key]: val });
 }
 
-/* ===== Handlers ===== */
+// ===== Eventos =====
 // Foto
-btnEditarFoto.addEventListener('click', () => inputFoto.click());
+btnAlterarFoto.addEventListener('click', () => inputFoto.click());
 inputFoto.addEventListener('change', () => {
-  const file = inputFoto.files?.[0];
-  if (!file) return;
+  const f = inputFoto.files?.[0];
+  if (!f) return;
   const reader = new FileReader();
   reader.onload = (e) => {
-    const dataUrl = e.target.result;
-    fotoPerfil.src = dataUrl;
-    mergeSave({ foto: dataUrl });
+    fotoPerfil.src = e.target.result;
+    save({ foto: e.target.result });
   };
-  reader.readAsDataURL(file);
+  reader.readAsDataURL(f);
 });
 
-// Nome / Email
-btnEditarNome.addEventListener('click', () => editarCampo(campoNomeSpan, inputNome, 'nome'));
-btnEditarEmail.addEventListener('click', () => editarCampo(campoEmailSpan, inputEmail, 'email'));
-
-// Teclado (Enter/Espaço) nos botões de lápis
-[btnEditarFoto, btnEditarNome, btnEditarEmail].forEach(btn => {
+// Nome/Email
+btnEditarNome.addEventListener('click', () => editarTexto(campoNome, 'nome'));
+btnEditarEmail.addEventListener('click', () => editarTexto(campoEmail, 'email'));
+[btnEditarNome, btnEditarEmail].forEach(btn => {
   btn.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
   });
 });
 
-// Preferências
+// Preferências marcadas (checkboxes base)
+preferenciasWrap.addEventListener('change', () => {
+  const marcadas = Array.from(document.querySelectorAll('.tag-checkbox:checked')).map(cb => cb.value);
+  save({ preferenciasMarcadas: marcadas });
+});
+
+// Preferências livres (+ lista)
 btnAddPref.addEventListener('click', () => {
   const val = (inputPref.value || '').trim();
   if (!val) return;
-  const curr = getData();
-  const prefs = Array.isArray(curr.preferencias) ? curr.preferencias.slice() : [];
-  prefs.push(val);
-  mergeSave({ preferencias: prefs });
+  const d = getData();
+  const livre = Array.isArray(d.preferenciasLivres) ? d.preferenciasLivres.slice() : [];
+  livre.push(val);
+  save({ preferenciasLivres: livre });
   inputPref.value = '';
-  renderPreferencias(prefs);
+  renderPreferencias(livre, d.preferenciasMarcadas || []);
 });
 inputPref.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') { e.preventD
+  if (e.key === 'Enter') { e.preventDefault(); btnAddPref.click(); }
+});
+listaPrefs.addEventListener('click', (e) => {
+  const rm = e.target.closest('button.remover');
+  if (!rm) return;
+  const idx = Number(rm.dataset.idx);
+  const d = getData();
+  const livre = (d.preferenciasLivres || []).slice();
+  livre.splice(idx, 1);
+  save({ preferenciasLivres: livre });
+  renderPreferencias(livre, d.preferenciasMarcadas || []);
+});
+
+// Nível
+nivelBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const nivel = btn.dataset.nivel;
+    save({ nivel });
+    renderNivel(nivel);
+  });
+  btn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
+  });
+});
+
+// Rodapé (links corretos)
+btnVoltar.addEventListener('click', () => { window.location.href = '../humor/index.html'; });
+btnLogo.addEventListener('click', () => { window.location.href = '../home/index.html'; });
+btnGeladeira.addEventListener('click', () => { window.location.href = '../geladeira/index.html'; });
+
+// Boot
+document.addEventListener('DOMContentLoaded', renderAll);
