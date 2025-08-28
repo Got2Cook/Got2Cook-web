@@ -1,9 +1,10 @@
 :root{
   --bg:#c0ffa5;
-  --roxo:#492f70;
+  --roxo:#492f70;        /* ainda existe, mas não está mais em uso */
   --roxo-escuro:#7b7190;
   --verde:#225c18;
   --chip:#e9ffd7;
+  --borda:#3e6529;       /* nova cor de borda */
 }
 
 *{box-sizing:border-box}
@@ -18,16 +19,15 @@ body{
 
 .container{
   margin:0 auto;
-  padding:16px 16px 120px; /* espaço p/ rodapé */
+  padding:16px 16px 120px; 
   max-width:1200px;
 }
 
-/* remove contorno no main (evita “quadrado preto” ao abrir) */
 #conteudo:focus{outline:none}
 
 .titulo{
   text-align:center;
-  font-size:35px;           /* ↑ igual às outras telas */
+  font-size:35px;           
   margin:8px 0 12px;
   letter-spacing:.5px;
 }
@@ -37,19 +37,18 @@ body{
   display:grid;
   gap:10px;
   margin-bottom:12px;
-  color: #c9eb9e
 }
 .busca{
-  background-color: #7ed957;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  padding: 10px 15px;
-  gap: 10px;
-  width: 90%;          
-  max-width: 600px;    
-  margin: 0 auto;      
-  box-sizing: border-box;
+  background-color:#7ed957;
+  border-radius:30px;
+  display:flex;
+  align-items:center;
+  padding:10px 15px;
+  gap:10px;
+  width:90%;
+  max-width:600px;
+  margin:0 auto;
+  box-sizing:border-box;
 }
 .lupa{width:20px;height:20px;flex:0 0 20px}
 #campoBusca{
@@ -65,18 +64,16 @@ body{
   display:flex;
   gap:8px;
 }
-/* ===== Busca e filtros ===== */
 .selects select, .btn{
   font-size:14px;
   padding:10px 12px;
   border-radius:12px;
-  border:2px solid #3e6529;   /* borda alterada */
-  background:#c7e89c;         
+  border:2px solid var(--borda);  /* borda verde */
+  background:#c7e89c;
   color:var(--verde);
   cursor:pointer;
 }
-.btn{background:#c7e89c; border:2px solid #3e6529;} /* borda alterada também */
-.btn{background:#c7e89c;} /* também aplica ao botão limpar */
+.btn{background:#c7e89c; border:2px solid var(--borda);}
 .btn:focus-visible,
 select:focus-visible,
 #campoBusca:focus-visible{outline:3px solid #000; outline-offset:2px}
@@ -88,7 +85,6 @@ select:focus-visible,
   gap:14px;
 }
 
-/* Desktop ≥1024px */
 @media (min-width:1024px){
   .grid{grid-template-columns:repeat(4,1fr); gap:18px;}
   .titulo{font-size:40px;}
@@ -99,8 +95,8 @@ select:focus-visible,
   display:flex;
   flex-direction:column;
   gap:8px;
-  background:#c7e89c;   
-  border:3px solid #3e6529;   /* borda alterada */
+  background:#c7e89c;
+  border:3px solid var(--borda);   /* borda verde */
   border-radius:18px;
   padding:10px;
 }
@@ -110,7 +106,7 @@ select:focus-visible,
   aspect-ratio:1/1;
   border-radius:12px;
   object-fit:cover;
-  border:6px solid var(--roxo);
+  border:6px solid var(--borda);   /* borda verde */
   background:#c9eb9e;
 }
 .card-titulo{
@@ -146,41 +142,37 @@ select:focus-visible,
   gap:8px;
 }
 
-/* regras comuns */
+/* botões comuns */
 .btn-favorito,
 .btn-excluir,
 .card-link {
-  border: 2px solid var(--roxo);
-  background: #fff;
-  border-radius: 12px;
-  padding: 6px 10px;
-  font-size: 14px;
-  line-height: 1;
-  cursor: pointer;
+  border:2px solid var(--borda);  /* borda verde */
+  background:#fff;
+  border-radius:12px;
+  padding:6px 10px;
+  font-size:14px;
+  line-height:1;
+  cursor:pointer;
 }
 
-/* coração */
 .btn-favorito {
-  min-width: 44px;
-  text-align: center;
+  min-width:44px;
+  text-align:center;
 }
 
-/* estado favorito → só o coração muda */
 .btn-favorito[aria-pressed="true"] {
-  background: #fff;     
-  color: #FF0000;       
+  background:#fff;
+  color:#FF0000;
 }
 
-/* lixeira */
 .btn-excluir {
-  min-width: 44px;
-  text-align: center;
+  min-width:44px;
+  text-align:center;
 }
 
-/* botão visualizar */
 .card-link {
-  flex: 1;
-  text-align: center;
+  flex:1;
+  text-align:center;
 }
 
 /* ===== Estado vazio ===== */
@@ -195,7 +187,7 @@ select:focus-visible,
   margin-top:8px;
   padding:10px 14px;
   border-radius:12px;
-  border:2px solid var(--roxo);
+  border:2px solid var(--borda); /* borda verde */
   background:#fff;
   color:var(--verde);
   text-decoration:none;
@@ -218,10 +210,9 @@ select:focus-visible,
 .curva__nav{
   display:flex;
   align-items:center;
-  gap:40px; 
+  gap:40px;
 }
 
-/* Botões laterais 55px; central 150px elevado */
 .btn-footer{
   width:55px; height:55px;
   border:none; background:transparent;
@@ -237,7 +228,6 @@ select:focus-visible,
 }
 .btn-central img{width:150%; height:150%; object-fit:contain}
 
-/* ===== Utilidades de acessibilidade ===== */
 .sr-only{
   position:absolute!important;
   width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
