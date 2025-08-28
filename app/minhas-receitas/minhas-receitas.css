@@ -39,12 +39,16 @@ body{
   margin-bottom:12px;
 }
 .busca{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  background:#7ed957;
-  border-radius:28px;
-  padding:10px 14px;
+  background-color: #7ed957;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  gap: 10px;
+  width: 80%;          /* ↓ antes era 100% */
+  max-width: 350px;    /* largura máxima em px */
+  margin: 0 auto;      /* centraliza na tela */
+  box-sizing: border-box;
 }
 .lupa{width:20px;height:20px;flex:0 0 20px}
 #campoBusca{
