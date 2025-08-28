@@ -45,7 +45,7 @@ body{
   align-items: center;
   padding: 10px 15px;
   gap: 10px;
-  width: 80%;          /* ↓ antes era 100% */
+  width: 90%;          /* ↓ antes era 100% */
   max-width: 350px;    /* largura máxima em px */
   margin: 0 auto;      /* centraliza na tela */
   box-sizing: border-box;
