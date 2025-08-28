@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dados Pessoais - Got2Cook</title>
+  <link rel="stylesheet" href="dados-pessoais.css" />
+</head>
+<body>
+  <main id="conteudo" class="container">
+    <h1 class="titulo">Dados Pessoais</h1>
+
+    <section class="perfil-grid" aria-labelledby="perfil-heading">
+      <h2 id="perfil-heading" class="sr-only">Perfil do usuário</h2>
+
+      <!-- FOTO + EMOJI -->
+      <div class="perfil-foto">
+        <div class="foto-wrap">
+          <img id="fotoPerfil" alt="Foto de perfil" src="../assets/perfil.png" />
+          <span id="emojiHumor" aria-label="Humor atual">😀</span>
+          <button id="btnEditarFoto" class="btn-lapis" aria-label="Alterar foto de perfil" title="Alterar foto">
+            ✏️
+          </button>
+          <input type="file" id="inputFoto" accept="image/*" class="sr-only" />
+        </div>
+      </div>
+
+      <!-- CAMPOS EDITÁVEIS -->
+      <div class="perfil-dados">
+        <div class="linha-campo">
+          <label for="inputNome">Nome completo</label>
+          <div class="campo-editavel">
+            <span id="campoNome" class="campo-texto" tabindex="0">Usuário</span>
+            <input id="inputNome" class="campo-input" type="text" aria-label="Editar nome" />
+            <button id="btnEditarNome" class="btn-lapis" aria-label="Editar nome">✏️</button>
+          </div>
+        </div>
+
+        <div class="linha-campo">
+          <label for="inputEmail">E-mail</label>
+          <div class="campo-editavel">
+            <span id="campoEmail" class="campo-texto" tabindex="0">email@exemplo.com</span>
+            <input id="inputEmail" class="campo-input" type="email" aria-label="Editar e-mail" />
+            <button id="btnEditarEmail" class="btn-lapis" aria-label="Editar e-mail">✏️</button>
+          </div>
+        </div>
+
+        <div class="linha-campo">
+          <span class="rotulo">Preferências alimentares</span>
+          <div class="preferencias">
+            <ul id="preferenciasLista" class="chips" aria-live="polite"></ul>
+            <div class="preferencias-acoes">
+              <input id="preferenciaNova" type="text" placeholder="Adicionar preferência..." aria-label="Nova preferência" />
+              <button id="btnAddPreferencia" class="btn" aria-label="Adicionar preferência">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="linha-campo">
+          <span class="rotulo">Nível culinário</span>
+          <div class="niveis" role="group" aria-label="Nível culinário">
+            <button class="nivel-btn" data-nivel="basico" aria-pressed="false">BÁSICO</button>
+            <button class="nivel-btn" data-nivel="intermediario" aria-pressed="false">INTERMEDIÁRIO</button>
+            <button class="nivel-btn" data-nivel="avancado" aria-pressed="false">AVANÇADO</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- RODAPÉ PADRÃO -->
+  <footer class="curva">
+    <button class="btn-footer" id="btnVoltar" aria-label="Ir para Humor">
+      <img src="../assets/humor.png" alt="" />
+    </button>
+
+    <button class="btn-footer btn-central" id="btnLogo" aria-label="Ir para Home">
+      <img src="../assets/logocentral.png" alt="" />
+    </button>
+
+    <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira">
+      <img src="../assets/geladeira.png" alt="" />
+    </button>
+  </footer>
+
+  <script src="dados-pessoais.js"></script>
+</body>
+</html>
