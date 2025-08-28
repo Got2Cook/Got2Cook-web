@@ -46,9 +46,9 @@ body{
   align-items: center;
   padding: 10px 15px;
   gap: 10px;
-  width: 90%;          /* ↓ antes era 100% */
-  max-width: 600px;    /* largura máxima em px */
-  margin: 0 auto;      /* centraliza na tela */
+  width: 90%;          
+  max-width: 600px;    
+  margin: 0 auto;      
   box-sizing: border-box;
 }
 .lupa{width:20px;height:20px;flex:0 0 20px}
@@ -70,11 +70,11 @@ body{
   padding:10px 12px;
   border-radius:12px;
   border:2px solid var(--roxo);
-  background:#fff;
+  background:#c7e89c;   /* cor dos filtros alterada */
   color:var(--verde);
   cursor:pointer;
 }
-.btn{background:#fff}
+.btn{background:#c7e89c;} /* também aplica ao botão limpar */
 .btn:focus-visible,
 select:focus-visible,
 #campoBusca:focus-visible{outline:3px solid #000; outline-offset:2px}
@@ -97,7 +97,7 @@ select:focus-visible,
   display:flex;
   flex-direction:column;
   gap:8px;
-  background:#ffffffbd;
+  background:#c7e89c;   /* cor do card alterada */
   border:3px solid var(--roxo);
   border-radius:18px;
   padding:10px;
@@ -165,8 +165,8 @@ select:focus-visible,
 
 /* estado favorito → só o coração muda */
 .btn-favorito[aria-pressed="true"] {
-  background: #fff;     /* não pinta o fundo */
-  color: #FF0000;       /* cor do coração */
+  background: #fff;     
+  color: #FF0000;       
 }
 
 /* lixeira */
@@ -216,7 +216,7 @@ select:focus-visible,
 .curva__nav{
   display:flex;
   align-items:center;
-  gap:40px; /* gap exato entre botões */
+  gap:40px; 
 }
 
 /* Botões laterais 55px; central 150px elevado */
