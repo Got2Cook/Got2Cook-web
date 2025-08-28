@@ -169,3 +169,52 @@ input[type="text"], input[type="email"] {
   border-radius: 12px; border: 1.5px solid #9ac27d; background: #fffef7; color: #2b2b2b;
 }
 .modal-acoes{ display: flex; justify-content: flex-end; gap: 8px; }
+
+/* Linha com tags + campo “adicionar” lado a lado */
+.preferencias-linha{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:10px;
+  margin-top:8px;
+}
+
+/* Reaproveita o estilo das tags existentes */
+.preferencias-linha label{
+  font-size:14px;
+  padding:8px 18px;
+  background:#c0ffa5;
+  border:2px solid #492f70;
+  border-radius:20px;
+  font-weight:700;
+  color:#492f70;
+  cursor:pointer;
+}
+
+/* “Chip” de input para adicionar preferência */
+.input-chip{
+  display:flex;
+  align-items:stretch;
+  gap:6px;
+  padding:4px;
+  background:#c0ffa5;
+  border:2px solid #492f70;
+  border-radius:20px;
+}
+
+.input-chip input{
+  border:none;
+  background:transparent;       /* sem bloco branco */
+  padding:6px 10px;
+  outline:none;
+  min-width:180px;              /* cresce conforme digita */
+}
+
+.btn-plus{
+  border-radius:14px;
+  padding:6px 12px;
+  line-height:1;
+}
+
+/* Remova/ignore o bloco antigo, se existir:
+   .preferencias-acoes { ... } */
