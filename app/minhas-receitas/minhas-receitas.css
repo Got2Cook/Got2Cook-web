@@ -143,23 +143,41 @@ select:focus-visible,
   gap:8px;
 }
 
-.btn-favorito, .btn-excluir, .card-link{
-  border:2px solid var(--roxo);
-  background:#fff;
-  border-radius:12px;
-  padding:6px 10px;
-  font-size:14px;
-  line-height:1;
-  cursor:pointer;
+/* regras comuns */
+.btn-favorito,
+.btn-excluir,
+.card-link {
+  border: 2px solid var(--roxo);
+  background: #fff;
+  border-radius: 12px;
+  padding: 6px 10px;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
 }
 
-.btn-favorito{min-width:44px;text-align:center}
-.btn-favorito[aria-pressed="true"]{background:#ffd7f1}
-.btn-excluir{min-width:44px;text-align:center}
+/* coração */
+.btn-favorito {
+  min-width: 44px;
+  text-align: center;
+}
 
-.card-link{
-  flex:1;
-  text-align:center;
+/* estado favorito → só o coração muda */
+.btn-favorito[aria-pressed="true"] {
+  background: #fff;     /* não pinta o fundo */
+  color: #d63384;       /* cor do coração */
+}
+
+/* lixeira */
+.btn-excluir {
+  min-width: 44px;
+  text-align: center;
+}
+
+/* botão visualizar */
+.card-link {
+  flex: 1;
+  text-align: center;
 }
 
 /* ===== Estado vazio ===== */
