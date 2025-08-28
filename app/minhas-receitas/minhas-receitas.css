@@ -1,0 +1,216 @@
+:root{
+  --bg:#c0ffa5;
+  --roxo:#492f70;
+  --roxo-escuro:#7b7190;
+  --verde:#225c18;
+  --chip:#e9ffd7;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:var(--bg);
+  color:var(--verde);
+  overflow-x:hidden;
+}
+
+.container{
+  margin:0 auto;
+  padding:16px 16px 120px; /* espaço p/ rodapé */
+  max-width:1200px; /* desktop ≥1024px vira grid amplo */
+}
+
+.titulo{
+  text-align:center;
+  font-size:28px;
+  margin:8px 0 12px;
+  letter-spacing:.5px;
+}
+
+/* ===== Busca e filtros ===== */
+.filtros{
+  display:grid;
+  gap:10px;
+  margin-bottom:12px;
+}
+.busca{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:#7ed957;
+  border-radius:28px;
+  padding:10px 14px;
+}
+.lupa{width:20px;height:20px;flex:0 0 20px}
+#campoBusca{
+  appearance:none;
+  border:none;
+  background:transparent;
+  outline:none;
+  font-size:16px;
+  width:100%;
+  color:#0f3c0b;
+}
+.selects{
+  display:flex;
+  gap:8px;
+}
+.selects select, .btn{
+  font-size:14px;
+  padding:10px 12px;
+  border-radius:12px;
+  border:2px solid var(--roxo);
+  background:#fff;
+  color:var(--verde);
+  cursor:pointer;
+}
+.btn{background:#fff}
+.btn:focus-visible,
+select:focus-visible,
+#campoBusca:focus-visible{outline:3px solid #000; outline-offset:2px}
+
+/* ===== Grid ===== */
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+/* Desktop ≥1024px */
+@media (min-width:1024px){
+  .grid{grid-template-columns:repeat(4,1fr); gap:18px;}
+  .titulo{font-size:32px}
+}
+
+/* ===== Card ===== */
+.card-receita{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  background:#ffffffbd;
+  border:3px solid var(--roxo);
+  border-radius:18px;
+  padding:10px;
+}
+.card-receita:focus-visible{outline:3px solid #000; outline-offset:2px}
+.card-cover{
+  width:100%;
+  aspect-ratio:1/1;
+  border-radius:12px;
+  object-fit:cover;
+  border:6px solid var(--roxo);
+  background:#fff;
+}
+.card-titulo{
+  margin:0;
+  text-align:center;
+  font-size:16px;
+  line-height:1.2;
+  color:var(--verde);
+}
+.meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  justify-content:center;
+}
+.card-meta{
+  background:var(--chip);
+  border:2px solid var(--verde);
+  border-radius:999px;
+  padding:4px 8px;
+  font-size:12px;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+}
+
+/* Ações do card */
+.card-acoes{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:4px;
+}
+.btn-favorito{
+  border:2px solid var(--roxo);
+  background:#fff;
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:16px;
+  line-height:1;
+  cursor:pointer;
+}
+.btn-favorito[aria-pressed="true"]{background:#ffd7f1}
+.card-link{
+  border:2px solid var(--roxo);
+  background:#fff;
+  border-radius:10px;
+  padding:8px 10px;
+  font-size:14px;
+  text-align:center;
+  cursor:pointer;
+}
+
+/* ===== Estado vazio ===== */
+.vazio{
+  text-align:center;
+  margin:40px 0;
+  color:var(--verde);
+}
+.vazio img{width:120px;height:auto;margin-bottom:8px}
+.vazio .cta{
+  display:inline-block;
+  margin-top:8px;
+  padding:10px 14px;
+  border-radius:12px;
+  border:2px solid var(--roxo);
+  background:#fff;
+  color:var(--verde);
+  text-decoration:none;
+}
+
+/* ===== Rodapé curvo (exato) ===== */
+.curva{
+  position:fixed;
+  left:0; right:0; bottom:0;
+  height:70px;
+  background:var(--roxo-escuro);
+  border-top-left-radius:100% 50%;
+  border-top-right-radius:100% 50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+  padding:0 16px;
+}
+.curva__nav{
+  display:flex;
+  align-items:center;
+  gap:40px; /* gap exato entre botões */
+}
+
+/* Botões laterais 55px; central 150px elevado */
+.btn-footer{
+  width:55px; height:55px;
+  border:none; background:transparent;
+  border-radius:50%;
+  padding:0; display:flex; align-items:center; justify-content:center;
+  transform:translateY(-10px);
+}
+.btn-footer img{width:250%; height:250%; object-fit:contain}
+
+.btn-central{
+  width:150px; height:150px;
+  transform:translateY(-20px);
+}
+.btn-central img{width:150%; height:150%; object-fit:contain}
+
+/* ===== Utilidades de acessibilidade ===== */
+.sr-only{
+  position:absolute!important;
+  width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
