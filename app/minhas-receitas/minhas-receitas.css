@@ -166,3 +166,32 @@ body{
   position:absolute!important; width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
   clip:rect(0,0,0,0); white-space:nowrap; border:0;
 }
+
+/* === OVERRIDES DE COR (garante #c9eb9e + borda #3e6529) === */
+
+/* Filtros (selects + botão limpar) — cobre os dois padrões: novo e antigo */
+.selects select,
+.btn,
+.filtrar {
+  background: #c9eb9e !important;
+  border-color: #3e6529 !important;
+  color: var(--verde) !important;
+}
+
+/* Cards — cobre .card (versão antiga) e .card-receita (versão nova) */
+.card,
+.card-receita {
+  background: #c9eb9e !important;
+  border-color: #3e6529 !important;
+}
+
+/* Moldura da imagem do card */
+.card-cover {
+  background: #c9eb9e !important;
+  border: 4px solid #3e6529 !important;
+}
+
+/* Chips/meta dentro do card (se quiser borda combinar) */
+.card-meta {
+  border-color: #3e6529 !important;
+}
