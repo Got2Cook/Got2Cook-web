@@ -1,10 +1,9 @@
 :root{
   --bg:#c0ffa5;
-  --roxo:#492f70;        /* ainda existe, mas não está mais em uso */
   --roxo-escuro:#7b7190;
   --verde:#225c18;
   --chip:#e9ffd7;
-  --borda:#3e6529;       /* nova cor de borda */
+  --borda:#3e6529;       
 }
 
 *{box-sizing:border-box}
@@ -36,7 +35,7 @@ body{
 .filtros{
   display:grid;
   gap:10px;
-  margin-bottom:12px;
+  margin:40px 0 20px;   /* ↓ afasta mais do topo */
 }
 .busca{
   background-color:#7ed957;
@@ -68,7 +67,7 @@ body{
   font-size:14px;
   padding:10px 12px;
   border-radius:12px;
-  border:2px solid var(--borda);  /* borda verde */
+  border:2px solid var(--borda);
   background:#c7e89c;
   color:var(--verde);
   cursor:pointer;
@@ -82,11 +81,12 @@ select:focus-visible,
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:14px;
+  gap:12px;
+  margin-top:20px;   /* ↓ joga os cards mais para baixo */
 }
 
 @media (min-width:1024px){
-  .grid{grid-template-columns:repeat(4,1fr); gap:18px;}
+  .grid{grid-template-columns:repeat(4,1fr); gap:16px;}
   .titulo{font-size:40px;}
 }
 
@@ -94,40 +94,41 @@ select:focus-visible,
 .card-receita{
   display:flex;
   flex-direction:column;
-  gap:8px;
+  gap:6px;
   background:#c7e89c;
-  border:3px solid var(--borda);   /* borda verde */
-  border-radius:18px;
-  padding:10px;
+  border:2px solid var(--borda);
+  border-radius:14px;
+  padding:8px;
+  transform:scale(0.95);   /* ↓ deixa levemente menor */
 }
 .card-receita:focus-visible{outline:3px solid #000; outline-offset:2px}
 .card-cover{
   width:100%;
-  aspect-ratio:1/1;
-  border-radius:12px;
+  aspect-ratio:3/4;   /* ↓ altura maior, mais compacto */
+  border-radius:10px;
   object-fit:cover;
-  border:6px solid var(--borda);   /* borda verde */
+  border:4px solid var(--borda);
   background:#c9eb9e;
 }
 .card-titulo{
   margin:0;
   text-align:center;
-  font-size:16px;
+  font-size:14px;    /* ↓ menor */
   line-height:1.2;
   color:var(--verde);
 }
 .meta{
   display:flex;
   flex-wrap:wrap;
-  gap:6px;
+  gap:4px;
   justify-content:center;
 }
 .card-meta{
   background:var(--chip);
-  border:2px solid var(--verde);
+  border:1px solid var(--verde);
   border-radius:999px;
-  padding:4px 8px;
-  font-size:12px;
+  padding:3px 6px;
+  font-size:11px;
   display:inline-flex;
   align-items:center;
   gap:4px;
@@ -139,34 +140,23 @@ select:focus-visible,
   align-items:center;
   justify-content:space-between;
   margin-top:4px;
-  gap:8px;
+  gap:6px;
 }
 
-/* botões comuns */
-.btn-favorito,
+/* só lixeira + visualizar agora */
 .btn-excluir,
 .card-link {
-  border:2px solid var(--borda);  /* borda verde */
+  border:2px solid var(--borda);
   background:#fff;
-  border-radius:12px;
-  padding:6px 10px;
-  font-size:14px;
-  line-height:1;
+  border-radius:10px;
+  padding:5px 8px;
+  font-size:13px;
   cursor:pointer;
-}
-
-.btn-favorito {
-  min-width:44px;
-  text-align:center;
-}
-
-.btn-favorito[aria-pressed="true"] {
-  background:#fff;
-  color:#FF0000;
+  line-height:1;
 }
 
 .btn-excluir {
-  min-width:44px;
+  min-width:40px;
   text-align:center;
 }
 
@@ -185,9 +175,9 @@ select:focus-visible,
 .vazio .cta{
   display:inline-block;
   margin-top:8px;
-  padding:10px 14px;
-  border-radius:12px;
-  border:2px solid var(--borda); /* borda verde */
+  padding:8px 12px;
+  border-radius:10px;
+  border:2px solid var(--borda);
   background:#fff;
   color:var(--verde);
   text-decoration:none;
