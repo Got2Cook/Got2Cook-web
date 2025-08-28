@@ -41,26 +41,28 @@
           </span>
         </div>
 
-        <div class="linha">
-          <span class="emoji">🍽️</span>
-          <span><strong>Preferência alimentar:</strong></span>
+       <div class="linha">
+  <span class="emoji">🍽️</span>
+  <span><strong>Preferência alimentar:</strong></span>
 
-          <!-- tags base (marcáveis) -->
-          <div class="tags" id="preferencias">
-            <label><input type="checkbox" class="tag-checkbox" value="VEGETARIANO" /> VEGETARIANO</label>
-            <label><input type="checkbox" class="tag-checkbox" value="VEGANO" /> VEGANO</label>
-            <label><input type="checkbox" class="tag-checkbox" value="CELÍACO" /> CELÍACO</label>
-            <label><input type="checkbox" class="tag-checkbox" value="DIABÉTICO" /> DIABÉTICO</label>
-            <label><input type="checkbox" class="tag-checkbox" value="HIPOLACTASIA" /> HIPOLACTASIA</label>
-          </div>
+  <!-- LINHA FLEX (tags + campo de adicionar) -->
+  <div class="preferencias-linha" id="preferencias">
+    <label><input type="checkbox" class="tag-checkbox" value="VEGETARIANO" /> VEGETARIANO</label>
+    <label><input type="checkbox" class="tag-checkbox" value="VEGANO" /> VEGANO</label>
+    <label><input type="checkbox" class="tag-checkbox" value="CELÍACO" /> CELÍACO</label>
+    <label><input type="checkbox" class="tag-checkbox" value="DIABÉTICO" /> DIABÉTICO</label>
+    <label><input type="checkbox" class="tag-checkbox" value="HIPOLACTASIA" /> HIPOLACTASIA</label>
 
-          <!-- preferências livres (adicionar/remover) -->
-          <div class="preferencias-acoes">
-            <input id="preferenciaNova" type="text" placeholder="Adicionar preferência..." aria-label="Nova preferência" />
-            <button id="btnAddPreferencia" class="btn" aria-label="Adicionar preferência">+</button>
-          </div>
-          <ul id="preferenciasLista" class="chips" aria-live="polite"></ul>
-        </div>
+    <!-- “Adicionar preferência” como chip, ao lado das tags -->
+    <div class="input-chip">
+      <input id="preferenciaNova" type="text" placeholder="Adicionar preferência..." aria-label="Nova preferência" />
+      <button id="btnAddPreferencia" class="btn btn-plus" aria-label="Adicionar preferência">+</button>
+    </div>
+  </div>
+
+  <!-- Lista de preferências livres (adicionadas) -->
+  <ul id="preferenciasLista" class="chips" aria-live="polite"></ul>
+</div>
 
         <div class="linha">
           <span class="emoji">👩‍🍳</span>
