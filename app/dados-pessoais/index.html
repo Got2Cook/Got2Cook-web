@@ -10,58 +10,64 @@
   <main id="conteudo" class="container">
     <h1 class="titulo">Dados Pessoais</h1>
 
-    <section class="perfil-grid" aria-labelledby="perfil-heading">
-      <h2 id="perfil-heading" class="sr-only">Perfil do usuário</h2>
-
-      <!-- FOTO + EMOJI -->
-      <div class="perfil-foto">
-        <div class="foto-wrap">
-          <img id="fotoPerfil" alt="Foto de perfil" src="../assets/perfil.png" />
-          <span id="emojiHumor" aria-label="Humor atual">😀</span>
-          <button id="btnEditarFoto" class="btn-lapis" aria-label="Alterar foto de perfil" title="Alterar foto">
-            ✏️
-          </button>
-          <input type="file" id="inputFoto" accept="image/*" class="sr-only" />
+    <!-- GRID: foto à esquerda, dados à direita (empilha no mobile) -->
+    <section class="perfil-grid">
+      <!-- COLUNA FOTO -->
+      <div class="perfil-topo">
+        <div class="foto-perfil">
+          <img id="fotoPerfil" src="../assets/perfil.png" alt="Foto de perfil" />
+          <span id="emojiHumor">😀</span>
         </div>
+
+        <input type="file" id="inputFoto" accept="image/*" style="display:none" />
+        <button class="alterar-foto" id="btnAlterarFoto" aria-label="Alterar foto">Alterar Foto</button>
       </div>
 
-      <!-- CAMPOS EDITÁVEIS -->
-      <div class="perfil-dados">
-        <div class="linha-campo">
-          <label for="inputNome">Nome completo</label>
-          <div class="campo-editavel">
-            <span id="campoNome" class="campo-texto" tabindex="0">Usuário</span>
-            <input id="inputNome" class="campo-input" type="text" aria-label="Editar nome" />
+      <!-- COLUNA DADOS (MESMO VISUAL DO QUE VOCÊ MANDOU) -->
+      <div class="bloco-dados">
+        <div class="linha">
+          <span class="emoji">👤</span>
+          <span><strong>Nome:</strong>
+            <span id="campoNome" class="editavel" tabindex="0">Usuário</span>
             <button id="btnEditarNome" class="btn-lapis" aria-label="Editar nome">✏️</button>
-          </div>
+          </span>
         </div>
 
-        <div class="linha-campo">
-          <label for="inputEmail">E-mail</label>
-          <div class="campo-editavel">
-            <span id="campoEmail" class="campo-texto" tabindex="0">email@exemplo.com</span>
-            <input id="inputEmail" class="campo-input" type="email" aria-label="Editar e-mail" />
+        <div class="linha">
+          <span class="emoji">✉️</span>
+          <span><strong>E-mail:</strong>
+            <span id="campoEmail" class="editavel" tabindex="0">email@exemplo.com</span>
             <button id="btnEditarEmail" class="btn-lapis" aria-label="Editar e-mail">✏️</button>
-          </div>
+          </span>
         </div>
 
-        <div class="linha-campo">
-          <span class="rotulo">Preferências alimentares</span>
-          <div class="preferencias">
-            <ul id="preferenciasLista" class="chips" aria-live="polite"></ul>
-            <div class="preferencias-acoes">
-              <input id="preferenciaNova" type="text" placeholder="Adicionar preferência..." aria-label="Nova preferência" />
-              <button id="btnAddPreferencia" class="btn" aria-label="Adicionar preferência">+</button>
-            </div>
+        <div class="linha">
+          <span class="emoji">🍽️</span>
+          <span><strong>Preferência alimentar:</strong></span>
+          <div class="tags" id="preferencias">
+            <!-- mesmas tags base do seu arquivo -->
+            <label><input type="checkbox" class="tag-checkbox" value="VEGETARIANO" /> VEGETARIANO</label>
+            <label><input type="checkbox" class="tag-checkbox" value="VEGANO" /> VEGANO</label>
+            <label><input type="checkbox" class="tag-checkbox" value="CELÍACO" /> CELÍACO</label>
+            <label><input type="checkbox" class="tag-checkbox" value="DIABÉTICO" /> DIABÉTICO</label>
+            <label><input type="checkbox" class="tag-checkbox" value="HIPOLACTASIA" /> HIPOLACTASIA</label>
           </div>
+
+          <div class="preferencias-acoes">
+            <input id="preferenciaNova" type="text" placeholder="Adicionar preferência..." aria-label="Nova preferência" />
+            <button id="btnAddPreferencia" class="btn" aria-label="Adicionar preferência">+</button>
+          </div>
+
+          <ul id="preferenciasLista" class="chips" aria-live="polite"></ul>
         </div>
 
-        <div class="linha-campo">
-          <span class="rotulo">Nível culinário</span>
-          <div class="niveis" role="group" aria-label="Nível culinário">
-            <button class="nivel-btn" data-nivel="basico" aria-pressed="false">BÁSICO</button>
-            <button class="nivel-btn" data-nivel="intermediario" aria-pressed="false">INTERMEDIÁRIO</button>
-            <button class="nivel-btn" data-nivel="avancado" aria-pressed="false">AVANÇADO</button>
+        <div class="linha">
+          <span class="emoji">👩‍🍳</span>
+          <span><strong>Nível culinário:</strong></span>
+          <div class="nivel-botoes" id="nivel">
+            <button class="nivel-btn" data-nivel="basico">BÁSICO</button>
+            <button class="nivel-btn" data-nivel="intermediario">INTERMEDIÁRIO</button>
+            <button class="nivel-btn" data-nivel="avancado">AVANÇADO</button>
           </div>
         </div>
       </div>
@@ -73,11 +79,9 @@
     <button class="btn-footer" id="btnVoltar" aria-label="Ir para Humor">
       <img src="../assets/humor.png" alt="" />
     </button>
-
     <button class="btn-footer btn-central" id="btnLogo" aria-label="Ir para Home">
       <img src="../assets/logocentral.png" alt="" />
     </button>
-
     <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira">
       <img src="../assets/geladeira.png" alt="" />
     </button>
