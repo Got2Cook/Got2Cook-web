@@ -61,18 +61,25 @@ body{
   flex-wrap:wrap;                 /* quebra linha no mobile */
   justify-content:center;         /* centraliza selects/botão */
 }
+/* ===== Busca e filtros (centralizados) ===== */
 .selects select, .btn{
   font-size:14px;
   padding:10px 12px;
   border-radius:12px;
   border:2px solid var(--borda);
-  background:#c7e89c;
+  background:#c9eb9e;   /* cor dos filtros alterada */
   color:var(--verde);
   cursor:pointer;
 }
-.btn{background:#c7e89c; border:2px solid var(--borda);}
-.btn:focus-visible,select:focus-visible,#campoBusca:focus-visible{
-  outline:3px solid #000; outline-offset:2px;
+.btn{background:#c9eb9e; border:2px solid var(--borda);} /* botão limpar também */
+
+/* ===== Card (mais curto/compacto) ===== */
+.card-receita{
+  display:flex; flex-direction:column; gap:6px;
+  background:#c9eb9e;   /* cor dos cards alterada */
+  border:2px solid var(--borda);
+  border-radius:14px;
+  padding:8px;
 }
 
 /* ===== Grid ===== */
@@ -90,7 +97,7 @@ body{
 /* ===== Card (mais curto/compacto) ===== */
 .card-receita{
   display:flex; flex-direction:column; gap:6px;
-  background:#c7e89c;
+  background:#c9eb9e;   /* cor dos cards alterada */
   border:2px solid var(--borda);
   border-radius:14px;
   padding:8px;
