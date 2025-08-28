@@ -1,108 +1,135 @@
-/* ===== Reset/Base ===== */
-* { box-sizing: border-box; }
-html, body { height: 100%; }
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #c0ffa5;
-  color: #333;
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#c0ffa5;
+  color:#2b2b2b;
 }
-img { display:block; max-width:100%; }
+img{display:block;max-width:100%}
 
-/* ===== Container / Título (igual padrão) ===== */
-.container { max-width: 600px; margin: 0 auto; padding: 16px 16px 140px; }
-.titulo { margin: 16px 0 8px; font-size: 35px; color: #492f70; text-align: center; }
-
-/* ===== Foto + Humor (igual seu estilo) ===== */
-.perfil-topo { text-align: center; margin-top: 10px; }
-.foto-perfil { position: relative; display: inline-block; }
-.foto-perfil img {
-  width: 250px; height: 250px; border-radius: 50%;
-  object-fit: cover; border: 3px solid #225c18; background:#fff;
-}
-#emojiHumor { position: absolute; bottom: 5px; right: -10px; font-size: 80px; }
-.alterar-foto {
-  display: block; margin: 12px auto 0;
-  background-color: #7b7190; color: white; font-weight: bold;
-  border: none; border-radius: 20px; padding: 8px 20px; cursor: pointer;
+/* Container / Título */
+.container{max-width:600px;margin:0 auto;padding:16px 16px 140px}
+.titulo{
+  margin:10px 0 8px;
+  font-size:42px;             /* maior */
+  line-height:1.1;
+  color:#492f70;              /* tom do app */
+  text-align:center;
+  font-weight:800;
 }
 
-/* ===== Bloco de dados (seu visual) ===== */
-.bloco-dados {
-  background-color: #c9eb9e; padding: 20px; border-radius: 25px; margin: 20px;
+/* Foto + Humor */
+.perfil-topo{text-align:center;margin-top:10px}
+.foto-perfil{position:relative;display:inline-block}
+.foto-perfil img{
+  width:260px;height:260px;border-radius:50%;
+  object-fit:cover;border:3px solid #225c18;background:#fff;
 }
-.linha {
-  display: flex; align-items: center; gap: 10px; margin: 15px 0; flex-wrap: wrap;
-  font-size: 20px; color: #333; border-bottom: 2px solid #c0ffa5; padding-bottom: 10px;
+#emojiHumor{position:absolute;bottom:0;right:-6px;font-size:84px;line-height:1}
+.alterar-foto{
+  display:block;
+  margin:12px auto 0;         /* centralizado */
+  background:#7b7190;
+  color:#fff;font-weight:700;
+  border:none;border-radius:24px;
+  padding:10px 22px;cursor:pointer;
+  box-shadow:0 2px 0 rgba(0,0,0,.15);
 }
-.linha:last-child { border-bottom: none; }
-.emoji { font-size: 20px; }
 
-.editavel { padding: 4px 8px; border-radius: 10px; background:#fff; }
-.btn-lapis {
-  margin-left: 8px; background:#7b7190; color:#fff;
-  border:none; border-radius:10px; padding:6px 10px; cursor:pointer;
+/* Bloco de dados */
+.bloco-dados{background:#c9eb9e;padding:20px;border-radius:24px;margin:20px}
+.linha{
+  display:flex;align-items:center;gap:10px;margin:15px 0;flex-wrap:wrap;
+  font-size:18px;color:#2b2b2b;border-bottom:2px solid #c0ffa5;padding-bottom:10px;
 }
+.linha:last-child{border-bottom:none}
+.emoji{font-size:20px}
 
-/* Tags (seu estilo) */
-.tags { display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
-.tags label {
-  font-size: 14px; padding: 8px 18px; background-color: #c0ffa5;
-  border: 2px solid #492f70; border-radius: 20px; margin: 4px; font-weight: bold; color: #492f70;
+/* “profissional” para textos editáveis e inputs */
+.editavel{
+  padding:6px 10px;border-radius:10px;
+  background:linear-gradient(180deg,#f7fff0,#eef8e6);
+  border:1px solid #9ac27d;
 }
-.tags input[type="checkbox"] { display:none; }
+input[type="text"],input[type="email"]{
+  padding:10px 12px;border-radius:12px;border:1.5px solid #9ac27d;background:#f4ffe9;
+  color:#2b2b2b
+}
+::placeholder{color:#6a6a6a}
+
+/* Tags */
+.tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.tags label{
+  font-size:14px;padding:8px 18px;background:#c0ffa5;
+  border:2px solid #492f70;border-radius:20px;margin:4px;font-weight:700;color:#492f70
+}
+.tags input[type="checkbox"]{display:none}
 .tags input[type="checkbox"]:checked + label,
-.tags label:has(input[type="checkbox"]:checked) {
-  background-color: #a0f47d; border-color:#4CAF50;
+.tags label:has(input[type="checkbox"]:checked){background:#a0f47d;border-color:#4caf50}
+
+/* Preferências extras */
+.preferencias-acoes{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:8px}
+.btn{
+  background:#7b7190;color:#fff;border:none;border-radius:12px;padding:10px 14px;cursor:pointer;
+}
+.btn-terciario{
+  background:#e8e1ff;color:#492f70;border:1px solid #7b7190;border-radius:12px;padding:10px 14px;cursor:pointer;
+}
+.chips{list-style:none;padding:0;margin:8px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.chips li{
+  background:#c0ffa5;color:#492f70;border:2px solid #492f70;border-radius:20px;
+  padding:6px 12px;display:inline-flex;gap:8px;align-items:center
+}
+.chips button.remover{background:transparent;border:none;cursor:pointer;font-size:16px}
+
+/* Nível culinário */
+.nivel-botoes{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
+.nivel-btn{
+  padding:10px 18px;border:2px solid #492f70;border-radius:25px;
+  background:#c0ffa5;color:#492f70;font-weight:700;cursor:pointer;font-size:14px
+}
+.nivel-btn.selecionado{background:#a0f47d;border-color:#4caf50}
+
+/* Grid desktop */
+.perfil-grid{display:grid;gap:16px}
+@media (min-width:1024px){
+  .container{max-width:980px}
+  .perfil-grid{grid-template-columns:360px 1fr;align-items:start}
+  .titulo{text-align:left}
+  .perfil-topo{text-align:left}
 }
 
-/* Preferências extras (personalizadas) */
-.preferencias-acoes { display:grid; grid-template-columns: 1fr auto; gap:8px; margin-top:8px; }
-.preferencias-acoes input {
-  padding:10px 12px; border-radius:12px; border:2px solid #7b7190; background:#fff;
+/* Rodapé corrigido */
+.curva{
+  position:fixed;left:0;bottom:0;width:100%;height:70px;background:#7b7190;
+  border-top-left-radius:100% 50%;border-top-right-radius:100% 50%;
+  display:flex;justify-content:center;align-items:center;gap:40px;z-index:10;
 }
-.btn { background:#7b7190; color:#fff; border:none; border-radius:12px; padding:10px 14px; cursor:pointer; }
-.chips { list-style:none; padding:0; margin:8px 0 0; display:flex; flex-wrap:wrap; gap:8px; }
-.chips li { background:#c0ffa5; color:#492f70; border:2px solid #492f70; border-radius:20px; padding:6px 12px; display:inline-flex; gap:8px; align-items:center; }
-.chips button.remover { background:transparent; border:none; cursor:pointer; font-size:16px; }
+.btn-footer{
+  background:transparent;border:none;border-radius:50%;
+  width:55px;height:55px;padding:0;display:grid;place-items:center;
+  transform:translateY(-10px);cursor:pointer;overflow:hidden
+}
+.btn-footer img{width:250%;height:250%;object-fit:contain}
+.btn-footer.btn-central{width:150px;height:150px;transform:translateY(-20px)}
+.btn-footer.btn-central img{width:150%;height:150%}
 
-/* Nível culinário (seu estilo) */
-.nivel-botoes { display:flex; flex-wrap:wrap; gap:12px; margin-top:10px; }
-.nivel-btn {
-  padding: 8px 18px; border: 2px solid #492f70; border-radius: 25px;
-  background-color: #c0ffa5; color: #492f70; font-weight: bold; cursor: pointer; font-size: 14px;
+/* Modal (mini-widget) */
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.35);
+  display:none;align-items:center;justify-content:center;z-index:20;
 }
-.nivel-btn.selecionado { background-color: #a0f47d; border-color: #4CAF50; }
-
-/* ===== Grid responsivo (FOTO ← | → DADOS no desktop) ===== */
-.perfil-grid { display:grid; gap:16px; }
-@media (min-width: 1024px) {
-  .container { max-width: 980px; }
-  .perfil-grid {
-    grid-template-columns: 320px 1fr;
-    align-items: start;
-  }
-  .titulo { text-align:left; }
-  .perfil-topo { text-align:left; }
+.modal[aria-hidden="false"]{display:flex}
+.modal-content{
+  width:min(92vw,420px);background:#f2ffe5;border:2px solid #7b7190;border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);padding:16px
 }
-
-/* ===== Rodapé curvo padrão ===== */
-.curva {
-  position: fixed; left: 0; bottom: 0; width: 100%; height: 70px;
-  background-color: #7b7190;
-  border-top-left-radius: 100% 50%;
-  border-top-right-radius: 100% 50%;
-  display: flex; justify-content: center; align-items: center;
-  gap: 40px; z-index: 10;
+.modal-titulo{margin:0 0 10px;color:#492f70}
+.modal-content input{
+  width:100%;margin-bottom:12px;padding:12px;border-radius:12px;border:1.5px solid #9ac27d;background:#fffef7
 }
-.btn-footer {
-  background: transparent; border: none; border-radius: 50%;
-  width: 55px; height: 55px; padding: 0; display: grid; place-items: center;
-  transform: translateY(-10px); cursor: pointer; overflow: hidden;
-}
-.btn-footer img { width: 250%; height: 250%; object-fit: contain; }
-.btn-footer.btn-central { width: 150px; height: 150px; transform: translateY(-20px); }
-.btn-footer.btn-central img { width: 150%; height: 150%; }
+.modal-acoes{display:flex;justify-content:flex-end;gap:8px}
 
 /* Acessibilidade */
-:focus-visible { outline: 3px solid #492f70; outline-offset: 2px; }
+:focus-visible{outline:3px solid #492f70;outline-offset:2px}
