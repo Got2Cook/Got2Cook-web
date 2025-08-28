@@ -35,7 +35,7 @@ body{
   display:grid;
   gap:12px;
   margin:40px auto 20px;
-  place-items:center; /* centraliza tudo no eixo X */
+  place-items:center; 
   width:100%;
 }
 .busca{
@@ -58,28 +58,21 @@ body{
 .selects{
   display:flex;
   gap:8px;
-  flex-wrap:wrap;                 /* quebra linha no mobile */
-  justify-content:center;         /* centraliza selects/botão */
+  flex-wrap:wrap;                 
+  justify-content:center;         
 }
-/* ===== Busca e filtros (centralizados) ===== */
 .selects select, .btn{
   font-size:14px;
   padding:10px 12px;
   border-radius:12px;
   border:2px solid var(--borda);
-  background:#c9eb9e;   /* cor dos filtros alterada */
+  background:#c9eb9e;   /* filtros cor nova */
   color:var(--verde);
   cursor:pointer;
 }
-.btn{background:#c9eb9e; border:2px solid var(--borda);} /* botão limpar também */
-
-/* ===== Card (mais curto/compacto) ===== */
-.card-receita{
-  display:flex; flex-direction:column; gap:6px;
-  background:#c9eb9e;   /* cor dos cards alterada */
-  border:2px solid var(--borda);
-  border-radius:14px;
-  padding:8px;
+.btn{background:#c9eb9e; border:2px solid var(--borda);}
+.btn:focus-visible,select:focus-visible,#campoBusca:focus-visible{
+  outline:3px solid #000; outline-offset:2px;
 }
 
 /* ===== Grid ===== */
@@ -87,7 +80,7 @@ body{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
-  margin-top:20px; /* desce os cards */
+  margin-top:20px; 
 }
 @media (min-width:1024px){
   .grid{grid-template-columns:repeat(4,1fr); gap:16px;}
@@ -97,7 +90,7 @@ body{
 /* ===== Card (mais curto/compacto) ===== */
 .card-receita{
   display:flex; flex-direction:column; gap:6px;
-  background:#c9eb9e;   /* cor dos cards alterada */
+  background:#c9eb9e;   /* cards cor nova */
   border:2px solid var(--borda);
   border-radius:14px;
   padding:8px;
@@ -105,7 +98,7 @@ body{
 .card-receita:focus-visible{outline:3px solid #000; outline-offset:2px}
 .card-cover{
   width:100%;
-  aspect-ratio:4/3;            /* ↓ mais curto que 1:1 e 3:4 */
+  aspect-ratio:4/3;            
   border-radius:10px;
   object-fit:cover;
   border:4px solid var(--borda);
