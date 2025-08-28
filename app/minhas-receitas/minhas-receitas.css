@@ -3,7 +3,7 @@
   --roxo-escuro:#7b7190;
   --verde:#225c18;
   --chip:#e9ffd7;
-  --borda:#3e6529;       
+  --borda:#3e6529;
 }
 
 *{box-sizing:border-box}
@@ -18,24 +18,25 @@ body{
 
 .container{
   margin:0 auto;
-  padding:16px 16px 120px; 
+  padding:16px 16px 120px;
   max-width:1200px;
 }
-
 #conteudo:focus{outline:none}
 
 .titulo{
   text-align:center;
-  font-size:35px;           
+  font-size:35px;
   margin:8px 0 12px;
   letter-spacing:.5px;
 }
 
-/* ===== Busca e filtros ===== */
+/* ===== Busca e filtros (centralizados) ===== */
 .filtros{
   display:grid;
-  gap:10px;
-  margin:40px 0 20px;   /* ↓ afasta mais do topo */
+  gap:12px;
+  margin:40px auto 20px;
+  place-items:center; /* centraliza tudo no eixo X */
+  width:100%;
 }
 .busca{
   background-color:#7ed957;
@@ -51,17 +52,14 @@ body{
 }
 .lupa{width:20px;height:20px;flex:0 0 20px}
 #campoBusca{
-  appearance:none;
-  border:none;
-  background:transparent;
-  outline:none;
-  font-size:16px;
-  width:100%;
-  color:#0f3c0b;
+  appearance:none;border:none;background:transparent;outline:none;
+  font-size:16px;width:100%;color:#0f3c0b;
 }
 .selects{
   display:flex;
   gap:8px;
+  flex-wrap:wrap;                 /* quebra linha no mobile */
+  justify-content:center;         /* centraliza selects/botão */
 }
 .selects select, .btn{
   font-size:14px;
@@ -73,55 +71,45 @@ body{
   cursor:pointer;
 }
 .btn{background:#c7e89c; border:2px solid var(--borda);}
-.btn:focus-visible,
-select:focus-visible,
-#campoBusca:focus-visible{outline:3px solid #000; outline-offset:2px}
+.btn:focus-visible,select:focus-visible,#campoBusca:focus-visible{
+  outline:3px solid #000; outline-offset:2px;
+}
 
 /* ===== Grid ===== */
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
-  margin-top:20px;   /* ↓ joga os cards mais para baixo */
+  margin-top:20px; /* desce os cards */
 }
-
 @media (min-width:1024px){
   .grid{grid-template-columns:repeat(4,1fr); gap:16px;}
   .titulo{font-size:40px;}
 }
 
-/* ===== Card ===== */
+/* ===== Card (mais curto/compacto) ===== */
 .card-receita{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
+  display:flex; flex-direction:column; gap:6px;
   background:#c7e89c;
   border:2px solid var(--borda);
   border-radius:14px;
   padding:8px;
-  transform:scale(0.95);   /* ↓ deixa levemente menor */
 }
 .card-receita:focus-visible{outline:3px solid #000; outline-offset:2px}
 .card-cover{
   width:100%;
-  aspect-ratio:3/4;   /* ↓ altura maior, mais compacto */
+  aspect-ratio:4/3;            /* ↓ mais curto que 1:1 e 3:4 */
   border-radius:10px;
   object-fit:cover;
   border:4px solid var(--borda);
   background:#c9eb9e;
 }
 .card-titulo{
-  margin:0;
-  text-align:center;
-  font-size:14px;    /* ↓ menor */
-  line-height:1.2;
-  color:var(--verde);
+  margin:0; text-align:center;
+  font-size:14px; line-height:1.2; color:var(--verde);
 }
 .meta{
-  display:flex;
-  flex-wrap:wrap;
-  gap:4px;
-  justify-content:center;
+  display:flex; flex-wrap:wrap; gap:4px; justify-content:center;
 }
 .card-meta{
   background:var(--chip);
@@ -129,23 +117,15 @@ select:focus-visible,
   border-radius:999px;
   padding:3px 6px;
   font-size:11px;
-  display:inline-flex;
-  align-items:center;
-  gap:4px;
+  display:inline-flex; align-items:center; gap:4px;
 }
 
-/* Ações do card */
+/* ===== Ações: só Lixeira + Visualizar ===== */
 .card-acoes{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-top:4px;
-  gap:6px;
+  display:flex; align-items:center; justify-content:space-between;
+  margin-top:4px; gap:6px;
 }
-
-/* só lixeira + visualizar agora */
-.btn-excluir,
-.card-link {
+.btn-excluir, .card-link{
   border:2px solid var(--borda);
   background:#fff;
   border-radius:10px;
@@ -154,72 +134,35 @@ select:focus-visible,
   cursor:pointer;
   line-height:1;
 }
-
-.btn-excluir {
-  min-width:40px;
-  text-align:center;
-}
-
-.card-link {
-  flex:1;
-  text-align:center;
-}
+.btn-excluir{min-width:40px; text-align:center}
+.card-link{flex:1; text-align:center}
 
 /* ===== Estado vazio ===== */
-.vazio{
-  text-align:center;
-  margin:40px 0;
-  color:var(--verde);
-}
+.vazio{text-align:center; margin:40px 0; color:var(--verde)}
 .vazio img{width:120px;height:auto;margin-bottom:8px}
 .vazio .cta{
-  display:inline-block;
-  margin-top:8px;
-  padding:8px 12px;
-  border-radius:10px;
-  border:2px solid var(--borda);
-  background:#fff;
-  color:var(--verde);
-  text-decoration:none;
+  display:inline-block; margin-top:8px; padding:8px 12px;
+  border-radius:10px; border:2px solid var(--borda);
+  background:#fff; color:var(--verde); text-decoration:none;
 }
 
-/* ===== Rodapé curvo (exato) ===== */
+/* ===== Rodapé curvo ===== */
 .curva{
-  position:fixed;
-  left:0; right:0; bottom:0;
-  height:70px;
+  position:fixed; left:0; right:0; bottom:0; height:70px;
   background:var(--roxo-escuro);
-  border-top-left-radius:100% 50%;
-  border-top-right-radius:100% 50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:10;
-  padding:0 16px;
+  border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
+  display:flex; align-items:center; justify-content:center;
+  z-index:10; padding:0 16px;
 }
-.curva__nav{
-  display:flex;
-  align-items:center;
-  gap:40px;
-}
-
-.btn-footer{
-  width:55px; height:55px;
-  border:none; background:transparent;
-  border-radius:50%;
-  padding:0; display:flex; align-items:center; justify-content:center;
-  transform:translateY(-10px);
-}
+.curva__nav{display:flex; align-items:center; gap:40px}
+.btn-footer{width:55px; height:55px; border:none; background:transparent; border-radius:50%;
+  padding:0; display:flex; align-items:center; justify-content:center; transform:translateY(-10px)}
 .btn-footer img{width:250%; height:250%; object-fit:contain}
-
-.btn-central{
-  width:150px; height:150px;
-  transform:translateY(-20px);
-}
+.btn-central{width:150px; height:150px; transform:translateY(-20px)}
 .btn-central img{width:150%; height:150%; object-fit:contain}
 
+/* ===== A11y ===== */
 .sr-only{
-  position:absolute!important;
-  width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  position:absolute!important; width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
   clip:rect(0,0,0,0); white-space:nowrap; border:0;
 }
