@@ -7,11 +7,9 @@
   <link rel="stylesheet" href="./minhas-receitas.css" />
 </head>
 <body>
-  <main id="conteudo" class="container" tabindex="-1">
-    <!-- Cabeçalho simples (sem menus) -->
+  <main id="conteudo" class="container">
     <h1 class="titulo">Minhas Receitas</h1>
 
-    <!-- Filtros e busca -->
     <section class="filtros" aria-label="Busca e filtros">
       <div class="busca">
         <img src="../../assets/lupa.png" alt="" class="lupa" aria-hidden="true" />
@@ -44,14 +42,11 @@
       </div>
     </section>
 
-    <!-- Feedback vivo para ações (favoritar/excluir) -->
     <div id="ariaFeedback" class="sr-only" aria-live="polite"></div>
 
-    <!-- Lista/grid -->
     <section aria-label="Receitas salvas">
       <div id="listaReceitas" class="grid"></div>
 
-      <!-- Estado vazio -->
       <div id="estadoVazio" class="vazio" hidden>
         <img src="../../assets/empty-recipes.png" alt="" aria-hidden="true" />
         <h2>Você ainda não salvou receitas</h2>
@@ -61,7 +56,6 @@
     </section>
   </main>
 
-  <!-- Rodapé curvo padrão (exato) -->
   <footer class="curva" aria-label="Navegação principal">
     <nav class="curva__nav">
       <a id="btnVoltar" class="btn-footer" href="../humor/index.html" aria-label="Voltar para Humor">
