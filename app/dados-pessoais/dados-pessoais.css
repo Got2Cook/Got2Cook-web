@@ -4,17 +4,18 @@
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 :root{
-  /* ---- Dimensões unificadas para TODOS os botões ---- */
-  --btn-h: 44px;          /* altura fixa */
-  --btn-minw: 160px;      /* largura mínima igual */
-  --btn-pad-x: 20px;      /* padding horizontal */
-  --btn-br: 25px;         /* border-radius */
-  --btn-bw: 2px;          /* espessura da borda */
-  --btn-fs: 14px;         /* fonte */
+  --btn-h: 48px;             /* altura fixa */
+  --btn-minw: 160px;         /* largura mínima */
+  --btn-pad-x: 20px;         /* padding horizontal */
+  --btn-br: 25px;            /* raio borda */
+  --btn-bw: 2px;             /* espessura borda */
+  --btn-fs: 16px;            /* fonte */
+  --btn-fw: 700;             /* peso fonte */
   --btn-bg: #c0ffa5;
   --btn-fg: #492f70;
-  --btn-bg-active: #a0f47d;
   --btn-border: #492f70;
+  --btn-bg-active: #a0f47d;
+  --btn-fg-active: #1c3f14;
   --btn-border-active: #4caf50;
 }
 
@@ -83,35 +84,37 @@ input[type="text"], input[type="email"]{
 }
 :focus-visible{ outline:3px solid #492f70; outline-offset:2px; }
 
-/* ===== Preferências (botões inteiros clicáveis) ===== */
-.preferencias-linha{
-  display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:8px;
-}
-.preferencias-linha .tag{
-  /* botão padrão unificado */
+/* ===== BOTÃO BASE (para preferências, nível e chips) ===== */
+.btn-base{
   display:inline-flex; align-items:center; justify-content:center;
   height:var(--btn-h);
   min-width:var(--btn-minw);
   padding:0 var(--btn-pad-x);
   font-size:var(--btn-fs);
+  font-weight:var(--btn-fw);
+  text-align:center;
   background:var(--btn-bg);
   color:var(--btn-fg);
   border:var(--btn-bw) solid var(--btn-border);
   border-radius:var(--btn-br);
-  cursor:pointer; user-select:none; text-align:center;
+  cursor:pointer; user-select:none;
 }
-.preferencias-linha .tag input[type="checkbox"]{ display:none; }
-.preferencias-linha .tag:has(input[type="checkbox"]:checked){
+.btn-base.active{
   background:var(--btn-bg-active);
   border-color:var(--btn-border-active);
-  color:#1c3f14;
+  color:var(--btn-fg-active);
 }
 
-/* Campo “Adicionar preferência” em chip do mesmo tamanho */
+/* ===== Preferências ===== */
+.preferencias-linha{ display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:8px; }
+.preferencias-linha .tag{ }
+.preferencias-linha .tag input{ display:none; }
+.preferencias-linha .tag span{ pointer-events:none; } /* só pra manter texto seguro */
+
+/* “Adicionar preferência” */
 .input-chip{
   display:inline-flex; align-items:center; gap:8px;
-  height:var(--btn-h);
-  min-width:var(--btn-minw);
+  height:var(--btn-h); min-width:var(--btn-minw);
   padding:0 8px 0 12px;
   background:var(--btn-bg);
   border:var(--btn-bw) solid var(--btn-border);
@@ -119,46 +122,44 @@ input[type="text"], input[type="email"]{
 }
 .input-chip input{
   border:none; background:transparent; outline:none;
-  font-size:var(--btn-fs); width:160px; /* cresce com conteúdo */
+  font-size:var(--btn-fs); flex:1;
 }
-.btn{ background:#7b7190; color:#fff; border:none; border-radius:12px; padding:10px 14px; cursor:pointer; }
-.btn-plus{ border-radius:14px; padding:6px 12px; line-height:1; }
+.btn-plus{ border-radius:14px; padding:6px 12px; }
 
-/* Lista de preferências livres no mesmo tamanho */
+/* Lista de preferências livres */
 .chips{
   list-style:none; padding:0; margin:8px 0 0;
   display:flex; flex-wrap:wrap; gap:10px;
 }
+.chips li{ @apply .btn-base; } /* se não usar Tailwind, replique manual: */
 .chips li{
   display:inline-flex; align-items:center; justify-content:center; gap:8px;
-  height:var(--btn-h);
-  min-width:var(--btn-minw);
+  height:var(--btn-h); min-width:var(--btn-minw);
   padding:0 var(--btn-pad-x);
-  font-size:var(--btn-fs);
-  background:var(--btn-bg);
-  color:var(--btn-fg);
+  font-size:var(--btn-fs); font-weight:var(--btn-fw);
+  background:var(--btn-bg); color:var(--btn-fg);
   border:var(--btn-bw) solid var(--btn-border);
   border-radius:var(--btn-br);
 }
 .chips button.remover{ background:transparent; border:none; cursor:pointer; font-size:16px; }
 
-/* ===== Nível culinário (mesmo tamanho das preferências) ===== */
+/* ===== Nível culinário ===== */
 .nivel-botoes{ display:flex; flex-wrap:wrap; gap:12px; margin-top:10px; }
+.nivel-btn{ composes: btn-base; } /* se não usar pós-CSS, repete abaixo */
 .nivel-btn{
   display:inline-flex; align-items:center; justify-content:center;
-  height:var(--btn-h);
-  min-width:var(--btn-minw);
+  height:var(--btn-h); min-width:var(--btn-minw);
   padding:0 var(--btn-pad-x);
-  font-size:var(--btn-fs);
-  text-align:center;
+  font-size:var(--btn-fs); font-weight:var(--btn-fw);
+  background:var(--btn-bg); color:var(--btn-fg);
   border:var(--btn-bw) solid var(--btn-border);
   border-radius:var(--btn-br);
-  background:var(--btn-bg);
-  color:var(--btn-fg);
-  font-weight:700;
-  cursor:pointer;
 }
-.nivel-btn.selecionado{ background:var(--btn-bg-active); border-color:var(--btn-border-active); }
+.nivel-btn.selecionado{
+  background:var(--btn-bg-active);
+  border-color:var(--btn-border-active);
+  color:var(--btn-fg-active);
+}
 
 /* ===== Grid responsivo ===== */
 .perfil-grid{ display:grid; gap:16px; }
@@ -168,7 +169,7 @@ input[type="text"], input[type="email"]{
   .perfil-topo{ justify-items:center; }
 }
 
-/* ===== Rodapé curvo ===== */
+/* ===== Rodapé ===== */
 .curva{
   position:fixed; left:0; bottom:0; width:100%; height:70px; background:#7b7190;
   border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
@@ -183,7 +184,7 @@ input[type="text"], input[type="email"]{
 .btn-footer.btn-central{ width:150px; height:150px; transform:translateY(-20px); }
 .btn-footer.btn-central img{ width:150%; height:150%; }
 
-/* ===== Modal (mini-widget de edição) ===== */
+/* ===== Modal ===== */
 .modal{
   position:fixed; inset:0; background:rgba(0,0,0,.35);
   display:none; align-items:center; justify-content:center; z-index:20;
