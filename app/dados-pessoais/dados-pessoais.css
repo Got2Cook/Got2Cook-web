@@ -4,13 +4,13 @@
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 :root{
-  /* dimensões/estilo unificado para TODOS os botões visuais */
-  --btn-h: 48px;
-  --btn-minw: 160px;
-  --btn-pad-x: 20px;
-  --btn-br: 25px;
+  /* Botões mais compactos */
+  --btn-h: 36px;         /* altura menor */
+  --btn-minw: 120px;     /* largura mínima menor */
+  --btn-pad-x: 14px;     /* padding menor */
+  --btn-br: 18px;        /* raio menor */
   --btn-bw: 2px;
-  --btn-fs: 16px;
+  --btn-fs: 14px;        /* fonte menor */
   --btn-fw: 700;
   --btn-bg: #c0ffa5;
   --btn-fg: #492f70;
@@ -29,10 +29,15 @@ body{
 img{ display:block; max-width:100%; }
 
 /* ===== Container / Título ===== */
-.container{ max-width:600px; margin:0 auto; padding:16px 16px 140px; }
+.container{
+  max-width:600px;
+  margin:0 auto;
+  padding:12px 16px 120px;          /* menos padding para caber melhor */
+  min-height:calc(100vh - 70px);    /* ocupa a tela inteira acima do rodapé */
+}
 .titulo{
-  margin:10px 0 8px;
-  font-size:56px;
+  margin:6px 0 6px;                 /* margens menores */
+  font-size:56px;                    /* mantém o impacto do título */
   line-height:1.05;
   color:#1d5c00;
   text-align:center;
@@ -42,50 +47,54 @@ img{ display:block; max-width:100%; }
 /* ===== Foto + Humor ===== */
 .perfil-topo{
   display:grid; justify-items:center; align-content:start;
-  margin-top:10px; text-align:center;
+  margin-top:6px; text-align:center;
 }
 .foto-perfil{ position:relative; display:inline-block; }
 .foto-perfil img{
-  width:260px; height:260px; border-radius:50%;
-  object-fit:cover; border:3px solid #225c18; background:#fff;
+  width:240px; height:240px;        /* ligeiramente menor */
+  border-radius:50%; object-fit:cover;
+  border:3px solid #225c18; background:#fff;
 }
-#emojiHumor{ position:absolute; bottom:0; right:-6px; font-size:84px; line-height:1; }
+#emojiHumor{ position:absolute; bottom:0; right:-6px; font-size:78px; line-height:1; }
 .alterar-foto{
-  display:block; margin:12px auto 0;
+  display:block; margin:10px auto 0;
   background:#7b7190; color:#fff; font-weight:700;
-  border:none; border-radius:24px; padding:10px 22px; cursor:pointer;
+  border:none; border-radius:20px; padding:8px 18px; cursor:pointer;
   box-shadow:0 2px 0 rgba(0,0,0,.15);
 }
 
-/* ===== Bloco de dados ===== */
+/* ===== Bloco de dados (mais compacto, mas expansível) ===== */
 .bloco-dados{
-  background:#c9eb9e; padding:28px; border-radius:24px; margin:20px;
+  background:#c9eb9e;
+  padding:20px;                      /* menor */
+  border-radius:20px;
+  margin:12px;
 }
 .linha{
-  display:flex; align-items:center; gap:10px; margin:15px 0; flex-wrap:wrap;
-  font-size:18px; color:#2b2b2b; border-bottom:2px solid #c0ffa5; padding-bottom:10px;
+  display:flex; align-items:center; gap:8px; margin:10px 0; flex-wrap:wrap;
+  font-size:18px; color:#2b2b2b; border-bottom:1.5px solid #c0ffa5; padding-bottom:8px;
 }
 .linha:last-child{ border-bottom:none; }
-.emoji{ font-size:20px; }
+.emoji{ font-size:18px; }
 
 /* Textos editáveis / inputs */
 .editavel{
-  padding:6px 10px; border-radius:10px;
+  padding:4px 8px; border-radius:10px;
   background:linear-gradient(180deg,#f7fff0,#eef8e6);
   border:1px solid #9ac27d;
 }
 input[type="text"], input[type="email"]{
-  padding:10px 12px; border-radius:12px; border:1.5px solid #9ac27d; background:#f4ffe9;
-  color:#2b2b2b;
+  padding:8px 10px; border-radius:10px;
+  border:1.5px solid #9ac27d; background:#f4ffe9; color:#2b2b2b;
 }
 ::placeholder{ color:#6a6a6a; }
 .btn-lapis{
-  margin-left:8px; background:#7b7190; color:#fff;
-  border:none; border-radius:10px; padding:6px 10px; cursor:pointer;
+  margin-left:6px; background:#7b7190; color:#fff;
+  border:none; border-radius:10px; padding:5px 8px; cursor:pointer;
 }
 :focus-visible{ outline:3px solid #492f70; outline-offset:2px; }
 
-/* ===== BOTÃO BASE (aplicado em preferências, nível e chips) ===== */
+/* ===== Botão base (todos iguais) ===== */
 .g2c-btn{
   display:inline-flex; align-items:center; justify-content:center;
   height:var(--btn-h);
@@ -102,20 +111,22 @@ input[type="text"], input[type="email"]{
 }
 
 /* ===== Preferências ===== */
-.preferencias-linha{ display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:8px; }
-
-/* Cada label.tag contém input oculto + span.g2c-btn que é o botão */
+.preferencias-linha{
+  display:flex; flex-wrap:wrap; align-items:center;
+  gap:8px;                           /* gap menor */
+  margin-top:6px;
+}
 .tag input{ display:none; }
-.tag .g2c-btn{ /* já recebe estilo por .g2c-btn */ }
+.tag .g2c-btn{ /* botão visual */ }
 .tag input:checked + .g2c-btn{
   background:var(--btn-bg-active);
   border-color:var(--btn-border-active);
   color:var(--btn-fg-active);
 }
 
-/* “Adicionar preferência” com mesmo tamanho */
+/* “Adicionar preferência” mantém o mesmo tamanho */
 .input-chip.g2c-btn{
-  gap:8px; padding:0 8px 0 12px; /* mantém largura com o input dentro */
+  gap:6px; padding:0 8px 0 10px;
 }
 .input-chip input{
   border:none; background:transparent; outline:none;
@@ -123,16 +134,16 @@ input[type="text"], input[type="email"]{
 }
 .btn-plus{
   background:#7b7190; color:#fff; border:none;
-  border-radius:12px; padding:6px 12px; cursor:pointer; line-height:1;
+  border-radius:12px; padding:4px 10px; cursor:pointer; line-height:1;
 }
 
-/* Lista de preferências livres (chips) com mesmo visual */
+/* Lista de preferências livres com mesmo visual e tamanho */
 .chips{
-  list-style:none; padding:0; margin:10px 0 0;
-  display:flex; flex-wrap:wrap; gap:10px;
+  list-style:none; padding:0; margin:8px 0 0;
+  display:flex; flex-wrap:wrap; gap:8px;
 }
-.chips li{ /* aplica o mesmo botão base */
-  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+.chips li{
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
   height:var(--btn-h); min-width:var(--btn-minw);
   padding:0 var(--btn-pad-x);
   font-size:var(--btn-fs); font-weight:var(--btn-fw);
@@ -142,9 +153,9 @@ input[type="text"], input[type="email"]{
 }
 .chips button.remover{ background:transparent; border:none; cursor:pointer; font-size:16px; }
 
-/* ===== Nível culinário (usa o mesmo botão base) ===== */
-.nivel-botoes{ display:flex; flex-wrap:wrap; gap:12px; margin-top:10px; }
-.nivel-btn{ /* já herda .g2c-btn no HTML */ }
+/* ===== Nível culinário (mesmos botões) ===== */
+.nivel-botoes{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+.nivel-btn{ /* já recebe .g2c-btn no HTML */ }
 .nivel-btn.selecionado{
   background:var(--btn-bg-active);
   border-color:var(--btn-border-active);
@@ -152,11 +163,11 @@ input[type="text"], input[type="email"]{
 }
 
 /* ===== Grid responsivo ===== */
-.perfil-grid{ display:grid; gap:16px; }
+.perfil-grid{ display:grid; gap:12px; }
 @media (min-width:1024px){
-  .container{ max-width:1100px; }
-  .perfil-grid{ grid-template-columns:340px 1fr; align-items:start; }
-  .perfil-topo{ justify-items:center; }
+  .container{ max-width:1000px; }                  /* um pouco mais estreito ajuda a caber */
+  .perfil-grid{ grid-template-columns:320px 1fr; align-items:start; }
+  .foto-perfil img{ width:230px; height:230px; }   /* ajusta levemente no desktop */
 }
 
 /* ===== Rodapé curvo ===== */
@@ -181,12 +192,12 @@ input[type="text"], input[type="email"]{
 }
 .modal[aria-hidden="false"]{ display:flex; }
 .modal-content{
-  width:min(92vw,420px); background:#f2ffe5; border:2px solid #7b7190; border-radius:20px;
-  box-shadow:0 10px 30px rgba(0,0,0,.25); padding:16px;
+  width:min(92vw,420px); background:#f2ffe5; border:2px solid #7b7190; border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25); padding:14px;
 }
-.modal-titulo{ margin:0 0 10px; color:#492f70; }
+.modal-titulo{ margin:0 0 8px; color:#492f70; }
 .modal-content input{
-  width:100%; margin-bottom:12px; padding:12px;
-  border-radius:12px; border:1.5px solid #9ac27d; background:#fffef7; color:#2b2b2b;
+  width:100%; margin-bottom:10px; padding:10px;
+  border-radius:10px; border:1.5px solid #9ac27d; background:#fffef7; color:#2b2b2b;
 }
 .modal-acoes{ display:flex; justify-content:flex-end; gap:8px; }
