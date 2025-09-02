@@ -4,13 +4,13 @@
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 :root{
-  /* Botões mais compactos */
-  --btn-h: 36px;         /* altura menor */
-  --btn-minw: 120px;     /* largura mínima menor */
-  --btn-pad-x: 14px;     /* padding menor */
-  --btn-br: 18px;        /* raio menor */
+  /* Botões compactos e padronizados */
+  --btn-h: 36px;
+  --btn-minw: 120px;
+  --btn-pad-x: 14px;
+  --btn-br: 18px;
   --btn-bw: 2px;
-  --btn-fs: 14px;        /* fonte menor */
+  --btn-fs: 14px;
   --btn-fw: 700;
   --btn-bg: #c0ffa5;
   --btn-fg: #492f70;
@@ -32,12 +32,12 @@ img{ display:block; max-width:100%; }
 .container{
   max-width:600px;
   margin:0 auto;
-  padding:12px 16px 120px;          /* menos padding para caber melhor */
-  min-height:calc(100vh - 70px);    /* ocupa a tela inteira acima do rodapé */
+  padding:12px 16px 120px;
+  min-height:calc(100vh - 70px); /* ocupa a tela acima do rodapé */
 }
 .titulo{
-  margin:6px 0 6px;                 /* margens menores */
-  font-size:56px;                    /* mantém o impacto do título */
+  margin:6px 0 6px;
+  font-size:56px;
   line-height:1.05;
   color:#1d5c00;
   text-align:center;
@@ -46,12 +46,14 @@ img{ display:block; max-width:100%; }
 
 /* ===== Foto + Humor ===== */
 .perfil-topo{
-  display:grid; justify-items:center; align-content:start;
-  margin-top:6px; text-align:center;
+  display:grid;
+  justify-items:center;
+  align-content:center;   /* centraliza verticalmente no espaço da célula */
+  text-align:center;
 }
 .foto-perfil{ position:relative; display:inline-block; }
 .foto-perfil img{
-  width:240px; height:240px;        /* ligeiramente menor */
+  width:240px; height:240px;
   border-radius:50%; object-fit:cover;
   border:3px solid #225c18; background:#fff;
 }
@@ -63,10 +65,10 @@ img{ display:block; max-width:100%; }
   box-shadow:0 2px 0 rgba(0,0,0,.15);
 }
 
-/* ===== Bloco de dados (mais compacto, mas expansível) ===== */
+/* ===== Bloco de dados ===== */
 .bloco-dados{
   background:#c9eb9e;
-  padding:20px;                      /* menor */
+  padding:20px;
   border-radius:20px;
   margin:12px;
 }
@@ -94,7 +96,7 @@ input[type="text"], input[type="email"]{
 }
 :focus-visible{ outline:3px solid #492f70; outline-offset:2px; }
 
-/* ===== Botão base (todos iguais) ===== */
+/* ===== Botão base ===== */
 .g2c-btn{
   display:inline-flex; align-items:center; justify-content:center;
   height:var(--btn-h);
@@ -113,18 +115,16 @@ input[type="text"], input[type="email"]{
 /* ===== Preferências ===== */
 .preferencias-linha{
   display:flex; flex-wrap:wrap; align-items:center;
-  gap:8px;                           /* gap menor */
-  margin-top:6px;
+  gap:8px; margin-top:6px;
 }
 .tag input{ display:none; }
-.tag .g2c-btn{ /* botão visual */ }
 .tag input:checked + .g2c-btn{
   background:var(--btn-bg-active);
   border-color:var(--btn-border-active);
   color:var(--btn-fg-active);
 }
 
-/* “Adicionar preferência” mantém o mesmo tamanho */
+/* “Adicionar preferência” */
 .input-chip.g2c-btn{
   gap:6px; padding:0 8px 0 10px;
 }
@@ -137,7 +137,7 @@ input[type="text"], input[type="email"]{
   border-radius:12px; padding:4px 10px; cursor:pointer; line-height:1;
 }
 
-/* Lista de preferências livres com mesmo visual e tamanho */
+/* Lista de preferências livres */
 .chips{
   list-style:none; padding:0; margin:8px 0 0;
   display:flex; flex-wrap:wrap; gap:8px;
@@ -153,9 +153,9 @@ input[type="text"], input[type="email"]{
 }
 .chips button.remover{ background:transparent; border:none; cursor:pointer; font-size:16px; }
 
-/* ===== Nível culinário (mesmos botões) ===== */
+/* ===== Nível culinário ===== */
 .nivel-botoes{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
-.nivel-btn{ /* já recebe .g2c-btn no HTML */ }
+.nivel-btn{}
 .nivel-btn.selecionado{
   background:var(--btn-bg-active);
   border-color:var(--btn-border-active);
@@ -163,11 +163,20 @@ input[type="text"], input[type="email"]{
 }
 
 /* ===== Grid responsivo ===== */
-.perfil-grid{ display:grid; gap:12px; }
+.perfil-grid{
+  display:grid;
+  gap:16px;
+  align-items:center;        /* centraliza verticalmente as colunas */
+  justify-items:center;      /* centraliza horizontalmente */
+  margin-top:40px;           /* joga mais para baixo */
+}
 @media (min-width:1024px){
-  .container{ max-width:1000px; }                  /* um pouco mais estreito ajuda a caber */
-  .perfil-grid{ grid-template-columns:320px 1fr; align-items:start; }
-  .foto-perfil img{ width:230px; height:230px; }   /* ajusta levemente no desktop */
+  .container{ max-width:1000px; }
+  .perfil-grid{
+    grid-template-columns:320px 1fr;
+    align-items:center;      /* centraliza no desktop também */
+  }
+  .foto-perfil img{ width:230px; height:230px; }
 }
 
 /* ===== Rodapé curvo ===== */
