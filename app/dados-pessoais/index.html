@@ -14,7 +14,6 @@
       <!-- COLUNA ESQUERDA: FOTO + HUMOR -->
       <div class="perfil-topo">
         <div class="foto-perfil">
-          <!-- Troque o src se sua imagem estiver em outra pasta -->
           <img id="fotoPerfil" src="../assets/perfil.png" alt="Foto de perfil" />
           <span id="emojiHumor" aria-label="Humor atual">😀</span>
         </div>
@@ -41,41 +40,43 @@
           </span>
         </div>
 
-       <div class="linha">
-  <span class="emoji">🍽️</span>
-  <span><strong>Preferência alimentar:</strong></span>
+        <!-- PREFERÊNCIAS (tags inteiras clicáveis + campo de adicionar ao lado) -->
+        <div class="linha">
+          <span class="emoji">🍽️</span>
+          <span><strong>Preferência alimentar:</strong></span>
 
-  <div class="preferencias-linha" id="preferencias">
-    <label class="tag">
-      <input type="checkbox" class="tag-checkbox" value="VEGETARIANO" />
-      <span>VEGETARIANO</span>
-    </label>
-    <label class="tag">
-      <input type="checkbox" class="tag-checkbox" value="VEGANO" />
-      <span>VEGANO</span>
-    </label>
-    <label class="tag">
-      <input type="checkbox" class="tag-checkbox" value="CELÍACO" />
-      <span>CELÍACO</span>
-    </label>
-    <label class="tag">
-      <input type="checkbox" class="tag-checkbox" value="DIABÉTICO" />
-      <span>DIABÉTICO</span>
-    </label>
-    <label class="tag">
-      <input type="checkbox" class="tag-checkbox" value="HIPOLACTASIA" />
-      <span>HIPOLACTASIA</span>
-    </label>
+          <div class="preferencias-linha" id="preferencias">
+            <label class="tag">
+              <input type="checkbox" class="tag-checkbox" value="VEGETARIANO" />
+              <span>VEGETARIANO</span>
+            </label>
+            <label class="tag">
+              <input type="checkbox" class="tag-checkbox" value="VEGANO" />
+              <span>VEGANO</span>
+            </label>
+            <label class="tag">
+              <input type="checkbox" class="tag-checkbox" value="CELÍACO" />
+              <span>CELÍACO</span>
+            </label>
+            <label class="tag">
+              <input type="checkbox" class="tag-checkbox" value="DIABÉTICO" />
+              <span>DIABÉTICO</span>
+            </label>
+            <label class="tag">
+              <input type="checkbox" class="tag-checkbox" value="HIPOLACTASIA" />
+              <span>HIPOLACTASIA</span>
+            </label>
 
-    <!-- Adicionar preferência (fica ao lado e quebra de linha quando precisar) -->
-    <div class="input-chip">
-      <input id="preferenciaNova" type="text" placeholder="Adicionar preferência..." aria-label="Nova preferência" />
-      <button id="btnAddPreferencia" class="btn btn-plus" aria-label="Adicionar preferência">+</button>
-    </div>
-  </div>
+            <!-- Adicionar preferência (ao lado; quebra para baixo se faltar espaço) -->
+            <div class="input-chip">
+              <input id="preferenciaNova" type="text" placeholder="Adicionar preferência..." aria-label="Nova preferência" />
+              <button id="btnAddPreferencia" class="btn btn-plus" aria-label="Adicionar preferência">+</button>
+            </div>
+          </div>
 
-  <ul id="preferenciasLista" class="chips" aria-live="polite"></ul>
-</div>
+          <!-- Lista de preferências livres adicionadas -->
+          <ul id="preferenciasLista" class="chips" aria-live="polite"></ul>
+        </div>
 
         <div class="linha">
           <span class="emoji">👩‍🍳</span>
