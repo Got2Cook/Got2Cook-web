@@ -44,25 +44,31 @@ img{ display:block; max-width:100%; }
   font-weight:800;
 }
 
-/* ===== Foto + Humor ===== */
+/* ===== Foto + Humor (MAIOR e MAIS PARA BAIXO) ===== */
 .perfil-topo{
   display:grid;
   justify-items:center;
-  align-content:center;   /* centraliza verticalmente no espaço da célula */
+  align-content:center;   /* centraliza verticalmente dentro da célula */
   text-align:center;
+  margin-top:20px;        /* desce o conjunto */
 }
 .foto-perfil{ position:relative; display:inline-block; }
 .foto-perfil img{
-  width:240px; height:240px;
+  width:280px; height:280px;     /* maior */
   border-radius:50%; object-fit:cover;
-  border:3px solid #225c18; background:#fff;
+  border:4px solid #225c18;      /* borda proporcional */
+  background:#fff;
 }
-#emojiHumor{ position:absolute; bottom:0; right:-6px; font-size:78px; line-height:1; }
+#emojiHumor{
+  position:absolute; bottom:0; right:-8px;
+  font-size:96px; line-height:1; /* emoji maior */
+}
 .alterar-foto{
-  display:block; margin:10px auto 0;
+  display:block; margin:16px auto 0; /* mais espaço da foto até o botão */
   background:#7b7190; color:#fff; font-weight:700;
-  border:none; border-radius:20px; padding:8px 18px; cursor:pointer;
+  border:none; border-radius:24px; padding:10px 22px; cursor:pointer;
   box-shadow:0 2px 0 rgba(0,0,0,.15);
+  font-size:16px;                 /* botão ligeiramente maior */
 }
 
 /* ===== Bloco de dados ===== */
@@ -96,7 +102,7 @@ input[type="text"], input[type="email"]{
 }
 :focus-visible{ outline:3px solid #492f70; outline-offset:2px; }
 
-/* ===== Botão base ===== */
+/* ===== Botão base (todos iguais) ===== */
 .g2c-btn{
   display:inline-flex; align-items:center; justify-content:center;
   height:var(--btn-h);
@@ -124,7 +130,7 @@ input[type="text"], input[type="email"]{
   color:var(--btn-fg-active);
 }
 
-/* “Adicionar preferência” */
+/* “Adicionar preferência” com mesmo tamanho */
 .input-chip.g2c-btn{
   gap:6px; padding:0 8px 0 10px;
 }
@@ -162,21 +168,21 @@ input[type="text"], input[type="email"]{
   color:var(--btn-fg-active);
 }
 
-/* ===== Grid responsivo ===== */
+/* ===== Grid responsivo (desce mais o conjunto) ===== */
 .perfil-grid{
   display:grid;
-  gap:16px;
-  align-items:center;        /* centraliza verticalmente as colunas */
-  justify-items:center;      /* centraliza horizontalmente */
-  margin-top:40px;           /* joga mais para baixo */
+  gap:20px;                /* mais espaço entre colunas */
+  align-items:center;      /* centraliza verticalmente as colunas */
+  justify-items:center;    /* centraliza horizontalmente */
+  margin-top:60px;         /* conjunto mais para baixo */
 }
 @media (min-width:1024px){
-  .container{ max-width:1000px; }
+  .container{ max-width:1100px; }
   .perfil-grid{
-    grid-template-columns:320px 1fr;
-    align-items:center;      /* centraliza no desktop também */
+    grid-template-columns:360px 1fr; /* coluna da foto maior */
+    align-items:center;
   }
-  .foto-perfil img{ width:230px; height:230px; }
+  .foto-perfil img{ width:260px; height:260px; } /* grande e equilibrado no desktop */
 }
 
 /* ===== Rodapé curvo ===== */
