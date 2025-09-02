@@ -3,20 +3,31 @@
    ========================= */
 * { box-sizing: border-box; }
 html, body { height: 100%; }
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #c0ffa5;
-  color: #2b2b2b;
+:root{
+  /* ---- Dimensões unificadas para TODOS os botões ---- */
+  --btn-h: 44px;          /* altura fixa */
+  --btn-minw: 160px;      /* largura mínima igual */
+  --btn-pad-x: 20px;      /* padding horizontal */
+  --btn-br: 25px;         /* border-radius */
+  --btn-bw: 2px;          /* espessura da borda */
+  --btn-fs: 14px;         /* fonte */
+  --btn-bg: #c0ffa5;
+  --btn-fg: #492f70;
+  --btn-bg-active: #a0f47d;
+  --btn-border: #492f70;
+  --btn-border-active: #4caf50;
 }
-img { display: block; max-width: 100%; }
+
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#c0ffa5;
+  color:#2b2b2b;
+}
+img{ display:block; max-width:100%; }
 
 /* ===== Container / Título ===== */
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 16px 16px 140px; /* espaço pro rodapé */
-}
+.container{ max-width:600px; margin:0 auto; padding:16px 16px 140px; }
 .titulo{
   margin:10px 0 8px;
   font-size:56px;
@@ -28,11 +39,8 @@ img { display: block; max-width: 100%; }
 
 /* ===== Foto + Humor ===== */
 .perfil-topo{
-  display:grid;
-  justify-items:center;
-  align-content:start;
-  margin-top:10px;
-  text-align:center;
+  display:grid; justify-items:center; align-content:start;
+  margin-top:10px; text-align:center;
 }
 .foto-perfil{ position:relative; display:inline-block; }
 .foto-perfil img{
@@ -49,10 +57,7 @@ img { display: block; max-width: 100%; }
 
 /* ===== Bloco de dados ===== */
 .bloco-dados{
-  background:#c9eb9e;
-  padding:28px;
-  border-radius:24px;
-  margin:20px;
+  background:#c9eb9e; padding:28px; border-radius:24px; margin:20px;
 }
 .linha{
   display:flex; align-items:center; gap:10px; margin:15px 0; flex-wrap:wrap;
@@ -72,8 +77,6 @@ input[type="text"], input[type="email"]{
   color:#2b2b2b;
 }
 ::placeholder{ color:#6a6a6a; }
-
-/* Lápis */
 .btn-lapis{
   margin-left:8px; background:#7b7190; color:#fff;
   border:none; border-radius:10px; padding:6px 10px; cursor:pointer;
@@ -82,71 +85,80 @@ input[type="text"], input[type="email"]{
 
 /* ===== Preferências (botões inteiros clicáveis) ===== */
 .preferencias-linha{
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  gap:10px;
-  margin-top:8px;
+  display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:8px;
 }
 .preferencias-linha .tag{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:10px 20px;           /* igual aos botões de nível */
-  min-width:140px;
-  text-align:center;
-  background:#c0ffa5;
-  border:2px solid #492f70;
-  border-radius:25px;
-  font-weight:700;
-  color:#492f70;
-  cursor:pointer;
-  user-select:none;
+  /* botão padrão unificado */
+  display:inline-flex; align-items:center; justify-content:center;
+  height:var(--btn-h);
+  min-width:var(--btn-minw);
+  padding:0 var(--btn-pad-x);
+  font-size:var(--btn-fs);
+  background:var(--btn-bg);
+  color:var(--btn-fg);
+  border:var(--btn-bw) solid var(--btn-border);
+  border-radius:var(--btn-br);
+  cursor:pointer; user-select:none; text-align:center;
 }
 .preferencias-linha .tag input[type="checkbox"]{ display:none; }
 .preferencias-linha .tag:has(input[type="checkbox"]:checked){
-  background:#a0f47d;
-  border-color:#4caf50;
+  background:var(--btn-bg-active);
+  border-color:var(--btn-border-active);
   color:#1c3f14;
 }
 
-/* Campo de adicionar preferência */
+/* Campo “Adicionar preferência” em chip do mesmo tamanho */
 .input-chip{
-  display:flex; align-items:stretch; gap:6px;
-  padding:4px 8px; background:#c0ffa5;
-  border:2px solid #492f70; border-radius:25px;
+  display:inline-flex; align-items:center; gap:8px;
+  height:var(--btn-h);
+  min-width:var(--btn-minw);
+  padding:0 8px 0 12px;
+  background:var(--btn-bg);
+  border:var(--btn-bw) solid var(--btn-border);
+  border-radius:var(--btn-br);
 }
 .input-chip input{
-  border:none; background:transparent; padding:6px 4px 6px 6px;
-  outline:none; min-width:140px;
+  border:none; background:transparent; outline:none;
+  font-size:var(--btn-fs); width:160px; /* cresce com conteúdo */
 }
 .btn{ background:#7b7190; color:#fff; border:none; border-radius:12px; padding:10px 14px; cursor:pointer; }
 .btn-plus{ border-radius:14px; padding:6px 12px; line-height:1; }
 
-/* Lista de preferências livres */
-.chips{ list-style:none; padding:0; margin:8px 0 0; display:flex; flex-wrap:wrap; gap:8px; }
+/* Lista de preferências livres no mesmo tamanho */
+.chips{
+  list-style:none; padding:0; margin:8px 0 0;
+  display:flex; flex-wrap:wrap; gap:10px;
+}
 .chips li{
-  background:#c0ffa5; color:#492f70; border:2px solid #492f70; border-radius:25px;
-  padding:10px 20px; min-width:140px; text-align:center;
-  display:inline-flex; justify-content:center; align-items:center; gap:8px;
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  height:var(--btn-h);
+  min-width:var(--btn-minw);
+  padding:0 var(--btn-pad-x);
+  font-size:var(--btn-fs);
+  background:var(--btn-bg);
+  color:var(--btn-fg);
+  border:var(--btn-bw) solid var(--btn-border);
+  border-radius:var(--btn-br);
 }
 .chips button.remover{ background:transparent; border:none; cursor:pointer; font-size:16px; }
 
-/* ===== Nível culinário ===== */
+/* ===== Nível culinário (mesmo tamanho das preferências) ===== */
 .nivel-botoes{ display:flex; flex-wrap:wrap; gap:12px; margin-top:10px; }
 .nivel-btn{
-  padding:10px 20px;
-  min-width:140px;
+  display:inline-flex; align-items:center; justify-content:center;
+  height:var(--btn-h);
+  min-width:var(--btn-minw);
+  padding:0 var(--btn-pad-x);
+  font-size:var(--btn-fs);
   text-align:center;
-  border:2px solid #492f70;
-  border-radius:25px;
-  background:#c0ffa5;
-  color:#492f70;
+  border:var(--btn-bw) solid var(--btn-border);
+  border-radius:var(--btn-br);
+  background:var(--btn-bg);
+  color:var(--btn-fg);
   font-weight:700;
   cursor:pointer;
-  font-size:14px;
 }
-.nivel-btn.selecionado{ background:#a0f47d; border-color:#4caf50; }
+.nivel-btn.selecionado{ background:var(--btn-bg-active); border-color:var(--btn-border-active); }
 
 /* ===== Grid responsivo ===== */
 .perfil-grid{ display:grid; gap:16px; }
@@ -160,8 +172,7 @@ input[type="text"], input[type="email"]{
 .curva{
   position:fixed; left:0; bottom:0; width:100%; height:70px; background:#7b7190;
   border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
-  display:flex; justify-content:center; align-items:center;
-  gap:40px; z-index:10;
+  display:flex; justify-content:center; align-items:center; gap:40px; z-index:10;
 }
 .btn-footer{
   background:transparent; border:none; border-radius:50%;
