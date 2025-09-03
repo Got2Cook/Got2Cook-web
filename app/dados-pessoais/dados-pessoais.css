@@ -185,54 +185,38 @@ input[type="text"], input[type="email"]{
   .foto-perfil img{ width:260px; height:260px; } /* grande e equilibrado no desktop */
 }
 
-/* Rodapé curvo — medidas EXATAS */
-.curva {
-  width: 100%;
-  height: 70px;
-  background-color: #7b7190;
-  border-top-left-radius: 100% 50%;
-  border-top-right-radius: 100% 50%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px; /* (fix) faltava ; no original */
-  z-index: 10;
+/* ===== Rodapé curvo ===== */
+.curva{
+  position:fixed;
+  left:0; bottom:0;
+  width:100%; height:70px;
+  background:#7b7190;
+  border-top-left-radius:100% 50%;
+  border-top-right-radius:100% 50%;
+  display:flex; justify-content:center; align-items:center;
+  gap:40px; z-index:10;
 }
 
-.btn-footer {
-  background-color: transparent;
-  border: none;
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  cursor: pointer;
-  transform: translateY(-10px);
+.btn-footer{
+  background:transparent;
+  border:none; border-radius:50%;
+  width:55px; height:55px;        /* botões laterais */
+  padding:0;
+  display:grid; place-items:center;
+  transform:translateY(-10px);
+  cursor:pointer; overflow:hidden;
+}
+.btn-footer img{
+  width:100%; height:100%;        /* imagem preenche o botão inteiro */
+  object-fit:contain;
 }
 
-.btn-footer img {
-  width: 250%;
-  height: 250%;
-  object-fit: contain;
+.btn-footer.btn-central{
+  width:150px; height:150px;      /* botão central maior */
+  transform:translateY(-20px);
 }
-
-.btn-footer.logo {
-  width: 150px;
-  height: 150px;
-  transform: translateY(-20px);
-}
-
-.btn-footer.logo img {
-  width: 150%;
-  height: 150%;
-  object-fit: contain;
+.btn-footer.btn-central img{
+  width:100%; height:100%;        /* imagem também preenche inteiro */
 }
 
 /* ===== Modal ===== */
