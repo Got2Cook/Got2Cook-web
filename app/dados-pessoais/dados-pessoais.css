@@ -219,3 +219,45 @@ input[type="text"], input[type="email"]{
 }
 .modal-acoes{ display:flex; justify-content:flex-end; gap:8px; }
 
+/* ===== Rodapé curvo – icones grandes sem cortar ===== */
+.curva{
+  position: fixed;
+  left: 0; bottom: 0;
+  width: 100%; height: 70px;
+  background: #7b7190;
+  border-top-left-radius: 100% 50%;
+  border-top-right-radius: 100% 50%;
+  display: flex; justify-content: center; align-items: center;
+  gap: 40px; z-index: 10;
+  overflow: visible;                /* deixa os filhos aparecerem para fora */
+}
+
+.curva .btn-footer{
+  position: relative;               /* para z-index funcionar */
+  z-index: 2;                       /* acima da “curva” */
+  background: transparent;
+  border: none; border-radius: 50%;
+  width: 55px; height: 55px;        /* laterais */
+  padding: 0; display: grid; place-items: center;
+  transform: translateY(-18px);     /* sobe um pouco mais */
+  cursor: pointer; overflow: hidden;
+}
+
+.curva .btn-footer img{
+  max-width: none !important;
+  width: 260% !important;           /* tamanho igual ao da sua outra tela */
+  height: 260% !important;
+  object-fit: contain;
+}
+
+.curva .btn-footer.btn-central{
+  width: 150px; height: 150px;      /* botão central grande */
+  transform: translateY(-26px);     /* sobe um pouco mais */
+}
+
+.curva .btn-footer.btn-central img{
+  max-width: none !important;
+  width: 160% !important;
+  height: 160% !important;
+  object-fit: contain;
+}
