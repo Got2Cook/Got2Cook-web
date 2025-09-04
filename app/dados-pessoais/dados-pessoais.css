@@ -185,22 +185,45 @@ input[type="text"], input[type="email"]{
   .foto-perfil img{ width:260px; height:260px; } /* grande e equilibrado no desktop */
 }
 
+/* =================================================================
+   Rodapé curvo — MESMO PADRÃO da tela "Minhas Receitas"
+   (icones grandes, elevação e tamanhos idênticos)
+   ================================================================= */
 .curva{
-  width:100%; height:70px; background-color:#7b7190 !important;
-  border-top-left-radius:100% 50%; border-top-right-radius:100% 50% !important;
-  position:fixed; bottom:0; left:0; right:0 !important;
-  display:flex; justify-content:center; align-items:center; gap:40px; z-index:10 !important;
+  position:fixed; left:0; right:0; bottom:0; height:70px;
+  background:#7b7190; /* var(--roxo-escuro) */
+  border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
+  display:flex; align-items:center; justify-content:center;
+  z-index:10; padding:0 16px;
 }
+
+/* (Opcional) wrapper, caso você use <nav class="curva__nav"> como em Minhas Receitas */
+.curva__nav{ display:flex; align-items:center; gap:40px; }
+
 .btn-footer{
-  background-color:transparent; border:none; border-radius:50% !important;
-  width:55px; height:55px; padding:0; display:flex; justify-content:center; align-items:center !important;
-  overflow:hidden; cursor:pointer; transform:translateY(-10px); box-shadow:0 6px 18px rgba(0,0,0,.18) !important;
+  width:55px; height:55px;
+  border:none; background:transparent; border-radius:50%;
+  padding:0; display:flex; align-items:center; justify-content:center;
+  transform:translateY(-10px);
+  cursor:pointer;
+  /* garante que a curva não recorte a imagem e mantém consistência visual */
+  overflow:hidden;
 }
-.btn-footer img{ width:250%; height:250%; object-fit:contain; display:block !important; }
-.btn-footer.logo{
-  width:150px; height:150px; transform:translateY(-20px); box-shadow:0 10px 26px rgba(0,0,0,.22) !important;
+.btn-footer img{
+  /* importante para ignorar img{max-width:100%} global */
+  max-width:none; 
+  width:250%; height:250%;
+  object-fit:contain;
 }
-.btn-footer.logo img{ width:150%; height:150%; object-fit:contain; display:block !important; }
+.btn-central{
+  width:150px; height:150px;
+  transform:translateY(-20px);
+}
+.btn-central img{
+  max-width:none;
+  width:150%; height:150%;
+  object-fit:contain;
+}
 
 /* ===== Modal ===== */
 .modal{
@@ -218,46 +241,3 @@ input[type="text"], input[type="email"]{
   border-radius:10px; border:1.5px solid #9ac27d; background:#fffef7; color:#2b2b2b;
 }
 .modal-acoes{ display:flex; justify-content:flex-end; gap:8px; }
-
-/* ===== Rodapé curvo – icones grandes sem cortar ===== */
-.curva{
-  position: fixed;
-  left: 0; bottom: 0;
-  width: 100%; height: 70px;
-  background: #7b7190;
-  border-top-left-radius: 100% 50%;
-  border-top-right-radius: 100% 50%;
-  display: flex; justify-content: center; align-items: center;
-  gap: 40px; z-index: 10;
-  overflow: visible;                /* deixa os filhos aparecerem para fora */
-}
-
-.curva .btn-footer{
-  position: relative;               /* para z-index funcionar */
-  z-index: 2;                       /* acima da “curva” */
-  background: transparent;
-  border: none; border-radius: 50%;
-  width: 55px; height: 55px;        /* laterais */
-  padding: 0; display: grid; place-items: center;
-  transform: translateY(-18px);     /* sobe um pouco mais */
-  cursor: pointer; overflow: hidden;
-}
-
-.curva .btn-footer img{
-  max-width: none !important;
-  width: 260% !important;           /* tamanho igual ao da sua outra tela */
-  height: 260% !important;
-  object-fit: contain;
-}
-
-.curva .btn-footer.btn-central{
-  width: 150px; height: 150px;      /* botão central grande */
-  transform: translateY(-26px);     /* sobe um pouco mais */
-}
-
-.curva .btn-footer.btn-central img{
-  max-width: none !important;
-  width: 160% !important;
-  height: 160% !important;
-  object-fit: contain;
-}
