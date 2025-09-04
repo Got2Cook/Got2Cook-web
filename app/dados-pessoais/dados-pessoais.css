@@ -48,27 +48,27 @@ img{ display:block; max-width:100%; }
 .perfil-topo{
   display:grid;
   justify-items:center;
-  align-content:center;   /* centraliza verticalmente dentro da célula */
+  align-content:center;
   text-align:center;
-  margin-top:20px;        /* desce o conjunto */
+  margin-top:20px;
 }
 .foto-perfil{ position:relative; display:inline-block; }
 .foto-perfil img{
-  width:280px; height:280px;     /* maior */
+  width:280px; height:280px;
   border-radius:50%; object-fit:cover;
-  border:4px solid #225c18;      /* borda proporcional */
+  border:4px solid #225c18;
   background:#fff;
 }
 #emojiHumor{
   position:absolute; bottom:0; right:-8px;
-  font-size:96px; line-height:1; /* emoji maior */
+  font-size:96px; line-height:1;
 }
 .alterar-foto{
-  display:block; margin:16px auto 0; /* mais espaço da foto até o botão */
+  display:block; margin:16px auto 0;
   background:#7b7190; color:#fff; font-weight:700;
   border:none; border-radius:24px; padding:10px 22px; cursor:pointer;
   box-shadow:0 2px 0 rgba(0,0,0,.15);
-  font-size:16px;                 /* botão ligeiramente maior */
+  font-size:16px;
 }
 
 /* ===== Bloco de dados ===== */
@@ -168,58 +168,62 @@ input[type="text"], input[type="email"]{
   color:var(--btn-fg-active);
 }
 
-/* ===== Grid responsivo (desce mais o conjunto) ===== */
+/* ===== Grid responsivo ===== */
 .perfil-grid{
   display:grid;
-  gap:20px;                /* mais espaço entre colunas */
-  align-items:center;      /* centraliza verticalmente as colunas */
-  justify-items:center;    /* centraliza horizontalmente */
-  margin-top:60px;         /* conjunto mais para baixo */
+  gap:20px;
+  align-items:center;
+  justify-items:center;
+  margin-top:60px;
 }
 @media (min-width:1024px){
   .container{ max-width:1100px; }
   .perfil-grid{
-    grid-template-columns:360px 1fr; /* coluna da foto maior */
+    grid-template-columns:360px 1fr;
     align-items:center;
   }
-  .foto-perfil img{ width:260px; height:260px; } /* grande e equilibrado no desktop */
+  .foto-perfil img{ width:260px; height:260px; }
 }
 
 /* =================================================================
    Rodapé curvo — MESMO PADRÃO da tela "Minhas Receitas"
-   (icones grandes, elevação e tamanhos idênticos)
    ================================================================= */
 .curva{
   position:fixed; left:0; right:0; bottom:0; height:70px;
-  background:#7b7190; /* var(--roxo-escuro) */
+  background:#7b7190;
   border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
   display:flex; align-items:center; justify-content:center;
+  gap:40px;                     /* <<< espaçamento entre botões */
   z-index:10; padding:0 16px;
 }
 
-/* (Opcional) wrapper, caso você use <nav class="curva__nav"> como em Minhas Receitas */
+/* Caso use um wrapper <nav class="curva__nav">, mantém o mesmo gap */
 .curva__nav{ display:flex; align-items:center; gap:40px; }
 
+/* Botões laterais (55x55) */
 .btn-footer{
   width:55px; height:55px;
   border:none; background:transparent; border-radius:50%;
   padding:0; display:flex; align-items:center; justify-content:center;
   transform:translateY(-10px);
-  cursor:pointer;
-  /* garante que a curva não recorte a imagem e mantém consistência visual */
-  overflow:hidden;
+  cursor:pointer; overflow:hidden;
 }
 .btn-footer img{
-  /* importante para ignorar img{max-width:100%} global */
-  max-width:none; 
+  max-width:none;                  /* ignora img{max-width:100%} */
   width:250%; height:250%;
   object-fit:contain;
 }
-.btn-central{
+
+/* Botão central (150x150) — cobre .btn-central, .logo e o id #btnLogo */
+.btn-footer.btn-central,
+.btn-footer.logo,
+#btnLogo.btn-footer{
   width:150px; height:150px;
   transform:translateY(-20px);
 }
-.btn-central img{
+.btn-footer.btn-central img,
+.btn-footer.logo img,
+#btnLogo.btn-footer img{
   max-width:none;
   width:150%; height:150%;
   object-fit:contain;
