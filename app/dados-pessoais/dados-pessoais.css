@@ -237,3 +237,41 @@ input[type="text"], input[type="email"]{
   border-radius:10px; border:1.5px solid #9ac27d; background:#fffef7; color:#2b2b2b;
 }
 .modal-acoes{ display:flex; justify-content:flex-end; gap:8px; }
+
+/* ===== Rodapé curvo padrão (força ícones grandes) ===== */
+.curva{
+  position:fixed; left:0; bottom:0;
+  width:100%; height:70px;
+  background:#7b7190;
+  border-top-left-radius:100% 50%;
+  border-top-right-radius:100% 50%;
+  display:flex; justify-content:center; align-items:center;
+  gap:40px; z-index:10;
+}
+
+.curva .btn-footer{
+  background:transparent; border:none; border-radius:50%;
+  width:55px; height:55px;            /* laterais */
+  padding:0; display:grid; place-items:center;
+  transform:translateY(-10px);
+  cursor:pointer; overflow:hidden;
+}
+
+/* AQUI é o segredo: remove o max-width e força o tamanho maior */
+.curva .btn-footer img{
+  max-width:none !important;          /* ignora img{ max-width:100% } global */
+  width:260% !important;
+  height:260% !important;
+  object-fit:contain;
+}
+
+.curva .btn-footer.btn-central{
+  width:150px; height:150px;          /* central */
+  transform:translateY(-20px);
+}
+.curva .btn-footer.btn-central img{
+  max-width:none !important;
+  width:160% !important;
+  height:160% !important;
+  object-fit:contain;
+}
