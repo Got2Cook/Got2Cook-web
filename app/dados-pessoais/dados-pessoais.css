@@ -185,41 +185,20 @@ input[type="text"], input[type="email"]{
   .foto-perfil img{ width:260px; height:260px; } /* grande e equilibrado no desktop */
 }
 
-/* ===== Rodapé curvo padrão (igual em todas as telas) ===== */
+/* ===== Rodapé curvo ===== */
 .curva{
-  position:fixed;
-  left:0; bottom:0;
-  width:100%; height:70px;
-  background:#7b7190;
-  border-top-left-radius:100% 50%;
-  border-top-right-radius:100% 50%;
-  display:flex; justify-content:center; align-items:center;
-  gap:40px; z-index:10;
+  position:fixed; left:0; right:0; bottom:0; height:70px; 
+  background:var(--roxo-escuro);
+  border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
+  display:flex; align-items:center; justify-content:center;
+  z-index:10; padding:0 16px;
 }
-
-.btn-footer{
-  background:transparent;
-  border:none;
-  border-radius:50%;
-  width:55px; height:55px;           /* laterais */
-  padding:0;
-  display:grid; place-items:center;
-  transform:translateY(-10px);
-  cursor:pointer;
-  overflow:hidden;
-}
-.btn-footer img{
-  width:250%; height:250%;           /* aumenta os ícones laterais */
-  object-fit:contain;
-}
-
-.btn-footer.btn-central{
-  width:150px; height:150px;         /* central maior */
-  transform:translateY(-20px);
-}
-.btn-footer.btn-central img{
-  width:150%; height:150%;           /* ícone central proporcional */
-}
+.curva__nav{display:flex; align-items:center; gap:40px}
+.btn-footer{width:55px; height:55px; border:none; background:transparent; border-radius:50%;
+  padding:0; display:flex; align-items:center; justify-content:center; transform:translateY(-10px)}
+.btn-footer img{width:250%; height:250%; object-fit:contain}
+.btn-central{width:150px; height:150px; transform:translateY(-20px)}
+.btn-central img{width:150%; height:150%; object-fit:contain}
 
 /* ===== Modal ===== */
 .modal{
@@ -238,40 +217,3 @@ input[type="text"], input[type="email"]{
 }
 .modal-acoes{ display:flex; justify-content:flex-end; gap:8px; }
 
-/* ===== Rodapé curvo padrão (força ícones grandes) ===== */
-.curva{
-  position:fixed; left:0; bottom:0;
-  width:100%; height:70px;
-  background:#7b7190;
-  border-top-left-radius:100% 50%;
-  border-top-right-radius:100% 50%;
-  display:flex; justify-content:center; align-items:center;
-  gap:40px; z-index:10;
-}
-
-.curva .btn-footer{
-  background:transparent; border:none; border-radius:50%;
-  width:55px; height:55px;            /* laterais */
-  padding:0; display:grid; place-items:center;
-  transform:translateY(-10px);
-  cursor:pointer; overflow:hidden;
-}
-
-/* AQUI é o segredo: remove o max-width e força o tamanho maior */
-.curva .btn-footer img{
-  max-width:none !important;          /* ignora img{ max-width:100% } global */
-  width:260% !important;
-  height:260% !important;
-  object-fit:contain;
-}
-
-.curva .btn-footer.btn-central{
-  width:150px; height:150px;          /* central */
-  transform:translateY(-20px);
-}
-.curva .btn-footer.btn-central img{
-  max-width:none !important;
-  width:160% !important;
-  height:160% !important;
-  object-fit:contain;
-}
