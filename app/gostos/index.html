@@ -10,21 +10,23 @@
   <div class="container">
     <h1 class="titulo">MEUS GOSTOS</h1>
 
-    <div class="listas-gostos">
-      <!-- Lista Preferidos -->
-      <div class="lista preferidos">
-        <h3>✔️</h3>
-        <ul id="listaPreferidos" class="lista-itens" aria-label="Alimentos preferidos"></ul>
-        <button class="btn-mais" id="btnAddPreferido" aria-haspopup="dialog" aria-controls="janelaSelecao" aria-label="Adicionar preferido">＋</button>
-      </div>
+    <!-- Preferidos -->
+<div class="lista preferidos">
+  <h3>✔️</h3>
+  <ul id="listaPreferidos" class="lista-itens" aria-label="Alimentos preferidos"></ul>
+  <button class="btn-mais" type="button" id="btnAddPreferido"
+          aria-haspopup="dialog" aria-controls="janelaSelecao"
+          aria-label="Adicionar preferido">＋</button>
+</div>
 
-      <!-- Lista Restrições -->
-      <div class="lista restricoes">
-        <h3>❌</h3>
-        <ul id="listaRestricoes" class="lista-itens" aria-label="Alimentos restritos"></ul>
-        <button class="btn-mais" id="btnAddRestrito" aria-haspopup="dialog" aria-controls="janelaSelecao" aria-label="Adicionar restrição">＋</button>
-      </div>
-    </div>
+<!-- Restrições -->
+<div class="lista restricoes">
+  <h3>❌</h3>
+  <ul id="listaRestricoes" class="lista-itens" aria-label="Alimentos restritos"></ul>
+  <button class="btn-mais" type="button" id="btnAddRestrito"
+          aria-haspopup="dialog" aria-controls="janelaSelecao"
+          aria-label="Adicionar restrição">＋</button>
+</div>
 
     <!-- Janela de seleção -->
     <div id="janelaSelecao" class="janela" role="dialog" aria-modal="true" aria-labelledby="tituloSelecao" style="display:none">
