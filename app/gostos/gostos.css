@@ -1,0 +1,211 @@
+:root{
+  --bg:#c0ffa5;
+  --roxo:#7b7190;
+  --verde:#225c18;
+  --chip:#e9ffd7;
+  --borda:#3e6529;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:var(--bg);
+  color:var(--verde);
+}
+
+/* Conteúdo */
+.wrap{
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px 16px 120px; /* respiro pro rodapé fixo */
+}
+.titulo{
+  margin: 24px 0 16px;
+  font-size: 28px;
+  font-weight: 800;
+  text-align: center;
+  color: var(--verde);
+  text-transform: none;
+}
+
+/* Cards e grid */
+.grid-gostos{
+  display: grid;
+  gap: 16px;
+}
+.card-gostos{
+  background: #d9edb6;
+  border-radius: 20px;
+  padding: 14px;
+  box-shadow: 0 2px 0 rgba(0,0,0,.06) inset;
+}
+.card-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom: 10px;
+}
+.card-titulo{
+  margin:0;
+  font-size: 16px;
+  font-weight: 800;
+  color: #6a5d85; /* mantém identidade dos títulos internos */
+}
+
+/* Chips */
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.chip{
+  display:inline-flex;
+  align-items:center;
+  height:36px;                /* requisito */
+  padding: 0 12px;
+  border-radius: 9999px;      /* pílula */
+  border:2px solid var(--borda);
+  background:var(--chip);
+  color: var(--verde);
+  font-size:14px;             /* requisito */
+  font-weight:700;            /* requisito */
+  cursor:pointer;
+}
+.chip:focus{
+  outline:3px dotted #492f70; /* foco visível */
+  outline-offset:2px;
+}
+.chip .chip-text{
+  line-height:1;
+}
+.chip .chip-del{
+  margin-left:8px;
+  border:none;
+  background:transparent;
+  font-size:16px;
+  line-height:1;
+  cursor:pointer;
+  color:#6a5d85;
+}
+.chip .chip-del:focus{
+  outline:3px dotted #492f70;
+  outline-offset:2px;
+}
+
+/* Botão "+" com o mesmo visual de chip */
+.chip-plus{
+  min-width:36px;
+  justify-content:center;
+}
+
+/* Modal */
+.modal{
+  position:fixed;
+  inset:0;
+  display:grid;
+  place-items:center;
+  background: rgba(0,0,0,.5);
+  z-index: 50;
+}
+.modal[hidden]{ display:none; }
+.modal-card{
+  width:min(92vw, 480px);
+  background:#fff;
+  border-radius:20px;
+  padding:16px;
+}
+.modal-titulo{ 
+  margin:0 0 12px 0; 
+  font-size:18px; 
+  color:#6a5d85; 
+}
+.modal-opcoes{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  max-height: 45vh;
+  overflow:auto;
+  padding-right:4px;
+}
+.modal-opcoes .chip{
+  background:#fff;
+}
+.modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:14px;
+}
+.btn{
+  height:36px;
+  padding:0 14px;
+  border-radius:9999px;
+  border:2px solid var(--borda);
+  background:var(--bg);
+  color:var(--verde);
+  font-weight:800;
+  cursor:pointer;
+}
+.btn:focus{
+  outline:3px dotted #492f70;
+  outline-offset:2px;
+}
+
+/* Rodapé curvo oficial */
+.curva{
+  position:fixed;
+  left:0; right:0; bottom:0;
+  height:70px;                     /* requisito */
+  background:var(--roxo);          /* requisito */
+  border-top-left-radius:100% 50%; /* requisito */
+  border-top-right-radius:100% 50%;/* requisito */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:40px;                        /* requisito */
+  z-index: 40;
+}
+.btn-footer{
+  width:55px;                      /* requisito */
+  height:55px;                     /* requisito */
+  border-radius:50%;
+  background:transparent;
+  border:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+  transform: translateY(-10px);
+  cursor:pointer;
+  overflow:hidden;
+}
+.btn-footer img{
+  width:250%; height:250%;         /* requisito */
+  object-fit:contain;
+}
+.btn-footer.btn-central{
+  width:150px; height:150px;       /* requisito */
+  transform: translateY(-20px);    /* central elevado */
+}
+.btn-footer.btn-central img{
+  width:150%; height:150%;         /* requisito */
+}
+
+/* Acessibilidade visual escondida */
+.sr-only{
+  position:absolute !important;
+  width:1px;height:1px;
+  padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);
+  white-space:nowrap;border:0;
+}
+
+/* Desktop (≥1024px): duas colunas lado a lado */
+@media (min-width:1024px){
+  .wrap{ max-width: 1024px; }
+  .grid-gostos{
+    grid-template-columns: 1fr 1fr;
+  }
+}
