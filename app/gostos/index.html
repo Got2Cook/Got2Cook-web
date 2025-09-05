@@ -2,66 +2,50 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Meus Gostos Culinários - Got2Cook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Meus Gostos - Got2Cook</title>
   <link rel="stylesheet" href="gostos.css" />
 </head>
 <body>
-  <main class="wrap">
-    <h1 class="titulo">Meus Gostos Culinários</h1>
+  <div class="container">
+    <h1 class="titulo">MEUS GOSTOS</h1>
 
-    <section class="grid-gostos" aria-label="Gestão de gostos culinários">
-      <!-- Preferidos -->
-      <div class="card-gostos">
-        <header class="card-head">
-          <h2 class="card-titulo">Alimentos Preferidos</h2>
-          <button class="chip chip-plus" id="btnAddPreferido" aria-haspopup="dialog" aria-controls="modalSelecao">
-            <span aria-hidden="true">+</span><span class="sr-only">Adicionar preferido</span>
-          </button>
-        </header>
-        <div id="chipsPreferidos" class="chips" role="list" aria-label="Lista de alimentos preferidos"></div>
+    <div class="listas-gostos">
+      <!-- Lista Preferidos -->
+      <div class="lista preferidos">
+        <h3>✔️</h3>
+        <ul id="listaPreferidos" class="lista-itens" aria-label="Alimentos preferidos"></ul>
+        <button class="btn-mais" id="btnAddPreferido" aria-haspopup="dialog" aria-controls="janelaSelecao" aria-label="Adicionar preferido">＋</button>
       </div>
 
-      <!-- Restritos -->
-      <div class="card-gostos">
-        <header class="card-head">
-          <h2 class="card-titulo">Alimentos Restritos</h2>
-          <button class="chip chip-plus" id="btnAddRestrito" aria-haspopup="dialog" aria-controls="modalSelecao">
-            <span aria-hidden="true">+</span><span class="sr-only">Adicionar restrito</span>
-          </button>
-        </header>
-        <div id="chipsRestritos" class="chips" role="list" aria-label="Lista de alimentos restritos"></div>
+      <!-- Lista Restrições -->
+      <div class="lista restricoes">
+        <h3>❌</h3>
+        <ul id="listaRestricoes" class="lista-itens" aria-label="Alimentos restritos"></ul>
+        <button class="btn-mais" id="btnAddRestrito" aria-haspopup="dialog" aria-controls="janelaSelecao" aria-label="Adicionar restrição">＋</button>
       </div>
-    </section>
-  </main>
+    </div>
 
-  <!-- Modal de seleção -->
-  <div id="modalSelecao" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo" hidden>
-    <div class="modal-card">
-      <h3 id="modalTitulo" class="modal-titulo">Selecione itens</h3>
-
-      <div class="modal-opcoes" id="opcoesContainer" aria-label="Opções de ingredientes">
-        <!-- as opções aparecem aqui como chips -->
-      </div>
-
-      <div class="modal-actions">
-        <button id="btnFecharModal" class="btn" type="button">Fechar</button>
+    <!-- Janela de seleção -->
+    <div id="janelaSelecao" class="janela" role="dialog" aria-modal="true" aria-labelledby="tituloSelecao" style="display:none">
+      <div class="conteudo-janela">
+        <h3 id="tituloSelecao">Selecione:</h3>
+        <ul id="opcoesIngrediente"></ul>
+        <button class="fechar" id="btnFechar">Fechar</button>
       </div>
     </div>
   </div>
 
   <!-- Rodapé curvo oficial -->
   <footer class="curva">
-    <button class="btn-footer" id="btnVoltar" aria-label="Voltar para Home">
-      <img src="../_assets/ico-voltar.png" alt="" />
+    <button class="btn-footer voltar" id="btnVoltar" aria-label="Voltar para Home">
+      <img src="humor.png" alt="" />
     </button>
-
-    <button class="btn-footer btn-central" id="btnLogo" aria-label="Ir para Minhas Receitas">
-      <img src="../_assets/ico-logo.png" alt="" />
+    <button class="btn-footer logo" id="btnLogo" aria-label="Ir para Minhas Receitas">
+      <img src="logocentral.png" alt="" />
     </button>
-
-    <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira">
-      <img src="../_assets/ico-geladeira.png" alt="" />
+    <button class="btn-footer geladeira" id="btnGeladeira" aria-label="Ir para Minha Geladeira">
+      <img src="geladeira.png" alt="" />
     </button>
   </footer>
 
