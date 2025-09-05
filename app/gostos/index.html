@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meus Gostos Culinários - Got2Cook</title>
+  <link rel="stylesheet" href="gostos.css" />
+</head>
+<body>
+  <main class="wrap">
+    <h1 class="titulo">Meus Gostos Culinários</h1>
+
+    <section class="grid-gostos" aria-label="Gestão de gostos culinários">
+      <!-- Preferidos -->
+      <div class="card-gostos">
+        <header class="card-head">
+          <h2 class="card-titulo">Alimentos Preferidos</h2>
+          <button class="chip chip-plus" id="btnAddPreferido" aria-haspopup="dialog" aria-controls="modalSelecao">
+            <span aria-hidden="true">+</span><span class="sr-only">Adicionar preferido</span>
+          </button>
+        </header>
+        <div id="chipsPreferidos" class="chips" role="list" aria-label="Lista de alimentos preferidos"></div>
+      </div>
+
+      <!-- Restritos -->
+      <div class="card-gostos">
+        <header class="card-head">
+          <h2 class="card-titulo">Alimentos Restritos</h2>
+          <button class="chip chip-plus" id="btnAddRestrito" aria-haspopup="dialog" aria-controls="modalSelecao">
+            <span aria-hidden="true">+</span><span class="sr-only">Adicionar restrito</span>
+          </button>
+        </header>
+        <div id="chipsRestritos" class="chips" role="list" aria-label="Lista de alimentos restritos"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal de seleção -->
+  <div id="modalSelecao" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo" hidden>
+    <div class="modal-card">
+      <h3 id="modalTitulo" class="modal-titulo">Selecione itens</h3>
+
+      <div class="modal-opcoes" id="opcoesContainer" aria-label="Opções de ingredientes">
+        <!-- as opções aparecem aqui como chips -->
+      </div>
+
+      <div class="modal-actions">
+        <button id="btnFecharModal" class="btn" type="button">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rodapé curvo oficial -->
+  <footer class="curva">
+    <button class="btn-footer" id="btnVoltar" aria-label="Voltar para Home">
+      <img src="../_assets/ico-voltar.png" alt="" />
+    </button>
+
+    <button class="btn-footer btn-central" id="btnLogo" aria-label="Ir para Minhas Receitas">
+      <img src="../_assets/ico-logo.png" alt="" />
+    </button>
+
+    <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira">
+      <img src="../_assets/ico-geladeira.png" alt="" />
+    </button>
+  </footer>
+
+  <script src="gostos.js" defer></script>
+</body>
+</html>
