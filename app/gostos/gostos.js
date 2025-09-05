@@ -1,150 +1,119 @@
-// ===== Constantes de storage (requisito) =====
+// ===== chaves de armazenamento =====
 const LS_PREF = 'got2cook_preferidos';
 const LS_REST = 'got2cook_restritos';
 
-// ===== Elementos =====
-const chipsPreferidos = document.getElementById('chipsPreferidos');
-const chipsRestritos  = document.getElementById('chipsRestritos');
-const btnAddPreferido = document.getElementById('btnAddPreferido');
-const btnAddRestrito  = document.getElementById('btnAddRestrito');
+// ===== refs DOM =====
+const listaPref   = document.getElementById('listaPreferidos');
+const listaRest   = document.getElementById('listaRestricoes');
+const btnAddPref  = document.getElementById('btnAddPreferido');
+const btnAddRest  = document.getElementById('btnAddRestrito');
+const janela      = document.getElementById('janelaSelecao');
+const opcoesUl    = document.getElementById('opcoesIngrediente');
+const btnFechar   = document.getElementById('btnFechar');
 
-const modal      = document.getElementById('modalSelecao');
-const opcoesBox  = document.getElementById('opcoesContainer');
-const btnFechar  = document.getElementById('btnFecharModal');
-const modalTitulo= document.getElementById('modalTitulo');
+let tipoAtual = 'preferido'; // 'preferido' | 'restrito'
 
-// ===== Navegação do rodapé (paths ajustáveis ao seu projeto) =====
-document.getElementById('btnVoltar')?.addEventListener('click', () => {
-  // Home
-  window.location.href = '../home/index.html';
-});
-document.getElementById('btnLogo')?.addEventListener('click', () => {
-  // Minhas Receitas
-  window.location.href = '../minhas-receitas/index.html'; // ajuste se necessário
-});
-document.getElementById('btnGeladeira')?.addEventListener('click', () => {
-  // Minha Geladeira
-  window.location.href = '../geladeira/index.html';
-});
-
-// ===== Estado =====
-let focoLista = 'preferidos'; // 'preferidos' | 'restritos'
-
-// Opções de ingredientes (exemplo; edite à vontade)
+// opções (edite à vontade)
 const OPCOES = [
-  'ARROZ','FEIJÃO','MASSA','CARNE VERMELHA','FRANGO','PEIXE','FRUTOS DO MAR',
-  'OVO','LEITE','LATICÍNIOS','GLÚTEN','CASTANHAS','AMENDOIM','SOJA','MILHO',
-  'CORANTES','CAFEÍNA','AÇÚCAR','PIMENTA','TOMATE','CEBOLA','ALHO','BERINJELA','ABOBRINHA'
+  'LACTOSE','GLÚTEN','FRUTOS DO MAR','OVO','CASTANHAS','AMENDOIM','SOJA','MILHO',
+  'CORANTES','CAFEÍNA','CARNE VERMELHA','FRANGO','PEIXE','TOMATE','CEBOLA','ALHO',
+  'AÇÚCAR','PIMENTA','ARROZ','FEIJÃO','MASSA','LATICÍNIOS','BERINJELA','ABOBRINHA'
 ];
 
-// ===== Utilidades de storage =====
-const getArray = (key) => JSON.parse(localStorage.getItem(key) || '[]');
-const setArray = (key, arr) => localStorage.setItem(key, JSON.stringify(arr));
+// ===== storage helpers =====
+const getArr = (k) => JSON.parse(localStorage.getItem(k) || '[]');
+const setArr = (k, v) => localStorage.setItem(k, JSON.stringify(v));
 
-// ===== Renderização dos chips =====
-function criarChip(nome, tipo){
-  const chip = document.createElement('div');
-  chip.className = 'chip';
-  chip.setAttribute('role','listitem');
-  chip.innerHTML = `
-    <span class="chip-text">${nome}</span>
-    <button class="chip-del" type="button" aria-label="Excluir ${nome}" title="Excluir">✖</button>
-  `;
-  chip.querySelector('.chip-del').addEventListener('click', () => {
-    removerItem(nome, tipo);
+// ===== render =====
+function criaItemLi(texto, listaTipo){
+  const li = document.createElement('li');
+  li.textContent = texto;
+
+  const btn = document.createElement('button');
+  btn.className = 'excluir';
+  btn.type = 'button';
+  btn.setAttribute('aria-label', `Remover ${texto}`);
+  btn.textContent = '✖';
+  btn.addEventListener('click', () => {
+    removerItem(texto, listaTipo);
   });
-  return chip;
+
+  li.appendChild(btn);
+  return li;
 }
 
 function render(){
-  const pref = getArray(LS_PREF);
-  const rest = getArray(LS_REST);
+  const pref = getArr(LS_PREF);
+  const rest = getArr(LS_REST);
 
-  chipsPreferidos.innerHTML = '';
-  chipsRestritos.innerHTML  = '';
+  listaPref.innerHTML = '';
+  listaRest.innerHTML = '';
 
-  pref.forEach(n => chipsPreferidos.appendChild(criarChip(n, 'preferidos')));
-  rest.forEach(n => chipsRestritos.appendChild(criarChip(n, 'restritos')));
+  pref.forEach(v => listaPref.appendChild(criaItemLi(v, 'preferido')));
+  rest.forEach(v => listaRest.appendChild(criaItemLi(v, 'restrito')));
 }
 
-// ===== Ações =====
+// ===== ações =====
 function abrirSelecao(tipo){
-  focoLista = tipo; // 'preferidos' | 'restritos'
-  modal.hidden = false;
-  modalTitulo.textContent = tipo === 'preferidos' ? 'Selecione preferidos' : 'Selecione restritos';
+  tipoAtual = tipo;
+  opcoesUl.innerHTML = '';
 
-  const pref = getArray(LS_PREF);
-  const rest = getArray(LS_REST);
-
-  // evita duplicados e itens já escolhidos em qualquer lista
-  const bloqueados = new Set([...pref, ...rest]);
-  opcoesBox.innerHTML = '';
-  OPÇÕES_SEM_DUP().forEach(op => {
-    if(!bloqueados.has(op)){
-      const btn = document.createElement('button');
-      btn.className = 'chip';
-      btn.type = 'button';
-      btn.textContent = op;
-      btn.addEventListener('click', () => {
-        adicionarItem(op, focoLista);
-      });
-      opcoesBox.appendChild(btn);
-    }
+  // mostra todas as opções (sem bloquear cruzado, como no exemplo)
+  OPCOES.forEach(op => {
+    const li = document.createElement('li');
+    li.tabIndex = 0;
+    li.textContent = op;
+    li.addEventListener('click', () => selecionar(op));
+    li.addEventListener('keypress', (e) => { if(e.key === 'Enter') selecionar(op); });
+    opcoesUl.appendChild(li);
   });
 
-  // foco acessível
-  setTimeout(() => {
-    opcoesBox.querySelector('.chip')?.focus();
-  }, 0);
+  janela.style.display = 'flex';
+  opcoesUl.querySelector('li')?.focus();
 }
 
 function fecharSelecao(){
-  modal.hidden = true;
+  janela.style.display = 'none';
 }
 
-function adicionarItem(nome, tipo){
-  const key = tipo === 'preferidos' ? LS_PREF : LS_REST;
-  const arr = getArray(key);
-  if(!arr.includes(nome)){
-    arr.push(nome);
-    setArray(key, arr);
+function selecionar(valor){
+  const key = tipoAtual === 'preferido' ? LS_PREF : LS_REST;
+  const arr = getArr(key);
+  // evita duplicado na MESMA lista (igual ao seu modelo)
+  if(!arr.includes(valor)){
+    arr.push(valor);
+    setArr(key, arr);
     render();
   }
+  fecharSelecao();
 }
 
-function removerItem(nome, tipo){
-  const key = tipo === 'preferidos' ? LS_PREF : LS_REST;
-  const arr = getArray(key).filter(n => n !== nome);
-  setArray(key, arr);
+function removerItem(valor, listaTipo){
+  const key = listaTipo === 'preferido' ? LS_PREF : LS_REST;
+  const arr = getArr(key).filter(v => v !== valor);
+  setArr(key, arr);
   render();
 }
 
-// garante lista única (case-insensitive) para exibição no modal
-function OPÇÕES_SEM_DUP(){
-  const seen = new Set();
-  const out = [];
-  for(const s of OPCOES){
-    const k = s.trim().toUpperCase();
-    if(!seen.has(k)){
-      seen.add(k);
-      out.push(k);
-    }
-  }
-  return out;
-}
-
-// ===== Eventos =====
-btnAddPreferido.addEventListener('click', () => abrirSelecao('preferidos'));
-btnAddRestrito .addEventListener('click', () => abrirSelecao('restritos'));
-btnFechar.addEventListener('click', fecharSelecao);
-modal.addEventListener('click', (e) => {
-  if(e.target === modal) fecharSelecao();
+// ===== navegação rodapé =====
+document.getElementById('btnVoltar')?.addEventListener('click', () => {
+  window.location.href = '../home/index.html';
+});
+document.getElementById('btnLogo')?.addEventListener('click', () => {
+  window.location.href = '../minhas-receitas/index.html';
+});
+document.getElementById('btnGeladeira')?.addEventListener('click', () => {
+  window.location.href = '../geladeira/index.html';
 });
 
-// ===== Boot =====
+// ===== init =====
 (function init(){
-  // inicializa chaves se não existirem
-  if(!localStorage.getItem(LS_PREF)) setArray(LS_PREF, []);
-  if(!localStorage.getItem(LS_REST)) setArray(LS_REST, []);
+  if(!localStorage.getItem(LS_PREF)) setArr(LS_PREF, []);
+  if(!localStorage.getItem(LS_REST)) setArr(LS_REST, []);
   render();
+
+  btnAddPref.addEventListener('click', () => abrirSelecao('preferido'));
+  btnAddRest.addEventListener('click', () => abrirSelecao('restrito'));
+  btnFechar.addEventListener('click', fecharSelecao);
+  janela.addEventListener('click', (e) => { if(e.target === janela) fecharSelecao(); });
 })();
