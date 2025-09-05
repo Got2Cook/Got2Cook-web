@@ -1,4 +1,4 @@
-/* ===== BASE/MOBILE (igual ao seu estilo) ===== */
+/* ===== BASE (mesmo estilo) ===== */
 body {
   background-color: #c0ffa5;
   font-family: Arial, sans-serif;
@@ -11,6 +11,7 @@ body {
   margin: 0 auto;
   padding: 20px 16px 120px; /* respiro para o rodapé */
   text-align: center;
+  overflow-x: hidden;
 }
 
 .titulo {
@@ -20,18 +21,21 @@ body {
   font-weight: 800;
 }
 
+/* Duas colunas SEMPRE (mobile e desktop) */
 .listas-gostos {
   display: flex;
   justify-content: center;
+  align-items: stretch;
   gap: 20px;
-  flex-wrap: wrap;            /* permite lado a lado no desktop */
+  flex-wrap: nowrap;          /* força lado a lado */
 }
 
 .lista {
   background-color: #d9edb6;
   padding: 10px 0;
   border-radius: 30px;
-  width: 45%;                 /* mantém duas colunas quando couber */
+  width: 45%;                 /* 45% + 45% + 20px de gap cabe em telas pequenas */
+  min-width: 140px;           /* segurança pra telas muito estreitas */
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -43,6 +47,7 @@ body {
 }
 .lista.restricoes h3{ color:#e53935; }
 
+/* Lista com divisórias */
 .lista-itens {
   list-style-type: none !important;
   padding: 0;
@@ -188,7 +193,15 @@ body {
   cursor: pointer;
 }
 
-/* Celular bem estreito: empilha 100% */
-@media (max-width: 560px){
-  .lista { width: 100%; }
+/* ===== Desktop: só amplia respiros, mantém DUAS COLUNAS ===== */
+@media (min-width: 1024px){
+  .container{
+    max-width: 1000px;
+    padding: 40px 24px 160px;
+  }
+  .titulo{
+    font-size: 42px;
+    margin: 40px 0 24px;
+  }
+  .lista-itens li{ padding: 14px 18px; }
 }
