@@ -10,47 +10,104 @@
   <div class="container">
     <h1 class="titulo">MEUS GOSTOS</h1>
 
-    <!-- Preferidos -->
-<div class="lista preferidos">
-  <h3>✔️</h3>
-  <ul id="listaPreferidos" class="lista-itens" aria-label="Alimentos preferidos"></ul>
-  <button class="btn-mais" type="button" id="btnAddPreferido"
-          aria-haspopup="dialog" aria-controls="janelaSelecao"
-          aria-label="Adicionar preferido">＋</button>
-</div>
+    <div class="listas-gostos">
+      <!-- Lista Preferidos -->
+      <div class="lista preferidos">
+        <h3>✔️</h3>
+        <ul id="listaPreferidos" class="lista-itens"></ul>
+        <button class="btn-mais" onclick="abrirSelecao('preferido')">＋</button>
+      </div>
 
-<!-- Restrições -->
-<div class="lista restricoes">
-  <h3>❌</h3>
-  <ul id="listaRestricoes" class="lista-itens" aria-label="Alimentos restritos"></ul>
-  <button class="btn-mais" type="button" id="btnAddRestrito"
-          aria-haspopup="dialog" aria-controls="janelaSelecao"
-          aria-label="Adicionar restrição">＋</button>
-</div>
+      <!-- Lista Restrições -->
+      <div class="lista restricoes">
+        <h3 style="color: red;">❌</h3>
+        <ul id="listaRestricoes" class="lista-itens"></ul>
+        <button class="btn-mais" onclick="abrirSelecao('restrito')">＋</button>
+      </div>
+    </div>
 
     <!-- Janela de seleção -->
-    <div id="janelaSelecao" class="janela" role="dialog" aria-modal="true" aria-labelledby="tituloSelecao" style="display:none">
+    <div id="janelaSelecao" class="janela">
       <div class="conteudo-janela">
-        <h3 id="tituloSelecao">Selecione:</h3>
+        <h3>Selecione:</h3>
         <ul id="opcoesIngrediente"></ul>
-        <button class="fechar" id="btnFechar">Fechar</button>
+        <button class="fechar" onclick="fecharSelecao()">Fechar</button>
       </div>
     </div>
   </div>
 
-  <!-- Rodapé curvo oficial -->
   <footer class="curva">
-    <button class="btn-footer voltar" id="btnVoltar" aria-label="Voltar para Home">
-      <img src="humor.png" alt="" />
+    <button class="btn-footer voltar" id="btnVoltar">
+      <img src="humor.png" alt="Voltar" />
     </button>
-    <button class="btn-footer logo" id="btnLogo" aria-label="Ir para Minhas Receitas">
-      <img src="logocentral.png" alt="" />
+    <button class="btn-footer logo" id="btnLogo">
+      <img src="logocentral.png" alt="Logo" />
     </button>
-    <button class="btn-footer geladeira" id="btnGeladeira" aria-label="Ir para Minha Geladeira">
-      <img src="geladeira.png" alt="" />
+    <button class="btn-footer geladeira" id="btnGeladeira">
+      <img src="geladeira.png" alt="Geladeira" />
     </button>
   </footer>
 
-  <script src="gostos.js" defer></script>
+  <script src="global.js"></script>
+
+  <script>
+    const ingredientesPreferidos = ["LACTOSE", "GLÚTEN", "FRUTOS DO MAR", "OVO", "CASTANHAS", "AMENDOIM", "SOJA", "MILHO", "CORANTES", "CAFEÍNA", "CARNE VERMELHA", "FRANGO"];
+    const ingredientesRestritos = ["LACTOSE", "GLÚTEN", "FRUTOS DO MAR", "OVO", "CASTANHAS", "AMENDOIM", "SOJA", "MILHO", "CORANTES", "CAFEÍNA", "CARNE VERMELHA", "FRANGO", ];
+    let listaAtual = "preferido";
+
+    function abrirSelecao(tipo) {
+      listaAtual = tipo;
+      const lista = document.getElementById("opcoesIngrediente");
+      lista.innerHTML = "";
+      const dados = tipo === "preferido" ? ingredientesPreferidos : ingredientesRestritos;
+      dados.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        li.onclick = () => adicionarIngrediente(tipo, item);
+        lista.appendChild(li);
+      });
+      document.getElementById("janelaSelecao").style.display = "flex";
+    }
+
+    function fecharSelecao() {
+      document.getElementById("janelaSelecao").style.display = "none";
+    }
+
+    function adicionarIngrediente(tipo, valor) {
+      const listaId = tipo === "preferido" ? "listaPreferidos" : "listaRestricoes";
+      const lista = document.getElementById(listaId);
+      if (![...lista.children].some(li => li.textContent.includes(valor))) {
+        const li = document.createElement("li");
+        li.innerHTML = `${valor} <button class="excluir" onclick="removerIngrediente(this)">✖</button>`;
+        lista.appendChild(li);
+        salvarLocalStorage();
+      }
+      fecharSelecao();
+    }
+
+    function removerIngrediente(botao) {
+      botao.parentElement.remove();
+      salvarLocalStorage();
+    }
+
+    function salvarLocalStorage() {
+      const preferidos = [...document.getElementById("listaPreferidos").children].map(li => li.textContent.replace("✖", "").trim());
+      const restritos = [...document.getElementById("listaRestricoes").children].map(li => li.textContent.replace("✖", "").trim());
+      localStorage.setItem("gostosPreferidos", JSON.stringify(preferidos));
+      localStorage.setItem("gostosRestritos", JSON.stringify(restritos));
+    }
+
+    function carregarLocalStorage() {
+      const preferidos = JSON.parse(localStorage.getItem("gostosPreferidos")) || [];
+      const restritos = JSON.parse(localStorage.getItem("gostosRestritos")) || [];
+      preferidos.forEach(item => adicionarIngrediente("preferido", item));
+      restritos.forEach(item => adicionarIngrediente("restrito", item));
+    }
+
+    document.getElementById("btnVoltar").onclick = () => window.location.href = "humor.html";
+    document.getElementById("btnLogo").onclick = () => window.location.href = "home.html";
+    document.getElementById("btnGeladeira").onclick = () => window.location.href = "minhageladeira.html";
+    window.onload = carregarLocalStorage;
+  </script>
 </body>
 </html>
