@@ -104,6 +104,16 @@
       preferidos.forEach(item => adicionarIngrediente("preferido", item));
       restritos.forEach(item => adicionarIngrediente("restrito", item));
     }
+    
+  document.getElementById('btnVoltar')?.addEventListener('click', () => {
+    window.location.href = '../home/index.html';              // Home
+  });
+  document.getElementById('btnLogo')?.addEventListener('click', () => {
+    window.location.href = '../minhas-receitas/index.html';   // Minhas Receitas
+  });
+  document.getElementById('btnGeladeira')?.addEventListener('click', () => {
+    window.location.href = '../geladeira/index.html';         // Minha Geladeira
+  });
   </script>
 </body>
 </html>
