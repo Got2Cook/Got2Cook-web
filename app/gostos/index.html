@@ -11,109 +11,171 @@
     <h1 class="titulo">MEUS GOSTOS</h1>
 
     <div class="listas-gostos">
-      <!-- Lista Preferidos -->
+      <!-- Preferidos -->
       <div class="lista preferidos">
         <h3>✔️</h3>
         <ul id="listaPreferidos" class="lista-itens"></ul>
-        <button class="btn-mais" onclick="abrirSelecao('preferido')">＋</button>
+        <button class="btn-mais" type="button" onclick="abrirSelecao('preferido')">＋</button>
       </div>
 
-      <!-- Lista Restrições -->
+      <!-- Restrições -->
       <div class="lista restricoes">
-        <h3 style="color: red;">❌</h3>
+        <h3 style="color:red;">❌</h3>
         <ul id="listaRestricoes" class="lista-itens"></ul>
-        <button class="btn-mais" onclick="abrirSelecao('restrito')">＋</button>
+        <button class="btn-mais" type="button" onclick="abrirSelecao('restrito')">＋</button>
       </div>
     </div>
 
-    <!-- Janela de seleção -->
-    <div id="janelaSelecao" class="janela">
+    <!-- Janela de seleção (container organizado + personalização) -->
+    <div id="janelaSelecao" class="janela" style="display:none">
       <div class="conteudo-janela">
         <h3>Selecione:</h3>
-        <ul id="opcoesIngrediente"></ul>
-        <button class="fechar" onclick="fecharSelecao()">Fechar</button>
+
+        <div class="opcoes-container">
+          <input id="buscaOpcao" type="search" placeholder="Buscar item..." oninput="filtrarOpcoes()"/>
+
+          <div id="opcoesGrid" class="opcoes-grid"><!-- opções renderizadas via JS --></div>
+
+          <div class="linha-personalizar">
+            <button class="btn-personalizar" type="button" onclick="abrirPersonalizar()">Personalizar</button>
+            <button class="btn-ia" type="button" onclick="irParaPrompt()">Personalizar com IA</button>
+          </div>
+
+          <div id="personalizarWrap" class="personalizar" style="display:none">
+            <input id="personalizadoInput" type="text" maxlength="30" placeholder="Digite um alimento..."/>
+            <button class="btn-ok" type="button" onclick="confirmarPersonalizado()">Adicionar</button>
+          </div>
+        </div>
+
+        <button class="fechar" type="button" onclick="fecharSelecao()">Fechar</button>
       </div>
     </div>
   </div>
 
-  <!-- RODAPÉ PADRÃO -->
+  <!-- Rodapé curvo oficial -->
   <footer class="curva">
-    <button class="btn-footer voltar" id="btnVoltar">
-      <img src="../../assets/humor.png" alt="Humor" />
+    <button class="btn-footer" id="btnVoltar" aria-label="Voltar para Home">
+      <img src="humor.png" alt="">
     </button>
-    <button class="btn-footer logo" id="btnLogo">
-      <img src="../../assets/logocentral.png" alt="Logo" />
+    <button class="btn-footer btn-central" id="btnLogo" aria-label="Ir para Minhas Receitas">
+      <img src="logocentral.png" alt="">
     </button>
-    <button class="btn-footer geladeira" id="btnGeladeira">
-      <img src="../../assets/geladeira.png" alt="Geladeira" />
+    <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira">
+      <img src="geladeira.png" alt="">
     </button>
   </footer>
 
   <script src="global.js"></script>
 
   <script>
-    const ingredientesPreferidos = ["LACTOSE", "GLÚTEN", "FRUTOS DO MAR", "OVO", "CASTANHAS", "AMENDOIM", "SOJA", "MILHO", "CORANTES", "CAFEÍNA", "CARNE VERMELHA", "FRANGO"];
-    const ingredientesRestritos = ["LACTOSE", "GLÚTEN", "FRUTOS DO MAR", "OVO", "CASTANHAS", "AMENDOIM", "SOJA", "MILHO", "CORANTES", "CAFEÍNA", "CARNE VERMELHA", "FRANGO", ];
-    let listaAtual = "preferido";
+    // ===== Dados-base (mantive seu padrão) =====
+    const ingredientesPreferidos = ["LACTOSE","GLÚTEN","FRUTOS DO MAR","OVO","CASTANHAS","AMENDOIM","SOJA","MILHO","CORANTES","CAFEÍNA","CARNE VERMELHA","FRANGO"];
+    const ingredientesRestritos  = ["LACTOSE","GLÚTEN","FRUTOS DO MAR","OVO","CASTANHAS","AMENDOIM","SOJA","MILHO","CORANTES","CAFEÍNA","CARNE VERMELHA","FRANGO"];
 
+    // ===== Estado da seleção modal =====
+    let listaAtual = "preferido";           // 'preferido' | 'restrito'
+    let opcoesOriginais = [];               // array base para filtro
+    let opcoesFiltradas = [];               // array atual exibido
+
+    // ===== Abertura/fechamento modal =====
     function abrirSelecao(tipo) {
       listaAtual = tipo;
-      const lista = document.getElementById("opcoesIngrediente");
-      lista.innerHTML = "";
-      const dados = tipo === "preferido" ? ingredientesPreferidos : ingredientesRestritos;
-      dados.forEach(item => {
-        const li = document.createElement("li");
-        li.textContent = item;
-        li.onclick = () => adicionarIngrediente(tipo, item);
-        lista.appendChild(li);
-      });
       document.getElementById("janelaSelecao").style.display = "flex";
-    }
 
+      opcoesOriginais = (tipo === "preferido" ? ingredientesPreferidos : ingredientesRestritos).slice();
+      opcoesOriginais.sort((a,b) => a.localeCompare(b, 'pt-BR'));
+      opcoesFiltradas = opcoesOriginais.slice();
+
+      document.getElementById('buscaOpcao').value = "";
+      renderOpcoes();
+    }
     function fecharSelecao() {
       document.getElementById("janelaSelecao").style.display = "none";
+      document.getElementById('personalizarWrap').style.display = "none";
     }
 
-    function adicionarIngrediente(tipo, valor) {
-      const listaId = tipo === "preferido" ? "listaPreferidos" : "listaRestricoes";
-      const lista = document.getElementById(listaId);
-      if (![...lista.children].some(li => li.textContent.includes(valor))) {
-        const li = document.createElement("li");
-        li.innerHTML = `${valor} <button class="excluir" onclick="removerIngrediente(this)">✖</button>`;
-        lista.appendChild(li);
-        salvarLocalStorage();
+    // ===== Render das opções (container organizado) =====
+    function renderOpcoes(){
+      const grid = document.getElementById('opcoesGrid');
+      grid.innerHTML = "";
+      opcoesFiltradas.forEach(item => {
+        const b = document.createElement('button');
+        b.type = "button";
+        b.className = "opcao-btn";
+        b.textContent = item;
+        b.onclick = () => adicionarIngrediente(listaAtual, item);
+        grid.appendChild(b);
+      });
+    }
+
+    // ===== Busca/filtro =====
+    function filtrarOpcoes(){
+      const q = (document.getElementById('buscaOpcao').value || "").trim().toUpperCase();
+      opcoesFiltradas = !q ? opcoesOriginais.slice()
+                           : opcoesOriginais.filter(x => x.toUpperCase().includes(q));
+      renderOpcoes();
+    }
+
+    // ===== Personalizar (item digitado) =====
+    function abrirPersonalizar(){
+      const box = document.getElementById('personalizarWrap');
+      box.style.display = (box.style.display === "none" || box.style.display === "") ? "grid" : "none";
+      if(box.style.display === "grid"){
+        document.getElementById('personalizadoInput').focus();
       }
+    }
+    function confirmarPersonalizado(){
+      const inp = document.getElementById('personalizadoInput');
+      const valor = (inp.value || "").trim();
+      if(!valor) return;
+      adicionarIngrediente(listaAtual, valor.toUpperCase());
+      inp.value = "";
+      document.getElementById('personalizarWrap').style.display = "none";
       fecharSelecao();
     }
 
+    // ===== Ir direto ao prompt de receita (tela Gerar) =====
+    function irParaPrompt(){
+      // dica: se quiser focar o campo lá, salve um flag:
+      // localStorage.setItem('got2cook_focus_prompt','1');
+      window.location.href = "../gerar/index.html";
+    }
+
+    // ===== Adição/remoção + persistência =====
+    function adicionarIngrediente(tipo, valor) {
+      const listaId = (tipo === "preferido") ? "listaPreferidos" : "listaRestricoes";
+      const ul = document.getElementById(listaId);
+      if (![...ul.children].some(li => li.textContent.replace("✖","").trim() === valor)) {
+        const li = document.createElement("li");
+        li.innerHTML = `${valor} <button class="excluir" type="button" onclick="removerIngrediente(this)">✖</button>`;
+        ul.appendChild(li);
+        salvarLocalStorage();
+      }
+    }
     function removerIngrediente(botao) {
       botao.parentElement.remove();
       salvarLocalStorage();
     }
-
     function salvarLocalStorage() {
-      const preferidos = [...document.getElementById("listaPreferidos").children].map(li => li.textContent.replace("✖", "").trim());
-      const restritos = [...document.getElementById("listaRestricoes").children].map(li => li.textContent.replace("✖", "").trim());
-      localStorage.setItem("gostosPreferidos", JSON.stringify(preferidos));
-      localStorage.setItem("gostosRestritos", JSON.stringify(restritos));
+      const pref = [...document.getElementById("listaPreferidos").children].map(li => li.textContent.replace("✖","").trim());
+      const rest = [...document.getElementById("listaRestricoes").children].map(li => li.textContent.replace("✖","").trim());
+      localStorage.setItem("gostosPreferidos", JSON.stringify(pref));
+      localStorage.setItem("gostosRestritos", JSON.stringify(rest));
+    }
+    function carregarLocalStorage() {
+      const pref = JSON.parse(localStorage.getItem("gostosPreferidos") || "[]");
+      const rest = JSON.parse(localStorage.getItem("gostosRestritos")  || "[]");
+      pref.forEach(v => adicionarIngrediente("preferido", v));
+      rest.forEach(v => adicionarIngrediente("restrito", v));
     }
 
-    function carregarLocalStorage() {
-      const preferidos = JSON.parse(localStorage.getItem("gostosPreferidos")) || [];
-      const restritos = JSON.parse(localStorage.getItem("gostosRestritos")) || [];
-      preferidos.forEach(item => adicionarIngrediente("preferido", item));
-      restritos.forEach(item => adicionarIngrediente("restrito", item));
-    }
-    
-  document.getElementById('btnVoltar')?.addEventListener('click', () => {
-    window.location.href = '../humor/index.html';              // Home
-  });
-  document.getElementById('btnLogo')?.addEventListener('click', () => {
-    window.location.href = '../home/index.html';   // Minhas Receitas
-  });
-  document.getElementById('btnGeladeira')?.addEventListener('click', () => {
-    window.location.href = '../geladeira/index.html';         // Minha Geladeira
-  });
+    // ===== Navegação rodapé =====
+    document.getElementById("btnVoltar").onclick   = () => window.location.href = "../humor/index.html";
+    document.getElementById("btnLogo").onclick     = () => window.location.href = "../home/index.html";
+    document.getElementById("btnGeladeira").onclick= () => window.location.href = "../geladeira/index.html";
+
+    // boot
+    window.onload = carregarLocalStorage;
   </script>
 </body>
 </html>
