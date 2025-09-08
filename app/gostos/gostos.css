@@ -90,49 +90,48 @@ body {
   align-items: center;
 }
 
+/* =================================================================
+   Rodapé curvo — MESMO PADRÃO da tela "Minhas Receitas"
+   ================================================================= */
 .curva{
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
-  height: 70px;                 /* altura oficial */
-  background: #7b7190;          /* cor oficial */
-  border-top-left-radius: 100% 50%;
-  border-top-right-radius: 100% 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;                    /* gap oficial */
-  z-index: 50;
+  position:fixed; left:0; right:0; bottom:0; height:70px;
+  background:#7b7190;
+  border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
+  display:flex; align-items:center; justify-content:center;
+  gap:40px;                     /* <<< espaçamento entre botões */
+  z-index:10; padding:0 16px;
 }
 
+/* Caso use um wrapper <nav class="curva__nav">, mantém o mesmo gap */
+.curva__nav{ display:flex; align-items:center; gap:40px; }
+
+/* Botões laterais (55x55) */
 .btn-footer{
-  width: 55px;                  /* laterais 55x55 */
-  height: 55px;
-  border-radius: 50%;
-  background: transparent;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  transform: translateY(-10px);
-  cursor: pointer;
-  overflow: hidden;
+  width:55px; height:55px;
+  border:none; background:transparent; border-radius:50%;
+  padding:0; display:flex; align-items:center; justify-content:center;
+  transform:translateY(-10px);
+  cursor:pointer; overflow:hidden;
 }
 .btn-footer img{
-  width: 250%;                  /* ícone interno 250% */
-  height: 250%;
-  object-fit: contain;
+  max-width:none;                  /* ignora img{max-width:100%} */
+  width:250%; height:250%;
+  object-fit:contain;
 }
 
-.btn-footer.btn-central{
-  width: 150px;                 /* central 150x150 */
-  height: 150px;
-  transform: translateY(-20px); /* elevado */
+/* Botão central (150x150) — cobre .btn-central, .logo e o id #btnLogo */
+.btn-footer.btn-central,
+.btn-footer.logo,
+#btnLogo.btn-footer{
+  width:150px; height:150px;
+  transform:translateY(-20px);
 }
-.btn-footer.btn-central img{
-  width: 150%;                  /* ícone interno 150% */
-  height: 150%;
-  object-fit: contain;
+.btn-footer.btn-central img,
+.btn-footer.logo img,
+#btnLogo.btn-footer img{
+  max-width:none;
+  width:150%; height:150%;
+  object-fit:contain;
 }
 
 .janela {
