@@ -26,17 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const opcoesUl = document.getElementById('opcoesIngrediente');
   const btnFechar= document.getElementById('btnFechar');
 
-  <script>
-  document.getElementById('btnVoltar')?.addEventListener('click', () => {
-    window.location.href = '../home/index.html';              // Home
-  });
-  document.getElementById('btnLogo')?.addEventListener('click', () => {
-    window.location.href = '../minhas-receitas/index.html';   // Minhas Receitas
-  });
-  document.getElementById('btnGeladeira')?.addEventListener('click', () => {
-    window.location.href = '../geladeira/index.html';         // Minha Geladeira
-  });
-</script>
+  // Rodapé (links padrão)
+btnVoltar.addEventListener('click', () => { window.location.href = '../humor/index.html'; });
+btnLogo.addEventListener('click', () => { window.location.href = '../home/index.html'; });
+btnGeladeira.addEventListener('click', () => { window.location.href = '../geladeira/index.html'; });
 
   // estado
   let tipoAtual = 'preferido'; // 'preferido' | 'restrito'
