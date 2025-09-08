@@ -185,3 +185,13 @@ body {
   border-radius: 20px;
   cursor: pointer;
 }
+
+/* ===== Desktop: containers mais largos ===== */
+@media (min-width: 1024px){
+  .container{
+    max-width: 1200px;   /* antes: 600px */
+  }
+  .lista{
+    width: 48%;          /* antes: 45% — fica visualmente mais cheio */
+  }
+}
