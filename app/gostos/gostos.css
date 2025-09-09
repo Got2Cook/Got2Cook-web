@@ -121,7 +121,7 @@ body{
 .opcao-btn:active{ transform:translateY(0) scale(.98); }
 .opcao-btn:focus{ outline:3px dotted #492f70; outline-offset:2px; }
 
-/* Barra de personalização (SEMEsma posição de antes) */
+/* Barra de adicionar (permanece) */
 .personalizar{
   display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center;
 }
@@ -135,21 +135,17 @@ body{
   background:#c0ffa5; color:#225c18; font-weight:800; cursor:pointer;
 }
 
-/* Ações abaixo da barra (centralizadas) */
+/* Ações abaixo da barra (apenas FECHAR) */
 .bottom-actions{
   display:flex; justify-content:center; gap:10px; margin-top:4px;
 }
-.btn-personalizar, .fechar{
+.fechar{
   height:36px; padding:0 14px; border-radius:9999px; border:2px solid #3e6529;
   background:#c0ffa5; color:#225c18; font-weight:800; cursor:pointer;
   transition:transform .1s ease, filter .12s ease;
 }
-.btn-personalizar:hover, .fechar:hover{ transform:translateY(-1px); filter:brightness(1.03); }
-.btn-personalizar:active, .fechar:active{ transform:translateY(0) scale(.98); }
-
-/* Highlight quando clica em Personalizar */
-.personalizar.pulse{ box-shadow:0 0 0 4px rgba(64,128,64,.12); animation:pulse .6s ease-out; }
-@keyframes pulse{ from{ box-shadow:0 0 0 0 rgba(64,128,64,.18)} to{ box-shadow:0 0 0 10px rgba(64,128,64,0)} }
+.fechar:hover{ transform:translateY(-1px); filter:brightness(1.03); }
+.fechar:active{ transform:translateY(0) scale(.98); }
 
 /* Rodapé curvo oficial */
 .curva{
@@ -173,4 +169,5 @@ body{
   .container{ max-width:1200px; padding:40px 24px 160px; }
   .titulo{ font-size:42px; margin:40px 0 24px; }
   .lista-itens li{ padding:14px 18px; }
+}
 }
