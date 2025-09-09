@@ -1,153 +1,100 @@
-/* jornada.css */
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Arial Rounded MT Bold', sans-serif;
-  background-color: #c0ffa5;
-  color: #225c18;
-  text-align: center;
+/* Base */
+body{
+  margin:0;
+  padding:0;
+  font-family:'Arial Rounded MT Bold', Arial, sans-serif;
+  background:#c0ffa5;
+  color:#225c18;
+  text-align:center;
+}
+.container{
+  max-width:600px;
+  margin:0 auto;
+  padding:0 16px 120px; /* espaço pro rodapé */
+}
+.topo-icones.somente-titulo{
+  display:flex; justify-content:center; align-items:center; padding:10px 0;
+}
+.titulo{
+  font-size:35px; color:#225c18; margin:70px 0 20px;
 }
 
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding-bottom: 120px; /* espaço para o rodapé */
+/* ===== Layout principal ===== */
+.layout{
+  display:grid;
+  gap:24px;
 }
 
-.topo-icones.somente-titulo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 0;
+/* Painel de gráficos (cartão verde claro) */
+.painel-graficos{
+  background:#dff5b7;
+  border-radius:28px;
+  padding:22px 18px;
+  display:grid;
+  gap:24px;              /* distância entre Gráfico 1 e 2 */
 }
+.grafico{ display:flex; flex-direction:column; align-items:center; }
+.grafico canvas{ max-height:160px; }
+.grafico-legenda{ font-weight:bold; margin-top:10px; }
 
-.titulo {
-  text-align: center;
-  font-size: 35px;
-  color: #225c18;
-  margin: 70px 0 20px;
-}
+/* Painel de conquistas (direita no desktop) */
+.painel-conquistas{ text-align:center; }
+.subtitulo{ font-size:22px; margin:10px 0 4px; font-weight:bold; }
+.contador-receitas{ font-size:16px; margin:8px 0 16px; color:#492f70; font-weight:bold; }
 
-/* Gráficos */
-.graficos {
-  background-color: #dff5b7;
-  border-radius: 24px;
-  padding: 20px 10px;
-  display: flex;
-  justify-content: space-around;
-  margin: 16px;
-  flex-wrap: wrap;
+/* Grid de medalhas */
+.conquistas{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:20px;
+  justify-items:center;
 }
+.medalha{
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  max-width:110px;
+}
+.medalha img{ width:130px; height:auto; margin-bottom:5px; }
+.estrelas{ font-size:30px; margin-bottom:4px; }
 
-.grafico {
-  width: 45%;
-  min-width: 200px;
-}
+/* Foco visível */
+:focus-visible{ outline:2px dotted #492f70; outline-offset:4px; }
 
-.grafico canvas {
-  max-height: 160px; /* altura reduzida */
+/* ===== Rodapé curvo oficial ===== */
+.curva{
+  width:100%; height:70px; background:#7b7190;
+  border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
+  position:fixed; bottom:0; left:0;
+  display:flex; justify-content:center; align-items:center; gap:40px;
+  z-index:10;
 }
+/* Botões laterais: 55x55 (ícone 250%) */
+.btn-footer{
+  background:transparent; border:none; border-radius:50%;
+  width:55px; height:55px; padding:0;
+  display:flex; justify-content:center; align-items:center; overflow:hidden;
+  cursor:pointer; transform:translateY(-10px);
+}
+.btn-footer img{ width:250%; height:250%; object-fit:contain; }
+/* Botão central: 150x150 elevado (ícone 150%) */
+.btn-footer.btn-central{ width:150px; height:150px; transform:translateY(-20px); }
+.btn-footer.btn-central img{ width:150%; height:150%; object-fit:contain; }
 
-.grafico-legenda {
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-.contador-receitas {
-  font-size: 16px;
-  margin: 16px 0;
-  color: #492f70;
-  font-weight: bold;
-}
-
-.subtitulo {
-  font-size: 22px;
-  margin: 25px 0 8px;
-  font-weight: bold;
-}
-
-/* Conquistas */
-.conquistas {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  padding: 20px;
-  justify-items: center;
-}
-
-.medalha {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 100px;
-}
-
-.medalha img {
-  width: 130px;
-  height: auto;
-  margin-bottom: 5px;
-}
-
-.estrelas {
-  font-size: 30px;
-  margin-bottom: 4px;
-}
-
-/* Rodapé curvo oficial */
-.curva {
-  width: 100%;
-  height: 70px;
-  background-color: #7b7190;
-  border-top-left-radius: 100% 50%;
-  border-top-right-radius: 100% 50%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-  z-index: 10;
-}
-
-/* Botões laterais: 55x55, ícone 250% */
-.btn-footer {
-  background-color: transparent;
-  border: none;
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  cursor: pointer;
-  transform: translateY(-10px);
-}
-.btn-footer img {
-  width: 250%;
-  height: 250%;
-  object-fit: contain;
-}
-
-/* Botão central: 150x150 elevado, ícone 150% */
-.btn-footer.btn-central {
-  width: 150px;
-  height: 150px;
-  transform: translateY(-20px);
-}
-.btn-footer.btn-central img {
-  width: 150%;
-  height: 150%;
-  object-fit: contain;
-}
-
-/* Desktop */
-@media (min-width: 1024px) {
-  .container { max-width: 900px; }
-  .graficos { justify-content: space-evenly; }
-  .grafico canvas { max-height: 200px; }
+/* ===== Desktop ≥1024px: igual ao mockup ===== */
+@media (min-width:1024px){
+  .container{ max-width:1100px; }
+  .layout{
+    grid-template-columns: 480px 1fr; /* esquerda fixa, direita flex */
+    align-items:start;
+    gap:40px;
+    text-align:left; /* alinha títulos à esquerda na coluna direita */
+  }
+  .painel-conquistas{ text-align:left; }
+  .subtitulo{ margin-top:8px; }
+  .grafico canvas{ max-height:200px; }
+  .conquistas{
+    grid-template-columns: repeat(4, minmax(140px, 1fr)); /* 4 colunas como no mockup */
+    gap:28px;
+  }
+  .medalha{ max-width:none; }
+  .titulo{ margin-top:56px; } /* levemente mais alto para respirar no desktop */
 }
