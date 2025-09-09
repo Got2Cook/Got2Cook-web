@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Navegação do rodapé
+  /* Navegação rodapé */
   document.getElementById("btnVoltar")?.addEventListener("click", () => {
     window.location.href = "../home/index.html";
   });
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = "../geladeira/index.html";
   });
 
-  // Gráficos
+  /* Gráficos */
   const ctx1 = document.getElementById('graficoEstilos');
   const ctx2 = document.getElementById('graficoMomentos');
 
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     new Chart(ctx1, {
       type: 'pie',
       data: {
-        labels: ['Massas', 'Doces', 'Carnes', 'Saladas', 'Petiscos'],
+        labels: ['Massas','Doces','Carnes','Saladas','Petiscos'],
         datasets: [{ data: [44.4,27.8,16.7,9.1,3.0], backgroundColor: ['#705a89','#b47cc5','#c5b4e3','#d3e3d3','#f2f2f2'] }]
       },
       options: { responsive: true }
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Conquistas
+  /* Conquistas (medalhas em /app/assets/) */
   const conquistas = [
     { id: 'medalha1', titulo: 'PRIMEIRA MORDIDA', nivel: 0 },
     { id: 'medalha2', titulo: 'REPETECO', nivel: 0 },
@@ -48,26 +48,16 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const container = document.getElementById('conquistasContainer');
-  const ASSETS_PRIMARY = '/app/assets/';   // absoluto para /app
-  const ASSETS_FALLBACK = '../assets/';    // relativo a /app/jornada/
+  if (container) {
+    const appRoot = (function () {
+      const p = window.location.pathname;
+      const i = p.indexOf('/app/');
+      return i >= 0 ? p.slice(0, i + 5) : '/app/';
+    })();
+    const primaryBase = appRoot + 'assets/';   // /app/assets/
+    const fallbackBase = '../assets/';         // relativo a /app/jornada/
 
-  function medalhaSrc(nomeArquivo) {
-    // usa caminho absoluto; se falhar (404), troca para relativo
-    const img = new Image();
-    const primary = ASSETS_PRIMARY + nomeArquivo;
-    const fallback = ASSETS_FALLBACK + nomeArquivo;
-
-    img.src = primary;
-    return new Promise((resolve) => {
-      img.onload = () => resolve(primary);
-      img.onerror = () => resolve(fallback);
-    });
-  }
-
-  (async () => {
-    if (!container) return;
-
-    for (const c of conquistas) {
+    conquistas.forEach((c) => {
       const div = document.createElement('div');
       div.classList.add('medalha');
 
@@ -75,18 +65,20 @@ document.addEventListener('DOMContentLoaded', () => {
         `<span style="color:${i < c.nivel ? '#f8c100' : '#999'}">★</span>`
       ).join('');
 
-      const src = await medalhaSrc(`${c.id}.png`);
+      const primary = `${primaryBase}${c.id}.png`;
+      const fallback = `${fallbackBase}${c.id}.png`;
 
       div.innerHTML = `
         <div class="estrelas">${estrelas}</div>
-        <img src="${src}" alt="${c.titulo}" />
+        <img src="${primary}" alt="${c.titulo}"
+             onerror="this.onerror=null; this.src='${fallback}';" />
         <p>${c.titulo}</p>
       `;
       container.appendChild(div);
-    }
-  })();
+    });
+  }
 
-  // Contador
+  /* Contador */
   const totalReceitas = localStorage.getItem('totalReceitas') || 0;
   const contador = document.getElementById('contador');
   if (contador) contador.textContent = totalReceitas;
