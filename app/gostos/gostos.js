@@ -155,11 +155,16 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-/* Rodapé e boot */
-window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('btnVoltar')?.addEventListener('click', () => { window.location.href = '../home/index.html'; });
-  document.getElementById('btnLogo')?.addEventListener('click', () => { window.location.href = '../minhas-receitas/index.html'; });
-  document.getElementById('btnGeladeira')?.addEventListener('click', () => { window.location.href = '../geladeira/index.html'; });
+// navegação do rodapé (ajuste os caminhos se seu projeto usar outros)
+document.getElementById('btnVoltar')?.addEventListener('click', () => {
+  window.location.href = '../humor/index.html';
+});
+document.getElementById('btnLogo')?.addEventListener('click', () => {
+  window.location.href = '../home/index.html';
+});
+document.getElementById('btnGeladeira')?.addEventListener('click', () => {
+  window.location.href = '../geladeira/index.html';
+});
 
   carregarLocalStorage();
 });
