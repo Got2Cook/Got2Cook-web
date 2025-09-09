@@ -1,106 +1,149 @@
 'use strict';
 
-// ===== chaves de armazenamento =====
-const LS_PREF = 'got2cook_preferidos';
-const LS_REST = 'got2cook_restritos';
-
-// opções (edite à vontade)
+// ===== Dados-base =====
 const OPCOES = [
-  'LACTOSE','GLÚTEN','FRUTOS DO MAR','OVO','CASTANHAS','AMENDOIM','SOJA','MILHO',
-  'CORANTES','CAFEÍNA','CARNE VERMELHA','FRANGO','PEIXE','TOMATE','CEBOLA','ALHO',
-  'AÇÚCAR','PIMENTA','ARROZ','FEIJÃO','MASSA','LATICÍNIOS','BERINJELA','ABOBRINHA'
+  'AMENDOIM','CAFEÍNA','CARNE VERMELHA','CASTANHAS','CORANTES','FRANGO',
+  'FRUTOS DO MAR','GLÚTEN','LACTOSE','MILHO','OVO','SOJA'
 ];
 
-// helpers storage
+// ===== Storage (mantendo como seu código original) =====
+const LS_PREF = 'gostosPreferidos';
+const LS_REST = 'gostosRestritos';
 const getArr = (k) => JSON.parse(localStorage.getItem(k) || '[]');
 const setArr = (k, v) => localStorage.setItem(k, JSON.stringify(v));
 
-document.addEventListener('DOMContentLoaded', () => {
-  // refs DOM
-  const listaPref  = document.getElementById('listaPreferidos');
-  const listaRest  = document.getElementById('listaRestricoes');
-  const btnAddPref = document.getElementById('btnAddPreferido');
-  const btnAddRest = document.getElementById('btnAddRestrito');
+// ===== Refs globais =====
+let listaAtual = 'preferido'; // 'preferido' | 'restrito'
 
-  const janela   = document.getElementById('janelaSelecao');
-  const opcoesUl = document.getElementById('opcoesIngrediente');
-  const btnFechar= document.getElementById('btnFechar');
+// ===== Abertura modal =====
+function abrirSelecao(tipo){
+  listaAtual = tipo;
+  document.getElementById('janelaSelecao').style.display = 'flex';
 
-  // Rodapé (links padrão)
-btnVoltar.addEventListener('click', () => { window.location.href = '../humor/index.html'; });
-btnLogo.addEventListener('click', () => { window.location.href = '../home/index.html'; });
-btnGeladeira.addEventListener('click', () => { window.location.href = '../geladeira/index.html'; });
+  // busca limpa
+  const busca = document.getElementById('buscaOpcao');
+  busca.value = '';
 
-  // estado
-  let tipoAtual = 'preferido'; // 'preferido' | 'restrito'
+  // render opções
+  renderOpcoes(OPCOES);
+  setTimeout(() => busca.focus(), 0);
+}
 
-  // render
-  function criaItemLi(texto, listaTipo){
-    const li = document.createElement('li');
-    li.textContent = texto;
+// ===== Fechamento modal =====
+function fecharSelecao(){
+  document.getElementById('janelaSelecao').style.display = 'none';
+}
 
-    const btn = document.createElement('button');
-    btn.className = 'excluir';
-    btn.type = 'button';
-    btn.setAttribute('aria-label', `Remover ${texto}`);
-    btn.textContent = '✖';
-    btn.addEventListener('click', () => removerItem(texto, listaTipo));
+// ===== Render chips de opções =====
+function renderOpcoes(lista){
+  const grid = document.getElementById('opcoesGrid');
+  grid.innerHTML = '';
+  lista.forEach(item => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'opcao-btn';
+    b.textContent = item;
+    b.onclick = () => { adicionarIngrediente(listaAtual, item); fecharSelecao(); };
+    grid.appendChild(b);
+  });
+}
 
-    li.appendChild(btn);
-    return li;
+// ===== Filtro de busca =====
+function filtrarOpcoes(){
+  const q = (document.getElementById('buscaOpcao').value || '').trim().toUpperCase();
+  const base = OPCOES;
+  const out = !q ? base : base.filter(x => x.includes(q));
+  renderOpcoes(out);
+}
+
+// ===== Personalizar =====
+function focusPersonalizar(){
+  const wrap = document.getElementById('personalizarWrap');
+  const inp = document.getElementById('personalizadoInput');
+  wrap.classList.remove('pulse'); // reinicia animação
+  void wrap.offsetWidth;          // reflow
+  wrap.classList.add('pulse');
+  inp.focus();
+}
+
+// caixa alta em tempo real
+document.addEventListener('input', (e) => {
+  if(e.target && e.target.id === 'personalizadoInput'){
+    const start = e.target.selectionStart;
+    const end = e.target.selectionEnd;
+    e.target.value = (e.target.value || '').toUpperCase();
+    e.target.setSelectionRange(start, end);
   }
-  function render(){
-    const pref = getArr(LS_PREF);
-    const rest = getArr(LS_REST);
+});
 
-    listaPref.innerHTML = '';
-    listaRest.innerHTML = '';
+function confirmarPersonalizado(){
+  const inp = document.getElementById('personalizadoInput');
+  const v = (inp.value || '').trim().toUpperCase();
+  if(!v) return;
+  adicionarIngrediente(listaAtual, v);
+  fecharSelecao();
+}
 
-    pref.forEach(v => listaPref.appendChild(criaItemLi(v, 'preferido')));
-    rest.forEach(v => listaRest.appendChild(criaItemLi(v, 'restrito')));
+// ===== Adição/remoção + persistência =====
+function criarLi(texto, tipoLista){
+  const li = document.createElement('li');
+  li.innerHTML = `${texto} <button class="excluir" type="button">✖</button>`;
+  li.querySelector('.excluir').addEventListener('click', () => removerIngrediente(texto, tipoLista));
+  li.classList.add('anim-pop');
+  return li;
+}
+
+function adicionarIngrediente(tipo, valor){
+  const ul = document.getElementById(tipo === 'preferido' ? 'listaPreferidos' : 'listaRestricoes');
+  const jaTem = [...ul.children].some(li => li.textContent.replace('✖','').trim() === valor);
+  if(!jaTem){
+    ul.appendChild(criarLi(valor, tipo));
+    salvarLocalStorage();
   }
+}
 
-  // seleção
-  function abrirSelecao(tipo){
-    tipoAtual = tipo;
-    opcoesUl.innerHTML = '';
-    OPCOES.forEach(op => {
-      const li = document.createElement('li');
-      li.tabIndex = 0;
-      li.textContent = op;
-      li.addEventListener('click', () => selecionar(op));
-      li.addEventListener('keypress', (e) => { if(e.key === 'Enter') selecionar(op); });
-      opcoesUl.appendChild(li);
-    });
-    janela.style.display = 'flex';
-    opcoesUl.querySelector('li')?.focus();
-  }
-  function fecharSelecao(){ janela.style.display = 'none'; }
-  function selecionar(valor){
-    const key = tipoAtual === 'preferido' ? LS_PREF : LS_REST;
-    const arr = getArr(key);
-    if(!arr.includes(valor)){
-      arr.push(valor);
-      setArr(key, arr);
-      render();
-    }
+function removerIngrediente(valor, tipo){
+  const ul = document.getElementById(tipo === 'preferido' ? 'listaPreferidos' : 'listaRestricoes');
+  [...ul.children].forEach(li => {
+    if(li.textContent.replace('✖','').trim() === valor) li.remove();
+  });
+  salvarLocalStorage();
+}
+
+function salvarLocalStorage(){
+  const pref = [...document.getElementById('listaPreferidos').children].map(li => li.textContent.replace('✖','').trim());
+  const rest = [...document.getElementById('listaRestricoes').children].map(li => li.textContent.replace('✖','').trim());
+  setArr(LS_PREF, pref);
+  setArr(LS_REST, rest);
+}
+
+function carregarLocalStorage(){
+  getArr(LS_PREF).forEach(v => adicionarIngrediente('preferido', v));
+  getArr(LS_REST).forEach(v => adicionarIngrediente('restrito', v));
+}
+
+// ===== UX: fechar clicando fora e ESC =====
+document.addEventListener('click', (e) => {
+  const modal = document.getElementById('janelaSelecao');
+  if(e.target && e.target.id === 'janelaSelecao') fecharSelecao();
+});
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape' && document.getElementById('janelaSelecao').style.display === 'flex'){
     fecharSelecao();
   }
-  function removerItem(valor, listaTipo){
-    const key = listaTipo === 'preferido' ? LS_PREF : LS_REST;
-    const arr = getArr(key).filter(v => v !== valor);
-    setArr(key, arr);
-    render();
-  }
+});
 
-  // binds (garantidos mesmo sem defer)
-  btnAddPref?.addEventListener('click', () => abrirSelecao('preferido'));
-  btnAddRest?.addEventListener('click', () => abrirSelecao('restrito'));
-  btnFechar?.addEventListener('click', fecharSelecao);
-  janela?.addEventListener('click', (e) => { if(e.target === janela) fecharSelecao(); });
+// ===== Navegação rodapé =====
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btnVoltar')?.addEventListener('click', () => {
+    window.location.href = '../home/index.html';
+  });
+  document.getElementById('btnLogo')?.addEventListener('click', () => {
+    window.location.href = '../minhas-receitas/index.html';
+  });
+  document.getElementById('btnGeladeira')?.addEventListener('click', () => {
+    window.location.href = '../geladeira/index.html';
+  });
 
-  // init
-  if(!localStorage.getItem(LS_PREF)) setArr(LS_PREF, []);
-  if(!localStorage.getItem(LS_REST)) setArr(LS_REST, []);
-  render();
+  carregarLocalStorage();
 });
