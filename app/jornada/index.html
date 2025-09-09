@@ -2,53 +2,54 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>JORNADA - Got2Cook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minha Jornada - Got2Cook</title>
 
-  <!-- Estilos da tela -->
   <link rel="stylesheet" href="jornada.css" />
 
-  <!-- Script da tela -->
+  <!-- Chart.js (mesmo padrão do seu código) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- JS desta tela (separado e com defer, como você pediu) -->
   <script src="jornada.js" defer></script>
 </head>
 <body>
-  <main id="conteudo" class="container" role="main">
-    <!-- Cabeçalho simples apenas com o título, seguindo o padrão dos seus títulos -->
-    <header class="topo-icones somente-titulo" aria-label="Cabeçalho da página Jornada">
-      <h1 class="titulo" id="tituloJornada">JORNADA</h1>
+  <div class="container">
+    <header class="topo-icones somente-titulo">
+      <h1 class="titulo">MINHA JORNADA</h1>
     </header>
 
-    <!-- ÁREA PRINCIPAL VAZIA: placeholders para componentes da Jornada -->
-    <section class="area-principal" aria-labelledby="tituloJornada">
-      <!-- Placeholder 1: gráfico/visão 01 -->
-      <div id="jornada-bloco-1" class="bloco placeholder" aria-hidden="true">
-        <!-- (placeholder) Gráfico/Visão 01 da Jornada entra aqui -->
+    <!-- GRÁFICOS (iguais ao seu layout atual) -->
+    <section class="graficos">
+      <div class="grafico">
+        <canvas id="graficoEstilos"></canvas>
+        <p class="grafico-legenda">ESTILOS PREFERIDOS</p>
       </div>
-
-      <!-- Placeholder 2: gráfico/visão 02 -->
-      <div id="jornada-bloco-2" class="bloco placeholder" aria-hidden="true">
-        <!-- (placeholder) Gráfico/Visão 02 da Jornada entra aqui -->
-      </div>
-
-      <!-- Placeholder 3: conquistas/estatísticas -->
-      <div id="jornada-bloco-3" class="bloco placeholder" aria-hidden="true">
-        <!-- (placeholder) Conquistas/Estatísticas da Jornada entram aqui -->
+      <div class="grafico">
+        <canvas id="graficoMomentos"></canvas>
+        <p class="grafico-legenda">MOMENTOS DO DIA</p>
       </div>
     </section>
-  </main>
 
-  <!-- Rodapé curvo oficial (estrutura obrigatória) -->
+    <p class="contador-receitas">🏆 VOCÊ JÁ CRIOU <span id="contador">0</span> RECEITAS COM A GOT2COOK! 🏆</p>
+
+    <h2 class="subtitulo">MINHAS CONQUISTAS:</h2>
+
+    <section class="conquistas" id="conquistasContainer"></section>
+  </div>
+
+  <!-- Rodapé curvo no mesmo padrão do seu arquivo -->
   <footer class="curva">
-    <button class="btn-footer" id="btnVoltar" type="button" aria-label="Voltar para Home">
-      <img src="humor.png" alt="" />
+    <button class="btn-footer voltar" id="btnVoltar" type="button" aria-label="Voltar para Home">
+      <img src="humor.png" alt="">
     </button>
 
-    <button class="btn-footer btn-central" id="btnLogo" type="button" aria-label="Ir para Minhas Receitas">
-      <img src="logocentral.png" alt="" />
+    <button class="btn-footer logo" id="btnLogo" type="button" aria-label="Ir para Minhas Receitas">
+      <img src="logocentral.png" alt="">
     </button>
 
-    <button class="btn-footer" id="btnGeladeira" type="button" aria-label="Ir para Minha Geladeira">
-      <img src="geladeira.png" alt="" />
+    <button class="btn-footer geladeira" id="btnGeladeira" type="button" aria-label="Ir para Minha Geladeira">
+      <img src="geladeira.png" alt="">
     </button>
   </footer>
 </body>
