@@ -20,13 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
   function montaChart(canvasId, legendaId, cfg){
     const canvas = $(canvasId), ul = $(legendaId);
     if(!canvas || !ul || !window.Chart) return;
-
     new Chart(canvas,{
       type:'pie',
       data:{ labels:cfg.labels, datasets:[{ data:cfg.data, backgroundColor:cfg.colors }]},
       options:{ responsive:true, plugins:{ legend:{ display:false } } }
     });
-
     ul.innerHTML = cfg.labels.map((label,i)=>`
       <li tabindex="0" aria-label="${label}: ${cfg.data[i]}%">
         <span class="swatch" style="background:${cfg.colors[i]}"></span>
@@ -34,11 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
       </li>
     `).join('');
   }
-
   montaChart('graficoEstilos','legendaEstilos',estilosCfg);
   montaChart('graficoMomentos','legendaMomentos',momentosCfg);
 
-  /* Conquistas (3 colunas; imagens em /app/assets) */
+  /* Conquistas — imagens em /app/assets (não alterar) */
   const conquistas = [
     { id:'medalha1', titulo:'PRIMEIRA MORDIDA', nivel:0 },
     { id:'medalha2', titulo:'REPETECO', nivel:0 },
