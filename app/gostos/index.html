@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <!-- Janela de seleção (container organizado + personalização) -->
+    <!-- Janela de seleção -->
     <div id="janelaSelecao" class="janela" style="display:none">
       <div class="conteudo-janela">
         <h3>Selecione:</h3>
@@ -36,21 +36,18 @@
 
           <div id="opcoesGrid" class="opcoes-grid"><!-- opções via JS --></div>
 
-          <!-- Ações: lado a lado por padrão -->
-          <div class="linha-acoes">
-            <button class="btn-personalizar" type="button" onclick="abrirPersonalizar()">Personalizar</button>
-            <button id="btnFecharTop" class="fechar" type="button" onclick="fecharSelecao()">Fechar</button>
-          </div>
-
-          <!-- Barra de personalização (abre/fecha) -->
-          <div id="personalizarWrap" class="personalizar" style="display:none">
-            <input id="personalizadoInput" type="text" maxlength="30" placeholder="Digite um alimento..."/>
+          <!-- Barra de personalização SEMPRE visível -->
+          <div id="personalizarWrap" class="personalizar">
+            <input id="personalizadoInput" type="text" maxlength="30" placeholder="DIGITE UM ALIMENTO..."/>
             <button class="btn-ok" type="button" onclick="confirmarPersonalizado()">Adicionar</button>
           </div>
-        </div>
 
-        <!-- Fechar embaixo: só aparece quando estiver personalizando -->
-        <button id="btnFecharBottom" class="fechar fechar-bottom" type="button" style="display:none" onclick="fecharSelecao()">Fechar</button>
+          <!-- Ações abaixo da barra -->
+          <div class="linha-acoes bottom-actions">
+            <button class="btn-personalizar" type="button" onclick="focusPersonalizar()">Personalizar</button>
+            <button class="fechar" type="button" onclick="fecharSelecao()">Fechar</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -68,145 +65,6 @@
     </button>
   </footer>
 
-  <script src="global.js"></script>
-
-  <script>
-    // ===== Dados-base =====
-    const ingredientesPreferidos = ["LACTOSE","GLÚTEN","FRUTOS DO MAR","OVO","CASTANHAS","AMENDOIM","SOJA","MILHO","CORANTES","CAFEÍNA","CARNE VERMELHA","FRANGO"];
-    const ingredientesRestritos  = ["LACTOSE","GLÚTEN","FRUTOS DO MAR","OVO","CASTANHAS","AMENDOIM","SOJA","MILHO","CORANTES","CAFEÍNA","CARNE VERMELHA","FRANGO"];
-
-    // ===== Estado modal =====
-    let listaAtual = "preferido";
-    let opcoesOriginais = [];
-    let opcoesFiltradas = [];
-
-    // ===== Abre/fecha modal =====
-    function abrirSelecao(tipo) {
-      listaAtual = tipo;
-      document.getElementById("janelaSelecao").style.display = "flex";
-      const box = document.getElementById('opcoesContainer');
-      box.classList.remove('is-editing');            // garante estado inicial
-      document.getElementById('personalizarWrap').style.display = "none";
-      document.getElementById('btnFecharBottom').style.display = "none";
-
-      opcoesOriginais = (tipo === "preferido" ? ingredientesPreferidos : ingredientesRestritos).slice().sort((a,b)=>a.localeCompare(b,'pt-BR'));
-      opcoesFiltradas = opcoesOriginais.slice();
-
-      document.getElementById('buscaOpcao').value = "";
-      renderOpcoes();
-
-      // Acessibilidade: foco na busca
-      setTimeout(()=>document.getElementById('buscaOpcao').focus(), 0);
-    }
-    function fecharSelecao() {
-      document.getElementById("janelaSelecao").style.display = "none";
-    }
-
-    // ===== Render opções =====
-    function renderOpcoes(){
-      const grid = document.getElementById('opcoesGrid');
-      grid.innerHTML = "";
-      opcoesFiltradas.forEach(item => {
-        const b = document.createElement('button');
-        b.type = "button";
-        b.className = "opcao-btn";
-        b.textContent = item;
-        b.onclick = () => { adicionarIngrediente(listaAtual, item); fecharSelecao(); };
-        grid.appendChild(b);
-      });
-    }
-
-    // ===== Busca =====
-    function filtrarOpcoes(){
-      const q = (document.getElementById('buscaOpcao').value || "").trim().toUpperCase();
-      opcoesFiltradas = !q ? opcoesOriginais.slice() : opcoesOriginais.filter(x => x.toUpperCase().includes(q));
-      renderOpcoes();
-    }
-
-    // ===== Personalizar =====
-    function abrirPersonalizar(){
-      const box = document.getElementById('opcoesContainer');
-      const wrap = document.getElementById('personalizarWrap');
-      const bottomClose = document.getElementById('btnFecharBottom');
-
-      box.classList.toggle('is-editing');
-      const editando = box.classList.contains('is-editing');
-
-      wrap.style.display = editando ? "grid" : "none";
-      bottomClose.style.display = editando ? "inline-flex" : "none";
-
-      if(editando){
-        const inp = document.getElementById('personalizadoInput');
-        inp.value = "";
-        inp.focus();
-      }
-    }
-
-    // Caixa alta em tempo real + confirmação
-    document.addEventListener('input', (e) => {
-      if(e.target && e.target.id === 'personalizadoInput'){
-        const start = e.target.selectionStart;
-        const end = e.target.selectionEnd;
-        e.target.value = (e.target.value || "").toUpperCase();
-        // mantém caret
-        e.target.setSelectionRange(start, end);
-      }
-    });
-
-    function confirmarPersonalizado(){
-      const inp = document.getElementById('personalizadoInput');
-      const valor = (inp.value || "").trim();
-      if(!valor) return;
-      adicionarIngrediente(listaAtual, valor.toUpperCase());
-      fecharSelecao();
-    }
-
-    // ===== Adição/remoção + persistência =====
-    function adicionarIngrediente(tipo, valor) {
-      const listaId = (tipo === "preferido") ? "listaPreferidos" : "listaRestricoes";
-      const ul = document.getElementById(listaId);
-      if (![...ul.children].some(li => li.textContent.replace("✖","").trim() === valor)) {
-        const li = document.createElement("li");
-        li.className = "anim-pop";
-        li.innerHTML = `${valor} <button class="excluir" type="button" onclick="removerIngrediente(this)">✖</button>`;
-        ul.appendChild(li);
-        salvarLocalStorage();
-      }
-    }
-    function removerIngrediente(botao) {
-      botao.parentElement.remove();
-      salvarLocalStorage();
-    }
-    function salvarLocalStorage() {
-      const pref = [...document.getElementById("listaPreferidos").children].map(li => li.textContent.replace("✖","").trim());
-      const rest = [...document.getElementById("listaRestricoes").children].map(li => li.textContent.replace("✖","").trim());
-      localStorage.setItem("gostosPreferidos", JSON.stringify(pref));
-      localStorage.setItem("gostosRestritos", JSON.stringify(rest));
-    }
-    function carregarLocalStorage() {
-      const pref = JSON.parse(localStorage.getItem("gostosPreferidos") || "[]");
-      const rest = JSON.parse(localStorage.getItem("gostosRestritos")  || "[]");
-      pref.forEach(v => adicionarIngrediente("preferido", v));
-      rest.forEach(v => adicionarIngrediente("restrito", v));
-    }
-
-    // ===== Navegação rodapé =====
-    document.getElementById("btnVoltar").onclick   = () => window.location.href = "../home/index.html";
-    document.getElementById("btnLogo").onclick     = () => window.location.href = "../minhas-receitas/index.html";
-    document.getElementById("btnGeladeira").onclick= () => window.location.href = "../geladeira/index.html";
-
-    // Fechar modal clicando fora e tecla ESC
-    document.getElementById('janelaSelecao').addEventListener('click', (e)=>{
-      if(e.target.id === 'janelaSelecao') fecharSelecao();
-    });
-    document.addEventListener('keydown',(e)=>{
-      if(e.key === 'Escape' && document.getElementById("janelaSelecao").style.display === "flex"){
-        fecharSelecao();
-      }
-    });
-
-    // boot
-    window.onload = carregarLocalStorage;
-  </script>
+  <script src="gostos.js" defer></script>
 </body>
 </html>
