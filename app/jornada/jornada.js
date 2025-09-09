@@ -1,53 +1,108 @@
-// ===== JORNADA – esqueleto =====
-// Mantém o padrão: scripts com defer no HTML, sem sobrescrever estilos do rodapé.
+// jornada.js — igual ao seu comportamento, extraído do inline e com navegação nos caminhos pedidos
 
-/* ---------- Hooks preparados para receber conteúdo depois ---------- */
-const bloco1 = document.getElementById('jornada-bloco-1'); // ex.: gráfico/visão 01
-const bloco2 = document.getElementById('jornada-bloco-2'); // ex.: gráfico/visão 02
-const bloco3 = document.getElementById('jornada-bloco-3'); // ex.: conquistas/estatísticas
-
-// Futuros seletores (exemplos) — deixam claro onde ligar lógica depois:
-// const modalJornada = document.getElementById('modalJornada');
-// const listaConquistas = document.getElementById('listaConquistas');
-// const graficoEstilos = document.getElementById('graficoEstilos');
-
-/* ---------- Navegação do rodapé (placeholders de clique) ---------- */
 document.addEventListener('DOMContentLoaded', () => {
-  const btnVoltar = document.getElementById('btnVoltar');
-  const btnLogo = document.getElementById('btnLogo');
-  const btnGeladeira = document.getElementById('btnGeladeira');
-
-  btnVoltar?.addEventListener('click', () => {
-    // Ir para Home
-    window.location.href = '../home/index.html';
+  // Navegação do rodapé (placeholders) — mapeados conforme solicitado
+  document.getElementById("btnVoltar")?.addEventListener("click", () => {
+    window.location.href = "../home/index.html";
   });
 
-  btnLogo?.addEventListener('click', () => {
-    // Ir para Minhas Receitas
-    window.location.href = '../minhas-receitas/index.html';
+  document.getElementById("btnLogo")?.addEventListener("click", () => {
+    window.location.href = "../minhas-receitas/index.html";
   });
 
-  btnGeladeira?.addEventListener('click', () => {
-    // Ir para Minha Geladeira
-    window.location.href = '../geladeira/index.html';
+  document.getElementById("btnGeladeira")?.addEventListener("click", () => {
+    window.location.href = "../geladeira/index.html";
   });
+
+  // ===== Gráficos (Chart.js) — mesmo setup do seu arquivo =====
+  const ctx1 = document.getElementById('graficoEstilos');
+  const ctx2 = document.getElementById('graficoMomentos');
+
+  if (window.Chart && ctx1 && ctx2) {
+    new Chart(ctx1, {
+      type: 'pie',
+      data: {
+        labels: ['Massas', 'Doces', 'Carnes', 'Saladas', 'Petiscos'],
+        datasets: [{
+          data: [44.4, 27.8, 16.7, 9.1, 3.0],
+          backgroundColor: ['#705a89', '#b47cc5', '#c5b4e3', '#d3e3d3', '#f2f2f2']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            labels: {
+              font: { size: 10 },
+              boxWidth: 12,
+              boxHeight: 12,
+              borderRadius: 6
+            }
+          }
+        }
+      }
+    });
+
+    new Chart(ctx2, {
+      type: 'pie',
+      data: {
+        labels: ['Manhã', 'Meio-Dia', 'Noite', 'Madrugada', 'Tarde'],
+        datasets: [{
+          data: [38.9, 27.8, 22.2, 9.1, 3.0],
+          backgroundColor: ['#8a9ebf', '#a97dac', '#c9b9d3', '#e0dff2', '#f2f2f2']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            labels: {
+              font: { size: 10 },
+              boxWidth: 12,
+              boxHeight: 12,
+              borderRadius: 6
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // ===== Conquistas — exatamente como no seu código =====
+  const conquistas = [
+    { id: 'medalha1', titulo: 'PRIMEIRA MORDIDA', nivel: 0 },
+    { id: 'medalha2', titulo: 'REPETECO', nivel: 0 },
+    { id: 'medalha3', titulo: 'RECEITA RELÂMPAGO', nivel: 0 },
+    { id: 'medalha4', titulo: 'CHEF DO IMPROVISO', nivel: 0 },
+    { id: 'medalha5', titulo: 'COLECIONADOR', nivel: 0 },
+    { id: 'medalha6', titulo: 'INTERNACIONAL', nivel: 0 },
+    { id: 'medalha7', titulo: 'SAUDÁVEL', nivel: 0 },
+    { id: 'medalha8', titulo: 'AGENTE NOTURNO', nivel: 0 },
+    { id: 'medalha9', titulo: 'COZINHEIRO MESTRE', nivel: 0 }
+  ];
+
+  const container = document.getElementById('conquistasContainer');
+  if (container) {
+    conquistas.forEach((conquista) => {
+      const div = document.createElement('div');
+      div.classList.add('medalha');
+
+      const estrelas = Array.from({ length: 3 }, (_, i) =>
+        `<span style="color: ${i < conquista.nivel ? '#f8c100' : '#999'}">★</span>`
+      ).join('');
+
+      div.innerHTML = `
+        <div class="estrelas">${estrelas}</div>
+        <img src="${conquista.id}.png" alt="${conquista.titulo}" />
+        <p>${conquista.titulo}</p>
+      `;
+
+      container.appendChild(div);
+    });
+  }
+
+  // Contador (igual ao seu; sem alterar chaves de storage)
+  const totalReceitas = localStorage.getItem('totalReceitas') || 0;
+  const contador = document.getElementById('contador');
+  if (contador) contador.textContent = totalReceitas;
 });
-
-/* ---------- Acessibilidade mínima para teclado ---------- */
-// Permite "Enter" ou "Space" acionar os botões quando focados (reforço)
-['btnVoltar','btnLogo','btnGeladeira'].forEach(id => {
-  const el = document.getElementById(id);
-  el?.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      el.click();
-    }
-  });
-});
-
-/* ---------- Observações ----------
-- Nada de localStorage nesta etapa (apenas se você pedir depois).
-- Nada de conteúdo funcional ainda. Apenas estrutura e navegação.
-- Os três blocos .placeholder estão prontos para receber os componentes
-  que você descrever na próxima mensagem.
-*/
