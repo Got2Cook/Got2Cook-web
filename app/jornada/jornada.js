@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Navegação rodapé
+  /* Navegação do rodapé */
   const $ = (id) => document.getElementById(id);
   $('btnVoltar')?.addEventListener('click', () => { window.location.href = '../home/index.html'; });
   $('btnLogo')?.addEventListener('click', () => { window.location.href = '../minhas-receitas/index.html'; });
   $('btnGeladeira')?.addEventListener('click', () => { window.location.href = '../geladeira/index.html'; });
 
-  // ----- Gráficos com legenda custom ao lado -----
+  /* Gráficos (sem legenda nativa, com legenda custom ao lado) */
   const estilosCfg = {
     labels:['Massas','Doces','Carnes','Saladas','Petiscos'],
     data:[44.4,27.8,16.7,9.1,3.0],
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = $(canvasId), ul = $(legendaId);
     if(!canvas || !ul || !window.Chart) return;
 
-    new Chart(canvas, {
+    new Chart(canvas,{
       type:'pie',
       data:{ labels:cfg.labels, datasets:[{ data:cfg.data, backgroundColor:cfg.colors }]},
       options:{ responsive:true, plugins:{ legend:{ display:false } } }
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   montaChart('graficoEstilos','legendaEstilos',estilosCfg);
   montaChart('graficoMomentos','legendaMomentos',momentosCfg);
 
-  // ----- Conquistas (imagens em /app/assets) -----
+  /* Conquistas (3 colunas; imagens em /app/assets) */
   const conquistas = [
     { id:'medalha1', titulo:'PRIMEIRA MORDIDA', nivel:0 },
     { id:'medalha2', titulo:'REPETECO', nivel:0 },
@@ -66,10 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ----- Contador -----
+  /* Contador */
   const total = localStorage.getItem('totalReceitas') || 0;
   const contador = $('contador'); if (contador) contador.textContent = total;
-
-  // Log rápido pra confirmar carregamento
-  console.log('Jornada JS ok, CSS/JS carregados.');
 });
