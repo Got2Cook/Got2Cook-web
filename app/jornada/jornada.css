@@ -1,113 +1,150 @@
-:root{
-  --bg:#c0ffa5;
-  --roxo-escuro:#7b7190;
-  --verde:#225c18;
+/* jornada.css — igual ao seu, apenas corrigido ; faltante no .curva (mantendo visual idêntico) */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial Rounded MT Bold', sans-serif;
+  background-color: #c0ffa5;
+  color: #225c18;
+  text-align: center;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font-family: Arial, sans-serif;
-  background:var(--bg);
-  color:var(--verde);
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-bottom: 120px; /* espaço para o rodapé curvo */
 }
 
-/* Container principal mobile-first */
-.container{
-  max-width:600px;
-  margin:0 auto;
-  padding:0 16px 120px; /* espaço pro rodapé */
+.topo-icones.somente-titulo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
 }
 
-/* Título no mesmo estilo dos seus títulos */
-.topo-icones.somente-titulo{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding-top:24px;
-}
-.titulo{
-  font-size:35px;
-  line-height:1.1;
-  text-align:center;
-  color:var(--verde);
-  margin:64px 0 16px;
+.titulo {
+  text-align: center;
+  font-size: 35px;
+  color: #225c18;
+  margin: 70px 0 20px;
 }
 
-/* Área principal com blocos/containers placeholder */
-.area-principal{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:16px;
+.graficos {
+  background-color: #dff5b7;
+  border-radius: 24px;
+  padding: 30px 10px;
+  display: flex;
+  justify-content: space-around;
+  margin: 16px;
+  flex-wrap: wrap; /* mobile-first */
 }
 
-/* Placeholder visual: apenas rascunho do espaço */
-.bloco.placeholder{
-  min-height:140px;
-  border:2px dashed #3e6529;
-  border-radius:16px;
-  background:#dff5b7;
-  opacity:.7;
+.grafico {
+  width: 45%;
+  min-width: 240px; /* garante legibilidade no mobile */
 }
 
-/* Acessibilidade: foco visível */
-:focus-visible{
-  outline:2px dotted #492f70;
-  outline-offset:4px;
+.grafico-legenda {
+  font-weight: bold;
+  margin-top: 10px;
 }
 
-/* ---------------- Rodapé curvo oficial ---------------- */
-.curva{
-  width:100%;
-  height:70px;
-  background-color:var(--roxo-escuro);
-  border-top-left-radius:100% 50%;
-  border-top-right-radius:100% 50%;
-  position:fixed;
-  bottom:0; left:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:40px;
-  z-index:10;
+.contador-receitas {
+  font-size: 16px;
+  margin: 16px 0;
+  color: #492f70;
+  font-weight: bold;
+}
+
+.subtitulo {
+  font-size: 22px;
+  margin: 25px 0 8px;
+  font-weight: bold;
+}
+
+.conquistas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+  gap: 20px;
+  padding: 20px;
+  justify-items: center;
+}
+
+.medalha {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 100px;
+}
+
+.medalha img {
+  width: 130px;
+  height: auto;
+  margin-bottom: 5px;
+}
+
+.estrelas {
+  font-size: 30px;
+  margin-bottom: 4px;
+}
+
+.medalha.dourada img {
+  filter: brightness(1.2) saturate(1.4);
+}
+
+/* Rodapé curvo exatamente como o seu */
+.curva {
+  width: 100%;
+  height: 70px;
+  background-color: #7b7190;
+  border-top-left-radius: 100% 50%;
+  border-top-right-radius: 100% 50%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;   /* (corrigido ;) */
+  z-index: 10;
 }
 
 /* Botões laterais: 55x55, ícone 250% */
-.btn-footer{
-  background:transparent;
-  border:none;
-  border-radius:50%;
-  width:55px; height:55px;
-  padding:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
-  cursor:pointer;
-  transform:translateY(-10px);
+.btn-footer {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  transform: translateY(-10px);
 }
-.btn-footer img{
-  width:250%;
-  height:250%;
-  object-fit:contain;
-}
-
-/* Botão central: 150x150, elevado, ícone 150% */
-.btn-footer.btn-central{
-  width:150px; height:150px;
-  transform:translateY(-20px);
-}
-.btn-footer.btn-central img{
-  width:150%; height:150%;
-  object-fit:contain;
+.btn-footer img {
+  width: 250%;
+  height: 250%;
+  object-fit: contain;
 }
 
-/* Desktop ≥ 1024px: mantém identidade, expande área útil */
-@media (min-width:1024px){
-  .container{max-width:900px}
-  .area-principal{
-    grid-template-columns:repeat(3, 1fr);
-  }
-  .bloco.placeholder{min-height:180px}
+/* Botão central: 150x150 elevado, ícone 150% */
+.btn-footer.logo {
+  width: 150px;
+  height: 150px;
+  transform: translateY(-20px);
+}
+.btn-footer.logo img {
+  width: 150%;
+  height: 150%;
+  object-fit: contain;
+}
+
+/* Desktop ≥ 1024px: mantém “igual”, só garante bom fluxo */
+@media (min-width: 1024px) {
+  .container { max-width: 900px; }
+  .graficos { justify-content: space-evenly; }
 }
