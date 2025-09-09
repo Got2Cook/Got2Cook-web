@@ -281,3 +281,27 @@ body {
   margin: 15px auto 0 !important;  /* centro exato */
   align-self: center !important;    /* reforço no flex-column */
 }
+
+/* === Barra de cima: centralizada (Personalizar | Fechar) === */
+#opcoesContainer .linha-acoes{
+  display:flex !important;
+  justify-content:center !important;
+  gap:10px !important;
+}
+
+/* === Fechar de baixo: escondido por padrão; mostra só ao personalizar === */
+.conteudo-janela #btnFecharBottom.fechar{
+  display:none !important;          /* volta ao comportamento "antes" */
+  margin:12px auto 0 !important;    /* quando aparecer, centralizado */
+  padding:0 24px;
+}
+#opcoesContainer.is-editing + #btnFecharBottom.fechar{
+  display:inline-flex !important;   /* só aparece ao abrir Personalizar */
+}
+
+/* === Botão “＋” centralizado nas duas colunas === */
+.listas-gostos > .lista > .btn-mais{
+  display:block !important;
+  margin:15px auto 0 !important;    /* centro exato */
+  align-self:center !important;
+}
