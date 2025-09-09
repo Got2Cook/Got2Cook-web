@@ -1,62 +1,26 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Minha Jornada - Got2Cook</title>
-  <link rel="stylesheet" href="jornada.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-  <script src="jornada.js" defer></script>
-</head>
-<body>
-  <div class="container">
-    <header class="topo-icones somente-titulo">
-      <h1 class="titulo">MINHA JORNADA</h1>
-    </header>
+<!-- LAYOUT PRINCIPAL (esquerda: gráficos | direita: conquistas) -->
+<section class="layout">
+  <!-- Painel de gráficos (fixo no scroll) -->
+  <aside class="painel-graficos" aria-label="Painel de gráficos">
+    <div class="grafico">
+      <canvas id="graficoEstilos" aria-label="Gráfico Estilos"></canvas>
+      <ul class="legenda-lista" id="legendaEstilos" aria-label="Legenda Estilos"></ul>
+      <p class="grafico-legenda-vis" aria-hidden="true">ESTILOS PREFERIDOS</p>
+    </div>
 
-    <!-- LAYOUT PRINCIPAL (esquerda: gráficos | direita: conquistas) -->
-    <section class="layout">
+    <div class="grafico">
+      <canvas id="graficoMomentos" aria-label="Gráfico Momentos"></canvas>
+      <ul class="legenda-lista" id="legendaMomentos" aria-label="Legenda Momentos"></ul>
+      <p class="grafico-legenda-vis" aria-hidden="true">MOMENTOS DO DIA</p>
+    </div>
+  </aside>
 
-      <!-- Painel de gráficos (cartão à esquerda) -->
-      <aside class="painel-graficos" aria-label="Painel de gráficos">
-        <div class="grafico">
-          <canvas id="graficoEstilos"></canvas>
-          <p class="grafico-legenda">ESTILOS PREFERIDOS</p>
-        </div>
-
-        <div class="grafico">
-          <canvas id="graficoMomentos"></canvas>
-          <p class="grafico-legenda">MOMENTOS DO DIA</p>
-        </div>
-      </aside>
-
-      <!-- Coluna direita: título e conquistas -->
-      <section class="painel-conquistas">
-        <h2 class="subtitulo">MINHAS CONQUISTAS</h2>
-
-        <p class="contador-receitas">
-          🏆 VOCÊ JÁ CRIOU <span id="contador">0</span> RECEITAS COM A GOT2COOK! 🏆
-        </p>
-
-        <section class="conquistas" id="conquistasContainer"></section>
-      </section>
-
-    </section>
-  </div>
-
-  <!-- Rodapé curvo oficial -->
-  <footer class="curva">
-    <button class="btn-footer" id="btnVoltar" type="button" aria-label="Voltar para Home">
-      <img src="humor.png" alt="">
-    </button>
-
-    <button class="btn-footer btn-central" id="btnLogo" type="button" aria-label="Ir para Minhas Receitas">
-      <img src="logocentral.png" alt="">
-    </button>
-
-    <button class="btn-footer" id="btnGeladeira" type="button" aria-label="Ir para Minha Geladeira">
-      <img src="geladeira.png" alt="">
-    </button>
-  </footer>
-</body>
-</html>
+  <!-- Coluna direita (rolável) -->
+  <section class="painel-conquistas" aria-label="Minhas conquistas">
+    <h2 class="subtitulo">MINHAS CONQUISTAS</h2>
+    <p class="contador-receitas">
+      🏆 VOCÊ JÁ CRIOU <span id="contador">0</span> RECEITAS COM A GOT2COOK! 🏆
+    </p>
+    <section class="conquistas" id="conquistasContainer"></section>
+  </section>
+</section>
