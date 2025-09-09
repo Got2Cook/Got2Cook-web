@@ -4,13 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Minha Jornada - Got2Cook</title>
-
   <link rel="stylesheet" href="jornada.css" />
-
-  <!-- Chart.js (mesmo padrão do seu código) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- JS desta tela (separado e com defer, como você pediu) -->
   <script src="jornada.js" defer></script>
 </head>
 <body>
@@ -19,7 +14,7 @@
       <h1 class="titulo">MINHA JORNADA</h1>
     </header>
 
-    <!-- GRÁFICOS (iguais ao seu layout atual) -->
+    <!-- Gráficos -->
     <section class="graficos">
       <div class="grafico">
         <canvas id="graficoEstilos"></canvas>
@@ -31,23 +26,22 @@
       </div>
     </section>
 
-    <p class="contador-receitas">🏆 VOCÊ JÁ CRIOU <span id="contador">0</span> RECEITAS COM A GOT2COOK! 🏆</p>
+    <p class="contador-receitas">
+      🏆 VOCÊ JÁ CRIOU <span id="contador">0</span> RECEITAS COM A GOT2COOK! 🏆
+    </p>
 
     <h2 class="subtitulo">MINHAS CONQUISTAS:</h2>
-
     <section class="conquistas" id="conquistasContainer"></section>
   </div>
 
-  <!-- Rodapé curvo no mesmo padrão do seu arquivo -->
+  <!-- Rodapé curvo -->
   <footer class="curva">
     <button class="btn-footer voltar" id="btnVoltar" type="button" aria-label="Voltar para Home">
       <img src="humor.png" alt="">
     </button>
-
     <button class="btn-footer logo" id="btnLogo" type="button" aria-label="Ir para Minhas Receitas">
       <img src="logocentral.png" alt="">
     </button>
-
     <button class="btn-footer geladeira" id="btnGeladeira" type="button" aria-label="Ir para Minha Geladeira">
       <img src="geladeira.png" alt="">
     </button>
