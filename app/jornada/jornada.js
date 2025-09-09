@@ -64,10 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
       ).join('');
 
       div.innerHTML = `
-        <div class="estrelas">${estrelas}</div>
-        <img src="../assets/${conquista.id}.png" alt="${conquista.titulo}" />
-        <p>${conquista.titulo}</p>
-      `;
+  <div class="estrelas">${estrelas}</div>
+  <img src="../assets/${conquista.id}.png" alt="${conquista.titulo}" />
+  <p>${conquista.titulo}</p>
+`;
 
       container.appendChild(div);
     });
