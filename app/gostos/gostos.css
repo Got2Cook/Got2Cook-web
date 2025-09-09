@@ -170,3 +170,13 @@ body{
   .titulo{ font-size:42px; margin:40px 0 24px; }
   .lista-itens li{ padding:14px 18px; }
 }
+
+/* Listas crescem com altura própria, sem esticar uma pela outra */
+.listas-gostos{
+  align-items: flex-start !important;   /* para de nivelar alturas */
+}
+
+.listas-gostos .lista{
+  align-self: flex-start !important;    /* cada cartão usa só a própria altura */
+  height: auto !important;              /* garante que nada force 100% */
+}
