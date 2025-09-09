@@ -147,22 +147,24 @@ body{
 .fechar:hover{ transform:translateY(-1px); filter:brightness(1.03); }
 .fechar:active{ transform:translateY(0) scale(.98); }
 
-/* Rodapé curvo oficial */
+Rodapé curvo (mantido)
+   ========================================= */
 .curva{
-  position:fixed; left:0; right:0; bottom:0;
-  height:70px; background:#7b7190;
+  width:100%; height:70px; background-color:#7b7190;
   border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
-  display:flex; align-items:center; justify-content:center; gap:40px;
-  z-index:50;
+  position:fixed; bottom:0; left:0; right:0;
+  display:flex; justify-content:center; align-items:center; gap:40px; z-index:10;
 }
 .btn-footer{
-  width:55px; height:55px; border-radius:50%;
-  background:transparent; border:none; display:flex; align-items:center; justify-content:center;
-  transform:translateY(-10px); cursor:pointer; overflow:hidden; padding:0;
+  background-color:transparent; border:none; border-radius:50%;
+  width:55px; height:55px; padding:0; display:flex; justify-content:center; align-items:center;
+  overflow:hidden; cursor:pointer; transform:translateY(-10px); box-shadow:0 6px 18px rgba(0,0,0,.18);
 }
-.btn-footer img{ width:250%; height:250%; object-fit:contain; }
-.btn-footer.btn-central{ width:150px; height:150px; transform:translateY(-20px); }
-.btn-footer.btn-central img{ width:150%; height:150%; object-fit:contain; }
+.btn-footer img{ width:250%; height:250%; object-fit:contain; display:block; }
+.btn-footer.logo{
+  width:150px; height:150px; transform:translateY(-20px); box-shadow:0 10px 26px rgba(0,0,0,.22);
+}
+.btn-footer.logo img{ width:150%; height:150%; object-fit:contain; display:block; }
 
 /* Desktop: containers mais largos */
 @media (min-width:1024px){
