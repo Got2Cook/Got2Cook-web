@@ -247,41 +247,6 @@ body {
   .lista-itens li{ padding:14px 18px; }
 }
 
-/* Centralizar o FECHAR que aparece embaixo quando personalizando */
-#btnFecharBottom{
-  display: block;          /* vira bloco para aceitar margin auto */
-  margin: 12px auto 0;     /* centraliza horizontalmente */
-  padding: 0 24px;         /* só um conforto visual */
-}
-
-/* Garantir que o botão “＋” fique 100% centralizado nas duas colunas */
-.btn-mais{
-  display: block;          /* deixa ocupar a linha toda */
-  margin: 15px auto 0;     /* centraliza */
-  align-self: center;      /* redundância útil no flex-column do .lista */
-}
-
-/* === Centralizar o FECHAR (de baixo) do modal === */
-.conteudo-janela #btnFecharBottom.fechar {
-  display: block !important;
-  margin: 12px auto 0 !important; /* centraliza */
-  padding: 0 24px;
-}
-
-/* === Centralizar a fileira "Personalizar | Fechar" (de cima) === */
-#opcoesContainer .linha-acoes {
-  display: flex !important;
-  justify-content: center !important;
-  gap: 10px !important;
-}
-
-/* === Centralizar o botão "＋" em cada coluna === */
-.listas-gostos .lista .btn-mais {
-  display: block !important;
-  margin: 15px auto 0 !important;  /* centro exato */
-  align-self: center !important;    /* reforço no flex-column */
-}
-
 /* === Barra de cima: centralizada (Personalizar | Fechar) === */
 #opcoesContainer .linha-acoes{
   display:flex !important;
