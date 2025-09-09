@@ -1,24 +1,20 @@
-// jornada.js — igual ao seu comportamento, extraído do inline e com navegação nos caminhos pedidos
-
 document.addEventListener('DOMContentLoaded', () => {
-  // Navegação do rodapé (placeholders) — mapeados conforme solicitado
+  // Navegação do rodapé
   document.getElementById("btnVoltar")?.addEventListener("click", () => {
     window.location.href = "../home/index.html";
   });
-
   document.getElementById("btnLogo")?.addEventListener("click", () => {
     window.location.href = "../minhas-receitas/index.html";
   });
-
   document.getElementById("btnGeladeira")?.addEventListener("click", () => {
     window.location.href = "../geladeira/index.html";
   });
 
-  // ===== Gráficos (Chart.js) — mesmo setup do seu arquivo =====
+  // Gráficos
   const ctx1 = document.getElementById('graficoEstilos');
   const ctx2 = document.getElementById('graficoMomentos');
 
-  if (window.Chart && ctx1 && ctx2) {
+  if (ctx1 && ctx2) {
     new Chart(ctx1, {
       type: 'pie',
       data: {
@@ -28,19 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
           backgroundColor: ['#705a89', '#b47cc5', '#c5b4e3', '#d3e3d3', '#f2f2f2']
         }]
       },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            labels: {
-              font: { size: 10 },
-              boxWidth: 12,
-              boxHeight: 12,
-              borderRadius: 6
-            }
-          }
-        }
-      }
+      options: { responsive: true }
     });
 
     new Chart(ctx2, {
@@ -52,23 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
           backgroundColor: ['#8a9ebf', '#a97dac', '#c9b9d3', '#e0dff2', '#f2f2f2']
         }]
       },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            labels: {
-              font: { size: 10 },
-              boxWidth: 12,
-              boxHeight: 12,
-              borderRadius: 6
-            }
-          }
-        }
-      }
+      options: { responsive: true }
     });
   }
 
-  // ===== Conquistas — exatamente como no seu código =====
+  // Conquistas
   const conquistas = [
     { id: 'medalha1', titulo: 'PRIMEIRA MORDIDA', nivel: 0 },
     { id: 'medalha2', titulo: 'REPETECO', nivel: 0 },
@@ -93,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       div.innerHTML = `
         <div class="estrelas">${estrelas}</div>
-        <img src="${conquista.id}.png" alt="${conquista.titulo}" />
+        <img src="../assets/${conquista.id}.png" alt="${conquista.titulo}" />
         <p>${conquista.titulo}</p>
       `;
 
@@ -101,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Contador (igual ao seu; sem alterar chaves de storage)
+  // Contador
   const totalReceitas = localStorage.getItem('totalReceitas') || 0;
   const contador = document.getElementById('contador');
   if (contador) contador.textContent = totalReceitas;
