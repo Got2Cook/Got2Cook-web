@@ -1,0 +1,113 @@
+:root{
+  --bg:#c0ffa5;
+  --roxo-escuro:#7b7190;
+  --verde:#225c18;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:var(--bg);
+  color:var(--verde);
+}
+
+/* Container principal mobile-first */
+.container{
+  max-width:600px;
+  margin:0 auto;
+  padding:0 16px 120px; /* espaço pro rodapé */
+}
+
+/* Título no mesmo estilo dos seus títulos */
+.topo-icones.somente-titulo{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding-top:24px;
+}
+.titulo{
+  font-size:35px;
+  line-height:1.1;
+  text-align:center;
+  color:var(--verde);
+  margin:64px 0 16px;
+}
+
+/* Área principal com blocos/containers placeholder */
+.area-principal{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+}
+
+/* Placeholder visual: apenas rascunho do espaço */
+.bloco.placeholder{
+  min-height:140px;
+  border:2px dashed #3e6529;
+  border-radius:16px;
+  background:#dff5b7;
+  opacity:.7;
+}
+
+/* Acessibilidade: foco visível */
+:focus-visible{
+  outline:2px dotted #492f70;
+  outline-offset:4px;
+}
+
+/* ---------------- Rodapé curvo oficial ---------------- */
+.curva{
+  width:100%;
+  height:70px;
+  background-color:var(--roxo-escuro);
+  border-top-left-radius:100% 50%;
+  border-top-right-radius:100% 50%;
+  position:fixed;
+  bottom:0; left:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:40px;
+  z-index:10;
+}
+
+/* Botões laterais: 55x55, ícone 250% */
+.btn-footer{
+  background:transparent;
+  border:none;
+  border-radius:50%;
+  width:55px; height:55px;
+  padding:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  cursor:pointer;
+  transform:translateY(-10px);
+}
+.btn-footer img{
+  width:250%;
+  height:250%;
+  object-fit:contain;
+}
+
+/* Botão central: 150x150, elevado, ícone 150% */
+.btn-footer.btn-central{
+  width:150px; height:150px;
+  transform:translateY(-20px);
+}
+.btn-footer.btn-central img{
+  width:150%; height:150%;
+  object-fit:contain;
+}
+
+/* Desktop ≥ 1024px: mantém identidade, expande área útil */
+@media (min-width:1024px){
+  .container{max-width:900px}
+  .area-principal{
+    grid-template-columns:repeat(3, 1fr);
+  }
+  .bloco.placeholder{min-height:180px}
+}
