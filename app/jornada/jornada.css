@@ -1,43 +1,48 @@
 /* Base */
 body{margin:0;padding:0;font-family:'Arial Rounded MT Bold',Arial,sans-serif;background:#c0ffa5;color:#225c18}
-.container{max-width:1100px;margin:0 auto;padding:0 16px 120px}
+.container{max-width:1180px;margin:0 auto;padding:0 8px 120px}
 .topo-icones.somente-titulo{display:flex;justify-content:center;align-items:center;padding:10px 0}
 .titulo{font-size:35px;color:#225c18;margin:56px 0 20px;text-align:center}
 :focus-visible{outline:2px dotted #492f70;outline-offset:4px}
 
-/* ===== Layout ===== */
+/* ===== Layout geral ===== */
 .layout{display:grid;gap:24px}
 
-/* Painel de gráficos — FIXO na tela (desktop), altura 100vh */
+/* ===== Painel dos GRÁFICOS (desktop ocupa a ALTURA INTEIRA; sem sticky) ===== */
 .painel-graficos{
-  background:#dff5b7;border-radius:28px;padding:18px;
-  display:grid;gap:24px;
+  background:#dff5b7;border-radius:28px;
+  padding:14px 14px 18px 8px;            /* pouca margem à esquerda -> quase encostado */
+  display:flex; flex-direction:column; gap:26px;
 }
 .grafico{display:flex;flex-direction:column;gap:10px}
-.grafico-titulo{font-size:18px;margin:0 0 4px 4px;color:#225c18}
+.grafico-titulo{font-size:18px;margin:0 0 4px 6px;color:#225c18}
 .grafico-row{
   display:grid;
-  grid-template-columns: 230px 1fr; /* canvas bem à esquerda + legenda ao lado */
+  grid-template-columns: 210px 1fr;     /* CANVAS estreito à esquerda + legenda larga */
   gap:16px; align-items:center;
 }
-.grafico-row canvas{max-height:220px}
+.grafico-row canvas{max-height:160px}   /* gráficos menores */
 
-/* Legenda em pílulas */
+/* Legenda ao lado (pílulas) */
 .legenda-lista{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .legenda-lista li{
   display:flex;align-items:center;gap:10px;
   background:#7b7190;color:#fff;font-size:14px;
-  padding:8px 12px;border-radius:999px;width:fit-content;
+  padding:8px 12px;border-radius:999px;width:fit-content
 }
 .legenda-lista .swatch{width:14px;height:14px;border-radius:50%;flex:0 0 14px}
 
-/* Painel das conquistas — rolável e 3 colunas */
-.painel-conquistas{text-align:left;max-height:calc(100vh - 70px - 40px);overflow-y:auto;padding-right:8px}
+/* ===== Conquistas (rolável, 3 colunas) ===== */
+.painel-conquistas{
+  text-align:left;
+  max-height:calc(100vh - 70px - 40px); /* tela - rodapé - respiro topo */
+  overflow-y:auto; padding-right:8px;
+}
 .subtitulo{font-size:22px;margin:8px 0 6px;font-weight:bold}
 .contador-receitas{font-size:16px;margin:6px 0 14px;color:#492f70;font-weight:bold}
 .conquistas{
   display:grid;
-  grid-template-columns: repeat(3, minmax(140px, 1fr));
+  grid-template-columns: repeat(3, minmax(140px,1fr));
   gap:22px; justify-items:center;
 }
 .medalha{display:flex;flex-direction:column;align-items:center;text-align:center}
@@ -55,20 +60,18 @@ body{margin:0;padding:0;font-family:'Arial Rounded MT Bold',Arial,sans-serif;bac
 /* ===== Desktop ===== */
 @media (min-width:1024px){
   .layout{
-    grid-template-columns: 540px 1fr; /* esquerda fixa / direita rolável */
+    grid-template-columns: 600px 1fr;   /* aumenta largura do painel -> menor altura dos gráficos */
     align-items:start; gap:40px;
   }
   .painel-graficos{
-    position: sticky;
-    top: 0;               /* fica visível igual ao rodapé */
-    height: calc(100vh - 20px); /* ocupa praticamente a tela inteira */
-    overflow: auto;       /* se precisar, rola só dentro do painel */
-    justify-self: start;  /* encosta na borda esquerda do container */
+    min-height:calc(100vh - 100px);     /* preenche a tela toda no desktop */
   }
 }
 
-/* ===== Mobile ===== */
+/* ===== Mobile (igual ao que você mandou) ===== */
 @media (max-width:1023px){
+  .layout{gap:16px}
+  .painel-graficos{padding:16px;border-radius:24px}
   .grafico-row{grid-template-columns:1fr;justify-items:center;text-align:center}
   .legenda-lista{justify-items:center}
   .painel-conquistas{max-height:unset;overflow:visible}
