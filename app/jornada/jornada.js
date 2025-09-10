@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   $('btnLogo')?.addEventListener('click', () => { window.location.href = '../minhas-receitas/index.html'; });
   $('btnGeladeira')?.addEventListener('click', () => { window.location.href = '../geladeira/index.html'; });
 
-  /* Gráficos (sem legenda nativa, com legenda custom ao lado) */
+  /* Gráficos (sem legenda nativa; legenda custom ao lado) */
   const estilosCfg = {
     labels:['Massas','Doces','Carnes','Saladas','Petiscos'],
     data:[44.4,27.8,16.7,9.1,3.0],
@@ -20,11 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
   function montaChart(canvasId, legendaId, cfg){
     const canvas = $(canvasId), ul = $(legendaId);
     if(!canvas || !ul || !window.Chart) return;
+
     new Chart(canvas,{
       type:'pie',
       data:{ labels:cfg.labels, datasets:[{ data:cfg.data, backgroundColor:cfg.colors }]},
       options:{ responsive:true, plugins:{ legend:{ display:false } } }
     });
+
     ul.innerHTML = cfg.labels.map((label,i)=>`
       <li tabindex="0" aria-label="${label}: ${cfg.data[i]}%">
         <span class="swatch" style="background:${cfg.colors[i]}"></span>
@@ -35,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   montaChart('graficoEstilos','legendaEstilos',estilosCfg);
   montaChart('graficoMomentos','legendaMomentos',momentosCfg);
 
-  /* Conquistas — imagens em /app/assets (não alterar) */
+  /* Conquistas — imagens com fallback (não muda mais o caminho base) */
   const conquistas = [
     { id:'medalha1', titulo:'PRIMEIRA MORDIDA', nivel:0 },
     { id:'medalha2', titulo:'REPETECO', nivel:0 },
@@ -54,9 +56,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const div = document.createElement('div');
       div.className = 'medalha';
       const estrelas = Array.from({length:3},(_,i)=>`<span style="color:${i<c.nivel?'#f8c100':'#999'}">★</span>`).join('');
+
+      // base relativa (quando /app/assets existe) + fallback para raiz /assets
+      const primary = `../assets/${c.id}.png`;
+      const fallback = `/assets/${c.id}.png`;
+
       div.innerHTML = `
         <div class="estrelas">${estrelas}</div>
-        <img src="/app/assets/${c.id}.png" alt="${c.titulo}">
+        <img src="${primary}" alt="${c.titulo}"
+             onerror="this.onerror=null; this.src='${fallback}';">
         <p>${c.titulo}</p>
       `;
       grid.appendChild(div);
