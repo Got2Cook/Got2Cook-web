@@ -2,7 +2,7 @@
    Persistência:
    - got2cook_historico_itens: array de objetos
      { id, titulo, dataISO, receitaId, foto, duracaoMin, porcoes, tags:[], favorito:boolean }
-   - got2cook_historico_filtros: { busca, periodo, ordenacao }
+   - got2cook_historico_filtros: { busca, periodo, ordenacao, dataSelecionada? }
 */
 
 (function(){
@@ -19,6 +19,13 @@
   const chipsPeriodo = Array.from(document.querySelectorAll('.chip'));
   const selOrdenacao = document.getElementById('selOrdenacao');
   const btnLimparFiltros = document.getElementById('btnLimparFiltros');
+
+  // ----- Calendário (mesmo comportamento do seu meuhistorico.js)
+  // refs
+  const diasContainer = document.getElementById('dias');
+  const mesAno = document.getElementById('mesAno');
+  const btnMesAnterior = document.getElementById('mesAnterior');
+  const btnMesProximo = document.getElementById('mesProximo');
 
   // ----- Navegação rodapé (placeholders)
   document.getElementById('btnVoltar')?.addEventListener('click', ()=> {
@@ -69,7 +76,7 @@
   }
 
   // ----- Estado de filtros
-  let filtros = lsGet(LS_FILTROS, { busca:'', periodo:'todos', ordenacao:'recente' });
+  let filtros = lsGet(LS_FILTROS, { busca:'', periodo:'todos', ordenacao:'recente', dataSelecionada:null });
 
   // UI -> estado inicial
   function syncControlesFromState(){
@@ -82,8 +89,23 @@
     });
   }
 
+  // Utilidades de data
+  function toYMD(date){
+    const y = date.getFullYear();
+    const m = String(date.getMonth()+1).padStart(2,'0');
+    const d = String(date.getDate()).padStart(2,'0');
+    return `${y}-${m}-${d}`;
+  }
+  function isSameDayISO(iso, ymd){
+    const d = new Date(iso);
+    return toYMD(d) === ymd;
+  }
+
   // ----- Filtro/ordenador
   function dentroDoPeriodo(iso, periodo){
+    if(filtros.dataSelecionada){ // prioridade quando selecionar no calendário
+      return isSameDayISO(iso, filtros.dataSelecionada);
+    }
     if(periodo === 'todos') return true;
     if(periodo === 'hoje'){
       const d = new Date(iso);
@@ -112,7 +134,7 @@
     return arr;
   }
 
-  // ----- Agrupar por data (Hoje, Ontem, dd/mm/aaaa)
+  // ----- Agrupar por data
   function labelData(d){
     const hoje = new Date();
     const ontem = new Date(Date.now()-24*60*60*1000);
@@ -120,7 +142,6 @@
     if(d.toDateString() === ontem.toDateString()) return 'Ontem';
     return d.toLocaleDateString('pt-BR');
   }
-
   function agrupaPorData(arr){
     const grupos = new Map();
     arr.forEach(it=>{
@@ -132,30 +153,24 @@
     return grupos;
   }
 
-  // ----- Paginação simples com "Carregar mais"
+  // ----- Paginação
   const PAGE_SIZE = 10;
   let pagina = 1;
   let cacheFiltradoOrdenado = [];
+  function resetPaginacao(){ pagina = 1; }
+  function slicePaginado(arr){ return arr.slice(0, PAGE_SIZE * pagina); }
 
-  function resetPaginacao(){
-    pagina = 1;
-  }
-
-  function slicePaginado(arr){
-    const total = PAGE_SIZE * pagina;
-    return arr.slice(0, total);
-  }
-
+  // ----- Render
   function render(){
     skeleton.hidden = true;
     const itens = lsGet(LS_ITENS, []);
     cacheFiltradoOrdenado = aplicaFiltrosEOrdenacao(itens);
 
-    // estado vazio
     if(cacheFiltradoOrdenado.length === 0){
       ul.innerHTML = '';
       vazio.hidden = false;
       btnCarregarMais.disabled = true;
+      pintarCalendarioDias(itens); // mantém destaque do calendário
       return;
     }
     vazio.hidden = true;
@@ -165,13 +180,11 @@
 
     ul.innerHTML = '';
     grupos.forEach((lista, tituloData)=>{
-      // subcabeçalho
       const liData = document.createElement('li');
       liData.className = 'li-data';
       liData.textContent = tituloData;
       ul.appendChild(liData);
 
-      // itens
       lista.forEach(it=>{
         const li = document.createElement('li');
         li.className = 'item';
@@ -179,7 +192,6 @@
         li.setAttribute('tabindex','0');
         li.dataset.id = it.id;
 
-        // thumb
         const thumb = document.createElement('div');
         thumb.className = 'thumb';
         const img = document.createElement('img');
@@ -187,90 +199,42 @@
         img.alt = '';
         thumb.appendChild(img);
 
-        // bloco info
         const bloco = document.createElement('div');
         bloco.className = 'bloco';
-        const h = document.createElement('div');
-        h.className = 'titulo';
-        h.textContent = it.titulo || 'Receita';
-        const meta = document.createElement('div');
-        meta.className = 'meta';
+        const h = document.createElement('div'); h.className='titulo'; h.textContent = it.titulo || 'Receita';
+        const meta = document.createElement('div'); meta.className='meta';
         const d = new Date(it.dataISO);
         const hora = d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
         meta.textContent = `${d.toLocaleDateString('pt-BR')} • ${hora} • ⏱ ${it.duracaoMin||'--'} min • 🍽 ${it.porcoes||'--'} porções`;
-
-        const tags = document.createElement('div');
-        tags.className = 'tags';
-        (it.tags||[]).forEach(t=>{
-          const span = document.createElement('span');
-          span.className = 'tag';
-          span.textContent = t;
-          tags.appendChild(span);
-        });
-
+        const tags = document.createElement('div'); tags.className='tags';
+        (it.tags||[]).forEach(t=>{ const s=document.createElement('span'); s.className='tag'; s.textContent=t; tags.appendChild(s); });
         bloco.append(h, meta, tags);
 
-        // ações
-        const acoes = document.createElement('div');
-        acoes.className = 'acoes';
-
-        // abrir (ícone separado além do li clicável)
-        const btnAbrir = document.createElement('button');
-        btnAbrir.type = 'button';
-        btnAbrir.className = 'icon-btn';
-        btnAbrir.setAttribute('aria-label','Abrir receita');
-        btnAbrir.innerHTML = '🔗';
-
-        // favoritar
-        const btnFav = document.createElement('button');
-        btnFav.type = 'button';
-        btnFav.className = 'icon-btn';
-        btnFav.setAttribute('aria-label', it.favorito ? 'Desfavoritar' : 'Favoritar');
-        btnFav.innerHTML = `<span class="estrela">${it.favorito ? '★' : '☆'}</span>`;
-        if(it.favorito) btnFav.classList.add('fav-ativo');
-
-        // remover
-        const btnDel = document.createElement('button');
-        btnDel.type = 'button';
-        btnDel.className = 'icon-btn';
-        btnDel.setAttribute('aria-label','Remover do histórico');
-        btnDel.innerHTML = '🗑️';
-
+        const acoes = document.createElement('div'); acoes.className='acoes';
+        const btnAbrir = document.createElement('button'); btnAbrir.type='button'; btnAbrir.className='icon-btn'; btnAbrir.setAttribute('aria-label','Abrir receita'); btnAbrir.innerHTML='🔗';
+        const btnFav = document.createElement('button'); btnFav.type='button'; btnFav.className='icon-btn'; btnFav.setAttribute('aria-label', it.favorito?'Desfavoritar':'Favoritar'); btnFav.innerHTML=`<span class="estrela">${it.favorito?'★':'☆'}</span>`; if(it.favorito) btnFav.classList.add('fav-ativo');
+        const btnDel = document.createElement('button'); btnDel.type='button'; btnDel.className='icon-btn'; btnDel.setAttribute('aria-label','Remover do histórico'); btnDel.innerHTML='🗑️';
         acoes.append(btnAbrir, btnFav, btnDel);
 
-        // montar li
         li.append(thumb, bloco, acoes);
         ul.appendChild(li);
 
-        // handlers
         function abrir(){
-          // placeholder: abrir receita
-          // você pode trocar a rota abaixo quando integrar
           window.location.href = '../visualizar/index.html?receitaId=' + encodeURIComponent(it.receitaId||'');
         }
         li.addEventListener('click', abrir);
-        li.addEventListener('keydown', (ev)=>{
-          if(ev.key === 'Enter' || ev.key === ' '){
-            ev.preventDefault(); abrir();
-          }
-        });
+        li.addEventListener('keydown', (ev)=>{ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); abrir(); }});
         btnAbrir.addEventListener('click', (ev)=>{ ev.stopPropagation(); abrir(); });
-
-        btnFav.addEventListener('click', (ev)=>{
-          ev.stopPropagation();
-          toggleFavorito(it.id, btnFav);
-        });
-
-        btnDel.addEventListener('click', (ev)=>{
-          ev.stopPropagation();
-          removerItem(it.id);
-        });
+        btnFav.addEventListener('click', (ev)=>{ ev.stopPropagation(); toggleFavorito(it.id, btnFav); });
+        btnDel.addEventListener('click', (ev)=>{ ev.stopPropagation(); removerItem(it.id); });
       });
     });
 
-    // paginar
     const temMais = cacheFiltradoOrdenado.length > visiveis.length;
     btnCarregarMais.disabled = !temMais;
+
+    // Atualiza destaques do calendário conforme itens existentes
+    pintarCalendarioDias(lsGet(LS_ITENS, []));
   }
 
   function toggleFavorito(id, btn){
@@ -279,7 +243,6 @@
     if(idx>-1){
       itens[idx].favorito = !itens[idx].favorito;
       lsSet(LS_ITENS, itens);
-      // feedback visual imediato
       const ativo = itens[idx].favorito;
       btn.classList.toggle('fav-ativo', ativo);
       btn.setAttribute('aria-label', ativo ? 'Desfavoritar' : 'Favoritar');
@@ -293,11 +256,10 @@
     let itens = lsGet(LS_ITENS, []);
     itens = itens.filter(x=>x.id !== id);
     lsSet(LS_ITENS, itens);
-    // re-render preservando filtros
     render();
   }
 
-  // ----- Eventos de controle
+  // ----- Controles
   inpBusca.addEventListener('input', ()=>{
     filtros.busca = inpBusca.value || '';
     lsSet(LS_FILTROS, filtros);
@@ -316,13 +278,11 @@
 
   chipsPeriodo.forEach(chip=>{
     chip.addEventListener('click', ()=>{
-      chipsPeriodo.forEach(c=>{
-        c.classList.remove('ativo');
-        c.setAttribute('aria-pressed','false');
-      });
-      chip.classList.add('ativo');
-      chip.setAttribute('aria-pressed','true');
+      chipsPeriodo.forEach(c=>{ c.classList.remove('ativo'); c.setAttribute('aria-pressed','false'); });
+      chip.classList.add('ativo'); chip.setAttribute('aria-pressed','true');
       filtros.periodo = chip.dataset.periodo;
+      // ao escolher um período padrão, limpamos data específica do calendário
+      filtros.dataSelecionada = null;
       lsSet(LS_FILTROS, filtros);
       resetPaginacao();
       render();
@@ -337,7 +297,7 @@
   });
 
   btnLimparFiltros.addEventListener('click', ()=>{
-    filtros = { busca:'', periodo:'todos', ordenacao:'recente' };
+    filtros = { busca:'', periodo:'todos', ordenacao:'recente', dataSelecionada:null };
     lsSet(LS_FILTROS, filtros);
     syncControlesFromState();
     resetPaginacao();
@@ -349,15 +309,88 @@
     render();
   });
 
+  // ====== CALENDÁRIO (adaptado 1:1 do seu padrão) ======
+  let hoje = new Date();
+  let mesAtual = hoje.getMonth();
+  let anoAtual = hoje.getFullYear();
+
+  function pintarCalendarioDias(itens){
+    // marca como "ativo" os dias que possuem itens
+    // (regera a grade mantendo o mês atual)
+    gerarCalendario(mesAtual, anoAtual, itens);
+  }
+
+  function gerarCalendario(mes, ano, itensParam){
+    // se já existir grade, vamos recriar do zero
+    diasContainer.innerHTML = "";
+    const primeiroDia = new Date(ano, mes, 1).getDay();
+    const ultimoDia = new Date(ano, mes + 1, 0).getDate();
+    mesAno.textContent = `${new Date(ano, mes).toLocaleString('pt-BR', { month: 'long' })} ${ano}`;
+
+    // colecao de itens para destacar dias
+    const itens = Array.isArray(itensParam) ? itensParam : lsGet(LS_ITENS, []);
+
+    // Pré-prepara um Set com YYYY-MM-DD que possuem itens
+    const diasComItens = new Set();
+    itens.forEach(it=>{
+      try{
+        const ymd = toYMD(new Date(it.dataISO));
+        diasComItens.add(ymd);
+      }catch{}
+    });
+
+    // Preenche dias vazios antes do 1º
+    for (let i = 0; i < primeiroDia; i++){
+      const vazio = document.createElement('div');
+      vazio.setAttribute('aria-hidden','true');
+      diasContainer.appendChild(vazio);
+    }
+
+    for (let dia = 1; dia <= ultimoDia; dia++){
+      const divDia = document.createElement('div');
+      divDia.textContent = String(dia);
+      const ymd = `${ano}-${String(mes+1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
+
+      if(diasComItens.has(ymd)){
+        divDia.classList.add('ativo');
+        divDia.setAttribute('title','Há receitas neste dia');
+      }
+
+      divDia.addEventListener('click', ()=>{
+        filtros.dataSelecionada = ymd;           // trava o filtro para o dia
+        filtros.periodo = 'todos';               // mantém chips consistentes
+        lsSet(LS_FILTROS, filtros);
+        chipsPeriodo.forEach(c=>{ c.classList.remove('ativo'); c.setAttribute('aria-pressed','false'); });
+        resetPaginacao();
+        render();
+        // rola até a lista para dar feedback
+        document.getElementById('listaHistorico')?.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+
+      diasContainer.appendChild(divDia);
+    }
+  }
+
+  btnMesAnterior?.addEventListener('click', ()=>{
+    mesAtual--;
+    if (mesAtual < 0){ mesAtual = 11; anoAtual--; }
+    gerarCalendario(mesAtual, anoAtual);
+  });
+
+  btnMesProximo?.addEventListener('click', ()=>{
+    mesAtual++;
+    if (mesAtual > 11){ mesAtual = 0; anoAtual++; }
+    gerarCalendario(mesAtual, anoAtual);
+  });
+
   // ----- Inicialização
   function init(){
     seedIfEmpty();
     syncControlesFromState();
     skeleton.hidden = false;
-    setTimeout(()=>{ // só para dar um leve "efeito de carregando"
-      resetPaginacao();
-      render();
-    }, 250);
+    // inicia calendário
+    gerarCalendario(mesAtual, anoAtual);
+    setTimeout(()=>{ resetPaginacao(); render(); }, 250);
   }
 
   init();
