@@ -1,100 +1,114 @@
 /* ===== BASE ===== */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
-  background: #c0ffa5;
-  color: #225c18;
+body{
+  margin:0;
+  padding:0;
+  font-family:'Arial Rounded MT Bold', Arial, sans-serif;
+  background:#c0ffa5;
+  color:#225c18;
 }
-.container {
-  max-width: 1400px;              /* container mais largo */
-  margin: 0 auto;
-  padding: 0 8px 120px;
+.container{
+  max-width:1400px;              /* largura geral */
+  margin:0 auto;
+  padding:0 24px 120px;          /* ↑ mais espaço nas laterais e pro rodapé */
 }
-.topo-icones.somente-titulo { display:flex; justify-content:center; align-items:center; padding:10px 0; }
-.titulo { font-size:35px; color:#225c18; margin:56px 0 20px; text-align:center; }
-:focus-visible { outline:2px dotted #492f70; outline-offset:4px; }
+.topo-icones.somente-titulo{display:flex;justify-content:center;align-items:center;padding:10px 0}
+.titulo{font-size:35px;color:#225c18;margin:56px 0 20px;text-align:center}
+:focus-visible{outline:2px dotted #492f70;outline-offset:4px}
 
-/* ===== LAYOUT GERAL ===== */
-.layout { display:grid; gap:24px; }
+/* ===== LAYOUT ===== */
+.layout{display:grid;gap:24px}
 
-/* ===== PAINEL DE GRÁFICOS (esquerda) ===== */
+/* ===== PAINEL DE GRÁFICOS (ESQUERDA) ===== */
 .painel-graficos{
   background:#dff5b7;
-  border-radius:28px;
-  padding:14px 16px 18px 6px;     /* pouco padding à esquerda → “quase encostado” */
-  display:flex; flex-direction:column; gap:26px;
+  border-radius:28px;            /* mantém o mesmo arredondado de antes */
+  /* “quase encostado” à esquerda, mas com respirou externo */
+  padding:16px 20px 20px 10px;
+  display:flex;flex-direction:column;gap:26px;
 }
-.grafico{ display:flex; flex-direction:column; gap:10px; }
-.grafico-titulo{ font-size:18px; margin:0 0 6px 6px; color:#225c18; }
+.grafico{display:flex;flex-direction:column;gap:10px}
+.grafico-titulo{font-size:18px;margin:0 0 6px 6px;color:#225c18}
 .grafico-row{
   display:grid;
-  grid-template-columns: 180px 1fr;  /* CANVAS à esquerda + legenda ao lado */
-  gap:16px; align-items:center; justify-items:start;
+  grid-template-columns:150px 1fr; /* canvas menor + legenda ao lado */
+  gap:16px;align-items:center;justify-items:start;
 }
 .grafico-row canvas{
-  width:180px !important; height:180px !important;
-  max-width:180px; max-height:180px; display:block;
+  width:150px !important;
+  height:150px !important;
+  max-width:150px;max-height:150px;
+  display:block;
 }
 
-/* ===== LEGENDA ===== */
-.legenda-lista{ list-style:none; margin:0; padding:0; display:grid; gap:10px; justify-items:start; }
+/* ===== LEGENDA (ao lado) ===== */
+.legenda-lista{list-style:none;margin:0;padding:0;display:grid;gap:10px;justify-items:start}
 .legenda-lista li{
-  display:flex; align-items:center; gap:10px;
-  background:#7b7190; color:#fff; font-size:14px;
-  padding:8px 12px; border-radius:999px; width:fit-content;
+  display:flex;align-items:center;gap:10px;
+  background:#7b7190;color:#fff;font-size:14px;
+  padding:8px 12px;border-radius:999px;width:fit-content
 }
-.legenda-lista .swatch{ width:14px; height:14px; border-radius:50%; flex:0 0 14px; }
+.legenda-lista .swatch{width:14px;height:14px;border-radius:50%;flex:0 0 14px}
 
-/* ===== CONQUISTAS ===== */
+/* ===== CONQUISTAS (DIREITA) ===== */
 .painel-conquistas{
   text-align:left;
-  max-height:calc(100vh - 70px - 40px);
-  overflow-y:auto; padding-right:8px;
+  max-height:calc(100vh - 70px - 48px); /* viewport - rodapé - respiro topo */
+  overflow-y:auto;
+  padding-right:12px;                    /* espaço pro scroll */
 }
-.subtitulo{ font-size:22px; margin:8px 0 6px; font-weight:bold; }
-.contador-receitas{ font-size:16px; margin:6px 0 14px; color:#492f70; font-weight:bold; }
+.subtitulo{font-size:22px;margin:8px 0 6px;font-weight:bold}
+.contador-receitas{font-size:16px;margin:6px 0 14px;color:#492f70;font-weight:bold}
 .conquistas{
   display:grid;
-  grid-template-columns: repeat(3, minmax(140px, 1fr));
-  gap:22px; justify-items:center;
+  grid-template-columns:repeat(3, minmax(140px, 1fr));
+  gap:22px;justify-items:center;
 }
-.medalha{ display:flex; flex-direction:column; align-items:center; text-align:center; }
-.medalha img{ width:130px; height:auto; margin-bottom:5px; }
-.estrelas{ font-size:30px; margin-bottom:4px; }
+.medalha{display:flex;flex-direction:column;align-items:center;text-align:center}
+.medalha img{width:130px;height:auto;margin-bottom:5px}
+.estrelas{font-size:30px;margin-bottom:4px}
 
-/* ===== RODAPÉ CURVO ===== */
+/* ===== RODAPÉ CURVO OFICIAL ===== */
 .curva{
-  width:100%; height:70px; background:#7b7190;
-  border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
-  position:fixed; bottom:0; left:0;
-  display:flex; justify-content:center; align-items:center; gap:40px; z-index:10;
+  width:100%;height:70px;background:#7b7190;
+  border-top-left-radius:100% 50%;border-top-right-radius:100% 50%;
+  position:fixed;bottom:0;left:0;
+  display:flex;justify-content:center;align-items:center;gap:40px;z-index:10;
 }
-.btn-footer{ background:transparent; border:none; border-radius:50%; width:55px; height:55px; padding:0;
-  display:flex; justify-content:center; align-items:center; overflow:hidden; cursor:pointer; transform:translateY(-10px); }
-.btn-footer img{ width:250%; height:250%; object-fit:contain; }
-.btn-footer.btn-central{ width:150px; height:150px; transform:translateY(-20px); }
-.btn-footer.btn-central img{ width:150%; height:150%; object-fit:contain; }
+.btn-footer{
+  background:transparent;border:none;border-radius:50%;
+  width:55px;height:55px;padding:0;
+  display:flex;justify-content:center;align-items:center;overflow:hidden;
+  cursor:pointer;transform:translateY(-10px);
+}
+.btn-footer img{width:250%;height:250%;object-fit:contain}
+.btn-footer.btn-central{width:150px;height:150px;transform:translateY(-20px)}
+.btn-footer.btn-central img{width:150%;height:150%;object-fit:contain}
 
 /* ===== DESKTOP ===== */
 @media (min-width:1024px){
+  /* mais espaço entre borda da TELA e conteúdo (gutters) */
+  .container{padding-left:40px;padding-right:40px}
+
+  /* painel mais largo para “chegar” perto das conquistas */
   .layout{
-    grid-template-columns: 700px 1fr;   /* esquerda larga (gráficos) + direita flex */
-    align-items:start; gap:40px;
+    grid-template-columns:820px 1fr;   /* ↑ alarga a coluna dos gráficos */
+    align-items:start;gap:48px;
   }
-  /* mantém o painel na ESQUERDA do container e visível na rolagem (sem centralizar) */
+
+  /* fica visível ao rolar (abaixo do título), sem centralizar na tela */
   .painel-graficos{
-    position: sticky;
-    top: 80px;                          /* aparece sempre, logo abaixo do título */
-    min-height: calc(100vh - 120px);    /* ocupa praticamente a tela */
-    overflow: visible;                  /* sem scrollbar interno */
-    justify-self: start;                /* alinha à esquerda do container */
+    position:sticky;
+    top:80px;
+    min-height:calc(100vh - 120px);    /* ocupa quase a tela inteira */
+    overflow:visible;
+    justify-self:start;                 /* gruda à esquerda do container */
   }
 }
 
 /* ===== MOBILE ===== */
 @media (max-width:1023px){
-  .grafico-row{ grid-template-columns:1fr; justify-items:center; text-align:center; }
-  .legenda-lista{ justify-items:center; }
-  .painel-conquistas{ max-height:unset; overflow:visible; }
+  .layout{gap:16px}
+  .grafico-row{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .legenda-lista{justify-items:center}
+  .painel-conquistas{max-height:unset;overflow:visible;padding-right:0}
 }
