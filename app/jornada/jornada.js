@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-  /* ========= Navegação do rodapé ========= */
-  const $ = (id) => document.getElementById(id);
-  $('btnVoltar')?.addEventListener('click', () => { window.location.href = '../home/index.html'; });
-  $('btnLogo')?.addEventListener('click',  () => { window.location.href = '../minhas-receitas/index.html'; });
-  $('btnGeladeira')?.addEventListener('click', () => { window.location.href = '../geladeira/index.html'; });
-  ['btnVoltar','btnLogo','btnGeladeira'].forEach(id=>{
-    const el=$(id); el?.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); el.click(); }});
+  // Navegação do rodapé (ajuste os caminhos se necessário)
+  document.getElementById('btnVoltar')?.addEventListener('click', () => {
+    window.location.href = '../humor/index.html';
+  });
+  document.getElementById('btnLogo')?.addEventListener('click', () => {
+    window.location.href = '../home/index.html';
+  });
+  document.getElementById('btnGeladeira')?.addEventListener('click', () => {
+    window.location.href = '../geladeira/index.html';
   });
 
   /* ========= Gráficos ========= */
