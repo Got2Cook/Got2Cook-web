@@ -7,9 +7,9 @@ body{
   color:#225c18;
 }
 .container{
-  max-width:1600px;              /* ↑ container mais largo */
+  max-width:1600px;              /* container mais largo */
   margin:0 auto;
-  padding:0 48px 120px;          /* ↑ mais espaço lateral + rodapé */
+  padding:0 48px 120px;          /* respira nas laterais + espaço do rodapé */
 }
 .topo-icones.somente-titulo{display:flex;justify-content:center;align-items:center;padding:10px 0}
 .titulo{font-size:35px;color:#225c18;margin:56px 0 20px;text-align:center}
@@ -18,19 +18,21 @@ body{
 /* ===== LAYOUT ===== */
 .layout{display:grid;gap:24px}
 
-/* ===== PAINEL DE GRÁFICOS ===== */
+/* ===== PAINEL DE GRÁFICOS (ESQUERDA) ===== */
 .painel-graficos{
   background:#dff5b7;
   border-radius:28px;
-  padding:20px 28px;             /* ↑ mais folga interna */
-  display:flex;flex-direction:column;gap:32px;
+  padding:18px 22px;                 /* leve respiro interno */
+  display:flex;flex-direction:column;gap:28px;
 }
 .grafico{display:flex;flex-direction:column;gap:10px}
 .grafico-titulo{font-size:18px;margin:0 0 6px 4px;color:#225c18}
+
+/* linha: gráfico no canto + legenda ao lado que se ajusta ao espaço */
 .grafico-row{
   display:grid;
-  grid-template-columns:140px 1fr; /* ↓ gráficos menores + legenda mais larga */
-  gap:20px;align-items:center;justify-items:start;
+  grid-template-columns:140px 1fr;   /* gráfico menor + área de legenda */
+  gap:18px;align-items:center;justify-items:start;
 }
 .grafico-row canvas{
   width:140px !important;
@@ -39,54 +41,63 @@ body{
   display:block;
 }
 
-/* ===== LEGENDA ===== */
-.legenda-lista{list-style:none;margin:0;padding:0;display:grid;gap:12px;justify-items:start;width:100%}
+/* ===== LEGENDA ADAPTÁVEL =====
+   - se o espaço for grande, distribui em várias "colunas" de pílulas
+   - se for menor, quebra em menos colunas automaticamente */
+.legenda-lista{
+  list-style:none;margin:0;padding:0;
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(120px, max-content));
+  gap:10px 12px;                     /* linhas x colunas */
+  align-content:start;               /* começa no topo */
+  justify-content:start;
+}
 .legenda-lista li{
   display:flex;align-items:center;gap:10px;
-  background:#7b7190;color:#fff;font-size:15px;
-  padding:10px 14px;border-radius:999px;width:fit-content;
+  background:#7b7190;color:#fff;font-size:14px;
+  padding:8px 12px;border-radius:999px;width:max-content;
 }
 .legenda-lista .swatch{width:14px;height:14px;border-radius:50%;flex:0 0 14px}
 
-/* ===== CONQUISTAS ===== */
-.painel-conquistas{
-  text-align:left;
-  margin-top:0;
-}
-.subtitulo{font-size:22px;margin:8px 0 6px;font-weight:bold}
-.contador-receitas{font-size:16px;margin:6px 0 20px;color:#492f70;font-weight:bold}
+/* ===== CONQUISTAS (DIREITA) ===== */
+.painel-conquistas{ text-align:left; }
+.subtitulo{font-size:22px;margin:8px 0 10px;font-weight:bold}
+.contador-receitas{font-size:16px;margin:0 0 20px;color:#492f70;font-weight:bold}
 .conquistas{
   display:grid;
-  grid-template-columns: repeat(3, 1fr); /* todas na tela, 3 colunas fixas */
-  gap:28px;
-  justify-items:center;
+  grid-template-columns:repeat(3, 1fr); /* todas visíveis na tela */
+  gap:28px; justify-items:center;
 }
 .medalha{display:flex;flex-direction:column;align-items:center;text-align:center}
 .medalha img{width:120px;height:auto;margin-bottom:5px}
 .estrelas{font-size:28px;margin-bottom:4px}
 
-/* ===== RODAPÉ CURVO ===== */
+/* ===== RODAPÉ CURVO OFICIAL ===== */
 .curva{
   width:100%;height:70px;background:#7b7190;
   border-top-left-radius:100% 50%;border-top-right-radius:100% 50%;
-  position:fixed;bottom:0;left:0;
-  display:flex;justify-content:center;align-items:center;gap:40px;z-index:10;
+  position:fixed;bottom:0;left:0;display:flex;justify-content:center;align-items:center;gap:40px;z-index:10;
 }
-.btn-footer{background:transparent;border:none;border-radius:50%;width:55px;height:55px;padding:0;
-  display:flex;justify-content:center;align-items:center;overflow:hidden;cursor:pointer;transform:translateY(-10px);}
+.btn-footer{
+  background:transparent;border:none;border-radius:50%;
+  width:55px;height:55px;padding:0;display:flex;justify-content:center;align-items:center;overflow:hidden;
+  cursor:pointer;transform:translateY(-10px);
+}
 .btn-footer img{width:250%;height:250%;object-fit:contain}
 .btn-footer.btn-central{width:150px;height:150px;transform:translateY(-20px)}
 .btn-footer.btn-central img{width:150%;height:150%;object-fit:contain}
 
-/* ===== DESKTOP ===== */
+/* ===== DESKTOP (meio a meio) ===== */
 @media (min-width:1024px){
   .layout{
-    grid-template-columns: 760px 1fr; /* ↑ painel mais largo */
-    align-items:start;gap:56px;
+    grid-template-columns: 1fr 1fr;   /* metade p/ gráficos, metade p/ conquistas */
+    align-items:start; gap:56px;      /* espaço entre colunas */
   }
+
+  /* fixa na tela (tipo “ancorado”), desce junto com a página (sem scroll interno) */
   .painel-graficos{
     position:sticky;
-    top:80px;
+    top:80px;                         /* fica visível abaixo do título */
     align-self:start;
   }
 }
@@ -95,6 +106,6 @@ body{
 @media (max-width:1023px){
   .layout{gap:16px}
   .grafico-row{grid-template-columns:1fr;justify-items:center;text-align:center}
-  .legenda-lista{justify-items:center}
-  .conquistas{grid-template-columns: repeat(2,1fr);gap:20px}
+  .legenda-lista{grid-template-columns:1fr;justify-items:center}
+  .conquistas{grid-template-columns: repeat(2,1fr); gap:20px}
 }
