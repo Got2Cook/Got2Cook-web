@@ -3,50 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Meu Histórico - Got2Cook</title>
-  <link rel="stylesheet" href="historico.css?v=1" />
-  <script src="historico.js" defer></script>
+  <title>Histórico de Receitas - Got2Cook</title>
+  <link rel="stylesheet" href="historico.css" />
 </head>
 <body>
-  <header class="topo">
-    <!-- Mantém o padrão de títulos do app -->
-    <h1 id="tituloHistorico" class="titulo">MEU HISTÓRICO</h1>
-  </header>
+  <main id="conteudo">
+    <h1 class="titulo-principal" id="tituloPagina">HISTÓRICO DE RECEITAS</h1>
 
-  <main id="conteudo" aria-labelledby="tituloHistorico">
-    <!-- Placeholder 1: filtros/periodização (ex.: semana/mês). 
-         Quando você enviar o conteúdo, substituiremos por select, chips ou botões. -->
-    <section class="bloco" id="area-filtros" aria-label="Filtros do histórico">
-      <!-- [placeholder: filtros/controles] -->
+    <!-- Barra de controle -->
+    <section class="controles" aria-label="Controles de histórico">
+      <div class="busca-wrap">
+        <label for="inpBusca" class="sr-only">Buscar receita</label>
+        <input id="inpBusca" class="inp-busca" type="search" placeholder="Buscar por nome..." autocomplete="off" />
+        <button id="btnLimparBusca" class="btn-sec" type="button" aria-label="Limpar busca">✕</button>
+      </div>
+
+      <fieldset class="grupo-filtros">
+        <legend class="sr-only">Filtros de período</legend>
+        <div class="filtros-periodo" role="radiogroup" aria-label="Período">
+          <button type="button" class="chip" data-periodo="hoje">Hoje</button>
+          <button type="button" class="chip" data-periodo="7">7 dias</button>
+          <button type="button" class="chip" data-periodo="30">30 dias</button>
+          <button type="button" class="chip" data-periodo="90">90 dias</button>
+          <button type="button" class="chip" data-periodo="todos" aria-pressed="true">Todos</button>
+        </div>
+      </fieldset>
+
+      <div class="linha-ordenacao">
+        <label for="selOrdenacao" class="sr-only">Ordenar</label>
+        <select id="selOrdenacao">
+          <option value="recente">Recente → Antigo</option>
+          <option value="az">Nome A→Z</option>
+        </select>
+
+        <button id="btnLimparFiltros" class="btn-sec" type="button">Limpar filtros</button>
+      </div>
     </section>
 
-    <!-- Placeholder 2: resumos em cartões (ex.: totais, destaques). -->
-    <section class="bloco" id="area-resumos" aria-label="Resumo do histórico">
-      <!-- [placeholder: cards de resumo] -->
-    </section>
+    <!-- Lista de histórico -->
+    <section aria-live="polite" aria-busy="false">
+      <ul id="listaHistorico" class="lista-historico" aria-label="Lista de receitas por data">
+        <!-- itens renderizados via JS -->
+      </ul>
 
-    <!-- Placeholder 3: lista cronológica com divisórias (se aplicável). -->
-    <section class="bloco lista" id="area-lista" aria-label="Lista do histórico">
-      <!-- [placeholder: lista com divisórias] -->
-    </section>
+      <!-- Estado vazio -->
+      <div id="estadoVazio" class="estado-vazio" hidden>
+        <p>Seu histórico está vazio.</p>
+        <a class="link-acao" href="../minhas-receitas/index.html">Ver Minhas Receitas</a>
+      </div>
 
-    <!-- Placeholder 4: espaço para gráficos/visualizações (ex.: linha/pizza). -->
-    <section class="bloco graficos" id="area-graficos" aria-label="Gráficos do histórico">
-      <!-- [placeholder: gráficos/visualizações] -->
+      <!-- Skeleton simples (opcional) -->
+      <div id="skeleton" class="skeleton" hidden></div>
+
+      <!-- Paginação -->
+      <div class="paginacao">
+        <button id="btnCarregarMais" class="btn-prim" type="button">Carregar mais</button>
+      </div>
     </section>
   </main>
 
-  <!-- Placeholder de modal/overlay (seguindo padrão do app). 
-       Mantido oculto até ser usado. -->
-  <div id="overlay" class="overlay" aria-hidden="true" hidden>
-    <div class="overlay-conteudo" role="dialog" aria-modal="true" aria-labelledby="overlayTitulo">
-      <h2 id="overlayTitulo" class="sr-only">Janela</h2>
-      <!-- [placeholder: conteúdo de modal] -->
-      <button type="button" class="btn-fechar" id="btnFecharOverlay">Fechar</button>
-    </div>
-  </div>
-
-  <!-- Rodapé curvo oficial -->
+  <!-- Rodapé oficial -->
   <footer class="curva">
     <button class="btn-footer" id="btnVoltar" type="button" aria-label="Voltar para Home">
       <img src="humor.png" alt="" />
@@ -60,5 +76,7 @@
       <img src="geladeira.png" alt="" />
     </button>
   </footer>
+
+  <script src="historico.js" defer></script>
 </body>
 </html>
