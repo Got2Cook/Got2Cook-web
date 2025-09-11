@@ -39,16 +39,17 @@ document.addEventListener('DOMContentLoaded', () => {
   montaChart('graficoMomentos','legendaMomentos',momentosCfg);
 
   /* ===================== Conquistas automáticas + tooltips ===================== */
+  // Texto curto e direto: "o que fazer" — sem títulos, sem metas numéricas no tooltip
   const MEDALHAS = [
-    { id:'medalha1',  titulo:'PRIMEIRA MORDIDA',  metric:'criadas',       req:[1,3,5],     unidade:'receitas criadas' },
-    { id:'medalha2',  titulo:'REPETECO',          metric:'repeticoes',    req:[2,5,10],    unidade:'repetições de uma receita' },
-    { id:'medalha3',  titulo:'RECEITA RELÂMPAGO', metric:'rapidas',       req:[1,3,7],     unidade:'receitas em < 10 min' },
-    { id:'medalha4',  titulo:'CHEF DO IMPROVISO', metric:'improviso',     req:[1,5,12],    unidade:'receitas só com o que tem' },
-    { id:'medalha5',  titulo:'COLECIONADOR',      metric:'salvas',        req:[5,15,30],   unidade:'receitas salvas' },
-    { id:'medalha6',  titulo:'INTERNACIONAL',     metric:'cozinhas',      req:[1,3,6],     unidade:'cozinhas diferentes' },
-    { id:'medalha7',  titulo:'SAUDÁVEL',          metric:'saudaveis',     req:[1,5,12],    unidade:'receitas saudáveis' },
-    { id:'medalha8',  titulo:'AGENTE NOTURNO',    metric:'noturnas',      req:[1,5,12],    unidade:'receitas entre 0h–5h' },
-    { id:'medalha9',  titulo:'COZINHEIRO MESTRE', metric:'total',         req:[10,25,50],  unidade:'receitas totais' }
+    { id:'medalha1',  titulo:'PRIMEIRA MORDIDA',  metric:'criadas',       req:[1,3,5],     descricao:'Crie receitas no app.' },
+    { id:'medalha2',  titulo:'REPETECO',          metric:'repeticoes',    req:[2,5,10],    descricao:'Repita a mesma receita.' },
+    { id:'medalha3',  titulo:'RECEITA RELÂMPAGO', metric:'rapidas',       req:[1,3,7],     descricao:'Crie receitas em menos de 10 minutos.' },
+    { id:'medalha4',  titulo:'CHEF DO IMPROVISO', metric:'improviso',     req:[1,5,12],    descricao:'Cozinhe usando só o que tem disponível.' },
+    { id:'medalha5',  titulo:'COLECIONADOR',      metric:'salvas',        req:[5,15,30],   descricao:'Salve suas receitas favoritas.' },
+    { id:'medalha6',  titulo:'INTERNACIONAL',     metric:'cozinhas',      req:[1,3,6],     descricao:'Explore cozinhas de países diferentes.' },
+    { id:'medalha7',  titulo:'SAUDÁVEL',          metric:'saudaveis',     req:[1,5,12],    descricao:'Crie receitas marcadas como saudáveis.' },
+    { id:'medalha8',  titulo:'AGENTE NOTURNO',    metric:'noturnas',      req:[1,5,12],    descricao:'Cozinhe entre meia-noite e 5h.' },
+    { id:'medalha9',  titulo:'COZINHEIRO MESTRE', metric:'total',         req:[10,25,50],  descricao:'Cozinhe com frequência e evolua.' }
   ];
 
   const state = {
@@ -68,29 +69,17 @@ document.addEventListener('DOMContentLoaded', () => {
   function estrelasMarkup(nivel){
     return Array.from({length:3},(_,i)=>`<span style="color:${i<nivel?'#f8c100':'#999'}">★</span>`).join('');
   }
-  function tooltipMarkup(m, nivel){
-    const linhas = m.req.map((alvo, i) => {
-      const done = i < nivel;
-      return `<li class="${done ? 'done' : ''}">
-        <span class="ico"></span>
-        <span>${i+1}★ — ${alvo} ${m.unidade}</span>
-      </li>`;
-    }).join('');
-    return `
-      <span class="tooltip" role="tooltip" aria-label="Detalhes da conquista ${m.titulo}">
-        <span class="titulo">${m.titulo}</span>
-        <ul class="requisitos">${linhas}</ul>
-        <span class="hint">A lista atualiza a cada estrela conquistada.</span>
-      </span>
-    `;
+  // Tooltip minimalista (apenas a descrição/ação a fazer)
+  function tooltipMarkup(m){
+    return `<span class="tooltip" role="tooltip" aria-label="${m.descricao}">${m.descricao}</span>`;
   }
+
   function renderMedalha(m){
     const nivel = state.niveis[m.id] || 0;
     const div = document.createElement('div');
     div.className = 'medalha';
     div.id = `c_${m.id}`;
 
-    // Caminho das medalhas: ../assets com fallback /assets
     const primary = `../assets/${m.id}.png`;
     const fallback = `/assets/${m.id}.png`;
 
@@ -98,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="estrelas">${estrelasMarkup(nivel)}</div>
       <img src="${primary}" alt="${m.titulo}" onerror="this.onerror=null;this.src='${fallback}'">
       <p>${m.titulo}</p>
-      ${tooltipMarkup(m, nivel)}
+      ${tooltipMarkup(m)}
     `;
     return div;
   }
@@ -124,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById(`c_${m.id}`);
         if (el) {
           el.querySelector('.estrelas').innerHTML = estrelasMarkup(novo);
-          el.querySelector('.tooltip').outerHTML = tooltipMarkup(m, novo);
+          // tooltip permanece somente com a descrição (não muda com o nível)
         }
       }
     });
@@ -148,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById(`c_${id}`);
     if (el) {
       el.querySelector('.estrelas').innerHTML = estrelasMarkup(state.niveis[id]);
-      el.querySelector('.tooltip').outerHTML = tooltipMarkup(m, state.niveis[id]);
     }
   }
   window.G2C = Object.assign(window.G2C || {}, { setMetrics, inc, setNivel, _state: state });
