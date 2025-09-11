@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  /* ===================== Navegação do rodapé ===================== */
+  /* ========= Navegação do rodapé ========= */
   const $ = (id) => document.getElementById(id);
   $('btnVoltar')?.addEventListener('click', () => { window.location.href = '../home/index.html'; });
   $('btnLogo')?.addEventListener('click',  () => { window.location.href = '../minhas-receitas/index.html'; });
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const el=$(id); el?.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); el.click(); }});
   });
 
-  /* ===================== Gráficos (pizza + legenda custom) ===================== */
+  /* ========= Gráficos ========= */
   const estilosCfg = {
     labels:['Massas','Doces','Carnes','Saladas','Petiscos'],
     data:[44.4,27.8,16.7,9.1,3.0],
@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     data:[38.9,27.8,22.2,9.1,3.0],
     colors:['#8a9ebf','#a97dac','#c9b9d3','#e0dff2','#f2f2f2']
   };
-
   function montaChart(canvasId, legendaId, cfg){
     const canvas = $(canvasId), ul = $(legendaId);
     if(!canvas || !ul || !window.Chart) return;
@@ -38,8 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   montaChart('graficoEstilos','legendaEstilos',estilosCfg);
   montaChart('graficoMomentos','legendaMomentos',momentosCfg);
 
-  /* ===================== Conquistas automáticas + tooltips ===================== */
-  // Texto curto e direto: "o que fazer" — sem títulos, sem metas numéricas no tooltip
+  /* ========= Conquistas automáticas + tooltip com próxima meta e progresso ========= */
   const MEDALHAS = [
     { id:'medalha1',  titulo:'PRIMEIRA MORDIDA',  metric:'criadas',       req:[1,3,5],     descricao:'Crie receitas no app.' },
     { id:'medalha2',  titulo:'REPETECO',          metric:'repeticoes',    req:[2,5,10],    descricao:'Repita a mesma receita.' },
@@ -69,13 +67,27 @@ document.addEventListener('DOMContentLoaded', () => {
   function estrelasMarkup(nivel){
     return Array.from({length:3},(_,i)=>`<span style="color:${i<nivel?'#f8c100':'#999'}">★</span>`).join('');
   }
-  // Tooltip minimalista (apenas a descrição/ação a fazer)
-  function tooltipMarkup(m){
-    return `<span class="tooltip" role="tooltip" aria-label="${m.descricao}">${m.descricao}</span>`;
+
+  // Tooltip: descrição + próxima meta + progresso atual (x/target e faltam N)
+  function tooltipMarkup(m, nivel, valor){
+    if (nivel >= 3) {
+      return `<span class="tooltip" role="tooltip" aria-label="Conquista completa">
+        <span class="desc">Tudo completo por aqui ✨</span>
+      </span>`;
+    }
+    const idx = Math.max(0, Math.min(2, nivel));
+    const target = m.req[idx];
+    const faltam = Math.max(0, target - (valor||0));
+    return `<span class="tooltip" role="tooltip" aria-label="${m.descricao}. Próxima: ${target}">
+      <span class="desc">${m.descricao}</span>
+      <span class="next">Próxima estrela: <strong>${target}</strong></span>
+      <span class="progress">${valor||0}/${target} (faltam ${faltam})</span>
+    </span>`;
   }
 
   function renderMedalha(m){
     const nivel = state.niveis[m.id] || 0;
+    const valor = Number(state.metrics[m.metric] || 0);
     const div = document.createElement('div');
     div.className = 'medalha';
     div.id = `c_${m.id}`;
@@ -87,10 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="estrelas">${estrelasMarkup(nivel)}</div>
       <img src="${primary}" alt="${m.titulo}" onerror="this.onerror=null;this.src='${fallback}'">
       <p>${m.titulo}</p>
-      ${tooltipMarkup(m)}
+      ${tooltipMarkup(m, nivel, valor)}
     `;
     return div;
   }
+
   function renderTodas(){
     if (!grid) return;
     grid.innerHTML = '';
@@ -104,22 +117,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (valor >= thresholds[2]) n = 3;
     return n;
   }
+
   function recomputeLevels(){
     MEDALHAS.forEach(m => {
       const valor = Number(state.metrics[m.metric] || 0);
       const novo = calcNivel(valor, m.req);
       if (novo !== state.niveis[m.id]) {
         state.niveis[m.id] = novo;
-        const el = document.getElementById(`c_${m.id}`);
-        if (el) {
-          el.querySelector('.estrelas').innerHTML = estrelasMarkup(novo);
-          // tooltip permanece somente com a descrição (não muda com o nível)
-        }
+      }
+      const el = document.getElementById(`c_${m.id}`);
+      if (el) {
+        el.querySelector('.estrelas').innerHTML = estrelasMarkup(state.niveis[m.id]);
+        const tip = el.querySelector('.tooltip');
+        if (tip) tip.outerHTML = tooltipMarkup(m, state.niveis[m.id], valor);
       }
     });
   }
 
-  // API para sua app ligar eventos → conquistas automáticas
+  // API para sua app
   function setMetrics(partial){
     Object.assign(state.metrics, partial || {});
     if (partial.total != null && state.metrics.criadas === 0 && state.metrics.total > 0) {
@@ -137,6 +152,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById(`c_${id}`);
     if (el) {
       el.querySelector('.estrelas').innerHTML = estrelasMarkup(state.niveis[id]);
+      const valor = Number(state.metrics[m.metric] || 0);
+      const tip = el.querySelector('.tooltip');
+      if (tip) tip.outerHTML = tooltipMarkup(m, state.niveis[id], valor);
     }
   }
   window.G2C = Object.assign(window.G2C || {}, { setMetrics, inc, setNivel, _state: state });
@@ -145,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTodas();
   recomputeLevels();
 
-  /* Contador exibido no topo (usa totalReceitas se existir) */
   const contador = $('contador');
   if (contador) contador.textContent = state.metrics.total || 0;
 });
