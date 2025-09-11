@@ -17,23 +17,27 @@ document.addEventListener('DOMContentLoaded', () => {
     colors:['#8a9ebf','#a97dac','#c9b9d3','#e0dff2','#f2f2f2']
   };
 
-  function montaChart(canvasId, legendaId, cfg){
-    const canvas = $(canvasId), ul = $(legendaId);
-    if(!canvas || !ul || !window.Chart) return;
+function montaChart(canvasId, legendaId, cfg){
+  const canvas = $(canvasId), ul = $(legendaId);
+  if(!canvas || !ul || !window.Chart) return;
 
-    new Chart(canvas,{
-      type:'pie',
-      data:{ labels:cfg.labels, datasets:[{ data:cfg.data, backgroundColor:cfg.colors }]},
-      options:{ responsive:true, plugins:{ legend:{ display:false } } }
-    });
+  new Chart(canvas,{
+    type:'pie',
+    data:{ labels:cfg.labels, datasets:[{ data:cfg.data, backgroundColor:cfg.colors }]},
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,   // ← permite usar width/height do CSS
+      plugins:{ legend:{ display:false } }
+    }
+  });
 
-    ul.innerHTML = cfg.labels.map((label,i)=>`
-      <li tabindex="0" aria-label="${label}: ${cfg.data[i]}%">
-        <span class="swatch" style="background:${cfg.colors[i]}"></span>
-        <span>${label}</span>
-      </li>
-    `).join('');
-  }
+  ul.innerHTML = cfg.labels.map((label,i)=>`
+    <li tabindex="0" aria-label="${label}: ${cfg.data[i]}%">
+      <span class="swatch" style="background:${cfg.colors[i]}"></span>
+      <span>${label}</span>
+    </li>
+  `).join('');
+}
   montaChart('graficoEstilos','legendaEstilos',estilosCfg);
   montaChart('graficoMomentos','legendaMomentos',momentosCfg);
 
