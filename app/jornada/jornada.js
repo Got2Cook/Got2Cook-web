@@ -1,13 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Navegação do rodapé (ajuste os caminhos se necessário)
-  document.getElementById('btnVoltar')?.addEventListener('click', () => {
-    window.location.href = '../humor/index.html';
-  });
-  document.getElementById('btnLogo')?.addEventListener('click', () => {
-    window.location.href = '../home/index.html';
-  });
-  document.getElementById('btnGeladeira')?.addEventListener('click', () => {
-    window.location.href = '../geladeira/index.html';
+  /* ========= Navegação do rodapé ========= */
+  const $ = (id) => document.getElementById(id);
+  $('btnVoltar')?.addEventListener('click', () => { window.location.href = '../home/index.html'; });
+  $('btnLogo')?.addEventListener('click',  () => { window.location.href = '../minhas-receitas/index.html'; });
+@@ -7,84 +8,160 @@ document.addEventListener('DOMContentLoaded', () => {
+    const el=$(id); el?.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); el.click(); }});
   });
 
   /* ========= Gráficos ========= */
