@@ -41,23 +41,45 @@ body{
   display:block;
 }
 
-/* ===== LEGENDA ADAPTÁVEL =====
-   - se o espaço for grande, distribui em várias "colunas" de pílulas
-   - se for menor, quebra em menos colunas automaticamente */
+/* ===== LEGENDA (em linha com quebra) ===== */
 .legenda-lista{
-  list-style:none;margin:0;padding:0;
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(120px, max-content));
-  gap:10px 12px;                     /* linhas x colunas */
-  align-content:start;               /* começa no topo */
-  justify-content:start;
+  list-style:none;
+  margin:0;
+  padding:0;
+
+  /* antes era grid — agora vira uma “fileira” que quebra */
+  display:flex;
+  flex-wrap:wrap;
+
+  /* espaçamentos entre pílulas */
+  column-gap:12px;   /* eixo horizontal */
+  row-gap:10px;      /* eixo vertical */
+
+  align-items:center;
+  justify-content:flex-start;
+  max-width:100%;    /* garante que possa quebrar */
 }
+
 .legenda-lista li{
-  display:flex;align-items:center;gap:10px;
-  background:#7b7190;color:#fff;font-size:14px;
-  padding:8px 12px;border-radius:999px;width:max-content;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#7b7190;
+  color:#fff;
+  font-size:14px;
+  padding:8px 12px;
+  border-radius:999px;
+
+  width:auto;             /* cada pílula só o necessário */
+  white-space:nowrap;     /* não quebra no meio do texto */
 }
-.legenda-lista .swatch{width:14px;height:14px;border-radius:50%;flex:0 0 14px}
+
+.legenda-lista .swatch{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  flex:0 0 14px;
+}
 
 /* ===== CONQUISTAS (DIREITA) ===== */
 .painel-conquistas{ text-align:left; }
