@@ -1,9 +1,11 @@
 :root{
   --bg:#c0ffa5;
+  --roxo:#492f70;
   --roxo-escuro:#7b7190;
   --verde:#225c18;
   --chip:#e9ffd7;
   --borda:#3e6529;
+  --white:#fff;
 }
 
 *{box-sizing:border-box}
@@ -12,104 +14,237 @@ body{
   margin:0;
   font-family: Arial, sans-serif;
   background:var(--bg);
-  color:var(--verde);
-}
-
-/* Título no padrão do app (adaptação do seu histórico anterior) */
-.titulo{
-  margin:20px auto 10px;
-  text-align:center;
-  font-size:24px;
-  color:var(--verde);
-}
-
-/* Conteúdo principal */
-#conteudo{
+  color:var(--roxo);
   max-width:600px;
-  margin:0 auto;
-  padding:0 16px 110px; /* espaço para o rodapé fixo */
+  margin-inline:auto;
+  padding:16px 16px 120px; /* espaço p/ rodapé */
 }
 
-/* Blocos/containers genéricos (placeholders) */
-.bloco{
-  background:#dfffbb;            /* tom claro usado nos seus cards */
-  border-radius:20px;
-  box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
-  padding:16px;
-  margin:16px 0;
-  min-height:90px;               /* altura mínima para visual */
+/* Título principal (padrão visual) */
+.titulo-principal{
+  margin:25px 0 15px;
+  color:var(--verde);
+  font-size:32px;
+  font-weight:bold;
+  letter-spacing:1px;
+  text-align:center;
 }
 
-/* Lista com divisórias (quando houver) */
-.lista > * + *{
-  border-top:1px dashed var(--borda);
-  margin-top:12px;
-  padding-top:12px;
-}
-
-/* Área de gráficos (placeholder) */
-.graficos{
-  aspect-ratio: 4 / 3;           /* reserva de espaço similar ao dos seus canvases */
-  display:flex; align-items:center; justify-content:center;
-}
-
-/* Overlay/modal placeholder */
-.overlay{
-  position:fixed; inset:0;
-  background:rgba(0,0,0,0.35);
-  display:grid; place-items:center;
-  z-index:1000;
-}
-.overlay-conteudo{
-  background:#fff;
-  color:#222;
-  width:min(90vw, 520px);
-  border-radius:16px;
-  padding:16px;
-}
-.btn-fechar{
-  appearance:none; border:none; cursor:pointer;
-  background:var(--chip); color:var(--verde);
-  padding:10px 14px; border-radius:12px; font-weight:700;
-}
-
-/* Acessibilidade: foco visível */
-:where(a, button, input, select, textarea, [tabindex]):focus{
-  outline:2px dotted #2e7d32;
+/* Acessibilidade */
+:focus{
+  outline:2px dotted #000;
   outline-offset:3px;
 }
+.sr-only{
+  position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;
+}
 
-/* Rodapé curvo oficial (fixo) */
-.curva{
+/* CONTROLES */
+.controles{
+  background:var(--white);
+  border-radius:16px;
+  padding:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,.15);
+  display:grid;
+  gap:12px;
+}
+
+/* Busca */
+.busca-wrap{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+.inp-busca{
+  flex:1;
+  height:40px;
+  border:2px solid var(--roxo);
+  border-radius:10px;
+  padding:0 12px;
+  font-size:16px;
+  background:#fff;
+  color:var(--roxo);
+}
+.btn-sec{
+  height:40px;
+  border:2px solid var(--roxo);
+  background:#fff;
+  color:var(--roxo);
+  border-radius:10px;
+  padding:0 12px;
+  cursor:pointer;
+  transition:.2s;
+}
+.btn-sec:hover{ background:#f7f7f7 }
+
+/* Chips de período */
+.filtros-periodo{
+  display:flex; flex-wrap:wrap; gap:8px;
+}
+.chip{
+  border:2px solid var(--borda);
+  background:var(--chip);
+  color:var(--verde);
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:14px;
+  cursor:pointer;
+  transition:.2s;
+}
+.chip[aria-pressed="true"], .chip.ativo{
+  background:var(--roxo-escuro);
+  color:#fff;
+  border-color:var(--roxo-escuro);
+}
+
+/* Ordenação + limpar */
+.linha-ordenacao{
+  display:flex; gap:8px; align-items:center; justify-content:space-between;
+}
+#selOrdenacao{
+  flex:1;
+  height:40px;
+  border:2px solid var(--roxo);
+  border-radius:10px;
+  padding:0 10px;
+  font-size:16px;
+  background:#fff;
+  color:var(--roxo);
+}
+
+/* LISTA */
+.lista-historico{
+  list-style:none;
+  margin:16px 0 0;
+  padding:0;
+  background:#fff;
+  border-radius:16px;
+  overflow:hidden;
+  border:2px solid var(--roxo);
+}
+
+/* Subcabeçalho de data */
+.li-data{
+  background:#d7ffbf;
+  color:var(--verde);
+  padding:10px 12px;
+  font-weight:bold;
+  border-bottom:2px solid var(--borda);
+}
+
+/* Item */
+.item{
+  display:grid;
+  grid-template-columns:56px 1fr auto;
+  gap:10px;
+  align-items:center;
+  padding:10px 12px;
+  border-bottom:1px solid rgba(0,0,0,.1);
+}
+.item:last-child{ border-bottom:none; }
+
+.thumb{
+  width:56px; height:56px; border-radius:10px; overflow:hidden; border:2px solid var(--roxo);
+  background:#fff;
+  display:flex; align-items:center; justify-content:center;
+}
+.thumb img{ width:100%; height:100%; object-fit:cover; }
+
+.bloco{
+  display:flex; flex-direction:column; gap:4px;
+}
+.titulo{
+  color:var(--verde);
+  font-weight:bold;
+  line-height:1.1;
+}
+
+.meta{
+  font-size:12px; color:var(--roxo);
+}
+.tags{
+  display:flex; gap:6px; flex-wrap:wrap;
+}
+.tag{
+  font-size:12px; background:var(--chip); color:var(--verde);
+  border:1px solid var(--borda);
+  border-radius:999px; padding:2px 6px;
+}
+
+.acoes{
+  display:flex; gap:8px; align-items:center;
+}
+.icon-btn{
+  width:36px; height:36px; border-radius:50%;
+  border:2px solid var(--roxo);
+  background:#fff; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:.2s;
+}
+.icon-btn:hover{ background:#f7f7f7; }
+.icon-btn .estrela{ font-size:18px; }
+.icon-btn.fav-ativo{ background:#ffe08a; border-color:#caa21f; }
+
+/* Clique no LI inteiro (opcional) */
+.click-area{
+  grid-column:1 / -1;
+  display:none;
+}
+
+/* Estado vazio */
+.estado-vazio{
+  text-align:center; color:var(--roxo);
+  padding:20px 0;
+}
+.link-acao{
+  display:inline-block; margin-top:8px; color:#fff; background:var(--roxo-escuro);
+  padding:8px 12px; border-radius:8px; text-decoration:none;
+}
+
+/* Skeleton simples */
+.skeleton{
+  margin-top:12px;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.06) 25%, rgba(0,0,0,0.12) 37%, rgba(0,0,0,0.06) 63%);
+  background-size:400% 100%;
+  height:80px; border-radius:10px;
+  animation:shimmer 1.2s infinite;
+}
+@keyframes shimmer{ 0%{background-position:100% 0} 100%{background-position:0 0} }
+
+/* Paginação */
+.paginacao{ display:flex; justify-content:center; padding:14px 0; }
+.btn-prim{
+  border:none; background:var(--roxo-escuro); color:#fff;
+  border-radius:10px; padding:10px 16px; font-size:16px; cursor:pointer;
+  transition:.2s;
+}
+.btn-prim:hover{ filter:brightness(0.95); }
+
+/* RODAPÉ OFICIAL */
+footer.curva{
   width:100%;
   height:70px;
-  background:var(--roxo-escuro);
+  background-color:var(--roxo-escuro);
   border-top-left-radius:100% 50%;
   border-top-right-radius:100% 50%;
-  position:fixed; left:0; bottom:0;
+  position:fixed; bottom:0; left:0;
   display:flex; justify-content:center; align-items:center;
-  gap:40px;
-  z-index:10;
+  gap:40px; z-index:10;
 }
-
-/* Botões laterais 55x55 (ícone 250%) */
 .btn-footer{
   background:transparent; border:none; border-radius:50%;
-  width:55px; height:55px; padding:0;
-  display:flex; align-items:center; justify-content:center;
-  overflow:hidden; cursor:pointer;
-  transform:translateY(-10px);
+  width:55px; height:55px; padding:0; display:flex; justify-content:center; align-items:center;
+  overflow:hidden; cursor:pointer; transform:translateY(-10px);
 }
 .btn-footer img{ width:250%; height:250%; object-fit:contain; }
-
-/* Botão central 150x150 elevado (ícone 150%) */
 .btn-footer.btn-central{
   width:150px; height:150px; transform:translateY(-20px);
 }
 .btn-footer.btn-central img{ width:150%; height:150%; object-fit:contain; }
 
-/* Desktop ≥1024px */
+/* DESKTOP */
 @media (min-width:1024px){
-  #conteudo{ padding-bottom:130px }
-  .bloco{ padding:20px; min-height:110px }
+  body{ max-width:800px; }
+  .titulo-principal{ font-size:36px; }
 }
