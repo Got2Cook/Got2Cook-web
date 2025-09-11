@@ -29,30 +29,52 @@ body{margin:0;padding:0;font-family:'Arial Rounded MT Bold',Arial,sans-serif;bac
 .medalha img{width:120px;height:auto;margin-bottom:5px}
 .estrelas{font-size:28px;margin-bottom:4px}
 
-/* ===== TOOLTIP (formato faixa: mais largo que alto) ===== */
+/* ===== TOOLTIP (card retangular médio, verde translúcido) ===== */
 .tooltip{
   position:absolute;
-  bottom:110%;left:50%;transform:translateX(-50%);
-  background:rgba(47,163,107,.95);color:#fff;
-  padding:8px 16px;                /* mais largo, menos alto */
-  border-radius:8px;
-  font-size:13px;line-height:1.3;
-  white-space:nowrap;              /* uma linha ou quebra mínima */
-  min-width:240px;max-width:360px; /* largura predominante */
-  opacity:0;pointer-events:none;
-  transition:opacity .15s ease, transform .15s ease;
+  bottom:112%;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(47,163,107,.93); /* verde, leve transparência */
+  color:#fff;
+
+  /* tamanho médio, formato “quadradinho retangular” */
+  padding:12px 14px;
+  border-radius:12px;
+  min-width:220px;
+  max-width:280px;              /* mais largo que alto, mas compacto */
+  white-space:normal;           /* permite 2–3 linhas */
+  line-height:1.35;
+  font-size:13.5px;
+
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s ease, transform .18s ease;
   z-index:20;
-  box-shadow:0 6px 14px rgba(0,0,0,.18), inset 0 0 0 1px rgba(255,255,255,.1)
+
+  /* embelezamento */
+  box-shadow:0 10px 22px rgba(0,0,0,.2), inset 0 0 0 1px rgba(255,255,255,.14);
+  backdrop-filter: saturate(120%);
 }
 .tooltip::after{
-  content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);
-  border-width:7px;border-style:solid;
-  border-color:rgba(47,163,107,.95) transparent transparent transparent
+  content:"";
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%);
+  border-width:8px;
+  border-style:solid;
+  border-color:rgba(47,163,107,.93) transparent transparent transparent;
 }
-.medalha:hover .tooltip{opacity:1;transform:translateX(-50%) translateY(-2px)}
+.medalha:hover .tooltip{
+  opacity:1;
+  transform:translateX(-50%) translateY(-2px);
+}
 
-.tooltip .desc{margin-right:12px}
-.tooltip .next,.tooltip .progress{margin-left:8px;font-weight:600}
+/* conteúdo interno (3 linhas enxutas) */
+.tooltip .desc{display:block;margin-bottom:6px}
+.tooltip .next{display:block;font-weight:700;background:rgba(255,255,255,.12);padding:6px 8px;border-radius:8px}
+.tooltip .progress{display:block;margin-top:6px;opacity:.95}
 
 /* ===== RODAPÉ ===== */
 .curva{width:100%;height:70px;background:#7b7190;border-top-left-radius:100% 50%;border-top-right-radius:100% 50%;position:fixed;bottom:0;left:0;display:flex;justify-content:center;align-items:center;gap:40px;z-index:10}
