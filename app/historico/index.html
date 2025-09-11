@@ -10,6 +10,20 @@
   <main id="conteudo">
     <h1 class="titulo-principal" id="tituloPagina">HISTÓRICO DE RECEITAS</h1>
 
+    <!-- Calendário (exatamente como no seu código de referência) -->
+    <section class="calendario-container" aria-label="Selecionar dia do histórico">
+      <div class="mes-navegacao">
+        <button id="mesAnterior" type="button" aria-label="Mês anterior">◀</button>
+        <span id="mesAno" aria-live="polite"></span>
+        <button id="mesProximo" type="button" aria-label="Próximo mês">▶</button>
+      </div>
+      <div class="dias-semana" aria-hidden="true">
+        <span>Dom</span><span>Seg</span><span>Ter</span>
+        <span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+      </div>
+      <div id="dias" class="dias"></div>
+    </section>
+
     <!-- Barra de controle -->
     <section class="controles" aria-label="Controles de histórico">
       <div class="busca-wrap">
@@ -42,9 +56,7 @@
 
     <!-- Lista de histórico -->
     <section aria-live="polite" aria-busy="false">
-      <ul id="listaHistorico" class="lista-historico" aria-label="Lista de receitas por data">
-        <!-- itens renderizados via JS -->
-      </ul>
+      <ul id="listaHistorico" class="lista-historico" aria-label="Lista de receitas por data"></ul>
 
       <!-- Estado vazio -->
       <div id="estadoVazio" class="estado-vazio" hidden>
