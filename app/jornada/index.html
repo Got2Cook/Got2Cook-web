@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Minha Jornada - Got2Cook</title>
 
-  <link rel="stylesheet" href="/app/jornada/jornada.css?v=12" />
+  <link rel="stylesheet" href="/app/jornada/jornada.css?v=13" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="/app/jornada/jornada.js?v=12" defer></script>
+  <script src="/app/jornada/jornada.js?v=13" defer></script>
 </head>
 <body>
   <div class="container">
@@ -15,7 +15,7 @@
       <h1 class="titulo">MINHA JORNADA</h1>
     </header>
 
-    <!-- ESQUERDA: painel inteiro dos gráficos | DIREITA: conquistas roláveis -->
+    <!-- ESQUERDA: gráficos | DIREITA: conquistas -->
     <section class="layout">
       <aside class="painel-graficos" aria-label="Painel de gráficos">
         <div class="grafico">
@@ -37,7 +37,9 @@
 
       <section class="painel-conquistas" aria-label="Minhas conquistas">
         <h2 class="subtitulo">MINHAS CONQUISTAS</h2>
-        <p class="contador-receitas">🏆 VOCÊ JÁ CRIOU <span id="contador">0</span> RECEITAS COM A GOT2COOK! 🏆</p>
+        <p class="contador-receitas">
+          🏆 VOCÊ JÁ CRIOU <span id="contador">0</span> RECEITAS COM A GOT2COOK! 🏆
+        </p>
         <section class="conquistas" id="conquistasContainer"></section>
       </section>
     </section>
