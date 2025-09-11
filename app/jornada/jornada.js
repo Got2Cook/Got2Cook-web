@@ -39,15 +39,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ========= Conquistas automáticas + tooltip ========= */
   const MEDALHAS = [
-    { id:'medalha1',  titulo:'PRIMEIRA MORDIDA',  metric:'criadas',       req:[1,3,5],     descricao:'Crie receitas no app.' },
-    { id:'medalha2',  titulo:'REPETECO',          metric:'repeticoes',    req:[2,5,10],    descricao:'Repita a mesma receita.' },
-    { id:'medalha3',  titulo:'RECEITA RELÂMPAGO', metric:'rapidas',       req:[1,3,7],     descricao:'Crie receitas em menos de 10 minutos.' },
-    { id:'medalha4',  titulo:'CHEF DO IMPROVISO', metric:'improviso',     req:[1,5,12],    descricao:'Cozinhe usando só o que tem disponível.' },
-    { id:'medalha5',  titulo:'COLECIONADOR',      metric:'salvas',        req:[5,15,30],   descricao:'Salve suas receitas favoritas.' },
-    { id:'medalha6',  titulo:'INTERNACIONAL',     metric:'cozinhas',      req:[1,3,6],     descricao:'Explore cozinhas de países diferentes.' },
-    { id:'medalha7',  titulo:'SAUDÁVEL',          metric:'saudaveis',     req:[1,5,12],    descricao:'Crie receitas marcadas como saudáveis.' },
-    { id:'medalha8',  titulo:'AGENTE NOTURNO',    metric:'noturnas',      req:[1,5,12],    descricao:'Cozinhe entre meia-noite e 5h.' },
-    { id:'medalha9',  titulo:'COZINHEIRO MESTRE', metric:'total',         req:[10,25,50],  descricao:'Cozinhe com frequência e evolua.' }
+    { id:'medalha1',  titulo:'PRIMEIRA MORDIDA',  metric:'criadas',       req:[1,5,15],     descricao:'Crie suas primeiras receitas!' },
+    { id:'medalha2',  titulo:'REPETECO',          metric:'repeticoes',    req:[2,7,15],    descricao:'Repita a mesma receita' },
+    { id:'medalha3',  titulo:'RECEITA RELÂMPAGO', metric:'rapidas',       req:[3,9,17],     descricao:'Crie receitas em menos de 10 minutos' },
+    { id:'medalha4',  titulo:'CHEF DO IMPROVISO', metric:'improviso',     req:[5,10,20],    descricao:'Cozinhe com apenas 3 ingredientes' },
+    { id:'medalha5',  titulo:'COLECIONADOR',      metric:'salvas',        req:[5,15,30],   descricao:'Salve suas receitas favoritas' },
+    { id:'medalha6',  titulo:'INTERNACIONAL',     metric:'cozinhas',      req:[5,10,20],     descricao:'Explore pratos de países diferentes' },
+    { id:'medalha7',  titulo:'SAUDÁVEL',          metric:'saudaveis',     req:[2,5,12],    descricao:'Crie receitas saudáveis' },
+    { id:'medalha8',  titulo:'AGENTE NOTURNO',    metric:'noturnas',      req:[1,5,12],    descricao:'Cozinhe entre meia-noite e 5h' },
+    { id:'medalha9',  titulo:'COZINHEIRO MESTRE', metric:'total',         req:[100,500,1000],  descricao:'Cozinhe!' }
   ];
 
   const state = {
