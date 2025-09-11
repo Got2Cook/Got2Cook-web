@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meu Histórico - Got2Cook</title>
+  <link rel="stylesheet" href="historico.css?v=1" />
+  <script src="historico.js" defer></script>
+</head>
+<body>
+  <header class="topo">
+    <!-- Mantém o padrão de títulos do app -->
+    <h1 id="tituloHistorico" class="titulo">MEU HISTÓRICO</h1>
+  </header>
+
+  <main id="conteudo" aria-labelledby="tituloHistorico">
+    <!-- Placeholder 1: filtros/periodização (ex.: semana/mês). 
+         Quando você enviar o conteúdo, substituiremos por select, chips ou botões. -->
+    <section class="bloco" id="area-filtros" aria-label="Filtros do histórico">
+      <!-- [placeholder: filtros/controles] -->
+    </section>
+
+    <!-- Placeholder 2: resumos em cartões (ex.: totais, destaques). -->
+    <section class="bloco" id="area-resumos" aria-label="Resumo do histórico">
+      <!-- [placeholder: cards de resumo] -->
+    </section>
+
+    <!-- Placeholder 3: lista cronológica com divisórias (se aplicável). -->
+    <section class="bloco lista" id="area-lista" aria-label="Lista do histórico">
+      <!-- [placeholder: lista com divisórias] -->
+    </section>
+
+    <!-- Placeholder 4: espaço para gráficos/visualizações (ex.: linha/pizza). -->
+    <section class="bloco graficos" id="area-graficos" aria-label="Gráficos do histórico">
+      <!-- [placeholder: gráficos/visualizações] -->
+    </section>
+  </main>
+
+  <!-- Placeholder de modal/overlay (seguindo padrão do app). 
+       Mantido oculto até ser usado. -->
+  <div id="overlay" class="overlay" aria-hidden="true" hidden>
+    <div class="overlay-conteudo" role="dialog" aria-modal="true" aria-labelledby="overlayTitulo">
+      <h2 id="overlayTitulo" class="sr-only">Janela</h2>
+      <!-- [placeholder: conteúdo de modal] -->
+      <button type="button" class="btn-fechar" id="btnFecharOverlay">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Rodapé curvo oficial -->
+  <footer class="curva">
+    <button class="btn-footer" id="btnVoltar" type="button" aria-label="Voltar para Home">
+      <img src="humor.png" alt="" />
+    </button>
+
+    <button class="btn-footer btn-central" id="btnLogo" type="button" aria-label="Ir para Minhas Receitas">
+      <img src="logocentral.png" alt="" />
+    </button>
+
+    <button class="btn-footer" id="btnGeladeira" type="button" aria-label="Ir para Minha Geladeira">
+      <img src="geladeira.png" alt="" />
+    </button>
+  </footer>
+</body>
+</html>
