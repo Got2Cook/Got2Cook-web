@@ -8,29 +8,60 @@ body{margin:0;padding:0;font-family:'Arial Rounded MT Bold',Arial,sans-serif;bac
 /* ===== Layout geral ===== */
 .layout{display:grid;gap:24px}
 
-/* ===== Painel dos GRÁFICOS (desktop ocupa a ALTURA INTEIRA; sem sticky) ===== */
+/* ===== Painel dos GRÁFICOS ===== */
 .painel-graficos{
   background:#dff5b7;border-radius:28px;
-  padding:14px 14px 18px 8px;            /* pouca margem à esquerda -> quase encostado */
+  /* zera o “acolchoado” da esquerda p/ encostar no container */
+  padding:14px 16px 18px 6px;
   display:flex; flex-direction:column; gap:26px;
 }
+
+/* Título em cima de cada gráfico */
 .grafico{display:flex;flex-direction:column;gap:10px}
-.grafico-titulo{font-size:18px;margin:0 0 4px 6px;color:#225c18}
+.grafico-titulo{font-size:18px;margin:0 0 6px 6px;color:#225c18}
+
+/* Linha: CANVAS no canto + LEGENDA ao lado */
 .grafico-row{
   display:grid;
-  grid-template-columns: 210px 1fr;     /* CANVAS estreito à esquerda + legenda larga */
-  gap:16px; align-items:center;
+  grid-template-columns: 180px 1fr;   /* canvas menor, colado à esquerda */
+  gap:16px; align-items:center; justify-items:start;
 }
-.grafico-row canvas{max-height:160px}   /* gráficos menores */
 
-/* Legenda ao lado (pílulas) */
-.legenda-lista{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+/* força o tamanho do canvas; JS respeita (maintainAspectRatio: false) */
+.grafico-row canvas{
+  width:180px !important;
+  height:180px !important;
+  max-width:180px; max-height:180px;
+  display:block; /* remove qualquer espaço extra */
+}
+
+/* Legenda em pílulas (ao lado) */
+.legenda-lista{list-style:none;margin:0;padding:0;display:grid;gap:10px;justify-items:start}
 .legenda-lista li{
   display:flex;align-items:center;gap:10px;
   background:#7b7190;color:#fff;font-size:14px;
   padding:8px 12px;border-radius:999px;width:fit-content
 }
 .legenda-lista .swatch{width:14px;height:14px;border-radius:50%;flex:0 0 14px}
+
+/* ===== Desktop ===== */
+@media (min-width:1024px){
+  /* aumenta um pouco a coluna da esquerda e encosta no container */
+  .layout{
+    grid-template-columns: 640px 1fr;   /* esquerda mais larga */
+    align-items:start; gap:40px;
+  }
+  .painel-graficos{
+    justify-self:start;                 /* encosta no canto do container */
+    min-height:calc(100vh - 100px);     /* ocupa visualmente a tela */
+  }
+}
+
+/* ===== Mobile (mantém empilhado) ===== */
+@media (max-width:1023px){
+  .grafico-row{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .legenda-lista{justify-items:center}
+}
 
 /* ===== Conquistas (rolável, 3 colunas) ===== */
 .painel-conquistas{
