@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const $ = (id) => document.getElementById(id);
 
   /* ========= Navegação do rodapé ========= */
-  $('btnVoltar')?.addEventListener('click', () => { window.location.href = '../home/index.html'; });
-  $('btnLogo')?.addEventListener('click',  () => { window.location.href = '../minhas-receitas/index.html'; });
+  $('btnVoltar')?.addEventListener('click', () => { window.location.href = '../humor/index.html'; });
+  $('btnLogo')?.addEventListener('click',  () => { window.location.href = '../home/index.html'; });
   $('btnGeladeira')?.addEventListener('click', () => { window.location.href = '../geladeira/index.html'; });
   ['btnVoltar','btnLogo','btnGeladeira'].forEach(id=>{
     const el=$(id); el?.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); el.click(); }});
