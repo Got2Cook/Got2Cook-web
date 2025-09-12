@@ -59,43 +59,38 @@ body{
   border:2px solid rgba(73,47,112,.15);
 }
 
-/* ===== Calendário “folhinha” (folha sobe; novo mês já está por baixo) ===== */
+/* ===== Calendário “folhinha” (folha sobe, SEM girar) ===== */
 .calendario-container{
   position:relative;
   background:#fff; padding:18px 16px; border-radius:20px;
-  width:90%; max-width:320px; margin: 8px auto 12px;
+  width:90%; max-width:320px; margin:8px auto 12px;
   box-shadow:var(--shadow); border:2px solid rgba(73,47,112,.15);
 }
-.flip-perspective{ perspective: 1400px; }
+.flip-perspective{ perspective: 1200px; }
 .calendario-page{
   position: relative;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
   border-radius: 16px;
 }
 
 /* Palco para a ÚNICA folha (clone) */
 .tear-stage{
   position:absolute; inset:12px;
-  pointer-events:none; perspective:1400px; overflow:visible;
+  pointer-events:none; perspective:1200px; overflow:visible;
 }
 .tear-page{
   position:absolute; inset:0;
   background:#fff; border-radius:16px; border:2px solid rgba(73,47,112,.15);
   box-shadow:0 10px 24px rgba(0,0,0,.18);
-  transform-origin: bottom center;            /* vira PARA CIMA */
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
   will-change: transform, filter, opacity;
-  /* mais lento: 1.0s */
-  animation: tearFlipUp 1s cubic-bezier(.2,.7,.2,1) forwards;
+  /* >>> desliza para cima, sem rotação */
+  animation: tearSlideUp 0.95s cubic-bezier(.22,.65,.25,1) forwards;
 }
 
-/* Animação da folha subindo/virando (novo mês JÁ visível embaixo, sem girar) */
-@keyframes tearFlipUp{
-  0%   { transform: rotateX(0deg)    translateY(0);     filter:drop-shadow(0 8px 18px rgba(0,0,0,.2));  opacity:1; }
-  60%  { transform: rotateX(-70deg)  translateY(-8px);  filter:drop-shadow(0 10px 22px rgba(0,0,0,.18)); opacity:.96; }
-  100% { transform: rotateX(-100deg) translateY(-22px); filter:drop-shadow(0 4px 12px rgba(0,0,0,.12)); opacity:0; }
+/* Animação da folha: apenas subir e sumir */
+@keyframes tearSlideUp{
+  0%   { transform: translateY(0);      filter:drop-shadow(0 8px 18px rgba(0,0,0,.20)); opacity:1; }
+  60%  { transform: translateY(-10%);   filter:drop-shadow(0 10px 22px rgba(0,0,0,.18)); opacity:.98; }
+  100% { transform: translateY(-110%);  filter:drop-shadow(0 4px 12px rgba(0,0,0,.08));  opacity:0; }
 }
 
 /* Cabeçalho / grid */
@@ -122,7 +117,7 @@ body{
 .dias .ativo{ background:var(--roxo); color:#fff; font-weight:bold; box-shadow:0 3px 8px rgba(0,0,0,.25); }
 .dias .selecionado{ outline:3px solid #b1a2d6; outline-offset:2px; }
 
-/* CONTROLES / LISTA (mantidos) */
+/* CONTROLES / LISTA (padrão do app) */
 .controles{ display:grid; gap:12px; }
 .pesquisa-container{ display:flex; gap:8px; align-items:center; }
 .pesquisar-input{
@@ -197,7 +192,7 @@ body{
 .icon-btn.heart-ativo{ background:#ffe3ea; border-color:var(--hearth-dark); }
 
 .estado-vazio{ text-align:center; color:var(--roxo); padding:22px 0; }
-.link-acao{ display:inline-block; margin-top:8px; color:#fff; background:var(--roxo-escuro); padding:9px 14px; border-radius:10px; text-decoration:none; }
+.link-acao{ display:inline-block; margin-top:8px; color:#fff; background:#7b7190; padding:9px 14px; border-radius:10px; text-decoration:none; }
 
 .skeleton{
   margin-top:12px;
