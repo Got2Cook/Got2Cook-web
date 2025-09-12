@@ -1,8 +1,8 @@
-/* Histórico de Receitas – Got2Cook (sem filtros de período)
+/* Histórico de Receitas – Got2Cook (com período + calendário)
    Persistência:
    - got2cook_historico_itens: array de objetos
      { id, titulo, dataISO, receitaId, foto, duracaoMin, porcoes, tags:[], favorito:boolean }
-   - got2cook_historico_filtros: { busca, ordenacao, dataSelecionada }
+   - got2cook_historico_filtros: { busca, periodo, dataSelecionada }
 */
 (function(){
   "use strict";
@@ -15,7 +15,8 @@
 
   const inpBusca = document.getElementById('inpBusca');
   const btnLimparBusca = document.getElementById('btnLimparBusca');
-  const selOrdenacao = document.getElementById('selOrdenacao');
+
+  const chipsPeriodo = Array.from(document.querySelectorAll('.chip'));
 
   // Calendário
   const diasContainer = document.getElementById('dias');
@@ -42,7 +43,7 @@
   const lsGet = (k,f)=>{ try{ return JSON.parse(localStorage.getItem(k)) ?? f; }catch{ return f; } };
   const lsSet = (k,v)=> localStorage.setItem(k, JSON.stringify(v));
 
-  // Seed exemplo se vazio (só no primeiro acesso local)
+  // Seed exemplo se vazio (só local)
   function seedIfEmpty(){
     let itens = lsGet(LS_ITENS, []);
     if(Array.isArray(itens) && itens.length) return;
@@ -65,12 +66,16 @@
     lsSet(LS_ITENS, exemplos);
   }
 
-  // ----- Estado de filtros (sem período)
-  let filtros = lsGet(LS_FILTROS, { busca:'', ordenacao:'recente', dataSelecionada:null });
+  // ----- Estado de filtros
+  let filtros = lsGet(LS_FILTROS, { busca:'', periodo:'todos', dataSelecionada:null });
 
   function syncControlesFromState(){
     inpBusca.value = filtros.busca || '';
-    selOrdenacao.value = filtros.ordenacao || 'recente';
+    chipsPeriodo.forEach(c=>{
+      const ativo = String(c.dataset.periodo) === String(filtros.periodo);
+      c.setAttribute('aria-pressed', ativo ? 'true' : 'false');
+      c.classList.toggle('ativo', ativo);
+    });
   }
 
   // Utils data
@@ -82,20 +87,33 @@
   };
   const isSameDayISO = (iso, ymd)=> toYMD(new Date(iso)) === ymd;
 
-  // Filtro/ordenador (apenas busca e dataSelecionada)
-  function aplicaFiltrosEOrdenacao(data){
+  // Período
+  function dentroDoPeriodo(iso, periodo){
+    if (filtros.dataSelecionada) { // seleção por dia tem prioridade
+      return isSameDayISO(iso, filtros.dataSelecionada);
+    }
+    if(periodo === 'todos') return true;
+    if(periodo === 'hoje'){
+      const d = new Date(iso);
+      const now = new Date();
+      return d.toDateString() === now.toDateString();
+    }
+    const dias = Number(periodo)||0;
+    const d = new Date(iso).getTime();
+    const lim = Date.now() - (dias*24*60*60*1000);
+    return d >= lim;
+  }
+
+  // Filtro principal
+  function aplicaFiltros(data){
     const busca = (filtros.busca||'').trim().toLowerCase();
     let arr = data.filter(it => {
       const okBusca = !busca || (it.titulo||'').toLowerCase().includes(busca);
-      const okDia = filtros.dataSelecionada ? isSameDayISO(it.dataISO, filtros.dataSelecionada) : true;
-      return okBusca && okDia;
+      const okPeriodo = dentroDoPeriodo(it.dataISO, filtros.periodo);
+      return okBusca && okPeriodo;
     });
-
-    if(filtros.ordenacao === 'az'){
-      arr.sort((a,b)=> (a.titulo||'').localeCompare(b.titulo||'', 'pt-BR', {sensitivity:'base'}));
-    }else{
-      arr.sort((a,b)=> new Date(b.dataISO) - new Date(a.dataISO));
-    }
+    // Ordenação fixa: recente -> antigo (mantém coerência do histórico)
+    arr.sort((a,b)=> new Date(b.dataISO) - new Date(a.dataISO));
     return arr;
   }
 
@@ -121,7 +139,7 @@
   // Paginação
   const PAGE_SIZE = 10;
   let pagina = 1;
-  let cacheFiltradoOrdenado = [];
+  let cacheFiltrado = [];
   const resetPaginacao = ()=> pagina = 1;
   const slicePaginado = (arr)=> arr.slice(0, PAGE_SIZE * pagina);
 
@@ -129,9 +147,9 @@
   function render(){
     skeleton.hidden = true;
     const itens = lsGet(LS_ITENS, []);
-    cacheFiltradoOrdenado = aplicaFiltrosEOrdenacao(itens);
+    cacheFiltrado = aplicaFiltros(itens);
 
-    if(cacheFiltradoOrdenado.length === 0){
+    if(cacheFiltrado.length === 0){
       ul.innerHTML = '';
       vazio.hidden = false;
       btnCarregarMais.disabled = true;
@@ -140,7 +158,7 @@
     }
     vazio.hidden = true;
 
-    const visiveis = slicePaginado(cacheFiltradoOrdenado);
+    const visiveis = slicePaginado(cacheFiltrado);
     const grupos = agrupaPorData(visiveis);
 
     ul.innerHTML = '';
@@ -193,7 +211,7 @@
       });
     });
 
-    const temMais = cacheFiltradoOrdenado.length > visiveis.length;
+    const temMais = cacheFiltrado.length > visiveis.length;
     btnCarregarMais.disabled = !temMais;
 
     // Atualiza destaques do calendário
@@ -237,11 +255,18 @@
     render();
     inpBusca.focus();
   });
-  selOrdenacao.addEventListener('change', ()=>{
-    filtros.ordenacao = selOrdenacao.value;
-    lsSet(LS_FILTROS, filtros);
-    resetPaginacao();
-    render();
+
+  chipsPeriodo.forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      chipsPeriodo.forEach(c=>{ c.classList.remove('ativo'); c.setAttribute('aria-pressed','false'); });
+      chip.classList.add('ativo'); chip.setAttribute('aria-pressed','true');
+      filtros.periodo = chip.dataset.periodo;
+      // ao escolher período, limpamos seleção por dia para não conflitar
+      filtros.dataSelecionada = null;
+      lsSet(LS_FILTROS, filtros);
+      resetPaginacao();
+      render();
+    });
   });
 
   // ===== Calendário =====
@@ -284,8 +309,9 @@
       }
 
       divDia.addEventListener('click', ()=>{
-        // clicar no mesmo dia desmarca; em outro dia seleciona
+        // selecionar/desselecionar dia
         filtros.dataSelecionada = (filtros.dataSelecionada === ymd) ? null : ymd;
+        // quando escolher dia, não forçamos período — ele continua marcado, mas a prioridade é do dia
         lsSet(LS_FILTROS, filtros);
         resetPaginacao();
         render();
@@ -315,7 +341,7 @@
 
   // Init
   function init(){
-    seedIfEmpty(); // remova esta linha se não quiser exemplos locais
+    seedIfEmpty(); // remova se não quiser exemplos locais
     syncControlesFromState();
     skeleton.hidden = false;
 
