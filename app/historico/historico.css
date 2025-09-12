@@ -1,225 +1,121 @@
-:root{
-  --bg:#c0ffa5;
-  --roxo:#492f70;
-  --roxo-escuro:#7b7190;
-  --verde:#225c18;
-  --chip:#e9ffd7;
-  --borda:#3e6529;
-  --white:#fff;
-  --shadow:0 6px 18px rgba(0,0,0,.18);
-  --shadow-sm:0 4px 12px rgba(0,0,0,.14);
-}
-
-*{box-sizing:border-box}
-html,body{height:100%}
+/* Base conforme seu arquivo: Poppins/Arial, fundo #c0ffa5, cores roxo/verde */
 body{
-  margin:0;
-  font-family: Arial, sans-serif;
-  background:var(--bg);
-  color:var(--roxo);
+  font-family:'Poppins', Arial, sans-serif;
+  background:#c0ffa5;
   max-width:600px;
-  margin-inline:auto;
-  padding:16px 16px 120px; /* espaço p/ rodapé */
+  margin:0 auto;
+  text-align:center;
+  padding:60px 0 120px;
+  color:#492f70;
 }
-
-/* Título */
+/* Título igual */
 .titulo-principal{
   margin:25px 0 15px;
-  color:var(--verde);
-  font-size:32px;
+  color:#225c18;
+  font-size:35px;
   font-weight:bold;
   letter-spacing:1px;
-  text-align:center;
-  text-shadow:0 1px 0 rgba(255,255,255,.6);
 }
-
 /* Acessibilidade */
 :focus{ outline:2px dotted #000; outline-offset:3px; }
-.sr-only{ position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden; }
+.sr-only{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
 
-/* ===== LAYOUT 2 COLUNAS ===== */
+/* ===== Layout 2 colunas (empilhado no mobile) ===== */
 .layout-historico{ display:block; gap:16px; }
 .lado-calendario{ margin-bottom:16px; }
-.lado-conteudo{}
-
-.card{
-  background:var(--white);
-  border-radius:18px;
-  padding:14px;
-  box-shadow:var(--shadow-sm);
-  border:2px solid rgba(73,47,112,.15);
-}
-.cal-card{
-  background:var(--white);
-  border-radius:22px;
-  padding:18px 16px;
-  box-shadow:var(--shadow);
-  border:2px solid rgba(73,47,112,.15);
+@media (min-width:1024px){
+  body{ max-width:1000px; }
+  .layout-historico{
+    display:grid;
+    grid-template-columns:360px 1fr;
+    gap:18px;
+    align-items:start;
+  }
 }
 
-/* Calendário */
-.calendario-container{ width:90%; max-width:320px; margin: 8px auto; }
-.mes-navegacao{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+/* ===== Calendário – exatamente como no seu CSS ===== */
+.calendario-container{
+  background:#fff;
+  margin:40px auto 20px;
+  padding:20px 15px;
+  border-radius:20px;
+  width:90%;
+  max-width:320px;
+  box-shadow:0 4px 12px rgba(0,0,0,.2);
+}
+.mes-navegacao{ display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; }
 .mes-navegacao button{
-  background:var(--roxo); color:#fff; border:none; border-radius:10px;
-  padding:6px 12px; font-size:16px; cursor:pointer; transition:transform .15s ease, filter .2s;
+  background:#492f70; color:#fff; border:none; border-radius:8px;
+  padding:5px 10px; font-size:16px; cursor:pointer; transition:.2s;
 }
-.mes-navegacao button:hover{ filter:brightness(.95); }
-.mes-navegacao button:active{ transform:scale(.98); }
+.mes-navegacao button:hover{ background:#7b7190; }
 #mesAno{ font-weight:bold; font-size:18px; text-transform:capitalize; }
-
-.dias-semana, .dias{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
-.dias-semana span{ font-weight:bold; font-size:13px; color:var(--roxo-escuro); text-align:center; }
-
-/* HOTFIX calendário */
-.dias{
-  display:grid !important;
-  grid-template-columns:repeat(7,1fr);
-  gap:6px;
-  min-height:240px;
+.dias-semana, .dias{ display:grid; grid-template-columns:repeat(7,1fr); gap:5px; }
+.dias-semana span{ font-weight:bold; font-size:14px; color:#7b7190; }
+.dias div{
+  padding:10px; border-radius:50%; cursor:pointer; font-size:14px; color:#492f70; transition:.2s;
 }
-.dias > div{
-  display:flex; align-items:center; justify-content:center;
-  padding:11px; border-radius:12px;
-  background:#fff; border:1px solid rgba(0,0,0,.08);
-  color:var(--roxo);
-  cursor:pointer; transition:background .2s, color .2s, transform .06s ease;
-  text-align:center;
+.dias div:hover{ background:#7b7190; color:#fff; }
+.dias .ativo{ background:#492f70; color:#fff; font-weight:bold; box-shadow:0 3px 8px rgba(0,0,0,.3); }
+
+/* ===== Pesquisar (visual alinhado à sua paleta/bordas) ===== */
+.pesquisa-container{
+  width:90%; max-width:600px; margin:0 auto 10px;
+  display:flex; gap:8px; align-items:center; justify-content:center;
 }
-.dias > div:hover{ background:#efe9ff; }
-.dias > div[aria-hidden="true"]{ visibility:hidden; }
-.dias .ativo{ background:var(--roxo); color:#fff; font-weight:bold; box-shadow:0 3px 8px rgba(0,0,0,.25); }
-.dias .selecionado{ outline:3px solid #b1a2d6; outline-offset:2px; }
-
-/* Ações do calendário */
-.linha-calendario-acoes{ margin-top:10px; display:flex; justify-content:flex-end; }
-.btn-sec.sm{ height:34px; padding:0 10px; border-radius:10px; font-size:14px; }
-
-/* CONTROLES */
-.controles{ display:grid; gap:12px; }
-.busca-wrap{ display:flex; gap:8px; align-items:center; }
-.inp-busca{
-  flex:1; height:44px; border:2px solid var(--roxo); border-radius:12px; padding:0 12px;
-  font-size:16px; background:#fff; color:var(--roxo);
+.pesquisar-input{
+  flex:1; height:44px; border:2px solid #492f70; border-radius:20px;
+  padding:0 12px; font-size:16px; color:#492f70; background:#fff;
 }
 .btn-sec{
-  height:44px; border:2px solid var(--roxo); background:#fff; color:var(--roxo);
+  height:44px; border:2px solid #492f70; background:#fff; color:#492f70;
   border-radius:12px; padding:0 12px; cursor:pointer; transition:.2s;
 }
 .btn-sec:hover{ background:#f7f7f7 }
 
-/* Chips de período */
-.filtros-periodo{ display:flex; flex-wrap:wrap; gap:8px; }
+/* ===== Chips de período (mantidos) ===== */
+.filtros-periodo{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:6px 0 10px; }
 .chip{
-  border:2px solid var(--borda);
-  background:var(--chip);
-  color:var(--verde);
-  border-radius:999px;
-  padding:8px 12px;
-  font-size:14px;
-  cursor:pointer;
-  transition:.2s;
+  border:2px solid #3e6529; background:#e9ffd7; color:#225c18;
+  border-radius:999px; padding:8px 12px; font-size:14px; cursor:pointer; transition:.2s;
 }
-.chip[aria-pressed="true"], .chip.ativo{
-  background:var(--roxo-escuro);
-  color:#fff;
-  border-color:var(--roxo-escuro);
-}
+.chip[aria-pressed="true"], .chip.ativo{ background:#7b7190; color:#fff; border-color:#7b7190; }
 
-/* LISTA */
-.list-card{
-  background:#fff; border-radius:18px; overflow:hidden; margin-top:16px;
-  border:2px solid rgba(73,47,112,.15); box-shadow:var(--shadow-sm);
-}
-.lista-historico{ list-style:none; margin:0; padding:0; }
-.li-data{
-  background:#d7ffbf; color:var(--verde); padding:10px 12px; font-weight:bold;
-  border-bottom:2px solid var(--borda);
-}
-.item{
-  display:grid; grid-template-columns:56px 1fr auto; gap:10px; align-items:center;
-  padding:12px 14px; border-bottom:1px solid rgba(0,0,0,.08);
-  transition:background .15s ease;
-}
-.item:hover{ background:#f9f9ff; }
-.item:last-child{ border-bottom:none; }
+/* ===== Lista de receitas (exatamente igual ao seu GRID/CARDS) ===== */
+.lista-receitas{ margin:20px 0 50px; }
+#titulo-dia{ font-size:18px; margin-bottom:15px; color:#492f70; }
 
-.thumb{
-  width:56px; height:56px; border-radius:12px; overflow:hidden;
-  border:2px solid var(--roxo); background:#fff; display:flex; align-items:center; justify-content:center;
+/* GRID de receitas */
+.receitas-grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  padding:0 20px 120px; margin-top:20px;
 }
-.thumb img{ width:100%; height:100%; object-fit:cover; }
-
-.bloco{ display:flex; flex-direction:column; gap:4px; }
-.titulo{ color:var(--verde); font-weight:bold; line-height:1.15; }
-.meta{ font-size:12px; color:var(--roxo); opacity:.9; }
-.tags{ display:flex; gap:6px; flex-wrap:wrap; margin-top:2px; }
-.tag{
-  font-size:12px; background:var(--chip); color:var(--verde);
-  border:1px solid var(--borda); border-radius:999px; padding:2px 6px;
+/* CARD */
+.card{ display:flex; flex-direction:column; align-items:center; }
+/* Imagem com borda roxa 10px */
+.imagem-container{
+  background:#fff; border-radius:20px; padding:0;
+  border:10px solid #492f70; width:80%; aspect-ratio:1 / 1; overflow:hidden;
 }
-
-.acoes{ display:flex; gap:8px; align-items:center; }
-.icon-btn{
-  width:38px; height:38px; border-radius:50%; border:2px solid var(--roxo);
-  background:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center;
-  transition:transform .06s ease, background .15s;
+.imagem-receita{ width:100%; height:100%; object-fit:cover; border-radius:0; }
+/* Bloco inferior verde com título/tempo/emojis */
+.bloco-inferior{
+  background:#d7ffbf; width:80%; border-radius:20px; margin-top:8px;
+  height:140px; padding:10px 10px; display:flex; flex-direction:column;
+  justify-content:space-between; position:relative;
 }
-.icon-btn:hover{ background:#f1eff9; }
-.icon-btn:active{ transform:scale(.98); }
-.icon-btn .estrela{ font-size:18px; }
-.icon-btn.fav-ativo{ background:#ffe08a; border-color:#caa21f; }
+.bloco-inferior h2{ margin:0; font-size:18px; color:#225c18; text-align:center; }
+.bloco-inferior p{ position:absolute; bottom:85px; left:12px; margin:0; font-size:17px; color:#225c18; }
+.emojis{ text-align:center; font-size:27px; margin-top:auto; }
 
-.estado-vazio{ text-align:center; color:var(--roxo); padding:22px 0; }
-.link-acao{
-  display:inline-block; margin-top:8px; color:#fff; background:var(--roxo-escuro);
-  padding:9px 14px; border-radius:10px; text-decoration:none;
-}
-
-/* Skeleton */
-.skeleton{
-  margin-top:12px;
-  background:linear-gradient(90deg, rgba(0,0,0,0.06) 25%, rgba(0,0,0,0.12) 37%, rgba(0,0,0,0.06) 63%);
-  background-size:400% 100%;
-  height:80px; border-radius:12px; animation:shimmer 1.2s infinite;
-}
-@keyframes shimmer{ 0%{background-position:100% 0} 100%{background-position:0 0} }
-
-/* Paginação */
-.paginacao{ display:flex; justify-content:center; padding:16px 0; }
-.btn-prim{
-  border:none; background:var(--roxo-escuro); color:#fff;
-  border-radius:12px; padding:12px 18px; font-size:16px; cursor:pointer; transition:.2s;
-  box-shadow:0 4px 10px rgba(0,0,0,.12);
-}
-.btn-prim:hover{ filter:brightness(0.95); }
-
-/* RODAPÉ OFICIAL */
+/* ===== Rodapé oficial (mantido) ===== */
 footer.curva{
-  width:100%; height:70px; background-color:var(--roxo-escuro);
+  width:100%; height:70px; background:#7b7190;
   border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
   position:fixed; bottom:0; left:0; display:flex; justify-content:center; align-items:center;
   gap:40px; z-index:10;
 }
-.btn-footer{
-  background:transparent; border:none; border-radius:50%; width:55px; height:55px; padding:0;
-  display:flex; justify-content:center; align-items:center; overflow:hidden; cursor:pointer; transform:translateY(-10px);
-}
+.btn-footer{ background:transparent; border:none; border-radius:50%; width:55px; height:55px; padding:0; display:flex; justify-content:center; align-items:center; overflow:hidden; cursor:pointer; transform:translateY(-10px); }
 .btn-footer img{ width:250%; height:250%; object-fit:contain; }
 .btn-footer.btn-central{ width:150px; height:150px; transform:translateY(-20px); }
 .btn-footer.btn-central img{ width:150%; height:150%; object-fit:contain; }
-
-/* DESKTOP */
-@media (min-width:1024px){
-  body{ max-width:1000px; }
-  .titulo-principal{ font-size:36px; }
-
-  .layout-historico{
-    display:grid;
-    grid-template-columns: 360px 1fr;
-    gap:18px;
-    align-items:start;
-  }
-  .lado-calendario{ position:sticky; top:16px; align-self:start; }
-  .calendario-container{ width:auto; max-width:100%; margin:0; }
-}
