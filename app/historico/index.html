@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Histórico de Receitas - Got2Cook</title>
-  <link rel="stylesheet" href="historico.css?v=21" />
+  <link rel="stylesheet" href="historico.css?v=22" />
 </head>
 <body>
   <main id="conteudo">
@@ -31,7 +31,8 @@
               <button id="btnLimparDia" class="btn-sec sm" type="button" aria-label="Mostrar todos os dias">Mostrar todos</button>
             </div>
           </div>
-          <!-- folha arrancando -->
+
+          <!-- Palco da “folha” (clone) -->
           <div id="tearStage" class="tear-stage" aria-hidden="true"></div>
         </section>
       </aside>
@@ -69,21 +70,26 @@
         </section>
       </section>
     </section>
+
+    <!-- Spacer: só para dar respiro acima do rodapé -->
+    <div class="spacer-rodape" aria-hidden="true"></div>
   </main>
 
-  <!-- Rodapé oficial -->
+  <!-- Rodapé oficial (curvo) -->
   <footer class="curva">
     <button class="btn-footer" id="btnVoltar" type="button" aria-label="Voltar para Home">
       <img src="humor.png" alt="">
     </button>
+
     <button class="btn-footer btn-central" id="btnLogo" type="button" aria-label="Ir para Minhas Receitas">
       <img src="logocentral.png" alt="">
     </button>
+
     <button class="btn-footer" id="btnGeladeira" type="button" aria-label="Ir para Minha Geladeira">
       <img src="geladeira.png" alt="">
     </button>
   </footer>
 
-  <script src="historico.js?v=20" defer></script>
+  <script src="historico.js?v=22" defer></script>
 </body>
 </html>
