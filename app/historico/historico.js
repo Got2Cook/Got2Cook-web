@@ -22,6 +22,7 @@
   const mesAno = document.getElementById('mesAno');
   const btnMesAnterior = document.getElementById('mesAnterior');
   const btnMesProximo = document.getElementById('mesProximo');
+  const btnLimparDia = document.getElementById('btnLimparDia');
 
   // Rodapé (placeholders)
   document.getElementById('btnVoltar')?.addEventListener('click', ()=> {
@@ -41,7 +42,7 @@
   const lsGet = (k,f)=>{ try{ return JSON.parse(localStorage.getItem(k)) ?? f; }catch{ return f; } };
   const lsSet = (k,v)=> localStorage.setItem(k, JSON.stringify(v));
 
-  // Seed exemplo se vazio
+  // Seed exemplo se vazio (só no primeiro acesso local)
   function seedIfEmpty(){
     let itens = lsGet(LS_ITENS, []);
     if(Array.isArray(itens) && itens.length) return;
@@ -185,4 +186,145 @@
 
         function abrir(){ window.location.href = '../visualizar/index.html?receitaId=' + encodeURIComponent(it.receitaId||''); }
         li.addEventListener('click', abrir);
-        li.addEventListener(
+        li.addEventListener('keydown', (ev)=>{ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); abrir(); }});
+        btnAbrir.addEventListener('click', (ev)=>{ ev.stopPropagation(); abrir(); });
+        btnFav.addEventListener('click', (ev)=>{ ev.stopPropagation(); toggleFavorito(it.id, btnFav); });
+        btnDel.addEventListener('click', (ev)=>{ ev.stopPropagation(); removerItem(it.id); });
+      });
+    });
+
+    const temMais = cacheFiltradoOrdenado.length > visiveis.length;
+    btnCarregarMais.disabled = !temMais;
+
+    // Atualiza destaques do calendário
+    pintarCalendarioDias(lsGet(LS_ITENS, []));
+  }
+
+  function toggleFavorito(id, btn){
+    const itens = lsGet(LS_ITENS, []);
+    const idx = itens.findIndex(x=>x.id===id);
+    if(idx>-1){
+      itens[idx].favorito = !itens[idx].favorito;
+      lsSet(LS_ITENS, itens);
+      const ativo = itens[idx].favorito;
+      btn.classList.toggle('fav-ativo', ativo);
+      btn.setAttribute('aria-label', ativo ? 'Desfavoritar' : 'Favoritar');
+      btn.innerHTML = `<span class="estrela">${ativo ? '★' : '☆'}</span>`;
+    }
+  }
+
+  function removerItem(id){
+    const ok = confirm('Remover este item do histórico?');
+    if(!ok) return;
+    let itens = lsGet(LS_ITENS, []);
+    itens = itens.filter(x=>x.id !== id);
+    lsSet(LS_ITENS, itens);
+    render();
+  }
+
+  // Controles
+  inpBusca.addEventListener('input', ()=>{
+    filtros.busca = inpBusca.value || '';
+    lsSet(LS_FILTROS, filtros);
+    resetPaginacao();
+    render();
+  });
+  btnLimparBusca.addEventListener('click', ()=>{
+    inpBusca.value = '';
+    filtros.busca = '';
+    lsSet(LS_FILTROS, filtros);
+    resetPaginacao();
+    render();
+    inpBusca.focus();
+  });
+  selOrdenacao.addEventListener('change', ()=>{
+    filtros.ordenacao = selOrdenacao.value;
+    lsSet(LS_FILTROS, filtros);
+    resetPaginacao();
+    render();
+  });
+
+  // ===== Calendário =====
+  let hoje = new Date();
+  let mesAtual = hoje.getMonth();
+  let anoAtual = hoje.getFullYear();
+
+  function toYMDstr(y,m,d){ return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
+
+  function pintarCalendarioDias(itens){ gerarCalendario(mesAtual, anoAtual, itens); }
+
+  function gerarCalendario(mes, ano, itensParam){
+    diasContainer.innerHTML = "";
+    const primeiroDia = new Date(ano, mes, 1).getDay();
+    const ultimoDia = new Date(ano, mes + 1, 0).getDate();
+    mesAno.textContent = `${new Date(ano, mes).toLocaleString('pt-BR', { month: 'long' })} ${ano}`;
+
+    const itens = Array.isArray(itensParam) ? itensParam : lsGet(LS_ITENS, []);
+    const diasComItens = new Set();
+    itens.forEach(it=>{ try{ diasComItens.add(toYMD(new Date(it.dataISO))); }catch{} });
+
+    // espaços antes do 1º dia
+    for (let i = 0; i < primeiroDia; i++){
+      const vazio = document.createElement('div');
+      vazio.setAttribute('aria-hidden','true');
+      diasContainer.appendChild(vazio);
+    }
+
+    for (let dia = 1; dia <= ultimoDia; dia++){
+      const divDia = document.createElement('div');
+      divDia.textContent = String(dia);
+      const ymd = toYMDstr(ano, mes, dia);
+
+      if(diasComItens.has(ymd)){
+        divDia.classList.add('ativo');
+        divDia.setAttribute('title','Há receitas neste dia');
+      }
+      if(filtros.dataSelecionada === ymd){
+        divDia.classList.add('selecionado');
+      }
+
+      divDia.addEventListener('click', ()=>{
+        // clicar no mesmo dia desmarca; em outro dia seleciona
+        filtros.dataSelecionada = (filtros.dataSelecionada === ymd) ? null : ymd;
+        lsSet(LS_FILTROS, filtros);
+        resetPaginacao();
+        render();
+        document.getElementById('listaHistorico')?.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+
+      diasContainer.appendChild(divDia);
+    }
+  }
+
+  btnMesAnterior?.addEventListener('click', ()=>{
+    mesAtual--;
+    if (mesAtual < 0){ mesAtual = 11; anoAtual--; }
+    gerarCalendario(mesAtual, anoAtual);
+  });
+  btnMesProximo?.addEventListener('click', ()=>{
+    mesAtual++;
+    if (mesAtual > 11){ mesAtual = 0; anoAtual++; }
+    gerarCalendario(mesAtual, anoAtual);
+  });
+  btnLimparDia?.addEventListener('click', ()=>{
+    filtros.dataSelecionada = null;
+    lsSet(LS_FILTROS, filtros);
+    resetPaginacao();
+    render();
+  });
+
+  // Init
+  function init(){
+    seedIfEmpty(); // remova esta linha se não quiser exemplos locais
+    syncControlesFromState();
+    skeleton.hidden = false;
+
+    // Garante render do calendário após DOM
+    document.addEventListener('DOMContentLoaded', ()=>{
+      try { gerarCalendario(mesAtual, anoAtual); } catch(e){}
+    });
+
+    setTimeout(()=>{ resetPaginacao(); render(); }, 200);
+  }
+  init();
+})();
