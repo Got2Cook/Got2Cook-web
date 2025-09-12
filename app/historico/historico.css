@@ -59,9 +59,7 @@ body{
 
 /* Calendário */
 .calendario-container{ width:90%; max-width:320px; margin: 8px auto; }
-.mes-navegacao{
-  display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;
-}
+.mes-navegacao{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
 .mes-navegacao button{
   background:var(--roxo); color:#fff; border:none; border-radius:10px;
   padding:6px 12px; font-size:16px; cursor:pointer; transition:transform .15s ease, filter .2s;
@@ -73,7 +71,7 @@ body{
 .dias-semana, .dias{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
 .dias-semana span{ font-weight:bold; font-size:13px; color:var(--roxo-escuro); text-align:center; }
 
-/* HOTFIX calendário: garante grid e altura visível */
+/* HOTFIX calendário */
 .dias{
   display:grid !important;
   grid-template-columns:repeat(7,1fr);
@@ -94,12 +92,10 @@ body{
 .dias .selecionado{ outline:3px solid #b1a2d6; outline-offset:2px; }
 
 /* Ações do calendário */
-.linha-calendario-acoes{
-  margin-top:10px; display:flex; justify-content:flex-end;
-}
+.linha-calendario-acoes{ margin-top:10px; display:flex; justify-content:flex-end; }
 .btn-sec.sm{ height:34px; padding:0 10px; border-radius:10px; font-size:14px; }
 
-/* CONTROLES (sem filtros de período) */
+/* CONTROLES */
 .controles{ display:grid; gap:12px; }
 .busca-wrap{ display:flex; gap:8px; align-items:center; }
 .inp-busca{
@@ -112,12 +108,22 @@ body{
 }
 .btn-sec:hover{ background:#f7f7f7 }
 
-.linha-ordenacao{ display:flex; gap:8px; align-items:center; justify-content:flex-end; }
-#selOrdenacao{
-  height:44px; min-width:190px;
-  border:2px solid var(--roxo); border-radius:12px; padding:0 10px;
-  font-size:16px; background:#fff; color:var(--roxo);
-  box-shadow:0 1px 0 rgba(0,0,0,.05) inset;
+/* Chips de período */
+.filtros-periodo{ display:flex; flex-wrap:wrap; gap:8px; }
+.chip{
+  border:2px solid var(--borda);
+  background:var(--chip);
+  color:var(--verde);
+  border-radius:999px;
+  padding:8px 12px;
+  font-size:14px;
+  cursor:pointer;
+  transition:.2s;
+}
+.chip[aria-pressed="true"], .chip.ativo{
+  background:var(--roxo-escuro);
+  color:#fff;
+  border-color:var(--roxo-escuro);
 }
 
 /* LISTA */
