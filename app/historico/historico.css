@@ -59,14 +59,14 @@ body{
   border:2px solid rgba(73,47,112,.15);
 }
 
-/* ===== Calendário com efeito “página virando” ===== */
+/* ===== Calendário com efeito “folhinha” (páginas subindo) ===== */
 .calendario-container{
+  position:relative;
   background:#fff; padding:18px 16px; border-radius:20px;
   width:90%; max-width:320px; margin: 8px auto 12px;
   box-shadow:var(--shadow); border:2px solid rgba(73,47,112,.15);
 }
-.flip-perspective{ perspective: 1200px; }
-
+.flip-perspective{ perspective: 1400px; }
 .calendario-page{
   position: relative;
   transform-style: preserve-3d;
@@ -74,17 +74,33 @@ body{
   will-change: transform, filter;
   border-radius: 16px;
 }
-
-/* Sombra/curl da “folha” */
-.calendario-page::before{
-  content:"";
-  position:absolute; inset:0; pointer-events:none;
-  background:
-    radial-gradient(120% 60% at 0% 0%, rgba(0,0,0,.16), rgba(0,0,0,0) 60%),
-    linear-gradient(90deg, rgba(0,0,0,.12), rgba(0,0,0,0) 40%, rgba(0,0,0,.08) 60%, rgba(0,0,0,0));
-  opacity:0; border-radius:16px;
+.calendario-page.with-curl::before{
+  content:""; position:absolute; inset:0; pointer-events:none; border-radius:16px;
+  background: radial-gradient(120% 60% at 50% 100%, rgba(0,0,0,.18), rgba(0,0,0,0) 65%);
 }
-.calendario-page.with-curl::before{ opacity:.28; transition:opacity .2s ease; }
+
+/* Palco para clones/folhas */
+.tear-stage{
+  position:absolute; inset:12px 12px 12px 12px; /* para respeitar padding/raio */
+  pointer-events:none; perspective:1400px; overflow:visible;
+}
+.tear-page{
+  position:absolute; inset:0;
+  background:#fff; border-radius:16px; border:2px solid rgba(73,47,112,.15);
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
+  transform-origin: bottom center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform, filter, opacity;
+  animation: tearFlipUp .42s cubic-bezier(.2,.7,.2,1) forwards;
+}
+
+/* animação de cada folha subindo/virando */
+@keyframes tearFlipUp{
+  0%   { transform: rotateX(0deg) translateY(0);    filter:drop-shadow(0 8px 18px rgba(0,0,0,.2)); opacity:1; }
+  60%  { transform: rotateX(-70deg) translateY(-10px); filter:drop-shadow(0 10px 22px rgba(0,0,0,.18)); opacity:.95; }
+  100% { transform: rotateX(-100deg) translateY(-24px); filter:drop-shadow(0 4px 12px rgba(0,0,0,.12)); opacity:0; }
+}
 
 /* Cabeçalho / grid */
 .mes-navegacao{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
@@ -110,32 +126,7 @@ body{
 .dias .ativo{ background:var(--roxo); color:#fff; font-weight:bold; box-shadow:0 3px 8px rgba(0,0,0,.25); }
 .dias .selecionado{ outline:3px solid #b1a2d6; outline-offset:2px; }
 
-/* Flip tipo LIVRO (esquerda/direita) */
-.calendario-page.page-out-left  { animation: pageFlipOutLeft .45s cubic-bezier(.2,.6,.2,1) forwards; transform-origin: left center; }
-.calendario-page.page-in-right  { animation: pageFlipInRight .45s cubic-bezier(.2,.6,.2,1) forwards;  transform-origin: right center; }
-.calendario-page.page-out-right { animation: pageFlipOutRight .45s cubic-bezier(.2,.6,.2,1) forwards; transform-origin: right center; }
-.calendario-page.page-in-left   { animation: pageFlipInLeft .45s cubic-bezier(.2,.6,.2,1) forwards;   transform-origin: left center; }
-
-@keyframes pageFlipOutLeft  { from{ transform:rotateY(0deg);   filter:drop-shadow(0 8px 20px rgba(0,0,0,.18)); } to{ transform:rotateY(-100deg); filter:drop-shadow(0 4px 12px rgba(0,0,0,.10)); } }
-@keyframes pageFlipInRight  { from{ transform:rotateY(100deg); filter:drop-shadow(0 4px 12px rgba(0,0,0,.10)); } to{ transform:rotateY(0deg);    filter:drop-shadow(0 8px 20px rgba(0,0,0,.18)); } }
-@keyframes pageFlipOutRight { from{ transform:rotateY(0deg);   filter:drop-shadow(0 8px 20px rgba(0,0,0,.18)); } to{ transform:rotateY(100deg);  filter:drop-shadow(0 4px 12px rgba(0,0,0,.10)); } }
-@keyframes pageFlipInLeft   { from{ transform:rotateY(-100deg);filter:drop-shadow(0 4px 12px rgba(0,0,0,.10)); } to{ transform:rotateY(0deg);    filter:drop-shadow(0 8px 20px rgba(0,0,0,.18)); } }
-
-/* Flip tipo CADERNO (para cima) — padrão */
-.calendario-page.page-out-up { animation: pageFlipOutUp .45s cubic-bezier(.2,.6,.2,1) forwards; transform-origin: bottom center; }
-.calendario-page.page-in-up  { animation: pageFlipInUp  .45s cubic-bezier(.2,.6,.2,1) forwards; transform-origin: bottom center; }
-
-@keyframes pageFlipOutUp { from{ transform:rotateX(0deg);    filter:drop-shadow(0 8px 20px rgba(0,0,0,.18)); } to{ transform:rotateX(-95deg); filter:drop-shadow(0 4px 12px rgba(0,0,0,.10)); } }
-@keyframes pageFlipInUp  { from{ transform:rotateX(95deg);   filter:drop-shadow(0 4px 12px rgba(0,0,0,.10)); } to{ transform:rotateX(0deg);    filter:drop-shadow(0 8px 20px rgba(0,0,0,.18)); } }
-
-/* Tap nos dias */
-.dias > div.tap{ animation:calTap .12s ease; }
-@keyframes calTap{ 0%{ transform:scale(1) } 80%{ transform:scale(.96) } 100%{ transform:scale(1) } }
-
-.linha-calendario-acoes{ margin-top:10px; display:flex; justify-content:flex-end; }
-.btn-sec.sm{ height:34px; padding:0 10px; border-radius:10px; font-size:14px; }
-
-/* ===== CONTROLES / LISTA (mesmo padrão anterior) ===== */
+/* CONTROLES / LISTA (mantidos) */
 .controles{ display:grid; gap:12px; }
 .pesquisa-container{ display:flex; gap:8px; align-items:center; }
 .pesquisar-input{
