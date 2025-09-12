@@ -1,11 +1,11 @@
-/* Histórico – calendário normal + lista com mais respiro
+/* Histórico – coração com toggle + calendário sticky
    Ações:
    - 👁️ Ver (abre a receita)
-   - ⭐ Favoritar (salva em "Minhas Receitas" e marca o item)
+   - ❤️ Coração (adiciona/remover de "Minhas Receitas" e marca/desmarca)
    - 🗑️ Lixo (remove do histórico)
    Persistência:
    - got2cook_historico_itens
-   - got2cook_minhas_receitas (novo)
+   - got2cook_minhas_receitas
 */
 (function(){
   "use strict";
@@ -143,21 +143,19 @@
   function resetPaginacao(){ pagina = 1; }
   function slicePaginado(arr){ return arr.slice(0, PAGE_SIZE * pagina); }
 
-  // ====== MINHAS RECEITAS (persistência) ======
+  // ====== MINHAS RECEITAS ======
   function getMinhas(){ return lsGet(LS_MINHAS, []); }
   function setMinhas(arr){ lsSet(LS_MINHAS, arr); }
-  function jaEstaEmMinhas(receitaId){
-    if(!receitaId) return false;
+  function jaEstaEmMinhas({receitaId, id, titulo}){
     const arr = getMinhas();
-    return !!arr.find(r => r.receitaId === receitaId);
+    return !!arr.find(r => (receitaId && r.receitaId===receitaId) || (id && r.originId===id) || (titulo && r.titulo===titulo));
   }
-  function salvarEmMinhasReceitas(item){
+  function adicionarEmMinhas(item){
+    if(jaEstaEmMinhas(item)) return false;
     const arr = getMinhas();
-    if(item.receitaId && arr.some(r => r.receitaId === item.receitaId)){
-      return false; // já existe
-    }
-    const salvo = {
+    arr.push({
       id: 'm_' + (item.id || Math.random().toString(36).slice(2)),
+      originId: item.id || null,
       receitaId: item.receitaId || null,
       titulo: item.titulo || 'Receita',
       foto: item.foto || '',
@@ -165,10 +163,20 @@
       porcoes: item.porcoes || null,
       tags: Array.isArray(item.tags) ? item.tags.slice(0) : [],
       dataSalvoISO: new Date().toISOString()
-    };
-    arr.push(salvo);
+    });
     setMinhas(arr);
     return true;
+  }
+  function removerDeMinhas(item){
+    let arr = getMinhas();
+    const before = arr.length;
+    arr = arr.filter(r => {
+      if(item.receitaId && r.receitaId === item.receitaId) return false;
+      if(item.id && r.originId === item.id) return false;
+      return true;
+    });
+    setMinhas(arr);
+    return arr.length !== before;
   }
 
   // Render
@@ -197,8 +205,9 @@
       ul.appendChild(liData);
 
       lista.forEach(it=>{
+        const salvo = jaEstaEmMinhas(it);
+
         const li = document.createElement('li');
-        const salvo = jaEstaEmMinhas(it.receitaId);
         li.className = 'item' + (salvo ? ' salvo' : '');
         li.setAttribute('role','button');
         li.setAttribute('tabindex','0');
@@ -229,12 +238,13 @@
         btnVer.setAttribute('aria-label','Visualizar receita'); btnVer.title='Visualizar';
         btnVer.textContent='👁️';
 
-        // ⭐ Favoritar (salva em Minhas Receitas)
-        const btnFavAdd = document.createElement('button');
-        btnFavAdd.type='button'; btnFavAdd.className='icon-btn btn-fav' + (salvo ? ' fav-ativo' : '');
-        btnFavAdd.setAttribute('aria-label', salvo?'Salva em Minhas Receitas':'Salvar em Minhas Receitas');
-        btnFavAdd.title = salvo ? 'Já em Minhas Receitas' : 'Adicionar a Minhas Receitas';
-        btnFavAdd.textContent='⭐';
+        // ❤️ Coração (toggle)
+        const btnHeart = document.createElement('button');
+        btnHeart.type='button'; btnHeart.className='icon-btn btn-heart';
+        btnHeart.setAttribute('aria-pressed', salvo ? 'true' : 'false');
+        btnHeart.classList.toggle('heart-ativo', !!salvo);
+        btnHeart.title = salvo ? 'Remover de Minhas Receitas' : 'Adicionar a Minhas Receitas';
+        btnHeart.textContent = salvo ? '❤️' : '🤍';
 
         // 🗑️ Lixo
         const btnDel = document.createElement('button');
@@ -242,7 +252,7 @@
         btnDel.setAttribute('aria-label','Remover do histórico'); btnDel.title='Remover';
         btnDel.textContent='🗑️';
 
-        acoes.append(btnVer, btnFavAdd, btnDel);
+        acoes.append(btnVer, btnHeart, btnDel);
 
         li.append(thumb, bloco, acoes);
         ul.appendChild(li);
@@ -255,22 +265,40 @@
         li.addEventListener('keydown', (ev)=>{ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); abrir(); }});
         btnVer.addEventListener('click', (ev)=>{ ev.stopPropagation(); abrir(); });
 
-        btnFavAdd.addEventListener('click', (ev)=>{
+        btnHeart.addEventListener('click', (ev)=>{
           ev.stopPropagation();
-          const adicionado = salvarEmMinhasReceitas(it);
-          // Marca visualmente e atualiza label
-          if(adicionado){
-            li.classList.add('salvo');
-            btnFavAdd.classList.add('fav-ativo');
-            btnFavAdd.setAttribute('aria-label','Salva em Minhas Receitas');
-            btnFavAdd.title = 'Já em Minhas Receitas';
-            // também marca este item como favorito local
-            const all = lsGet(LS_ITENS, []);
-            const idx = all.findIndex(x=>x.id===it.id);
-            if(idx>-1){ all[idx].favorito = true; lsSet(LS_ITENS, all); }
+          const jaSalvo = btnHeart.getAttribute('aria-pressed') === 'true';
+          if(jaSalvo){
+            // Deselecionar: remove de Minhas Receitas
+            const removed = removerDeMinhas(it);
+            if(removed){
+              btnHeart.setAttribute('aria-pressed','false');
+              btnHeart.classList.remove('heart-ativo');
+              btnHeart.textContent = '🤍';
+              btnHeart.title = 'Adicionar a Minhas Receitas';
+              li.classList.remove('salvo');
+              // marca favorito local falso
+              const all = lsGet(LS_ITENS, []);
+              const idx = all.findIndex(x=>x.id===it.id);
+              if(idx>-1){ all[idx].favorito = false; lsSet(LS_ITENS, all); }
+            }else{
+              // feedback se nada mudou
+              btnHeart.animate([{transform:'scale(1)'},{transform:'scale(1.07)'},{transform:'scale(1)'}], {duration:200});
+            }
           }else{
-            // já existia: apenas dá um feedback sutil
-            btnFavAdd.animate([{transform:'scale(1)'},{transform:'scale(1.08)'},{transform:'scale(1)'}], {duration:200});
+            // Selecionar: adiciona a Minhas Receitas
+            const added = adicionarEmMinhas(it);
+            if(added){
+              btnHeart.setAttribute('aria-pressed','true');
+              btnHeart.classList.add('heart-ativo');
+              btnHeart.textContent = '❤️';
+              btnHeart.title = 'Remover de Minhas Receitas';
+              li.classList.add('salvo');
+              // marca favorito local true
+              const all = lsGet(LS_ITENS, []);
+              const idx = all.findIndex(x=>x.id===it.id);
+              if(idx>-1){ all[idx].favorito = true; lsSet(LS_ITENS, all); }
+            }
           }
         });
 
