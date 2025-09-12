@@ -1,11 +1,8 @@
-/* Histórico – coração com toggle + calendário sticky
+/* Histórico – foco apenas no teclado + microinterações humanas
    Ações:
    - 👁️ Ver (abre a receita)
-   - ❤️ Coração (adiciona/remover de "Minhas Receitas" e marca/desmarca)
+   - ❤️ Coração (toggle em "Minhas Receitas")
    - 🗑️ Lixo (remove do histórico)
-   Persistência:
-   - got2cook_historico_itens
-   - got2cook_minhas_receitas
 */
 (function(){
   "use strict";
@@ -28,15 +25,9 @@
   const btnLimparDia = document.getElementById('btnLimparDia');
 
   // Rodapé (placeholders)
-  document.getElementById('btnVoltar')?.addEventListener('click', ()=> {
-    window.location.href = '../home/index.html';
-  });
-  document.getElementById('btnLogo')?.addEventListener('click', ()=> {
-    window.location.href = '../minhas-receitas/index.html';
-  });
-  document.getElementById('btnGeladeira')?.addEventListener('click', ()=> {
-    window.location.href = '../geladeira/index.html';
-  });
+  document.getElementById('btnVoltar')?.addEventListener('click', ()=> window.location.href = '../home/index.html');
+  document.getElementById('btnLogo')?.addEventListener('click',  ()=> window.location.href = '../minhas-receitas/index.html');
+  document.getElementById('btnGeladeira')?.addEventListener('click', ()=> window.location.href = '../geladeira/index.html');
 
   // ----- LocalStorage
   const LS_ITENS   = 'got2cook_historico_itens';
@@ -82,13 +73,13 @@
   }
 
   // Utils de data
-  function toYMD(date){
+  const toYMD = (date)=>{
     const y = date.getFullYear();
     const m = String(date.getMonth()+1).padStart(2,'0');
     const d = String(date.getDate()).padStart(2,'0');
     return `${y}-${m}-${d}`;
-  }
-  function isSameDayISO(iso, ymd){ return toYMD(new Date(iso)) === ymd; }
+  };
+  const isSameDayISO = (iso, ymd)=> toYMD(new Date(iso)) === ymd;
 
   // Período
   function dentroDoPeriodo(iso, periodo){
@@ -140,17 +131,17 @@
   const PAGE_SIZE = 10;
   let pagina = 1;
   let cacheFiltradoOrdenado = [];
-  function resetPaginacao(){ pagina = 1; }
-  function slicePaginado(arr){ return arr.slice(0, PAGE_SIZE * pagina); }
+  const resetPaginacao = ()=> pagina = 1;
+  const slicePaginado = (arr)=> arr.slice(0, PAGE_SIZE * pagina);
 
   // ====== MINHAS RECEITAS ======
-  function getMinhas(){ return lsGet(LS_MINHAS, []); }
-  function setMinhas(arr){ lsSet(LS_MINHAS, arr); }
-  function jaEstaEmMinhas({receitaId, id, titulo}){
+  const getMinhas = ()=> lsGet(LS_MINHAS, []);
+  const setMinhas = (arr)=> lsSet(LS_MINHAS, arr);
+  const jaEstaEmMinhas = (item)=>{
     const arr = getMinhas();
-    return !!arr.find(r => (receitaId && r.receitaId===receitaId) || (id && r.originId===id) || (titulo && r.titulo===titulo));
-  }
-  function adicionarEmMinhas(item){
+    return !!arr.find(r => (item.receitaId && r.receitaId===item.receitaId) || (item.id && r.originId===item.id));
+  };
+  const adicionarEmMinhas = (item)=>{
     if(jaEstaEmMinhas(item)) return false;
     const arr = getMinhas();
     arr.push({
@@ -166,18 +157,17 @@
     });
     setMinhas(arr);
     return true;
-  }
-  function removerDeMinhas(item){
+  };
+  const removerDeMinhas = (item)=>{
     let arr = getMinhas();
     const before = arr.length;
-    arr = arr.filter(r => {
-      if(item.receitaId && r.receitaId === item.receitaId) return false;
-      if(item.id && r.originId === item.id) return false;
-      return true;
-    });
+    arr = arr.filter(r => !((item.receitaId && r.receitaId===item.receitaId) || (item.id && r.originId===item.id)));
     setMinhas(arr);
     return arr.length !== before;
-  }
+  };
+
+  // Microinterações util
+  const pulse = (el)=>{ el.classList.add('pulse'); el.addEventListener('animationend', ()=> el.classList.remove('pulse'), {once:true}); };
 
   // Render
   function render(){
@@ -198,6 +188,8 @@
     const grupos = agrupaPorData(visiveis);
 
     ul.innerHTML = '';
+    let idxAnim = 0;
+
     grupos.forEach((lista, tituloData)=>{
       const liData = document.createElement('li');
       liData.className = 'li-data';
@@ -257,44 +249,41 @@
         li.append(thumb, bloco, acoes);
         ul.appendChild(li);
 
+        // animação de entrada em cascata
+        requestAnimationFrame(()=> {
+          setTimeout(()=> li.classList.add('aparecer'), 30 * (idxAnim++));
+        });
+
         // Ações
         function abrir(){
           window.location.href = '../visualizar/index.html?receitaId=' + encodeURIComponent(it.receitaId||'');
         }
         li.addEventListener('click', abrir);
         li.addEventListener('keydown', (ev)=>{ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); abrir(); }});
-        btnVer.addEventListener('click', (ev)=>{ ev.stopPropagation(); abrir(); });
+        btnVer.addEventListener('click', (ev)=>{ ev.stopPropagation(); pulse(btnVer); abrir(); });
 
         btnHeart.addEventListener('click', (ev)=>{
           ev.stopPropagation();
-          const jaSalvo = btnHeart.getAttribute('aria-pressed') === 'true';
-          if(jaSalvo){
-            // Deselecionar: remove de Minhas Receitas
-            const removed = removerDeMinhas(it);
-            if(removed){
+          pulse(btnHeart);
+          const ja = btnHeart.getAttribute('aria-pressed') === 'true';
+          if(ja){
+            if(removerDeMinhas(it)){
               btnHeart.setAttribute('aria-pressed','false');
               btnHeart.classList.remove('heart-ativo');
               btnHeart.textContent = '🤍';
               btnHeart.title = 'Adicionar a Minhas Receitas';
               li.classList.remove('salvo');
-              // marca favorito local falso
               const all = lsGet(LS_ITENS, []);
               const idx = all.findIndex(x=>x.id===it.id);
               if(idx>-1){ all[idx].favorito = false; lsSet(LS_ITENS, all); }
-            }else{
-              // feedback se nada mudou
-              btnHeart.animate([{transform:'scale(1)'},{transform:'scale(1.07)'},{transform:'scale(1)'}], {duration:200});
             }
           }else{
-            // Selecionar: adiciona a Minhas Receitas
-            const added = adicionarEmMinhas(it);
-            if(added){
+            if(adicionarEmMinhas(it)){
               btnHeart.setAttribute('aria-pressed','true');
               btnHeart.classList.add('heart-ativo');
               btnHeart.textContent = '❤️';
               btnHeart.title = 'Remover de Minhas Receitas';
               li.classList.add('salvo');
-              // marca favorito local true
               const all = lsGet(LS_ITENS, []);
               const idx = all.findIndex(x=>x.id===it.id);
               if(idx>-1){ all[idx].favorito = true; lsSet(LS_ITENS, all); }
@@ -304,6 +293,7 @@
 
         btnDel.addEventListener('click', (ev)=>{
           ev.stopPropagation();
+          pulse(btnDel);
           removerItem(it.id);
         });
       });
@@ -347,7 +337,6 @@
       chipsPeriodo.forEach(c=>{ c.classList.remove('ativo'); c.setAttribute('aria-pressed','false'); });
       chip.classList.add('ativo'); chip.setAttribute('aria-pressed','true');
       filtros.periodo = chip.dataset.periodo;
-      // ao escolher período, limpamos dia específico
       filtros.dataSelecionada = null;
       lsSet(LS_FILTROS, filtros);
       resetPaginacao();
@@ -360,7 +349,7 @@
   let mesAtual = hoje.getMonth();
   let anoAtual = hoje.getFullYear();
 
-  function toYMDstr(y,m,d){ return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
+  const toYMDstr = (y,m,d)=> `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
 
   function pintarCalendarioDias(itens){ gerarCalendario(mesAtual, anoAtual, itens); }
 
@@ -395,6 +384,10 @@
       }
 
       divDia.addEventListener('click', ()=>{
+        // animação de toque
+        divDia.classList.add('tap');
+        divDia.addEventListener('animationend', ()=> divDia.classList.remove('tap'), {once:true});
+
         filtros.dataSelecionada = (filtros.dataSelecionada === ymd) ? null : ymd;
         lsSet(LS_FILTROS, filtros);
         resetPaginacao();
@@ -407,18 +400,23 @@
   }
 
   btnMesAnterior?.addEventListener('click', ()=>{
+    btnMesAnterior.classList.add('pulse');
+    btnMesAnterior.addEventListener('animationend', ()=> btnMesAnterior.classList.remove('pulse'), {once:true});
     mesAtual--;
     if (mesAtual < 0){ mesAtual = 11; anoAtual--; }
     gerarCalendario(mesAtual, anoAtual);
   });
 
   btnMesProximo?.addEventListener('click', ()=>{
+    btnMesProximo.classList.add('pulse');
+    btnMesProximo.addEventListener('animationend', ()=> btnMesProximo.classList.remove('pulse'), {once:true});
     mesAtual++;
     if (mesAtual > 11){ mesAtual = 0; anoAtual++; }
     gerarCalendario(mesAtual, anoAtual);
   });
 
   btnLimparDia?.addEventListener('click', ()=>{
+    pulse(btnLimparDia);
     filtros.dataSelecionada = null;
     lsSet(LS_FILTROS, filtros);
     resetPaginacao();
@@ -427,6 +425,7 @@
 
   // Paginação
   btnCarregarMais.addEventListener('click', ()=>{
+    pulse(btnCarregarMais);
     pagina++;
     render();
   });
@@ -437,7 +436,7 @@
     syncControlesFromState();
     skeleton.hidden = false;
     gerarCalendario(mesAtual, anoAtual);
-    setTimeout(()=>{ resetPaginacao(); render(); }, 200);
+    setTimeout(()=>{ resetPaginacao(); render(); }, 150);
   }
   init();
 })();
