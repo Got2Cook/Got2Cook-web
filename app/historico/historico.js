@@ -1,7 +1,5 @@
-/* Calendário – folha direcional:
-   ▶ próximo mês: folha sobe (anim-up)
-   ◀ mês anterior: folha desce (anim-down)
-   Novo mês aparece imediatamente por baixo (sem rotação). */
+/* Histórico – sem paginação (“Carregar mais” removido).
+   Datas como texto, itens mais espaçados. Calendário com folha direcional. */
 (function(){
   "use strict";
 
@@ -9,7 +7,6 @@
   const ul = document.getElementById('listaHistorico');
   const skeleton = document.getElementById('skeleton');
   const vazio = document.getElementById('estadoVazio');
-  const btnCarregarMais = document.getElementById('btnCarregarMais');
 
   const inpBusca = document.getElementById('inpBusca');
   const btnLimparBusca = document.getElementById('btnLimparBusca');
@@ -37,7 +34,7 @@
   const lsGet = (k,f)=>{ try{ return JSON.parse(localStorage.getItem(k)) ?? f; }catch{ return f; } };
   const lsSet = (k,v)=> localStorage.setItem(k, JSON.stringify(v));
 
-  // Seed exemplo (somente local)
+  // Seed exemplo se vazio (local)
   function seedIfEmpty(){
     let itens = lsGet(LS_ITENS, []);
     if(Array.isArray(itens) && itens.length) return;
@@ -127,13 +124,6 @@
     return grupos;
   }
 
-  // Paginação
-  const PAGE_SIZE = 10;
-  let pagina = 1;
-  let cacheFiltradoOrdenado = [];
-  const resetPaginacao = ()=> pagina = 1;
-  const slicePaginado = (arr)=> arr.slice(0, PAGE_SIZE * pagina);
-
   // ====== MINHAS RECEITAS ======
   const getMinhas = ()=> lsGet(LS_MINHAS, []);
   const setMinhas = (arr)=> lsSet(LS_MINHAS, arr);
@@ -169,31 +159,28 @@
   // Micro interação
   const pulse = (el)=>{ el.classList.add('pulse'); el.addEventListener('animationend', ()=> el.classList.remove('pulse'), {once:true}); };
 
-  // Render
+  // Render (SEM paginação)
   function render(){
     skeleton.hidden = true;
     const itens = lsGet(LS_ITENS, []);
-    cacheFiltradoOrdenado = aplicaFiltrosEOrdenacao(itens);
+    const filtrado = aplicaFiltrosEOrdenacao(itens);
 
-    if(cacheFiltradoOrdenado.length === 0){
+    if(filtrado.length === 0){
       ul.innerHTML = '';
       vazio.hidden = false;
-      btnCarregarMais.disabled = true;
       pintarCalendarioDias(itens);
       return;
     }
     vazio.hidden = true;
 
-    const visiveis = slicePaginado(cacheFiltradoOrdenado);
-    const grupos = agrupaPorData(visiveis);
-
+    const grupos = agrupaPorData(filtrado);
     ul.innerHTML = '';
-    let idxAnim = 0;
 
+    let idxAnim = 0;
     grupos.forEach((lista, tituloData)=>{
       const liData = document.createElement('li');
       liData.className = 'li-data';
-      liData.textContent = tituloData;
+      liData.textContent = tituloData; // apenas texto
       ul.appendChild(liData);
 
       lista.forEach(it=>{
@@ -245,10 +232,12 @@
         li.append(thumb, bloco, acoes);
         ul.appendChild(li);
 
+        // animação de entrada em cascata
         requestAnimationFrame(()=> {
           setTimeout(()=> li.classList.add('aparecer'), 30 * (idxAnim++));
         });
 
+        // Ações
         function abrir(){
           window.location.href = '../visualizar/index.html?receitaId=' + encodeURIComponent(it.receitaId||'');
         }
@@ -285,14 +274,13 @@
         });
 
         btnDel.addEventListener('click', (ev)=>{
-          ev.stopPropagation(); pulse(btnDel); removerItem(it.id);
+          ev.stopPropagation(); pulse(btnDel);
+          removerItem(it.id);
         });
       });
     });
 
-    const temMais = cacheFiltradoOrdenado.length > visiveis.length;
-    btnCarregarMais.disabled = !temMais;
-
+    // Destaques do calendário
     pintarCalendarioDias(lsGet(LS_ITENS, []));
   }
 
@@ -308,20 +296,25 @@
   inpBusca.addEventListener('input', ()=>{
     filtros.busca = inpBusca.value || '';
     lsSet(LS_FILTROS, filtros);
-    resetPaginacao(); render();
+    render();
   });
+
   btnLimparBusca.addEventListener('click', ()=>{
-    inpBusca.value = ''; filtros.busca = '';
+    inpBusca.value = '';
+    filtros.busca = '';
     lsSet(LS_FILTROS, filtros);
-    resetPaginacao(); render(); inpBusca.focus();
+    render();
+    inpBusca.focus();
   });
+
   chipsPeriodo.forEach(chip=>{
     chip.addEventListener('click', ()=>{
       chipsPeriodo.forEach(c=>{ c.classList.remove('ativo'); c.setAttribute('aria-pressed','false'); });
       chip.classList.add('ativo'); chip.setAttribute('aria-pressed','true');
-      filtros.periodo = chip.dataset.periodo; filtros.dataSelecionada = null;
+      filtros.periodo = chip.dataset.periodo;
+      filtros.dataSelecionada = null;
       lsSet(LS_FILTROS, filtros);
-      resetPaginacao(); render();
+      render();
     });
   });
 
@@ -359,15 +352,13 @@
         divDia.classList.add('ativo');
         divDia.setAttribute('title','Há receitas neste dia');
       }
-      if(filtros.dataSelecionada === ymd){
-        divDia.classList.add('selecionado');
-      }
+      if(filtros.dataSelecionada === ymd){ divDia.classList.add('selecionado'); }
 
       divDia.addEventListener('click', ()=>{
         divDia.animate([{transform:'scale(1)'},{transform:'scale(.96)'},{transform:'scale(1)'}], {duration:120, easing:'ease-out'});
         filtros.dataSelecionada = (filtros.dataSelecionada === ymd) ? null : ymd;
         lsSet(LS_FILTROS, filtros);
-        resetPaginacao(); render();
+        render();
         document.getElementById('listaHistorico')?.scrollIntoView({behavior:'smooth', block:'start'});
       });
 
@@ -375,11 +366,9 @@
     }
   }
 
-  // ---- Folha direcional
+  // ---- Folha direcional (sobe/ desce) com novo mês já visível
   let mesAnimando = false;
-  function removerIdsDoClone(el){
-    el.removeAttribute('id'); el.querySelectorAll('[id]').forEach(n=> n.removeAttribute('id'));
-  }
+  function removerIdsDoClone(el){ el.removeAttribute('id'); el.querySelectorAll('[id]').forEach(n=> n.removeAttribute('id')); }
   function criarFolhaClone(direcao){
     const clone = calPage.cloneNode(true);
     removerIdsDoClone(clone);
@@ -403,14 +392,10 @@
       mesAnimando = false; return;
     }
 
-    // 1) folha (clone do mês atual) em cima
     const folha = criarFolhaClone(direcao);
     tearStage.appendChild(folha);
-
-    // 2) troca o mês embaixo imediatamente
     changeMonthInstant(direcao);
 
-    // 3) ao fim da animação, remove a folha
     folha.addEventListener('animationend', ()=>{
       limparFolha(); mesAnimando = false;
     }, {once:true});
@@ -422,12 +407,7 @@
   btnLimparDia?.addEventListener('click', ()=>{
     pulse(btnLimparDia);
     filtros.dataSelecionada = null; lsSet(LS_FILTROS, filtros);
-    resetPaginacao(); render();
-  });
-
-  // Paginação
-  btnCarregarMais.addEventListener('click', ()=>{
-    pulse(btnCarregarMais); pagina++; render();
+    render();
   });
 
   // Init
@@ -436,7 +416,7 @@
     syncControlesFromState();
     skeleton.hidden = false;
     gerarCalendario(mesAtual, anoAtual);
-    setTimeout(()=>{ resetPaginacao(); render(); }, 150);
+    setTimeout(render, 150);
   }
   init();
 })();
