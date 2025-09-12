@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Histórico de Receitas - Got2Cook</title>
-  <link rel="stylesheet" href="historico.css?v=3" />
+  <link rel="stylesheet" href="historico.css?v=4" />
 </head>
 <body>
   <main id="conteudo">
@@ -33,7 +33,7 @@
 
       <!-- DIREITA: Controles + Lista -->
       <section class="lado-conteudo">
-        <!-- Barra de controle (sem filtros de período) -->
+        <!-- Barra de controle (com busca e chips de período) -->
         <section class="controles card" aria-label="Controles de histórico">
           <div class="busca-wrap">
             <label for="inpBusca" class="sr-only">Buscar receita</label>
@@ -41,13 +41,16 @@
             <button id="btnLimparBusca" class="btn-sec" type="button" aria-label="Limpar busca">✕</button>
           </div>
 
-          <div class="linha-ordenacao">
-            <label for="selOrdenacao" class="sr-only">Ordenar</label>
-            <select id="selOrdenacao">
-              <option value="recente">Recente → Antigo</option>
-              <option value="az">Nome A→Z</option>
-            </select>
-          </div>
+          <fieldset class="grupo-filtros">
+            <legend class="sr-only">Período</legend>
+            <div class="filtros-periodo" role="radiogroup" aria-label="Período">
+              <button type="button" class="chip" data-periodo="hoje" aria-pressed="false">Hoje</button>
+              <button type="button" class="chip" data-periodo="7" aria-pressed="false">Últimos 7 dias</button>
+              <button type="button" class="chip" data-periodo="30" aria-pressed="false">Últimos 30 dias</button>
+              <button type="button" class="chip" data-periodo="90" aria-pressed="false">Últimos 90 dias</button>
+              <button type="button" class="chip" data-periodo="todos" aria-pressed="true">Todos</button>
+            </div>
+          </fieldset>
         </section>
 
         <!-- Lista -->
@@ -84,6 +87,6 @@
     </button>
   </footer>
 
-  <script src="historico.js?v=3" defer></script>
+  <script src="historico.js?v=4" defer></script>
 </body>
 </html>
