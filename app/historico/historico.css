@@ -12,6 +12,7 @@
   --hearth-dark:#d93a57;
 }
 
+/* Reset básico */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
@@ -24,6 +25,20 @@ body{
   padding:16px 16px 120px; /* espaço p/ rodapé */
 }
 
+/* ===== Foco: sem pontilhado no clique; visível no teclado ===== */
+*:focus{ outline:none; }
+*:focus-visible{
+  outline:2px dotted #000;
+  outline-offset:3px;
+}
+.icon-btn:focus-visible,
+.chip:focus-visible,
+.pesquisar-input:focus-visible,
+.btn-sec:focus-visible{
+  box-shadow:0 0 0 3px rgba(73,47,112,.25);
+  border-color:var(--roxo);
+}
+
 /* Título */
 .titulo-principal{
   margin:25px 0 15px;
@@ -34,15 +49,12 @@ body{
   text-align:center;
 }
 
-/* Acessibilidade */
-:focus{ outline:2px dotted #000; outline-offset:3px; }
+/* Acessibilidade auxiliar */
 .sr-only{ position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden; }
 
 /* ===== LAYOUT ===== */
 .layout-historico{ display:block; gap:16px; }
 .lado-calendario{ margin-bottom:16px; }
-.lado-conteudo{}
-
 .card{
   background:var(--white);
   border-radius:18px;
@@ -51,11 +63,12 @@ body{
   border:2px solid rgba(73,47,112,.15);
 }
 
-/* Calendário (tamanho normal; sticky no desktop) */
+/* Calendário (normal; sticky no desktop) */
 .calendario-container{
   background:#fff; padding:18px 16px; border-radius:20px;
   width:90%; max-width:320px; margin: 8px auto 12px;
   box-shadow:var(--shadow); border:2px solid rgba(73,47,112,.15);
+  transition:transform .2s ease, box-shadow .2s ease;
 }
 .mes-navegacao{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
 .mes-navegacao button{
@@ -79,6 +92,10 @@ body{
 .dias > div[aria-hidden="true"]{ visibility:hidden; }
 .dias .ativo{ background:var(--roxo); color:#fff; font-weight:bold; box-shadow:0 3px 8px rgba(0,0,0,.25); }
 .dias .selecionado{ outline:3px solid #b1a2d6; outline-offset:2px; }
+.dias > div.tap{ animation:calTap .12s ease; }
+@keyframes calTap{
+  0%{ transform:scale(1) } 80%{ transform:scale(.96) } 100%{ transform:scale(1) }
+}
 
 .linha-calendario-acoes{ margin-top:10px; display:flex; justify-content:flex-end; }
 .btn-sec.sm{ height:34px; padding:0 10px; border-radius:10px; font-size:14px; }
@@ -89,7 +106,9 @@ body{
 .pesquisar-input{
   flex:1; height:44px; border:2px solid var(--roxo); border-radius:12px; padding:0 12px;
   font-size:16px; background:#fff; color:var(--roxo);
+  transition: box-shadow .2s ease, border-color .2s ease;
 }
+.pesquisar-input:hover{ box-shadow:0 2px 10px rgba(0,0,0,.08); }
 .btn-sec{
   height:44px; border:2px solid var(--roxo); background:#fff; color:var(--roxo);
   border-radius:12px; padding:0 12px; cursor:pointer; transition:.2s;
@@ -106,15 +125,16 @@ body{
   padding:8px 12px;
   font-size:14px;
   cursor:pointer;
-  transition:.2s;
+  transition:transform .05s ease, background .2s, color .2s, border-color .2s;
 }
+.chip:active{ transform:scale(.98); }
 .chip[aria-pressed="true"], .chip.ativo{
   background:var(--roxo-escuro);
   color:#fff;
   border-color:var(--roxo-escuro);
 }
 
-/* ===== LISTA (UL/LI – mais respiro) ===== */
+/* ===== LISTA (UL/LI – microanimações) ===== */
 .list-card{
   background:#fff; border-radius:18px; overflow:hidden; margin-top:16px;
   border:2px solid rgba(73,47,112,.15); box-shadow:var(--shadow-sm);
@@ -125,15 +145,17 @@ body{
   border-bottom:2px solid var(--borda);
 }
 
-/* Itens com mais “respiro” e acabamento */
+/* Itens mais humanos: entrada suave e hovers */
 .item{
   position:relative;
   display:grid; grid-template-columns:68px 1fr auto; gap:14px; align-items:center;
   padding:16px 18px;
   border-bottom:1px solid rgba(0,0,0,.08);
   background:#ffffff;
-  transition:background .15s ease, transform .06s ease, box-shadow .15s;
+  transition:background .15s ease, transform .06s ease, box-shadow .15s, opacity .2s ease;
+  opacity:0; transform:translateY(6px);
 }
+.item.aparecer{ opacity:1; transform:none; }
 .item:hover{ background:#fbfffa; box-shadow:inset 0 -1px 0 rgba(0,0,0,.06); }
 .item:active{ transform:scale(.997); }
 
@@ -160,21 +182,23 @@ body{
   border:1px solid var(--borda); border-radius:999px; padding:2px 6px;
 }
 
-/* Ações bonitas no padrão do app */
+/* Ações (pulso ao clicar) */
 .acoes{ display:flex; gap:8px; align-items:center; }
 .icon-btn{
   width:40px; height:40px; border-radius:50%; border:2px solid var(--roxo);
   background:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center;
-  transition:transform .06s ease, background .15s, box-shadow .15s;
+  transition:transform .06s ease, background .15s, box-shadow .15s, border-color .15s;
   font-size:18px;
 }
 .icon-btn:hover{ background:#f1eff9; box-shadow:0 2px 6px rgba(0,0,0,.12); }
 .icon-btn:active{ transform:scale(.98); }
-
-/* Coração ativo */
+.icon-btn.pulse{ animation:pulse .18s ease; }
+@keyframes pulse{
+  0%{ transform:scale(1) } 50%{ transform:scale(1.08) } 100%{ transform:scale(1) }
+}
 .icon-btn.heart-ativo{
-  background: #ffe3ea;
-  border-color: var(--hearth-dark);
+  background:#ffe3ea;
+  border-color:var(--hearth-dark);
 }
 
 /* Estado vazio */
@@ -217,7 +241,7 @@ footer.curva{
 .btn-footer.btn-central{ width:150px; height:150px; transform:translateY(-20px); }
 .btn-footer.btn-central img{ width:150%; height:150%; object-fit:contain; }
 
-/* DESKTOP (2 colunas; calendário sticky e normal) */
+/* DESKTOP (2 colunas; calendário sticky) */
 @media (min-width:1024px){
   body{ max-width:1000px; }
   .titulo-principal{ font-size:36px; }
@@ -229,4 +253,9 @@ footer.curva{
   }
   .lado-calendario{ position:sticky; top:16px; align-self:start; }
   .calendario-container{ margin:0; width:auto; max-width:100%; }
+}
+
+/* Respeita usuários com redução de movimento */
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
 }
