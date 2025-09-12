@@ -22,8 +22,8 @@
   const btnLimparDia = document.getElementById('btnLimparDia');
 
   // Rodapé (rotas placeholder)
-  document.getElementById('btnVoltar')?.addEventListener('click', ()=> window.location.href = '../home/index.html');
-  document.getElementById('btnLogo')?.addEventListener('click',  ()=> window.location.href = '../minhas-receitas/index.html');
+  document.getElementById('btnVoltar')?.addEventListener('click', ()=> window.location.href = '../humor/index.html');
+  document.getElementById('btnLogo')?.addEventListener('click',  ()=> window.location.href = '../home/index.html');
   document.getElementById('btnGeladeira')?.addEventListener('click', ()=> window.location.href = '../geladeira/index.html');
 
   // ----- LocalStorage
