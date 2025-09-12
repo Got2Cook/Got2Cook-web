@@ -10,67 +10,75 @@
   <main id="conteudo">
     <h1 class="titulo-principal" id="tituloPagina">HISTÓRICO DE RECEITAS</h1>
 
-    <!-- Calendário (exatamente como no seu código de referência) -->
-    <section class="calendario-container" aria-label="Selecionar dia do histórico">
-      <div class="mes-navegacao">
-        <button id="mesAnterior" type="button" aria-label="Mês anterior">◀</button>
-        <span id="mesAno" aria-live="polite"></span>
-        <button id="mesProximo" type="button" aria-label="Próximo mês">▶</button>
-      </div>
-      <div class="dias-semana" aria-hidden="true">
-        <span>Dom</span><span>Seg</span><span>Ter</span>
-        <span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
-      </div>
-      <div id="dias" class="dias"></div>
-    </section>
+    <!-- Layout em 2 colunas no desktop -->
+    <section class="layout-historico" aria-label="Histórico">
+      <!-- LADO ESQUERDO: Calendário -->
+      <aside class="lado-calendario">
+        <section class="calendario-container" aria-label="Selecionar dia do histórico">
+          <div class="mes-navegacao">
+            <button id="mesAnterior" type="button" aria-label="Mês anterior">◀</button>
+            <span id="mesAno" aria-live="polite"></span>
+            <button id="mesProximo" type="button" aria-label="Próximo mês">▶</button>
+          </div>
+          <div class="dias-semana" aria-hidden="true">
+            <span>Dom</span><span>Seg</span><span>Ter</span>
+            <span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+          </div>
+          <div id="dias" class="dias"></div>
+        </section>
+      </aside>
 
-    <!-- Barra de controle -->
-    <section class="controles" aria-label="Controles de histórico">
-      <div class="busca-wrap">
-        <label for="inpBusca" class="sr-only">Buscar receita</label>
-        <input id="inpBusca" class="inp-busca" type="search" placeholder="Buscar por nome..." autocomplete="off" />
-        <button id="btnLimparBusca" class="btn-sec" type="button" aria-label="Limpar busca">✕</button>
-      </div>
+      <!-- LADO DIREITO: Controles + Lista -->
+      <section class="lado-conteudo">
+        <!-- Barra de controle -->
+        <section class="controles" aria-label="Controles de histórico">
+          <div class="busca-wrap">
+            <label for="inpBusca" class="sr-only">Buscar receita</label>
+            <input id="inpBusca" class="inp-busca" type="search" placeholder="Buscar por nome..." autocomplete="off" />
+            <button id="btnLimparBusca" class="btn-sec" type="button" aria-label="Limpar busca">✕</button>
+          </div>
 
-      <fieldset class="grupo-filtros">
-        <legend class="sr-only">Filtros de período</legend>
-        <div class="filtros-periodo" role="radiogroup" aria-label="Período">
-          <button type="button" class="chip" data-periodo="hoje">Hoje</button>
-          <button type="button" class="chip" data-periodo="7">7 dias</button>
-          <button type="button" class="chip" data-periodo="30">30 dias</button>
-          <button type="button" class="chip" data-periodo="90">90 dias</button>
-          <button type="button" class="chip" data-periodo="todos" aria-pressed="true">Todos</button>
-        </div>
-      </fieldset>
+          <fieldset class="grupo-filtros">
+            <legend class="sr-only">Filtros de período</legend>
+            <div class="filtros-periodo" role="radiogroup" aria-label="Período">
+              <button type="button" class="chip" data-periodo="hoje">Hoje</button>
+              <button type="button" class="chip" data-periodo="7">7 dias</button>
+              <button type="button" class="chip" data-periodo="30">30 dias</button>
+              <button type="button" class="chip" data-periodo="90">90 dias</button>
+              <button type="button" class="chip" data-periodo="todos" aria-pressed="true">Todos</button>
+            </div>
+          </fieldset>
 
-      <div class="linha-ordenacao">
-        <label for="selOrdenacao" class="sr-only">Ordenar</label>
-        <select id="selOrdenacao">
-          <option value="recente">Recente → Antigo</option>
-          <option value="az">Nome A→Z</option>
-        </select>
+          <div class="linha-ordenacao">
+            <label for="selOrdenacao" class="sr-only">Ordenar</label>
+            <select id="selOrdenacao">
+              <option value="recente">Recente → Antigo</option>
+              <option value="az">Nome A→Z</option>
+            </select>
 
-        <button id="btnLimparFiltros" class="btn-sec" type="button">Limpar filtros</button>
-      </div>
-    </section>
+            <button id="btnLimparFiltros" class="btn-sec" type="button">Limpar filtros</button>
+          </div>
+        </section>
 
-    <!-- Lista de histórico -->
-    <section aria-live="polite" aria-busy="false">
-      <ul id="listaHistorico" class="lista-historico" aria-label="Lista de receitas por data"></ul>
+        <!-- Lista de histórico -->
+        <section aria-live="polite" aria-busy="false">
+          <ul id="listaHistorico" class="lista-historico" aria-label="Lista de receitas por data"></ul>
 
-      <!-- Estado vazio -->
-      <div id="estadoVazio" class="estado-vazio" hidden>
-        <p>Seu histórico está vazio.</p>
-        <a class="link-acao" href="../minhas-receitas/index.html">Ver Minhas Receitas</a>
-      </div>
+          <!-- Estado vazio -->
+          <div id="estadoVazio" class="estado-vazio" hidden>
+            <p>Seu histórico está vazio.</p>
+            <a class="link-acao" href="../minhas-receitas/index.html">Ver Minhas Receitas</a>
+          </div>
 
-      <!-- Skeleton simples (opcional) -->
-      <div id="skeleton" class="skeleton" hidden></div>
+          <!-- Skeleton simples (opcional) -->
+          <div id="skeleton" class="skeleton" hidden></div>
 
-      <!-- Paginação -->
-      <div class="paginacao">
-        <button id="btnCarregarMais" class="btn-prim" type="button">Carregar mais</button>
-      </div>
+          <!-- Paginação -->
+          <div class="paginacao">
+            <button id="btnCarregarMais" class="btn-prim" type="button">Carregar mais</button>
+          </div>
+        </section>
+      </section>
     </section>
   </main>
 
