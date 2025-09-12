@@ -1,11 +1,13 @@
-/* Histórico – calendário com efeito "virar página" ao trocar de mês
-   Mantém:
-   - 👁️ Ver (abre a receita)
-   - ❤️ Coração (toggle em "Minhas Receitas")
-   - 🗑️ Lixo (remove do histórico)
+/* Histórico – calendário com flip “realista” (página inteira)
+   FLIP_TYPE:
+     - 'notebook' (padrão): vira para cima (rotateX)
+     - 'book'            : vira para a esquerda/direita (rotateY)
 */
 (function(){
   "use strict";
+
+  // ===== Config do efeito de página =====
+  const FLIP_TYPE = 'notebook'; // altere para 'book' se quiser estilo “livro”
 
   // ----- Seletores
   const ul = document.getElementById('listaHistorico');
@@ -18,6 +20,7 @@
   const chipsPeriodo = Array.from(document.querySelectorAll('.chip'));
 
   // Calendário
+  const calPage = document.getElementById('calPage'); // página inteira que vira
   const diasContainer = document.getElementById('dias');
   const mesAno = document.getElementById('mesAno');
   const btnMesAnterior = document.getElementById('mesAnterior');
@@ -166,7 +169,7 @@
     return arr.length !== before;
   };
 
-  // Microinterações util
+  // Micro interação
   const pulse = (el)=>{ el.classList.add('pulse'); el.addEventListener('animationend', ()=> el.classList.remove('pulse'), {once:true}); };
 
   // Render
@@ -399,40 +402,41 @@
     }
   }
 
-  // ---- Flip de mês (efeito "virar página")
+  // ---- Flip de mês (página inteira)
   let mesAnimando = false;
   function trocarMes(direcao){
     if(mesAnimando) return;
     mesAnimando = true;
 
-    const outClass = (direcao === 'prev') ? 'flip-out-left' : 'flip-out-right';
-    const inClass  = (direcao === 'prev') ? 'flip-in-right' : 'flip-in-left';
+    let outClass, inClass;
+    if(FLIP_TYPE === 'book'){
+      outClass = (direcao === 'prev') ? 'page-out-left' : 'page-out-right';
+      inClass  = (direcao === 'prev') ? 'page-in-right' : 'page-in-left';
+    }else{ // notebook (para cima)
+      outClass = 'page-out-up';
+      inClass  = 'page-in-up';
+    }
 
-    diasContainer.classList.add(outClass);
-    mesAno.classList.add('fade-out');
+    calPage.classList.add(outClass, 'with-curl');
 
-    const onOutEnd = ()=>{
-      // atualiza mês/ano
+    calPage.addEventListener('animationend', ()=>{
+      // Atualiza mês/ano após a “saída”
       if(direcao === 'prev'){
         mesAtual--; if(mesAtual < 0){ mesAtual = 11; anoAtual--; }
       }else{
         mesAtual++; if(mesAtual > 11){ mesAtual = 0; anoAtual++; }
       }
       gerarCalendario(mesAtual, anoAtual);
-      // troca classes para entrada
-      diasContainer.classList.remove(outClass);
-      diasContainer.classList.add(inClass);
-      mesAno.classList.remove('fade-out');
-      mesAno.classList.add('fade-in');
 
-      diasContainer.addEventListener('animationend', ()=>{
-        diasContainer.classList.remove(inClass);
-        mesAno.classList.remove('fade-in');
+      // Troca para animação de “entrada”
+      calPage.classList.remove(outClass);
+      calPage.classList.add(inClass);
+
+      calPage.addEventListener('animationend', ()=>{
+        calPage.classList.remove(inClass, 'with-curl');
         mesAnimando = false;
       }, {once:true});
-    };
-
-    diasContainer.addEventListener('animationend', onOutEnd, {once:true});
+    }, {once:true});
   }
 
   btnMesAnterior?.addEventListener('click', ()=> trocarMes('prev'));
