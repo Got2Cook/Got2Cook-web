@@ -1,5 +1,5 @@
-/* Histórico – sem paginação (“Carregar mais” removido).
-   Datas como texto, itens mais espaçados. Calendário com folha direcional. */
+/* Histórico – calendário corrigido (7 colunas estáveis, folha direcional),
+   datas como texto, lista sem paginação. */
 (function(){
   "use strict";
 
@@ -159,7 +159,7 @@
   // Micro interação
   const pulse = (el)=>{ el.classList.add('pulse'); el.addEventListener('animationend', ()=> el.classList.remove('pulse'), {once:true}); };
 
-  // Render (SEM paginação)
+  // Render
   function render(){
     skeleton.hidden = true;
     const itens = lsGet(LS_ITENS, []);
@@ -175,12 +175,12 @@
 
     const grupos = agrupaPorData(filtrado);
     ul.innerHTML = '';
-
     let idxAnim = 0;
+
     grupos.forEach((lista, tituloData)=>{
       const liData = document.createElement('li');
       liData.className = 'li-data';
-      liData.textContent = tituloData; // apenas texto
+      liData.textContent = tituloData;
       ul.appendChild(liData);
 
       lista.forEach(it=>{
@@ -192,15 +192,13 @@
         li.setAttribute('tabindex','0');
         li.dataset.id = it.id;
 
-        const thumb = document.createElement('div');
-        thumb.className = 'thumb';
+        const thumb = document.createElement('div'); thumb.className='thumb';
         const img = document.createElement('img');
         img.src = (it.foto && it.foto.trim()) ? it.foto : 'receita_placeholder.png';
         img.alt = '';
         thumb.appendChild(img);
 
-        const bloco = document.createElement('div');
-        bloco.className = 'bloco';
+        const bloco = document.createElement('div'); bloco.className='bloco';
         const h = document.createElement('div'); h.className='titulo'; h.textContent = it.titulo || 'Receita';
         const meta = document.createElement('div'); meta.className='meta';
         const d = new Date(it.dataISO);
@@ -232,12 +230,8 @@
         li.append(thumb, bloco, acoes);
         ul.appendChild(li);
 
-        // animação de entrada em cascata
-        requestAnimationFrame(()=> {
-          setTimeout(()=> li.classList.add('aparecer'), 30 * (idxAnim++));
-        });
+        requestAnimationFrame(()=> { setTimeout(()=> li.classList.add('aparecer'), 30 * (idxAnim++)); });
 
-        // Ações
         function abrir(){
           window.location.href = '../visualizar/index.html?receitaId=' + encodeURIComponent(it.receitaId||'');
         }
@@ -280,7 +274,6 @@
       });
     });
 
-    // Destaques do calendário
     pintarCalendarioDias(lsGet(LS_ITENS, []));
   }
 
@@ -329,7 +322,7 @@
 
   function gerarCalendario(mes, ano, itensParam){
     diasContainer.innerHTML = "";
-    const primeiroDia = new Date(ano, mes, 1).getDay();
+    const primeiroDia = new Date(ano, mes, 1).getDay(); // 0=Dom
     const ultimoDia = new Date(ano, mes + 1, 0).getDate();
     mesAno.textContent = `${new Date(ano, mes).toLocaleString('pt-BR', { month: 'long' })} ${ano}`;
 
@@ -337,6 +330,7 @@
     const diasComItens = new Set();
     itens.forEach(it=>{ try{ diasComItens.add(toYMD(new Date(it.dataISO))); }catch{} });
 
+    // espaços antes do 1º dia
     for (let i = 0; i < primeiroDia; i++){
       const vazio = document.createElement('div');
       vazio.setAttribute('aria-hidden','true');
@@ -352,7 +346,9 @@
         divDia.classList.add('ativo');
         divDia.setAttribute('title','Há receitas neste dia');
       }
-      if(filtros.dataSelecionada === ymd){ divDia.classList.add('selecionado'); }
+      if(filtros.dataSelecionada === ymd){
+        divDia.classList.add('selecionado');
+      }
 
       divDia.addEventListener('click', ()=>{
         divDia.animate([{transform:'scale(1)'},{transform:'scale(.96)'},{transform:'scale(1)'}], {duration:120, easing:'ease-out'});
