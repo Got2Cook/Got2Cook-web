@@ -4,17 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Histórico de Receitas - Got2Cook</title>
-  <link rel="stylesheet" href="historico.css?v=4" />
+  <link rel="stylesheet" href="historico.css?v=5" />
 </head>
 <body>
   <main id="conteudo">
-    <h1 class="titulo-principal" id="tituloPagina">HISTÓRICO DE RECEITAS</h1>
+    <h1 class="titulo-principal">HISTÓRICO DE RECEITAS</h1>
 
-    <!-- Layout em 2 colunas no desktop -->
     <section class="layout-historico" aria-label="Histórico">
-      <!-- ESQUERDA: Calendário -->
+      <!-- ESQUERDA: Calendário (mesmo padrão do seu código) -->
       <aside class="lado-calendario">
-        <section class="cal-card calendario-container" aria-label="Selecionar dia do histórico">
+        <section class="calendario-container" aria-label="Selecionar dia do histórico">
           <div class="mes-navegacao">
             <button id="mesAnterior" type="button" aria-label="Mês anterior">◀</button>
             <span id="mesAno" aria-live="polite"></span>
@@ -25,22 +24,24 @@
             <span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
           </div>
           <div id="dias" class="dias"></div>
+
           <div class="linha-calendario-acoes">
             <button id="btnLimparDia" class="btn-sec sm" type="button" aria-label="Mostrar todos os dias">Mostrar todos</button>
           </div>
         </section>
       </aside>
 
-      <!-- DIREITA: Controles + Lista -->
+      <!-- DIREITA: Pesquisar + Período + Lista em cards IGUAIS ao seu código -->
       <section class="lado-conteudo">
-        <!-- Barra de controle (com busca e chips de período) -->
-        <section class="controles card" aria-label="Controles de histórico">
-          <div class="busca-wrap">
+        <section class="controles" aria-label="Controles de histórico">
+          <!-- Pesquisar (visual alinhado ao seu padrão de cor/raios/tipografia) -->
+          <div class="pesquisa-container">
             <label for="inpBusca" class="sr-only">Buscar receita</label>
-            <input id="inpBusca" class="inp-busca" type="search" placeholder="Buscar por nome..." autocomplete="off" />
+            <input id="inpBusca" class="pesquisar-input" type="search" placeholder="Buscar por nome..." autocomplete="off" />
             <button id="btnLimparBusca" class="btn-sec" type="button" aria-label="Limpar busca">✕</button>
           </div>
 
+          <!-- Chips de período (permanecem) -->
           <fieldset class="grupo-filtros">
             <legend class="sr-only">Período</legend>
             <div class="filtros-periodo" role="radiogroup" aria-label="Período">
@@ -53,20 +54,10 @@
           </fieldset>
         </section>
 
-        <!-- Lista -->
-        <section aria-live="polite" aria-busy="false">
-          <ul id="listaHistorico" class="lista-historico list-card" aria-label="Lista de receitas por data"></ul>
-
-          <div id="estadoVazio" class="estado-vazio" hidden>
-            <p>Seu histórico está vazio.</p>
-            <a class="link-acao" href="../minhas-receitas/index.html">Ver Minhas Receitas</a>
-          </div>
-
-          <div id="skeleton" class="skeleton" hidden></div>
-
-          <div class="paginacao">
-            <button id="btnCarregarMais" class="btn-prim" type="button">Carregar mais</button>
-          </div>
+        <!-- LISTA DE RECEITAS (grade e cartões exatamente como no seu arquivo) -->
+        <section class="lista-receitas" aria-live="polite" aria-busy="false">
+          <h2 id="titulo-dia">Selecione um dia</h2>
+          <div id="receitas-grid" class="receitas-grid"></div>
         </section>
       </section>
     </section>
@@ -87,6 +78,6 @@
     </button>
   </footer>
 
-  <script src="historico.js?v=4" defer></script>
+  <script src="historico.js?v=5" defer></script>
 </body>
 </html>
