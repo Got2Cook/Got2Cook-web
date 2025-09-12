@@ -34,7 +34,15 @@ body{
 :focus{ outline:2px dotted #000; outline-offset:3px; }
 .sr-only{ position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden; }
 
-/* === CALENDÁRIO (idêntico ao seu padrão) === */
+/* ===== LAYOUT 2 COLUNAS ===== */
+.layout-historico{
+  display:block; /* mobile: empilhado */
+  gap:16px;
+}
+.lado-calendario{ margin-bottom:16px; }
+.lado-conteudo{}
+
+/* Calendário (mantém seu estilo) */
 .calendario-container{
   background:#fff;
   margin: 20px auto 16px;
@@ -44,9 +52,7 @@ body{
   max-width:320px;
   box-shadow:0 4px 12px rgba(0,0,0,.2);
 }
-.mes-navegacao{
-  display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;
-}
+.mes-navegacao{ display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; }
 .mes-navegacao button{
   background:var(--roxo); color:#fff; border:none; border-radius:8px;
   padding:5px 10px; font-size:16px; cursor:pointer; transition:.2s;
@@ -60,9 +66,7 @@ body{
   padding:10px; border-radius:50%; cursor:pointer; font-size:14px; color:var(--roxo); transition:.2s;
 }
 .dias div:hover{ background:var(--roxo-escuro); color:#fff; }
-.dias .ativo{
-  background:var(--roxo); color:#fff; font-weight:bold; box-shadow:0 3px 8px rgba(0,0,0,.3);
-}
+.dias .ativo{ background:var(--roxo); color:#fff; font-weight:bold; box-shadow:0 3px 8px rgba(0,0,0,.3); }
 
 /* CONTROLES */
 .controles{
@@ -164,6 +168,18 @@ footer.curva{
 
 /* DESKTOP */
 @media (min-width:1024px){
-  body{ max-width:800px; }
+  body{ max-width:1000px; } /* mais espaço para 2 colunas */
   .titulo-principal{ font-size:36px; }
+
+  .layout-historico{
+    display:grid;
+    grid-template-columns: 340px 1fr;
+    gap:16px;
+    align-items:start;
+  }
+  .calendario-container{
+    margin:0;           /* remove margem extra quando lado a lado */
+    width:auto;
+    max-width:100%;
+  }
 }
