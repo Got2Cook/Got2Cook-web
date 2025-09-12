@@ -72,15 +72,32 @@ body{
 
 .dias-semana, .dias{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
 .dias-semana span{ font-weight:bold; font-size:13px; color:var(--roxo-escuro); text-align:center; }
-.dias div{
-  padding:11px; border-radius:12px; cursor:pointer; font-size:14px; color:var(--roxo);
-  transition:background .2s, color .2s, transform .06s ease;
-  text-align:center; background:#fff; border:1px solid rgba(0,0,0,.08);
+
+/* HOTFIX calendário: garante grid e altura visível */
+.dias{
+  display:grid !important;
+  grid-template-columns:repeat(7,1fr);
+  gap:6px;
+  min-height:240px;
 }
-.dias div:hover{ background:#efe9ff; }
-.dias .ativo{
-  background:var(--roxo); color:#fff; font-weight:bold; box-shadow:0 3px 8px rgba(0,0,0,.25);
+.dias > div{
+  display:flex; align-items:center; justify-content:center;
+  padding:11px; border-radius:12px;
+  background:#fff; border:1px solid rgba(0,0,0,.08);
+  color:var(--roxo);
+  cursor:pointer; transition:background .2s, color .2s, transform .06s ease;
+  text-align:center;
 }
+.dias > div:hover{ background:#efe9ff; }
+.dias > div[aria-hidden="true"]{ visibility:hidden; }
+.dias .ativo{ background:var(--roxo); color:#fff; font-weight:bold; box-shadow:0 3px 8px rgba(0,0,0,.25); }
+.dias .selecionado{ outline:3px solid #b1a2d6; outline-offset:2px; }
+
+/* Ações do calendário */
+.linha-calendario-acoes{
+  margin-top:10px; display:flex; justify-content:flex-end;
+}
+.btn-sec.sm{ height:34px; padding:0 10px; border-radius:10px; font-size:14px; }
 
 /* CONTROLES (sem filtros de período) */
 .controles{ display:grid; gap:12px; }
