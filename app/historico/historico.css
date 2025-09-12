@@ -25,7 +25,7 @@ body{
   padding:16px 16px 120px; /* espaço p/ rodapé */
 }
 
-/* Foco só no teclado */
+/* Foco apenas no teclado */
 *:focus{ outline:none; }
 *:focus-visible{ outline:2px dotted #000; outline-offset:3px; }
 .icon-btn:focus-visible,
@@ -59,20 +59,17 @@ body{
   border:2px solid rgba(73,47,112,.15);
 }
 
-/* ===== Calendário “folhinha” (folha sobe, SEM girar) ===== */
+/* ===== Calendário com “folha” direcional ===== */
 .calendario-container{
   position:relative;
   background:#fff; padding:18px 16px; border-radius:20px;
   width:90%; max-width:320px; margin:8px auto 12px;
   box-shadow:var(--shadow); border:2px solid rgba(73,47,112,.15);
 }
-.flip-perspective{ perspective: 1200px; }
-.calendario-page{
-  position: relative;
-  border-radius: 16px;
-}
+.flip-perspective{ perspective:1200px; }
+.calendario-page{ position:relative; border-radius:16px; }
 
-/* Palco para a ÚNICA folha (clone) */
+/* Palco da folha (clone) */
 .tear-stage{
   position:absolute; inset:12px;
   pointer-events:none; perspective:1200px; overflow:visible;
@@ -82,15 +79,22 @@ body{
   background:#fff; border-radius:16px; border:2px solid rgba(73,47,112,.15);
   box-shadow:0 10px 24px rgba(0,0,0,.18);
   will-change: transform, filter, opacity;
-  /* >>> desliza para cima, sem rotação */
-  animation: tearSlideUp 0.95s cubic-bezier(.22,.65,.25,1) forwards;
 }
+/* Direções */
+.anim-up{   animation: tearSlideUp   0.95s cubic-bezier(.22,.65,.25,1) forwards; }
+.anim-down{ animation: tearSlideDown 0.95s cubic-bezier(.22,.65,.25,1) forwards; }
 
-/* Animação da folha: apenas subir e sumir */
+/* Sobe */
 @keyframes tearSlideUp{
   0%   { transform: translateY(0);      filter:drop-shadow(0 8px 18px rgba(0,0,0,.20)); opacity:1; }
   60%  { transform: translateY(-10%);   filter:drop-shadow(0 10px 22px rgba(0,0,0,.18)); opacity:.98; }
   100% { transform: translateY(-110%);  filter:drop-shadow(0 4px 12px rgba(0,0,0,.08));  opacity:0; }
+}
+/* Desce */
+@keyframes tearSlideDown{
+  0%   { transform: translateY(0);      filter:drop-shadow(0 -8px 18px rgba(0,0,0,.20)); opacity:1; }
+  60%  { transform: translateY(10%);    filter:drop-shadow(0 -10px 22px rgba(0,0,0,.18)); opacity:.98; }
+  100% { transform: translateY(110%);   filter:drop-shadow(0 -4px 12px rgba(0,0,0,.08));  opacity:0; }
 }
 
 /* Cabeçalho / grid */
@@ -117,7 +121,7 @@ body{
 .dias .ativo{ background:var(--roxo); color:#fff; font-weight:bold; box-shadow:0 3px 8px rgba(0,0,0,.25); }
 .dias .selecionado{ outline:3px solid #b1a2d6; outline-offset:2px; }
 
-/* CONTROLES / LISTA (padrão do app) */
+/* CONTROLES / LISTA */
 .controles{ display:grid; gap:12px; }
 .pesquisa-container{ display:flex; gap:8px; align-items:center; }
 .pesquisar-input{
