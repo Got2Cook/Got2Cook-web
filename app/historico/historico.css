@@ -8,6 +8,8 @@
   --white:#fff;
   --shadow:0 6px 18px rgba(0,0,0,.18);
   --shadow-sm:0 4px 12px rgba(0,0,0,.14);
+  --hearth:#ff4d6d;
+  --hearth-dark:#d93a57;
 }
 
 *{box-sizing:border-box}
@@ -49,7 +51,7 @@ body{
   border:2px solid rgba(73,47,112,.15);
 }
 
-/* Calendário (normal, como antes) */
+/* Calendário (tamanho normal; sticky no desktop) */
 .calendario-container{
   background:#fff; padding:18px 16px; border-radius:20px;
   width:90%; max-width:320px; margin: 8px auto 12px;
@@ -112,7 +114,7 @@ body{
   border-color:var(--roxo-escuro);
 }
 
-/* ===== LISTA (UL/LI – mais separada, mas com divisória) ===== */
+/* ===== LISTA (UL/LI – mais respiro) ===== */
 .list-card{
   background:#fff; border-radius:18px; overflow:hidden; margin-top:16px;
   border:2px solid rgba(73,47,112,.15); box-shadow:var(--shadow-sm);
@@ -127,29 +129,29 @@ body{
 .item{
   position:relative;
   display:grid; grid-template-columns:68px 1fr auto; gap:14px; align-items:center;
-  padding:14px 16px;
+  padding:16px 18px;
   border-bottom:1px solid rgba(0,0,0,.08);
-  background:#ffffff; /* mantém a divisória */
+  background:#ffffff;
   transition:background .15s ease, transform .06s ease, box-shadow .15s;
 }
 .item:hover{ background:#fbfffa; box-shadow:inset 0 -1px 0 rgba(0,0,0,.06); }
 .item:active{ transform:scale(.997); }
 
-/* Fita dourada sutil quando já salvo em “Minhas Receitas” */
+/* Fita quando salvo em Minhas Receitas */
 .item.salvo::before{
   content:"";
   position:absolute; left:0; top:0; bottom:0; width:4px;
   background:linear-gradient(180deg, #ffd34a, #ffb800);
 }
 
-/* Thumb com aro ligeiramente maior */
+/* Thumb */
 .thumb{
   width:68px; height:68px; border-radius:14px; overflow:hidden;
   border:3px solid var(--roxo); background:#fff; display:flex; align-items:center; justify-content:center;
 }
 .thumb img{ width:100%; height:100%; object-fit:cover; }
 
-.bloco{ display:flex; flex-direction:column; gap:5px; min-width:0; }
+.bloco{ display:flex; flex-direction:column; gap:6px; min-width:0; }
 .titulo{ color:var(--verde); font-weight:bold; line-height:1.15; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .meta{ font-size:12px; color:var(--roxo); opacity:.9; }
 .tags{ display:flex; gap:6px; flex-wrap:wrap; margin-top:2px; }
@@ -169,11 +171,11 @@ body{
 .icon-btn:hover{ background:#f1eff9; box-shadow:0 2px 6px rgba(0,0,0,.12); }
 .icon-btn:active{ transform:scale(.98); }
 
-/* estados */
-.icon-btn.fav-ativo{ background:#ffe08a; border-color:#caa21f; }
-.icon-btn.btn-ver{ }
-.icon-btn.btn-fav{ }
-.icon-btn.btn-trash{ }
+/* Coração ativo */
+.icon-btn.heart-ativo{
+  background: #ffe3ea;
+  border-color: var(--hearth-dark);
+}
 
 /* Estado vazio */
 .estado-vazio{ text-align:center; color:var(--roxo); padding:22px 0; }
@@ -215,7 +217,7 @@ footer.curva{
 .btn-footer.btn-central{ width:150px; height:150px; transform:translateY(-20px); }
 .btn-footer.btn-central img{ width:150%; height:150%; object-fit:contain; }
 
-/* DESKTOP (2 colunas; calendário normal) */
+/* DESKTOP (2 colunas; calendário sticky e normal) */
 @media (min-width:1024px){
   body{ max-width:1000px; }
   .titulo-principal{ font-size:36px; }
@@ -225,5 +227,6 @@ footer.curva{
     gap:18px;
     align-items:start;
   }
+  .lado-calendario{ position:sticky; top:16px; align-self:start; }
   .calendario-container{ margin:0; width:auto; max-width:100%; }
 }
