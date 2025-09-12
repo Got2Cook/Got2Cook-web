@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Histórico de Receitas - Got2Cook</title>
-  <link rel="stylesheet" href="historico.css" />
+  <link rel="stylesheet" href="historico.css?v=3" />
 </head>
 <body>
   <main id="conteudo">
@@ -25,6 +25,9 @@
             <span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
           </div>
           <div id="dias" class="dias"></div>
+          <div class="linha-calendario-acoes">
+            <button id="btnLimparDia" class="btn-sec sm" type="button" aria-label="Mostrar todos os dias">Mostrar todos</button>
+          </div>
         </section>
       </aside>
 
@@ -81,6 +84,6 @@
     </button>
   </footer>
 
-  <script src="historico.js" defer></script>
+  <script src="historico.js?v=3" defer></script>
 </body>
 </html>
