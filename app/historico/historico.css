@@ -10,8 +10,11 @@
   --shadow-sm:0 4px 12px rgba(0,0,0,.14);
   --hearth:#ff4d6d;
   --hearth-dark:#d93a57;
-  /* espaço para não encostar no rodapé (mobile) */
-  --footer-safe: 220px;
+
+  /* medidas do rodapé */
+  --footer-h:70px;         /* altura do footer */
+  --btn-central:150px;     /* botão central elevado */
+  --footer-safe: clamp(160px, 24vh, 280px); /* respiro */
 }
 
 /* ===== Reset / base ===== */
@@ -24,10 +27,17 @@ body{
   color:var(--roxo);
   max-width:600px;
   margin-inline:auto;
-  padding:16px 16px var(--footer-safe);
+  padding:16px;            /* sem padding-bottom aqui */
 }
 h1,h2,h3,p,ul{margin:0}
 ul{padding-left:0}
+
+/* Spacer global para nunca encostar no rodapé */
+main#conteudo::after{
+  content:"";
+  display:block;
+  height: calc(var(--footer-safe) + 8px);
+}
 
 /* Foco visível só no teclado */
 *:focus{ outline:none; }
@@ -54,7 +64,7 @@ ul{padding-left:0}
 
 /* ===== Layout ===== */
 .layout-historico{ display:block; gap:16px; }
-.lado-calendario{ margin-bottom: calc(var(--footer-safe) - 80px); }
+.lado-calendario{ margin-bottom:24px; }
 .card{
   background:var(--white);
   border-radius:18px;
@@ -63,7 +73,7 @@ ul{padding-left:0}
   border:2px solid rgba(73,47,112,.15);
 }
 
-/* ===== Calendário (folha direcional subir/descer) ===== */
+/* ===== Calendário (folha direcional) ===== */
 .calendario-container{
   position:relative;
   background:#fff; padding:18px 16px; border-radius:20px;
@@ -107,12 +117,8 @@ ul{padding-left:0}
 .mes-navegacao button:active{ transform:scale(.98); }
 #mesAno{ font-weight:bold; font-size:18px; text-transform:capitalize; }
 
-.dias-semana, .dias{
-  display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); gap:6px;
-}
-.dias-semana span{
-  font-weight:bold; font-size:13px; color:var(--roxo-escuro); text-align:center;
-}
+.dias-semana, .dias{ display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); gap:6px; }
+.dias-semana span{ font-weight:bold; font-size:13px; color:var(--roxo-escuro); text-align:center; }
 .dias{ align-items:start; }
 .dias > div{
   display:flex; align-items:center; justify-content:center;
@@ -160,14 +166,14 @@ ul{padding-left:0}
 }
 .lista-historico{ list-style:none; margin:0; padding:0; }
 
-/* Data: só o texto */
+/* Data (só texto) */
 .li-data{
   background:transparent; border:none;
   padding:12px 6px 6px; margin:8px 6px 4px;
   color:var(--verde); font-weight:bold; font-size:14px;
 }
 
-/* Item mais separado (cartão individual) */
+/* Card item */
 .item{
   position:relative;
   display:grid; grid-template-columns:68px 1fr auto; gap:14px; align-items:center;
@@ -186,10 +192,7 @@ ul{padding-left:0}
   background:linear-gradient(180deg, #ffd34a, #ffb800);
   border-radius:14px 0 0 14px;
 }
-.thumb{
-  width:68px; height:68px; border-radius:14px; overflow:hidden;
-  border:3px solid var(--roxo); background:#fff; display:flex; align-items:center; justify-content:center;
-}
+.thumb{ width:68px; height:68px; border-radius:14px; overflow:hidden; border:3px solid var(--roxo); background:#fff; display:flex; align-items:center; justify-content:center; }
 .thumb img{ width:100%; height:100%; object-fit:cover; }
 .bloco{ display:flex; flex-direction:column; gap:6px; min-width:0; }
 .titulo{ color:var(--verde); font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -225,7 +228,7 @@ ul{padding-left:0}
 
 /* ===== Rodapé oficial ===== */
 footer.curva{
-  width:100%; height:70px; background-color:var(--roxo-escuro);
+  width:100%; height:var(--footer-h); background-color:var(--roxo-escuro);
   border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
   position:fixed; bottom:0; left:0; display:flex; justify-content:center; align-items:center;
   gap:40px; z-index:10;
@@ -235,12 +238,12 @@ footer.curva{
   display:flex; justify-content:center; align-items:center; overflow:hidden; cursor:pointer; transform:translateY(-10px);
 }
 .btn-footer img{ width:250%; height:250%; object-fit:contain; }
-.btn-footer.btn-central{ width:150px; height:150px; transform:translateY(-20px); }
+.btn-footer.btn-central{ width:var(--btn-central); height:var(--btn-central); transform:translateY(-20px); }
 .btn-footer.btn-central img{ width:150%; height:150%; object-fit:contain; }
 
 /* ===== Desktop ===== */
 @media (min-width:1024px){
-  body{ max-width:1000px; padding-bottom:170px; }
+  body{ max-width:1000px; }
   .titulo-principal{ font-size:36px; }
   .layout-historico{
     display:grid;
@@ -248,8 +251,9 @@ footer.curva{
     gap:18px;
     align-items:start;
   }
-  .lado-calendario{ position:sticky; top:16px; align-self:start; margin-bottom:120px; }
+  .lado-calendario{ position:sticky; top:16px; align-self:start; }
   .calendario-container{ margin:0; width:auto; max-width:100%; }
+  main#conteudo::after{ height: clamp(130px, 18vh, 220px); } /* respiro otimizado no desktop */
 }
 
 /* Redução de movimento */
