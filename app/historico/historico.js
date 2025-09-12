@@ -1,8 +1,11 @@
-/* Histórico de Receitas – Lista estilizada + calendário sticky
+/* Histórico – calendário normal + lista com mais respiro
+   Ações:
+   - 👁️ Ver (abre a receita)
+   - ⭐ Favoritar (salva em "Minhas Receitas" e marca o item)
+   - 🗑️ Lixo (remove do histórico)
    Persistência:
-   - got2cook_historico_itens: array de objetos
-     { id, titulo, dataISO, receitaId, foto, duracaoMin, porcoes, tags:[], favorito:boolean }
-   - got2cook_historico_filtros: { busca, periodo, dataSelecionada }
+   - got2cook_historico_itens
+   - got2cook_minhas_receitas (novo)
 */
 (function(){
   "use strict";
@@ -36,8 +39,9 @@
   });
 
   // ----- LocalStorage
-  const LS_ITENS = 'got2cook_historico_itens';
+  const LS_ITENS   = 'got2cook_historico_itens';
   const LS_FILTROS = 'got2cook_historico_filtros';
+  const LS_MINHAS  = 'got2cook_minhas_receitas';
 
   const lsGet = (k,f)=>{ try{ return JSON.parse(localStorage.getItem(k)) ?? f; }catch{ return f; } };
   const lsSet = (k,v)=> localStorage.setItem(k, JSON.stringify(v));
@@ -139,6 +143,34 @@
   function resetPaginacao(){ pagina = 1; }
   function slicePaginado(arr){ return arr.slice(0, PAGE_SIZE * pagina); }
 
+  // ====== MINHAS RECEITAS (persistência) ======
+  function getMinhas(){ return lsGet(LS_MINHAS, []); }
+  function setMinhas(arr){ lsSet(LS_MINHAS, arr); }
+  function jaEstaEmMinhas(receitaId){
+    if(!receitaId) return false;
+    const arr = getMinhas();
+    return !!arr.find(r => r.receitaId === receitaId);
+  }
+  function salvarEmMinhasReceitas(item){
+    const arr = getMinhas();
+    if(item.receitaId && arr.some(r => r.receitaId === item.receitaId)){
+      return false; // já existe
+    }
+    const salvo = {
+      id: 'm_' + (item.id || Math.random().toString(36).slice(2)),
+      receitaId: item.receitaId || null,
+      titulo: item.titulo || 'Receita',
+      foto: item.foto || '',
+      duracaoMin: item.duracaoMin || null,
+      porcoes: item.porcoes || null,
+      tags: Array.isArray(item.tags) ? item.tags.slice(0) : [],
+      dataSalvoISO: new Date().toISOString()
+    };
+    arr.push(salvo);
+    setMinhas(arr);
+    return true;
+  }
+
   // Render
   function render(){
     skeleton.hidden = true;
@@ -166,7 +198,8 @@
 
       lista.forEach(it=>{
         const li = document.createElement('li');
-        li.className = 'item' + (it.favorito ? ' favorito' : '');
+        const salvo = jaEstaEmMinhas(it.receitaId);
+        li.className = 'item' + (salvo ? ' salvo' : '');
         li.setAttribute('role','button');
         li.setAttribute('tabindex','0');
         li.dataset.id = it.id;
@@ -190,22 +223,61 @@
         bloco.append(h, meta, tags);
 
         const acoes = document.createElement('div'); acoes.className='acoes';
-        const btnAbrir = document.createElement('button'); btnAbrir.type='button'; btnAbrir.className='icon-btn'; btnAbrir.setAttribute('aria-label','Abrir receita'); btnAbrir.innerHTML='🔗';
-        const btnFav = document.createElement('button'); btnFav.type='button'; btnFav.className='icon-btn'; btnFav.setAttribute('aria-label', it.favorito?'Desfavoritar':'Favoritar'); btnFav.innerHTML=`<span class="estrela">${it.favorito?'★':'☆'}</span>`; if(it.favorito) btnFav.classList.add('fav-ativo');
-        const btnDel = document.createElement('button'); btnDel.type='button'; btnDel.className='icon-btn'; btnDel.setAttribute('aria-label','Remover do histórico'); btnDel.innerHTML='🗑️';
-        acoes.append(btnAbrir, btnFav, btnDel);
+        // 👁️ Ver
+        const btnVer = document.createElement('button');
+        btnVer.type='button'; btnVer.className='icon-btn btn-ver';
+        btnVer.setAttribute('aria-label','Visualizar receita'); btnVer.title='Visualizar';
+        btnVer.textContent='👁️';
+
+        // ⭐ Favoritar (salva em Minhas Receitas)
+        const btnFavAdd = document.createElement('button');
+        btnFavAdd.type='button'; btnFavAdd.className='icon-btn btn-fav' + (salvo ? ' fav-ativo' : '');
+        btnFavAdd.setAttribute('aria-label', salvo?'Salva em Minhas Receitas':'Salvar em Minhas Receitas');
+        btnFavAdd.title = salvo ? 'Já em Minhas Receitas' : 'Adicionar a Minhas Receitas';
+        btnFavAdd.textContent='⭐';
+
+        // 🗑️ Lixo
+        const btnDel = document.createElement('button');
+        btnDel.type='button'; btnDel.className='icon-btn btn-trash';
+        btnDel.setAttribute('aria-label','Remover do histórico'); btnDel.title='Remover';
+        btnDel.textContent='🗑️';
+
+        acoes.append(btnVer, btnFavAdd, btnDel);
 
         li.append(thumb, bloco, acoes);
         ul.appendChild(li);
 
+        // Ações
         function abrir(){
           window.location.href = '../visualizar/index.html?receitaId=' + encodeURIComponent(it.receitaId||'');
         }
         li.addEventListener('click', abrir);
         li.addEventListener('keydown', (ev)=>{ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); abrir(); }});
-        btnAbrir.addEventListener('click', (ev)=>{ ev.stopPropagation(); abrir(); });
-        btnFav.addEventListener('click', (ev)=>{ ev.stopPropagation(); toggleFavorito(it.id, btnFav, li); });
-        btnDel.addEventListener('click', (ev)=>{ ev.stopPropagation(); removerItem(it.id); });
+        btnVer.addEventListener('click', (ev)=>{ ev.stopPropagation(); abrir(); });
+
+        btnFavAdd.addEventListener('click', (ev)=>{
+          ev.stopPropagation();
+          const adicionado = salvarEmMinhasReceitas(it);
+          // Marca visualmente e atualiza label
+          if(adicionado){
+            li.classList.add('salvo');
+            btnFavAdd.classList.add('fav-ativo');
+            btnFavAdd.setAttribute('aria-label','Salva em Minhas Receitas');
+            btnFavAdd.title = 'Já em Minhas Receitas';
+            // também marca este item como favorito local
+            const all = lsGet(LS_ITENS, []);
+            const idx = all.findIndex(x=>x.id===it.id);
+            if(idx>-1){ all[idx].favorito = true; lsSet(LS_ITENS, all); }
+          }else{
+            // já existia: apenas dá um feedback sutil
+            btnFavAdd.animate([{transform:'scale(1)'},{transform:'scale(1.08)'},{transform:'scale(1)'}], {duration:200});
+          }
+        });
+
+        btnDel.addEventListener('click', (ev)=>{
+          ev.stopPropagation();
+          removerItem(it.id);
+        });
       });
     });
 
@@ -214,20 +286,6 @@
 
     // Atualiza destaques do calendário
     pintarCalendarioDias(lsGet(LS_ITENS, []));
-  }
-
-  function toggleFavorito(id, btn, li){
-    const itens = lsGet(LS_ITENS, []);
-    const idx = itens.findIndex(x=>x.id===id);
-    if(idx>-1){
-      itens[idx].favorito = !itens[idx].favorito;
-      lsSet(LS_ITENS, itens);
-      const ativo = itens[idx].favorito;
-      btn.classList.toggle('fav-ativo', ativo);
-      btn.setAttribute('aria-label', ativo ? 'Desfavoritar' : 'Favoritar');
-      btn.innerHTML = `<span class="estrela">${ativo ? '★' : '☆'}</span>`;
-      li?.classList.toggle('favorito', ativo);
-    }
   }
 
   function removerItem(id){
@@ -350,7 +408,6 @@
     seedIfEmpty(); // remova esta linha se não quiser exemplos locais
     syncControlesFromState();
     skeleton.hidden = false;
-    // inicia calendário e lista
     gerarCalendario(mesAtual, anoAtual);
     setTimeout(()=>{ resetPaginacao(); render(); }, 200);
   }
