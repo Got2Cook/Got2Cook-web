@@ -59,7 +59,7 @@ body{
   border:2px solid rgba(73,47,112,.15);
 }
 
-/* ===== Calendário com efeito “folhinha” (páginas subindo) ===== */
+/* ===== Calendário “folhinha” ===== */
 .calendario-container{
   position:relative;
   background:#fff; padding:18px 16px; border-radius:20px;
@@ -79,9 +79,9 @@ body{
   background: radial-gradient(120% 60% at 50% 100%, rgba(0,0,0,.18), rgba(0,0,0,0) 65%);
 }
 
-/* Palco para clones/folhas */
+/* Palco para a folha (clone único) */
 .tear-stage{
-  position:absolute; inset:12px 12px 12px 12px; /* para respeitar padding/raio */
+  position:absolute; inset:12px; /* respeita padding/raio */
   pointer-events:none; perspective:1400px; overflow:visible;
 }
 .tear-page{
@@ -92,14 +92,15 @@ body{
   transform-style: preserve-3d;
   backface-visibility: hidden;
   will-change: transform, filter, opacity;
-  animation: tearFlipUp .42s cubic-bezier(.2,.7,.2,1) forwards;
+  /* >>> MAIS LENTO agora (0.85s) */
+  animation: tearFlipUp .85s cubic-bezier(.2,.7,.2,1) forwards;
 }
 
-/* animação de cada folha subindo/virando */
+/* animação da folha subindo/virando (mais suave) */
 @keyframes tearFlipUp{
-  0%   { transform: rotateX(0deg) translateY(0);    filter:drop-shadow(0 8px 18px rgba(0,0,0,.2)); opacity:1; }
-  60%  { transform: rotateX(-70deg) translateY(-10px); filter:drop-shadow(0 10px 22px rgba(0,0,0,.18)); opacity:.95; }
-  100% { transform: rotateX(-100deg) translateY(-24px); filter:drop-shadow(0 4px 12px rgba(0,0,0,.12)); opacity:0; }
+  0%   { transform: rotateX(0deg) translateY(0);      filter:drop-shadow(0 8px 18px rgba(0,0,0,.2));  opacity:1; }
+  55%  { transform: rotateX(-70deg) translateY(-8px);  filter:drop-shadow(0 10px 22px rgba(0,0,0,.18)); opacity:.96; }
+  100% { transform: rotateX(-100deg) translateY(-22px); filter:drop-shadow(0 4px 12px rgba(0,0,0,.12)); opacity:0; }
 }
 
 /* Cabeçalho / grid */
@@ -136,7 +137,7 @@ body{
 }
 .pesquisar-input:hover{ box-shadow:0 2px 10px rgba(0,0,0,.08); }
 .btn-sec{
-  height:44px; border:2px solid var(--roxo); background:#fff; color:var(--roxo);
+  height:44px; border:2px solid var(--roxo); background:#fff; color:#492f70;
   border-radius:12px; padding:0 12px; cursor:pointer; transition:.2s;
 }
 .btn-sec:hover{ background:#f7f7f7 }
