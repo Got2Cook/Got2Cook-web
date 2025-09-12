@@ -1,5 +1,5 @@
-/* Histórico – foco apenas no teclado + microinterações humanas
-   Ações:
+/* Histórico – calendário com efeito "virar página" ao trocar de mês
+   Mantém:
    - 👁️ Ver (abre a receita)
    - ❤️ Coração (toggle em "Minhas Receitas")
    - 🗑️ Lixo (remove do histórico)
@@ -399,21 +399,44 @@
     }
   }
 
-  btnMesAnterior?.addEventListener('click', ()=>{
-    btnMesAnterior.classList.add('pulse');
-    btnMesAnterior.addEventListener('animationend', ()=> btnMesAnterior.classList.remove('pulse'), {once:true});
-    mesAtual--;
-    if (mesAtual < 0){ mesAtual = 11; anoAtual--; }
-    gerarCalendario(mesAtual, anoAtual);
-  });
+  // ---- Flip de mês (efeito "virar página")
+  let mesAnimando = false;
+  function trocarMes(direcao){
+    if(mesAnimando) return;
+    mesAnimando = true;
 
-  btnMesProximo?.addEventListener('click', ()=>{
-    btnMesProximo.classList.add('pulse');
-    btnMesProximo.addEventListener('animationend', ()=> btnMesProximo.classList.remove('pulse'), {once:true});
-    mesAtual++;
-    if (mesAtual > 11){ mesAtual = 0; anoAtual++; }
-    gerarCalendario(mesAtual, anoAtual);
-  });
+    const outClass = (direcao === 'prev') ? 'flip-out-left' : 'flip-out-right';
+    const inClass  = (direcao === 'prev') ? 'flip-in-right' : 'flip-in-left';
+
+    diasContainer.classList.add(outClass);
+    mesAno.classList.add('fade-out');
+
+    const onOutEnd = ()=>{
+      // atualiza mês/ano
+      if(direcao === 'prev'){
+        mesAtual--; if(mesAtual < 0){ mesAtual = 11; anoAtual--; }
+      }else{
+        mesAtual++; if(mesAtual > 11){ mesAtual = 0; anoAtual++; }
+      }
+      gerarCalendario(mesAtual, anoAtual);
+      // troca classes para entrada
+      diasContainer.classList.remove(outClass);
+      diasContainer.classList.add(inClass);
+      mesAno.classList.remove('fade-out');
+      mesAno.classList.add('fade-in');
+
+      diasContainer.addEventListener('animationend', ()=>{
+        diasContainer.classList.remove(inClass);
+        mesAno.classList.remove('fade-in');
+        mesAnimando = false;
+      }, {once:true});
+    };
+
+    diasContainer.addEventListener('animationend', onOutEnd, {once:true});
+  }
+
+  btnMesAnterior?.addEventListener('click', ()=> trocarMes('prev'));
+  btnMesProximo?.addEventListener('click', ()=> trocarMes('next'));
 
   btnLimparDia?.addEventListener('click', ()=>{
     pulse(btnLimparDia);
