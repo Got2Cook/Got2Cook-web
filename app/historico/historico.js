@@ -1,4 +1,7 @@
-/* Calendário – folha sobe (slide up), novo mês já aparece por baixo */
+/* Calendário – folha direcional:
+   ▶ próximo mês: folha sobe (anim-up)
+   ◀ mês anterior: folha desce (anim-down)
+   Novo mês aparece imediatamente por baixo (sem rotação). */
 (function(){
   "use strict";
 
@@ -13,8 +16,8 @@
   const chipsPeriodo = Array.from(document.querySelectorAll('.chip'));
 
   // Calendário
-  const calPage = document.getElementById('calPage');    // base (novo mês aparece aqui)
-  const tearStage = document.getElementById('tearStage'); // folha (clone)
+  const calPage = document.getElementById('calPage');    // base (novo mês)
+  const tearStage = document.getElementById('tearStage'); // palco da folha (clone)
   const diasContainer = document.getElementById('dias');
   const mesAno = document.getElementById('mesAno');
   const btnMesAnterior = document.getElementById('mesAnterior');
@@ -93,7 +96,7 @@
     return d >= lim;
   }
 
-  // Filtra + ordena
+  // Filtra + ordena (recente → antigo)
   function aplicaFiltrosEOrdenacao(data){
     const busca = (filtros.busca||'').trim().toLowerCase();
     let arr = data.filter(it => {
@@ -221,13 +224,11 @@
         bloco.append(h, meta, tags);
 
         const acoes = document.createElement('div'); acoes.className='acoes';
-        // 👁️ Ver
         const btnVer = document.createElement('button');
         btnVer.type='button'; btnVer.className='icon-btn btn-ver';
         btnVer.setAttribute('aria-label','Visualizar receita'); btnVer.title='Visualizar';
         btnVer.textContent='👁️';
 
-        // ❤️ Coração (toggle)
         const btnHeart = document.createElement('button');
         btnHeart.type='button'; btnHeart.className='icon-btn btn-heart';
         btnHeart.setAttribute('aria-pressed', salvo ? 'true' : 'false');
@@ -235,23 +236,19 @@
         btnHeart.title = salvo ? 'Remover de Minhas Receitas' : 'Adicionar a Minhas Receitas';
         btnHeart.textContent = salvo ? '❤️' : '🤍';
 
-        // 🗑️ Lixo
         const btnDel = document.createElement('button');
         btnDel.type='button'; btnDel.className='icon-btn btn-trash';
         btnDel.setAttribute('aria-label','Remover do histórico'); btnDel.title='Remover';
         btnDel.textContent='🗑️';
 
         acoes.append(btnVer, btnHeart, btnDel);
-
         li.append(thumb, bloco, acoes);
         ul.appendChild(li);
 
-        // animação de entrada em cascata
         requestAnimationFrame(()=> {
           setTimeout(()=> li.classList.add('aparecer'), 30 * (idxAnim++));
         });
 
-        // Ações
         function abrir(){
           window.location.href = '../visualizar/index.html?receitaId=' + encodeURIComponent(it.receitaId||'');
         }
@@ -260,8 +257,7 @@
         btnVer.addEventListener('click', (ev)=>{ ev.stopPropagation(); pulse(btnVer); abrir(); });
 
         btnHeart.addEventListener('click', (ev)=>{
-          ev.stopPropagation();
-          pulse(btnHeart);
+          ev.stopPropagation(); pulse(btnHeart);
           const ja = btnHeart.getAttribute('aria-pressed') === 'true';
           if(ja){
             if(removerDeMinhas(it)){
@@ -289,9 +285,7 @@
         });
 
         btnDel.addEventListener('click', (ev)=>{
-          ev.stopPropagation();
-          pulse(btnDel);
-          removerItem(it.id);
+          ev.stopPropagation(); pulse(btnDel); removerItem(it.id);
         });
       });
     });
@@ -299,13 +293,11 @@
     const temMais = cacheFiltradoOrdenado.length > visiveis.length;
     btnCarregarMais.disabled = !temMais;
 
-    // Atualiza destaques do calendário
     pintarCalendarioDias(lsGet(LS_ITENS, []));
   }
 
   function removerItem(id){
-    const ok = confirm('Remover este item do histórico?');
-    if(!ok) return;
+    if(!confirm('Remover este item do histórico?')) return;
     let itens = lsGet(LS_ITENS, []);
     itens = itens.filter(x=>x.id !== id);
     lsSet(LS_ITENS, itens);
@@ -316,28 +308,20 @@
   inpBusca.addEventListener('input', ()=>{
     filtros.busca = inpBusca.value || '';
     lsSet(LS_FILTROS, filtros);
-    resetPaginacao();
-    render();
+    resetPaginacao(); render();
   });
-
   btnLimparBusca.addEventListener('click', ()=>{
-    inpBusca.value = '';
-    filtros.busca = '';
+    inpBusca.value = ''; filtros.busca = '';
     lsSet(LS_FILTROS, filtros);
-    resetPaginacao();
-    render();
-    inpBusca.focus();
+    resetPaginacao(); render(); inpBusca.focus();
   });
-
   chipsPeriodo.forEach(chip=>{
     chip.addEventListener('click', ()=>{
       chipsPeriodo.forEach(c=>{ c.classList.remove('ativo'); c.setAttribute('aria-pressed','false'); });
       chip.classList.add('ativo'); chip.setAttribute('aria-pressed','true');
-      filtros.periodo = chip.dataset.periodo;
-      filtros.dataSelecionada = null;
+      filtros.periodo = chip.dataset.periodo; filtros.dataSelecionada = null;
       lsSet(LS_FILTROS, filtros);
-      resetPaginacao();
-      render();
+      resetPaginacao(); render();
     });
   });
 
@@ -360,7 +344,6 @@
     const diasComItens = new Set();
     itens.forEach(it=>{ try{ diasComItens.add(toYMD(new Date(it.dataISO))); }catch{} });
 
-    // espaços antes do 1º dia
     for (let i = 0; i < primeiroDia; i++){
       const vazio = document.createElement('div');
       vazio.setAttribute('aria-hidden','true');
@@ -381,12 +364,10 @@
       }
 
       divDia.addEventListener('click', ()=>{
-        // tap
         divDia.animate([{transform:'scale(1)'},{transform:'scale(.96)'},{transform:'scale(1)'}], {duration:120, easing:'ease-out'});
         filtros.dataSelecionada = (filtros.dataSelecionada === ymd) ? null : ymd;
         lsSet(LS_FILTROS, filtros);
-        resetPaginacao();
-        render();
+        resetPaginacao(); render();
         document.getElementById('listaHistorico')?.scrollIntoView({behavior:'smooth', block:'start'});
       });
 
@@ -394,27 +375,23 @@
     }
   }
 
-  // ---- Troca de mês: folha sobe (slide up), novo mês já visível
+  // ---- Folha direcional
   let mesAnimando = false;
   function removerIdsDoClone(el){
-    el.removeAttribute('id');
-    el.querySelectorAll('[id]').forEach(n=> n.removeAttribute('id'));
+    el.removeAttribute('id'); el.querySelectorAll('[id]').forEach(n=> n.removeAttribute('id'));
   }
-  function criarFolhaClone(){
+  function criarFolhaClone(direcao){
     const clone = calPage.cloneNode(true);
     removerIdsDoClone(clone);
-    clone.classList.add('tear-page');
+    clone.classList.add('tear-page', direcao === 'next' ? 'anim-up' : 'anim-down');
     return clone;
   }
   function limparFolha(){ tearStage.innerHTML = ''; }
 
   function changeMonthInstant(direcao){
-    if(direcao === 'prev'){
-      mesAtual--; if(mesAtual<0){ mesAtual=11; anoAtual--; }
-    }else{
-      mesAtual++; if(mesAtual>11){ mesAtual=0; anoAtual++; }
-    }
-    gerarCalendario(mesAtual, anoAtual); // novo mês sem animação
+    if(direcao === 'prev'){ mesAtual--; if(mesAtual<0){ mesAtual=11; anoAtual--; } }
+    else { mesAtual++; if(mesAtual>11){ mesAtual=0; anoAtual++; } }
+    gerarCalendario(mesAtual, anoAtual); // novo mês já visível
   }
 
   function tearAndChangeMonth(direcao){
@@ -423,21 +400,19 @@
 
     if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
       changeMonthInstant(direcao);
-      mesAnimando = false;
-      return;
+      mesAnimando = false; return;
     }
 
-    // 1) cria a folha (clone do mês atual) por cima
-    const folha = criarFolhaClone();
+    // 1) folha (clone do mês atual) em cima
+    const folha = criarFolhaClone(direcao);
     tearStage.appendChild(folha);
 
-    // 2) troca o mês na base imediatamente
+    // 2) troca o mês embaixo imediatamente
     changeMonthInstant(direcao);
 
-    // 3) quando a folha terminar de subir, remove
+    // 3) ao fim da animação, remove a folha
     folha.addEventListener('animationend', ()=>{
-      limparFolha();
-      mesAnimando = false;
+      limparFolha(); mesAnimando = false;
     }, {once:true});
   }
 
@@ -446,22 +421,18 @@
 
   btnLimparDia?.addEventListener('click', ()=>{
     pulse(btnLimparDia);
-    filtros.dataSelecionada = null;
-    lsSet(LS_FILTROS, filtros);
-    resetPaginacao();
-    render();
+    filtros.dataSelecionada = null; lsSet(LS_FILTROS, filtros);
+    resetPaginacao(); render();
   });
 
   // Paginação
   btnCarregarMais.addEventListener('click', ()=>{
-    pulse(btnCarregarMais);
-    pagina++;
-    render();
+    pulse(btnCarregarMais); pagina++; render();
   });
 
   // Init
   function init(){
-    seedIfEmpty(); // remova se não quiser exemplos locais
+    seedIfEmpty();
     syncControlesFromState();
     skeleton.hidden = false;
     gerarCalendario(mesAtual, anoAtual);
