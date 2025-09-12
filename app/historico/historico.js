@@ -1,11 +1,10 @@
-/* Histórico – Calendário com efeito “folhinha” mais lento e 1 folha por mês */
+/* Histórico – Calendário “folhinha”: vira PARA CIMA apenas a folha (clone),
+   e o novo mês já aparece por baixo, sem qualquer rotação na entrada. */
 (function(){
   "use strict";
 
-  // ===== Config do efeito (ajustado) =====
-  const TEAR_SHEETS = 1;     // agora apenas UMA folha por troca
-  const TEAR_STAGGER = 0;    // sem atraso entre folhas (irrelevante com 1)
-  const TEAR_DURATION = 850; // entrada do mês novo mais lenta (ms)
+  // ===== Config do efeito =====
+  const TEAR_DURATION = 1000; // dura ~1.0s (em sincronia com o CSS)
 
   // ----- Seletores
   const ul = document.getElementById('listaHistorico');
@@ -18,8 +17,8 @@
   const chipsPeriodo = Array.from(document.querySelectorAll('.chip'));
 
   // Calendário
-  const calPage = document.getElementById('calPage');
-  const tearStage = document.getElementById('tearStage');
+  const calPage = document.getElementById('calPage');    // base (novo mês aparece aqui)
+  const tearStage = document.getElementById('tearStage'); // palco da folha (clone do mês antigo)
   const diasContainer = document.getElementById('dias');
   const mesAno = document.getElementById('mesAno');
   const btnMesAnterior = document.getElementById('mesAnterior');
@@ -399,59 +398,51 @@
     }
   }
 
-  // ---- Efeito “folhinha” (uma folha, mais lento)
+  // ---- Efeito “folha sobe” com novo mês já visível
   let mesAnimando = false;
   function removerIdsDoClone(el){
     el.removeAttribute('id');
     el.querySelectorAll('[id]').forEach(n=> n.removeAttribute('id'));
   }
   function criarFolhaClone(){
-    const clone = calPage.cloneNode(true);
+    const clone = calPage.cloneNode(true); // CLONE DO MÊS ATUAL
     removerIdsDoClone(clone);
-    clone.classList.remove('with-curl');
     clone.classList.add('tear-page');
     return clone;
   }
-  function limparFolhas(){ tearStage.innerHTML = ''; }
+  function limparFolha(){ tearStage.innerHTML = ''; }
+
+  function changeMonthInstant(direcao){
+    if(direcao === 'prev'){
+      mesAtual--; if(mesAtual<0){ mesAtual=11; anoAtual--; }
+    }else{
+      mesAtual++; if(mesAtual>11){ mesAtual=0; anoAtual++; }
+    }
+    gerarCalendario(mesAtual, anoAtual); // <<< já mostra o novo mês (sem animação)
+  }
 
   function tearAndChangeMonth(direcao){
     if(mesAnimando) return;
     mesAnimando = true;
 
-    // Respeita redução de movimento
+    // redução de movimento: troca direta
     if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-      if(direcao === 'prev'){ mesAtual--; if(mesAtual<0){mesAtual=11; anoAtual--;}}
-      else { mesAtual++; if(mesAtual>11){mesAtual=0; anoAtual++;}}
-      gerarCalendario(mesAtual, anoAtual);
+      changeMonthInstant(direcao);
       mesAnimando = false;
       return;
     }
 
-    calPage.classList.add('with-curl');
-
-    // Cria UMA única folha
+    // 1) cria CLONE do mês atual (a folha que vai sair)
     const folha = criarFolhaClone();
-    folha.style.animationDelay = '0ms';
     tearStage.appendChild(folha);
 
-    folha.addEventListener('animationend', ()=>{
-      // Troca o mês quando a folha termina
-      if(direcao === 'prev'){ mesAtual--; if(mesAtual<0){mesAtual=11; anoAtual--;}}
-      else { mesAtual++; if(mesAtual>11){mesAtual=0; anoAtual++;}}
-      gerarCalendario(mesAtual, anoAtual);
+    // 2) troca o mês na base imediatamente (por baixo do clone)
+    changeMonthInstant(direcao);
 
-      // Entrada do mês novo – com a mesma duração mais lenta
-      calPage.animate(
-        [
-          { transform:'rotateX(95deg)', filter:'drop-shadow(0 4px 12px rgba(0,0,0,.10))', opacity:.6 },
-          { transform:'rotateX(0deg)',  filter:'drop-shadow(0 8px 20px rgba(0,0,0,.18))', opacity:1 }
-        ],
-        { duration: TEAR_DURATION, easing:'cubic-bezier(.2,.7,.2,1)' }
-      ).addEventListener('finish', ()=>{
-        calPage.classList.remove('with-curl');
-        limparFolhas();
-        mesAnimando = false;
-      });
+    // 3) quando a folha terminar de subir, limpa e encerra
+    folha.addEventListener('animationend', ()=>{
+      limparFolha();
+      mesAnimando = false;
     }, {once:true});
   }
 
@@ -475,7 +466,7 @@
 
   // Init
   function init(){
-    seedIfEmpty(); // remova esta linha se não quiser exemplos locais
+    seedIfEmpty(); // remova se não quiser exemplos locais
     syncControlesFromState();
     skeleton.hidden = false;
     gerarCalendario(mesAtual, anoAtual);
