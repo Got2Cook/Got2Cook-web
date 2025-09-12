@@ -49,10 +49,10 @@ body{
   border:2px solid rgba(73,47,112,.15);
 }
 
-/* Calendário (fixo no desktop) */
+/* Calendário (normal, como antes) */
 .calendario-container{
   background:#fff; padding:18px 16px; border-radius:20px;
-  width:90%; max-width:320px; margin: 8px auto;
+  width:90%; max-width:320px; margin: 8px auto 12px;
   box-shadow:var(--shadow); border:2px solid rgba(73,47,112,.15);
 }
 .mes-navegacao{ display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
@@ -66,9 +66,7 @@ body{
 
 .dias-semana, .dias{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
 .dias-semana span{ font-weight:bold; font-size:13px; color:var(--roxo-escuro); text-align:center; }
-.dias{
-  min-height:240px;
-}
+.dias{ min-height:240px; }
 .dias > div{
   display:flex; align-items:center; justify-content:center;
   padding:11px; border-radius:12px; cursor:pointer; font-size:14px; color:var(--roxo);
@@ -114,7 +112,7 @@ body{
   border-color:var(--roxo-escuro);
 }
 
-/* ===== LISTA (UL/LI, mais estilizada) ===== */
+/* ===== LISTA (UL/LI – mais separada, mas com divisória) ===== */
 .list-card{
   background:#fff; border-radius:18px; overflow:hidden; margin-top:16px;
   border:2px solid rgba(73,47,112,.15); box-shadow:var(--shadow-sm);
@@ -125,34 +123,33 @@ body{
   border-bottom:2px solid var(--borda);
 }
 
-/* Item mais “card”, mas mantendo divisória */
+/* Itens com mais “respiro” e acabamento */
 .item{
   position:relative;
-  display:grid; grid-template-columns:64px 1fr auto; gap:12px; align-items:center;
-  padding:12px 14px;
+  display:grid; grid-template-columns:68px 1fr auto; gap:14px; align-items:center;
+  padding:14px 16px;
   border-bottom:1px solid rgba(0,0,0,.08);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.0), rgba(0,0,0,0.02));
-  transition:background .15s ease, transform .06s ease;
+  background:#ffffff; /* mantém a divisória */
+  transition:background .15s ease, transform .06s ease, box-shadow .15s;
 }
-.item:hover{ background:#f9f9ff; }
+.item:hover{ background:#fbfffa; box-shadow:inset 0 -1px 0 rgba(0,0,0,.06); }
 .item:active{ transform:scale(.997); }
 
-/* Acento visual à esquerda do favorito */
-.item.favorito::before{
+/* Fita dourada sutil quando já salvo em “Minhas Receitas” */
+.item.salvo::before{
   content:"";
-  position:absolute; left:0; top:0; bottom:0;
-  width:4px; background:linear-gradient(180deg, #ffd34a, #ffb800);
+  position:absolute; left:0; top:0; bottom:0; width:4px;
+  background:linear-gradient(180deg, #ffd34a, #ffb800);
 }
 
-/* Thumb maior e com aro */
+/* Thumb com aro ligeiramente maior */
 .thumb{
-  width:64px; height:64px; border-radius:14px; overflow:hidden;
+  width:68px; height:68px; border-radius:14px; overflow:hidden;
   border:3px solid var(--roxo); background:#fff; display:flex; align-items:center; justify-content:center;
 }
 .thumb img{ width:100%; height:100%; object-fit:cover; }
 
-.bloco{ display:flex; flex-direction:column; gap:4px; min-width:0; }
+.bloco{ display:flex; flex-direction:column; gap:5px; min-width:0; }
 .titulo{ color:var(--verde); font-weight:bold; line-height:1.15; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .meta{ font-size:12px; color:var(--roxo); opacity:.9; }
 .tags{ display:flex; gap:6px; flex-wrap:wrap; margin-top:2px; }
@@ -161,17 +158,22 @@ body{
   border:1px solid var(--borda); border-radius:999px; padding:2px 6px;
 }
 
-/* Ações */
+/* Ações bonitas no padrão do app */
 .acoes{ display:flex; gap:8px; align-items:center; }
 .icon-btn{
-  width:38px; height:38px; border-radius:50%; border:2px solid var(--roxo);
+  width:40px; height:40px; border-radius:50%; border:2px solid var(--roxo);
   background:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center;
-  transition:transform .06s ease, background .15s;
+  transition:transform .06s ease, background .15s, box-shadow .15s;
+  font-size:18px;
 }
-.icon-btn:hover{ background:#f1eff9; }
+.icon-btn:hover{ background:#f1eff9; box-shadow:0 2px 6px rgba(0,0,0,.12); }
 .icon-btn:active{ transform:scale(.98); }
-.icon-btn .estrela{ font-size:18px; }
+
+/* estados */
 .icon-btn.fav-ativo{ background:#ffe08a; border-color:#caa21f; }
+.icon-btn.btn-ver{ }
+.icon-btn.btn-fav{ }
+.icon-btn.btn-trash{ }
 
 /* Estado vazio */
 .estado-vazio{ text-align:center; color:var(--roxo); padding:22px 0; }
@@ -198,7 +200,7 @@ body{
 }
 .btn-prim:hover{ filter:brightness(0.95); }
 
-/* Rodapé oficial (inalterado) */
+/* Rodapé oficial */
 footer.curva{
   width:100%; height:70px; background-color:var(--roxo-escuro);
   border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
@@ -213,24 +215,15 @@ footer.curva{
 .btn-footer.btn-central{ width:150px; height:150px; transform:translateY(-20px); }
 .btn-footer.btn-central img{ width:150%; height:150%; object-fit:contain; }
 
-/* DESKTOP: 2 colunas e calendário fixo */
+/* DESKTOP (2 colunas; calendário normal) */
 @media (min-width:1024px){
   body{ max-width:1000px; }
   .titulo-principal{ font-size:36px; }
-
   .layout-historico{
     display:grid;
     grid-template-columns: 360px 1fr;
     gap:18px;
     align-items:start;
   }
-  .lado-calendario{
-    position:sticky; top:16px; /* fica fixo na tela */
-    align-self:start;
-    height: calc(100vh - 120px); /* acompanha a rolagem */
-  }
-  .calendario-container{
-    position:relative; height:100%; overflow:auto; /* rola dentro se precisar */
-    margin:0; width:auto; max-width:100%;
-  }
+  .calendario-container{ margin:0; width:auto; max-width:100%; }
 }
