@@ -59,7 +59,7 @@ body{
   border:2px solid rgba(73,47,112,.15);
 }
 
-/* ===== Calendário “folhinha” ===== */
+/* ===== Calendário “folhinha” (folha sobe; novo mês já está por baixo) ===== */
 .calendario-container{
   position:relative;
   background:#fff; padding:18px 16px; border-radius:20px;
@@ -71,35 +71,30 @@ body{
   position: relative;
   transform-style: preserve-3d;
   backface-visibility: hidden;
-  will-change: transform, filter;
   border-radius: 16px;
 }
-.calendario-page.with-curl::before{
-  content:""; position:absolute; inset:0; pointer-events:none; border-radius:16px;
-  background: radial-gradient(120% 60% at 50% 100%, rgba(0,0,0,.18), rgba(0,0,0,0) 65%);
-}
 
-/* Palco para a folha (clone único) */
+/* Palco para a ÚNICA folha (clone) */
 .tear-stage{
-  position:absolute; inset:12px; /* respeita padding/raio */
+  position:absolute; inset:12px;
   pointer-events:none; perspective:1400px; overflow:visible;
 }
 .tear-page{
   position:absolute; inset:0;
   background:#fff; border-radius:16px; border:2px solid rgba(73,47,112,.15);
   box-shadow:0 10px 24px rgba(0,0,0,.18);
-  transform-origin: bottom center;
+  transform-origin: bottom center;            /* vira PARA CIMA */
   transform-style: preserve-3d;
   backface-visibility: hidden;
   will-change: transform, filter, opacity;
-  /* >>> MAIS LENTO agora (0.85s) */
-  animation: tearFlipUp .85s cubic-bezier(.2,.7,.2,1) forwards;
+  /* mais lento: 1.0s */
+  animation: tearFlipUp 1s cubic-bezier(.2,.7,.2,1) forwards;
 }
 
-/* animação da folha subindo/virando (mais suave) */
+/* Animação da folha subindo/virando (novo mês JÁ visível embaixo, sem girar) */
 @keyframes tearFlipUp{
-  0%   { transform: rotateX(0deg) translateY(0);      filter:drop-shadow(0 8px 18px rgba(0,0,0,.2));  opacity:1; }
-  55%  { transform: rotateX(-70deg) translateY(-8px);  filter:drop-shadow(0 10px 22px rgba(0,0,0,.18)); opacity:.96; }
+  0%   { transform: rotateX(0deg)    translateY(0);     filter:drop-shadow(0 8px 18px rgba(0,0,0,.2));  opacity:1; }
+  60%  { transform: rotateX(-70deg)  translateY(-8px);  filter:drop-shadow(0 10px 22px rgba(0,0,0,.18)); opacity:.96; }
   100% { transform: rotateX(-100deg) translateY(-22px); filter:drop-shadow(0 4px 12px rgba(0,0,0,.12)); opacity:0; }
 }
 
