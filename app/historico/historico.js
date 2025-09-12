@@ -1,14 +1,11 @@
-/* Histórico – Calendário com efeito “folhinha arrancando”
-   - Ao trocar de mês, empilho clones da página do calendário e animo subindo/virando,
-     depois entro com o novo mês.
-*/
+/* Histórico – Calendário com efeito “folhinha” mais lento e 1 folha por mês */
 (function(){
   "use strict";
 
-  // ===== Config do efeito =====
-  const TEAR_SHEETS = 6;          // quantas “folhas” sobem
-  const TEAR_STAGGER = 60;        // atraso entre folhas (ms)
-  const TEAR_DURATION = 420;      // duraçao aprox. de cada folha (ms)
+  // ===== Config do efeito (ajustado) =====
+  const TEAR_SHEETS = 1;     // agora apenas UMA folha por troca
+  const TEAR_STAGGER = 0;    // sem atraso entre folhas (irrelevante com 1)
+  const TEAR_DURATION = 850; // entrada do mês novo mais lenta (ms)
 
   // ----- Seletores
   const ul = document.getElementById('listaHistorico');
@@ -21,15 +18,15 @@
   const chipsPeriodo = Array.from(document.querySelectorAll('.chip'));
 
   // Calendário
-  const calPage = document.getElementById('calPage');    // página inteira (conteúdo)
-  const tearStage = document.getElementById('tearStage'); // palco das folhas
+  const calPage = document.getElementById('calPage');
+  const tearStage = document.getElementById('tearStage');
   const diasContainer = document.getElementById('dias');
   const mesAno = document.getElementById('mesAno');
   const btnMesAnterior = document.getElementById('mesAnterior');
   const btnMesProximo = document.getElementById('mesProximo');
   const btnLimparDia = document.getElementById('btnLimparDia');
 
-  // Rodapé (placeholders de navegação)
+  // Rodapé (placeholders)
   document.getElementById('btnVoltar')?.addEventListener('click', ()=> window.location.href = '../home/index.html');
   document.getElementById('btnLogo')?.addEventListener('click',  ()=> window.location.href = '../minhas-receitas/index.html');
   document.getElementById('btnGeladeira')?.addEventListener('click', ()=> window.location.href = '../geladeira/index.html');
@@ -402,7 +399,7 @@
     }
   }
 
-  // ---- Efeito “folhinha” ao trocar mês
+  // ---- Efeito “folhinha” (uma folha, mais lento)
   let mesAnimando = false;
   function removerIdsDoClone(el){
     el.removeAttribute('id');
@@ -415,15 +412,13 @@
     clone.classList.add('tear-page');
     return clone;
   }
-  function limparFolhas(){
-    tearStage.innerHTML = '';
-  }
+  function limparFolhas(){ tearStage.innerHTML = ''; }
 
   function tearAndChangeMonth(direcao){
     if(mesAnimando) return;
     mesAnimando = true;
 
-    // Respeita redução de movimento: sem efeito, troca direto.
+    // Respeita redução de movimento
     if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
       if(direcao === 'prev'){ mesAtual--; if(mesAtual<0){mesAtual=11; anoAtual--;}}
       else { mesAtual++; if(mesAtual>11){mesAtual=0; anoAtual++;}}
@@ -432,41 +427,32 @@
       return;
     }
 
-    calPage.classList.add('with-curl'); // leve sombra extra
+    calPage.classList.add('with-curl');
 
-    // Empilha folhas com pequenos delays
-    let concluidas = 0;
-    for(let i=0;i<TEAR_SHEETS;i++){
-      const folha = criarFolhaClone();
-      folha.style.animationDelay = `${i*TEAR_STAGGER}ms`;
-      // leve variação horizontal para dar naturalidade
-      const jitter = (i%2===0 ? 1 : -1) * Math.min(6, i*1.2);
-      folha.style.transform = `translateX(${jitter}px)`;
-      tearStage.appendChild(folha);
+    // Cria UMA única folha
+    const folha = criarFolhaClone();
+    folha.style.animationDelay = '0ms';
+    tearStage.appendChild(folha);
 
-      folha.addEventListener('animationend', ()=>{
-        concluidas++;
-        if(concluidas === TEAR_SHEETS){
-          // Troca mês quando a última folha some
-          if(direcao === 'prev'){ mesAtual--; if(mesAtual<0){mesAtual=11; anoAtual--;}}
-          else { mesAtual++; if(mesAtual>11){mesAtual=0; anoAtual++;}}
-          gerarCalendario(mesAtual, anoAtual);
+    folha.addEventListener('animationend', ()=>{
+      // Troca o mês quando a folha termina
+      if(direcao === 'prev'){ mesAtual--; if(mesAtual<0){mesAtual=11; anoAtual--;}}
+      else { mesAtual++; if(mesAtual>11){mesAtual=0; anoAtual++;}}
+      gerarCalendario(mesAtual, anoAtual);
 
-          // Entrada suave do novo mês (pequeno flip-in)
-          calPage.animate(
-            [
-              { transform:'rotateX(95deg)', filter:'drop-shadow(0 4px 12px rgba(0,0,0,.10))', opacity:.6 },
-              { transform:'rotateX(0deg)',  filter:'drop-shadow(0 8px 20px rgba(0,0,0,.18))', opacity:1 }
-            ],
-            { duration: TEAR_DURATION, easing:'cubic-bezier(.2,.7,.2,1)' }
-          ).addEventListener('finish', ()=>{
-            calPage.classList.remove('with-curl');
-            limparFolhas();
-            mesAnimando = false;
-          });
-        }
+      // Entrada do mês novo – com a mesma duração mais lenta
+      calPage.animate(
+        [
+          { transform:'rotateX(95deg)', filter:'drop-shadow(0 4px 12px rgba(0,0,0,.10))', opacity:.6 },
+          { transform:'rotateX(0deg)',  filter:'drop-shadow(0 8px 20px rgba(0,0,0,.18))', opacity:1 }
+        ],
+        { duration: TEAR_DURATION, easing:'cubic-bezier(.2,.7,.2,1)' }
+      ).addEventListener('finish', ()=>{
+        calPage.classList.remove('with-curl');
+        limparFolhas();
+        mesAnimando = false;
       });
-    }
+    }, {once:true});
   }
 
   btnMesAnterior?.addEventListener('click', ()=> tearAndChangeMonth('prev'));
