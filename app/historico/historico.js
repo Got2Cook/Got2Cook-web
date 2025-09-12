@@ -1,14 +1,13 @@
-/* Histórico de Receitas – Got2Cook
+/* Histórico de Receitas – Got2Cook (sem filtros de período)
    Persistência:
    - got2cook_historico_itens: array de objetos
      { id, titulo, dataISO, receitaId, foto, duracaoMin, porcoes, tags:[], favorito:boolean }
-   - got2cook_historico_filtros: { busca, periodo, ordenacao, dataSelecionada? }
+   - got2cook_historico_filtros: { busca, ordenacao, dataSelecionada }
 */
-
 (function(){
   "use strict";
 
-  // ----- Seletores principais
+  // ----- Seletores
   const ul = document.getElementById('listaHistorico');
   const skeleton = document.getElementById('skeleton');
   const vazio = document.getElementById('estadoVazio');
@@ -16,18 +15,15 @@
 
   const inpBusca = document.getElementById('inpBusca');
   const btnLimparBusca = document.getElementById('btnLimparBusca');
-  const chipsPeriodo = Array.from(document.querySelectorAll('.chip'));
   const selOrdenacao = document.getElementById('selOrdenacao');
-  const btnLimparFiltros = document.getElementById('btnLimparFiltros');
 
-  // ----- Calendário (mesmo comportamento do seu meuhistorico.js)
-  // refs
+  // Calendário
   const diasContainer = document.getElementById('dias');
   const mesAno = document.getElementById('mesAno');
   const btnMesAnterior = document.getElementById('mesAnterior');
   const btnMesProximo = document.getElementById('mesProximo');
 
-  // ----- Navegação rodapé (placeholders)
+  // Rodapé (placeholders)
   document.getElementById('btnVoltar')?.addEventListener('click', ()=> {
     window.location.href = '../home/index.html';
   });
@@ -38,26 +34,19 @@
     window.location.href = '../geladeira/index.html';
   });
 
-  // ----- LocalStorage helpers
+  // ----- LocalStorage
   const LS_ITENS = 'got2cook_historico_itens';
   const LS_FILTROS = 'got2cook_historico_filtros';
 
-  function lsGet(key, fallback){
-    try{ return JSON.parse(localStorage.getItem(key)) ?? fallback; }
-    catch{ return fallback; }
-  }
-  function lsSet(key, val){
-    localStorage.setItem(key, JSON.stringify(val));
-  }
+  const lsGet = (k,f)=>{ try{ return JSON.parse(localStorage.getItem(k)) ?? f; }catch{ return f; } };
+  const lsSet = (k,v)=> localStorage.setItem(k, JSON.stringify(v));
 
-  // ----- Dados iniciais (se vazio)
+  // Seed exemplo se vazio
   function seedIfEmpty(){
     let itens = lsGet(LS_ITENS, []);
     if(Array.isArray(itens) && itens.length) return;
-
     const agora = new Date();
     const iso = (d)=> d.toISOString();
-
     const exemplos = [
       { id:'h1', titulo:'Salada verde crocante', dataISO: iso(new Date(agora.getTime()- 1*60*60*1000)),
         receitaId:'r101', foto:'', duracaoMin:15, porcoes:2, tags:['rápida','fit'], favorito:false },
@@ -75,66 +64,41 @@
     lsSet(LS_ITENS, exemplos);
   }
 
-  // ----- Estado de filtros
-  let filtros = lsGet(LS_FILTROS, { busca:'', periodo:'todos', ordenacao:'recente', dataSelecionada:null });
+  // ----- Estado de filtros (sem período)
+  let filtros = lsGet(LS_FILTROS, { busca:'', ordenacao:'recente', dataSelecionada:null });
 
-  // UI -> estado inicial
   function syncControlesFromState(){
     inpBusca.value = filtros.busca || '';
     selOrdenacao.value = filtros.ordenacao || 'recente';
-    chipsPeriodo.forEach(c=>{
-      const ativo = String(c.dataset.periodo) === String(filtros.periodo);
-      c.setAttribute('aria-pressed', ativo ? 'true' : 'false');
-      c.classList.toggle('ativo', ativo);
-    });
   }
 
-  // Utilidades de data
-  function toYMD(date){
+  // Utils data
+  const toYMD = (date)=>{
     const y = date.getFullYear();
     const m = String(date.getMonth()+1).padStart(2,'0');
     const d = String(date.getDate()).padStart(2,'0');
     return `${y}-${m}-${d}`;
-  }
-  function isSameDayISO(iso, ymd){
-    const d = new Date(iso);
-    return toYMD(d) === ymd;
-  }
+  };
+  const isSameDayISO = (iso, ymd)=> toYMD(new Date(iso)) === ymd;
 
-  // ----- Filtro/ordenador
-  function dentroDoPeriodo(iso, periodo){
-    if(filtros.dataSelecionada){ // prioridade quando selecionar no calendário
-      return isSameDayISO(iso, filtros.dataSelecionada);
-    }
-    if(periodo === 'todos') return true;
-    if(periodo === 'hoje'){
-      const d = new Date(iso);
-      const now = new Date();
-      return d.toDateString() === now.toDateString();
-    }
-    const dias = Number(periodo)||0;
-    const d = new Date(iso).getTime();
-    const lim = Date.now() - (dias*24*60*60*1000);
-    return d >= lim;
-  }
-
+  // Filtro/ordenador (apenas busca e dataSelecionada)
   function aplicaFiltrosEOrdenacao(data){
     const busca = (filtros.busca||'').trim().toLowerCase();
     let arr = data.filter(it => {
       const okBusca = !busca || (it.titulo||'').toLowerCase().includes(busca);
-      const okPeriodo = dentroDoPeriodo(it.dataISO, filtros.periodo);
-      return okBusca && okPeriodo;
+      const okDia = filtros.dataSelecionada ? isSameDayISO(it.dataISO, filtros.dataSelecionada) : true;
+      return okBusca && okDia;
     });
 
     if(filtros.ordenacao === 'az'){
       arr.sort((a,b)=> (a.titulo||'').localeCompare(b.titulo||'', 'pt-BR', {sensitivity:'base'}));
-    }else{ // recente
+    }else{
       arr.sort((a,b)=> new Date(b.dataISO) - new Date(a.dataISO));
     }
     return arr;
   }
 
-  // ----- Agrupar por data
+  // Agrupar por data
   function labelData(d){
     const hoje = new Date();
     const ontem = new Date(Date.now()-24*60*60*1000);
@@ -153,14 +117,14 @@
     return grupos;
   }
 
-  // ----- Paginação
+  // Paginação
   const PAGE_SIZE = 10;
   let pagina = 1;
   let cacheFiltradoOrdenado = [];
-  function resetPaginacao(){ pagina = 1; }
-  function slicePaginado(arr){ return arr.slice(0, PAGE_SIZE * pagina); }
+  const resetPaginacao = ()=> pagina = 1;
+  const slicePaginado = (arr)=> arr.slice(0, PAGE_SIZE * pagina);
 
-  // ----- Render
+  // Render
   function render(){
     skeleton.hidden = true;
     const itens = lsGet(LS_ITENS, []);
@@ -170,7 +134,7 @@
       ul.innerHTML = '';
       vazio.hidden = false;
       btnCarregarMais.disabled = true;
-      pintarCalendarioDias(itens); // mantém destaque do calendário
+      pintarCalendarioDias(itens);
       return;
     }
     vazio.hidden = true;
@@ -219,179 +183,6 @@
         li.append(thumb, bloco, acoes);
         ul.appendChild(li);
 
-        function abrir(){
-          window.location.href = '../visualizar/index.html?receitaId=' + encodeURIComponent(it.receitaId||'');
-        }
+        function abrir(){ window.location.href = '../visualizar/index.html?receitaId=' + encodeURIComponent(it.receitaId||''); }
         li.addEventListener('click', abrir);
-        li.addEventListener('keydown', (ev)=>{ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); abrir(); }});
-        btnAbrir.addEventListener('click', (ev)=>{ ev.stopPropagation(); abrir(); });
-        btnFav.addEventListener('click', (ev)=>{ ev.stopPropagation(); toggleFavorito(it.id, btnFav); });
-        btnDel.addEventListener('click', (ev)=>{ ev.stopPropagation(); removerItem(it.id); });
-      });
-    });
-
-    const temMais = cacheFiltradoOrdenado.length > visiveis.length;
-    btnCarregarMais.disabled = !temMais;
-
-    // Atualiza destaques do calendário conforme itens existentes
-    pintarCalendarioDias(lsGet(LS_ITENS, []));
-  }
-
-  function toggleFavorito(id, btn){
-    const itens = lsGet(LS_ITENS, []);
-    const idx = itens.findIndex(x=>x.id===id);
-    if(idx>-1){
-      itens[idx].favorito = !itens[idx].favorito;
-      lsSet(LS_ITENS, itens);
-      const ativo = itens[idx].favorito;
-      btn.classList.toggle('fav-ativo', ativo);
-      btn.setAttribute('aria-label', ativo ? 'Desfavoritar' : 'Favoritar');
-      btn.innerHTML = `<span class="estrela">${ativo ? '★' : '☆'}</span>`;
-    }
-  }
-
-  function removerItem(id){
-    const ok = confirm('Remover este item do histórico?');
-    if(!ok) return;
-    let itens = lsGet(LS_ITENS, []);
-    itens = itens.filter(x=>x.id !== id);
-    lsSet(LS_ITENS, itens);
-    render();
-  }
-
-  // ----- Controles
-  inpBusca.addEventListener('input', ()=>{
-    filtros.busca = inpBusca.value || '';
-    lsSet(LS_FILTROS, filtros);
-    resetPaginacao();
-    render();
-  });
-
-  btnLimparBusca.addEventListener('click', ()=>{
-    inpBusca.value = '';
-    filtros.busca = '';
-    lsSet(LS_FILTROS, filtros);
-    resetPaginacao();
-    render();
-    inpBusca.focus();
-  });
-
-  chipsPeriodo.forEach(chip=>{
-    chip.addEventListener('click', ()=>{
-      chipsPeriodo.forEach(c=>{ c.classList.remove('ativo'); c.setAttribute('aria-pressed','false'); });
-      chip.classList.add('ativo'); chip.setAttribute('aria-pressed','true');
-      filtros.periodo = chip.dataset.periodo;
-      // ao escolher um período padrão, limpamos data específica do calendário
-      filtros.dataSelecionada = null;
-      lsSet(LS_FILTROS, filtros);
-      resetPaginacao();
-      render();
-    });
-  });
-
-  selOrdenacao.addEventListener('change', ()=>{
-    filtros.ordenacao = selOrdenacao.value;
-    lsSet(LS_FILTROS, filtros);
-    resetPaginacao();
-    render();
-  });
-
-  btnLimparFiltros.addEventListener('click', ()=>{
-    filtros = { busca:'', periodo:'todos', ordenacao:'recente', dataSelecionada:null };
-    lsSet(LS_FILTROS, filtros);
-    syncControlesFromState();
-    resetPaginacao();
-    render();
-  });
-
-  btnCarregarMais.addEventListener('click', ()=>{
-    pagina++;
-    render();
-  });
-
-  // ====== CALENDÁRIO (adaptado 1:1 do seu padrão) ======
-  let hoje = new Date();
-  let mesAtual = hoje.getMonth();
-  let anoAtual = hoje.getFullYear();
-
-  function pintarCalendarioDias(itens){
-    // marca como "ativo" os dias que possuem itens
-    // (regera a grade mantendo o mês atual)
-    gerarCalendario(mesAtual, anoAtual, itens);
-  }
-
-  function gerarCalendario(mes, ano, itensParam){
-    // se já existir grade, vamos recriar do zero
-    diasContainer.innerHTML = "";
-    const primeiroDia = new Date(ano, mes, 1).getDay();
-    const ultimoDia = new Date(ano, mes + 1, 0).getDate();
-    mesAno.textContent = `${new Date(ano, mes).toLocaleString('pt-BR', { month: 'long' })} ${ano}`;
-
-    // colecao de itens para destacar dias
-    const itens = Array.isArray(itensParam) ? itensParam : lsGet(LS_ITENS, []);
-
-    // Pré-prepara um Set com YYYY-MM-DD que possuem itens
-    const diasComItens = new Set();
-    itens.forEach(it=>{
-      try{
-        const ymd = toYMD(new Date(it.dataISO));
-        diasComItens.add(ymd);
-      }catch{}
-    });
-
-    // Preenche dias vazios antes do 1º
-    for (let i = 0; i < primeiroDia; i++){
-      const vazio = document.createElement('div');
-      vazio.setAttribute('aria-hidden','true');
-      diasContainer.appendChild(vazio);
-    }
-
-    for (let dia = 1; dia <= ultimoDia; dia++){
-      const divDia = document.createElement('div');
-      divDia.textContent = String(dia);
-      const ymd = `${ano}-${String(mes+1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
-
-      if(diasComItens.has(ymd)){
-        divDia.classList.add('ativo');
-        divDia.setAttribute('title','Há receitas neste dia');
-      }
-
-      divDia.addEventListener('click', ()=>{
-        filtros.dataSelecionada = ymd;           // trava o filtro para o dia
-        filtros.periodo = 'todos';               // mantém chips consistentes
-        lsSet(LS_FILTROS, filtros);
-        chipsPeriodo.forEach(c=>{ c.classList.remove('ativo'); c.setAttribute('aria-pressed','false'); });
-        resetPaginacao();
-        render();
-        // rola até a lista para dar feedback
-        document.getElementById('listaHistorico')?.scrollIntoView({behavior:'smooth', block:'start'});
-      });
-
-      diasContainer.appendChild(divDia);
-    }
-  }
-
-  btnMesAnterior?.addEventListener('click', ()=>{
-    mesAtual--;
-    if (mesAtual < 0){ mesAtual = 11; anoAtual--; }
-    gerarCalendario(mesAtual, anoAtual);
-  });
-
-  btnMesProximo?.addEventListener('click', ()=>{
-    mesAtual++;
-    if (mesAtual > 11){ mesAtual = 0; anoAtual++; }
-    gerarCalendario(mesAtual, anoAtual);
-  });
-
-  // ----- Inicialização
-  function init(){
-    seedIfEmpty();
-    syncControlesFromState();
-    skeleton.hidden = false;
-    // inicia calendário
-    gerarCalendario(mesAtual, anoAtual);
-    setTimeout(()=>{ resetPaginacao(); render(); }, 250);
-  }
-
-  init();
-})();
+        li.addEventListener(
