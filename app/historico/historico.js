@@ -1,10 +1,6 @@
-/* Histórico – Calendário “folhinha”: vira PARA CIMA apenas a folha (clone),
-   e o novo mês já aparece por baixo, sem qualquer rotação na entrada. */
+/* Calendário – folha sobe (slide up), novo mês já aparece por baixo */
 (function(){
   "use strict";
-
-  // ===== Config do efeito =====
-  const TEAR_DURATION = 1000; // dura ~1.0s (em sincronia com o CSS)
 
   // ----- Seletores
   const ul = document.getElementById('listaHistorico');
@@ -18,14 +14,14 @@
 
   // Calendário
   const calPage = document.getElementById('calPage');    // base (novo mês aparece aqui)
-  const tearStage = document.getElementById('tearStage'); // palco da folha (clone do mês antigo)
+  const tearStage = document.getElementById('tearStage'); // folha (clone)
   const diasContainer = document.getElementById('dias');
   const mesAno = document.getElementById('mesAno');
   const btnMesAnterior = document.getElementById('mesAnterior');
   const btnMesProximo = document.getElementById('mesProximo');
   const btnLimparDia = document.getElementById('btnLimparDia');
 
-  // Rodapé (placeholders)
+  // Rodapé (rotas placeholder)
   document.getElementById('btnVoltar')?.addEventListener('click', ()=> window.location.href = '../home/index.html');
   document.getElementById('btnLogo')?.addEventListener('click',  ()=> window.location.href = '../minhas-receitas/index.html');
   document.getElementById('btnGeladeira')?.addEventListener('click', ()=> window.location.href = '../geladeira/index.html');
@@ -38,7 +34,7 @@
   const lsGet = (k,f)=>{ try{ return JSON.parse(localStorage.getItem(k)) ?? f; }catch{ return f; } };
   const lsSet = (k,v)=> localStorage.setItem(k, JSON.stringify(v));
 
-  // Seed exemplo se vazio (local)
+  // Seed exemplo (somente local)
   function seedIfEmpty(){
     let itens = lsGet(LS_ITENS, []);
     if(Array.isArray(itens) && itens.length) return;
@@ -398,14 +394,14 @@
     }
   }
 
-  // ---- Efeito “folha sobe” com novo mês já visível
+  // ---- Troca de mês: folha sobe (slide up), novo mês já visível
   let mesAnimando = false;
   function removerIdsDoClone(el){
     el.removeAttribute('id');
     el.querySelectorAll('[id]').forEach(n=> n.removeAttribute('id'));
   }
   function criarFolhaClone(){
-    const clone = calPage.cloneNode(true); // CLONE DO MÊS ATUAL
+    const clone = calPage.cloneNode(true);
     removerIdsDoClone(clone);
     clone.classList.add('tear-page');
     return clone;
@@ -418,28 +414,27 @@
     }else{
       mesAtual++; if(mesAtual>11){ mesAtual=0; anoAtual++; }
     }
-    gerarCalendario(mesAtual, anoAtual); // <<< já mostra o novo mês (sem animação)
+    gerarCalendario(mesAtual, anoAtual); // novo mês sem animação
   }
 
   function tearAndChangeMonth(direcao){
     if(mesAnimando) return;
     mesAnimando = true;
 
-    // redução de movimento: troca direta
     if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
       changeMonthInstant(direcao);
       mesAnimando = false;
       return;
     }
 
-    // 1) cria CLONE do mês atual (a folha que vai sair)
+    // 1) cria a folha (clone do mês atual) por cima
     const folha = criarFolhaClone();
     tearStage.appendChild(folha);
 
-    // 2) troca o mês na base imediatamente (por baixo do clone)
+    // 2) troca o mês na base imediatamente
     changeMonthInstant(direcao);
 
-    // 3) quando a folha terminar de subir, limpa e encerra
+    // 3) quando a folha terminar de subir, remove
     folha.addEventListener('animationend', ()=>{
       limparFolha();
       mesAnimando = false;
