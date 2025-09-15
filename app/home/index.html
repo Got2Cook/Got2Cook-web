@@ -1,67 +1,72 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fale Conosco - Got2Cook</title>
-  <link rel="stylesheet" href="faleconosco.css">
-</head>
-<body>
-
-  <div class="container">
-
-    <!-- Conteúdo principal -->
-    <h1 class="titulo">Fale Conosco</h1>
-    <p class="descricao">
-      Queremos ouvir você! Envie dúvidas, sugestões ou qualquer problema que encontrou no app.
-    </p>
-
-    <!-- Informações de contato -->
-    <div class="contatos">
-      <p><strong>📧 E-mail:</strong> suporte@got2cook.com</p>
-      <p><strong>📞 Telefone:</strong> (00) 00000-0000</p>
-    </div>
-
-    <!-- Formulário de contato -->
-    <form class="form-contato">
-      <input type="text" name="nome" placeholder="Seu nome (opcional)">
-      <input type="email" name="email" placeholder="Seu e-mail" required>
-      <textarea name="mensagem" placeholder="Digite sua mensagem..." required></textarea>
-
-      <!-- Botão que abre o app de e-mail -->
-      <a href="mailto:suporte@got2cook.com?subject=Contato%20Got2Cook" class="btn-enviar">
-        Enviar Mensagem
-      </a>
-    </form>
-
-    <!-- Rodapé padrão -->
-    <footer class="curva">
-      <button class="btn-footer voltar" id="btnVoltar">
-        <img src="humor.png" alt="Voltar" />
-      </button>
-      <button class="btn-footer logo" id="btnLogo">
-        <img src="logocentral.png" alt="Logo" />
-      </button>
-      <button class="btn-footer geladeira" id="btnGeladeira">
-        <img src="geladeira.png" alt="Geladeira" />
-      </button>
-    </footer>
-
-     <script>
-       document.getElementById("btnVoltar").addEventListener("click", () => {
-         window.location.href = "humor.html";
-       });
-
-       document.getElementById("btnLogo").addEventListener("click", () => {
-         window.location.href = "home.html";
-       });
-
-       document.getElementById("btnGeladeira").addEventListener("click", () => {
-         window.location.href = "minhageladeira.html";
-       });
-     </script>
-
+<header>
+  <!-- Perfil (esquerda) -->
+  <div class="icone perfil">
+    <img src="../../assets/perfil.png" alt="Perfil" id="perfilBtn" />
+    <nav class="menu-perfil hidden" id="perfilMenu" aria-label="Menu do perfil">
+      <div class="perfil-nome">
+        <img src="../../assets/perfil.png" alt="Ícone Perfil" />
+        <span id="perfil-nome"></span>
+      </div>
+      <ul>
+        <!-- Trocar emoji por <img src="../../assets/icone-dados.png" alt=""> quando enviar -->
+        <li onclick="window.location.href='../perfil/index.html'">
+          <span class="item-ico" aria-hidden="true">🧑‍💼</span> <!-- icone-dados.png -->
+          <span>Dados pessoais</span>
+        </li>
+        <li onclick="window.location.href='../historico/index.html'">
+          <span class="item-ico" aria-hidden="true">📈</span> <!-- icone-humor.png -->
+          <span>Meu histórico de humor</span>
+        </li>
+        <li onclick="window.location.href='../gostos/index.html'">
+          <span class="item-ico" aria-hidden="true">❤️‍🔥</span> <!-- icone-gostos.png -->
+          <span>Meus gostos culinários</span>
+        </li>
+        <li onclick="window.location.href='../jornada/index.html'">
+          <span class="item-ico" aria-hidden="true">🗺️</span> <!-- icone-jornada.png -->
+          <span>Minha jornada culinária</span>
+        </li>
+      </ul>
+    </nav>
   </div>
 
-</body>
-</html>
+  <!-- Menu (direita) -->
+  <div class="icone menu">
+    <img src="../../assets/menu.png" alt="Menu" id="menuBtn" />
+    <nav class="menu-principal hidden" id="menuPrincipal" aria-label="Menu principal">
+      <ul>
+        <li onclick="window.location.href='../meu-plano/index.html'">
+          <span class="item-ico" aria-hidden="true">💳</span> <!-- icone-plano.png -->
+          <span>Gerenciar plano</span>
+        </li>
+        <li onclick="window.location.href='../historico/index.html'">
+          <span class="item-ico" aria-hidden="true">🕘</span> <!-- icone-historico.png -->
+          <span>Meu histórico</span>
+        </li>
+        <li onclick="window.location.href='../config/index.html'">
+          <span class="item-ico" aria-hidden="true">⚙️</span> <!-- icone-config.png -->
+          <span>Configurações</span>
+        </li>
+        <li onclick="window.location.href='../faleconosco/index.html'">
+          <span class="item-ico" aria-hidden="true">💬</span> <!-- icone-fale.png -->
+          <span>Fale conosco</span>
+        </li>
+        <li onclick="window.location.href='../politica/index.html'">
+          <span class="item-ico" aria-hidden="true">📜</span> <!-- icone-politica.png -->
+          <span>Política de privacidade</span>
+        </li>
+        <li onclick="window.location.href='../tutorial/index.html'">
+          <span class="item-ico" aria-hidden="true">🎯</span> <!-- icone-tutorial.png -->
+          <span>Tutorial / Como usar</span>
+        </li>
+        <li class="danger" onclick="window.location.href='../apagar-conta/index.html'">
+          <span class="item-ico" aria-hidden="true">🗑️</span> <!-- icone-apagar.png -->
+          <span>Apagar conta</span>
+        </li>
+        <li onclick="window.location.href='../../index.html'">
+          <span class="item-ico" aria-hidden="true">🚪</span> <!-- icone-sair.png -->
+          <span>Sair para a landing</span>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
