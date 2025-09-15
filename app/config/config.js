@@ -3,10 +3,10 @@ console.log("Configurações carregadas");
 document.addEventListener('DOMContentLoaded', () => {
   // rotas do rodapé
   document.getElementById("btnVoltar").addEventListener("click", () => {
-    window.location.href = "../home/index.html";
+    window.location.href = "../humor/index.html";
   });
   document.getElementById("btnLogo").addEventListener("click", () => {
-    window.location.href = "../minhas-receitas/index.html";
+    window.location.href = "../home/index.html";
   });
   document.getElementById("btnGeladeira").addEventListener("click", () => {
     window.location.href = "../geladeira/index.html";
