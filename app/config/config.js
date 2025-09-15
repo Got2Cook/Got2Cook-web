@@ -80,3 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function save(){ localStorage.setItem('got2cook_config', JSON.stringify(state)) }
 });
+
+// versão
+document.getElementById('versaoApp').textContent = "1.0.0"; 
