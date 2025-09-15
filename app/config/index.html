@@ -2,102 +2,103 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Configurações - Got2Cook</title>
-  <link rel="stylesheet" href="config.css" />
+  <link rel="stylesheet" href="config.css"/>
+  <script src="config.js" defer></script>
 </head>
 <body>
-  <h1>CONFIGURAÇÕES</h1>
+  <main class="wrap">
+    <h1 class="titulo">CONFIGURAÇÕES</h1>
 
-  <div class="config-container">
+    <!-- PERFIL -->
+    <section class="secao">
+      <h2 class="secao-titulo">Perfil</h2>
+      <ul class="lista">
+        <li class="item">
+          <span class="rotulo">Editar perfil</span>
+          <button type="button" class="btn" id="editarPerfil">Abrir</button>
+        </li>
+      </ul>
+    </section>
 
-    <!-- Perfil -->
-    <div class="config-item">
-      <label>Perfil</label>
-      <button class="acao" id="editarPerfil">Editar perfil</button>
-    </div>
+    <!-- PREFERÊNCIAS BÁSICAS -->
+    <section class="secao">
+      <h2 class="secao-titulo">Preferências</h2>
+      <ul class="lista">
+        <li class="item">
+          <label class="rotulo" for="idioma">Idioma</label>
+          <select id="idioma">
+            <option value="pt">Português</option>
+            <option value="en">English</option>
+            <option value="es">Español</option>
+          </select>
+        </li>
+        <li class="item">
+          <span class="rotulo" id="lblHumor">Ativar lembretes de humor</span>
+          <button type="button" class="switch" id="lembreteHumor" role="switch" aria-checked="false" aria-labelledby="lblHumor"></button>
+        </li>
+        <li class="item">
+          <span class="rotulo" id="lblReceita">Receita diária</span>
+          <button type="button" class="switch" id="receitaDia" role="switch" aria-checked="false" aria-labelledby="lblReceita"></button>
+        </li>
+      </ul>
+    </section>
 
-    <!-- Seleção de Idioma -->
-    <div class="config-item">
-      <label for="idioma">Idioma</label>
-      <select id="idioma">
-        <option value="pt">Português</option>
-        <option value="en">English</option>
-        <option value="es">Español</option>
-      </select>
-    </div>
+    <!-- PRIVACIDADE -->
+    <section class="secao">
+      <h2 class="secao-titulo">Privacidade</h2>
+      <ul class="lista">
+        <li class="item item-link">
+          <a class="link" href="../politica/index.html">Política de Privacidade</a>
+        </li>
+      </ul>
+    </section>
 
-    <div class="config-item">
-      <label for="lembreteHumor">Ativar lembretes de humor</label>
-      <input type="checkbox" id="lembreteHumor">
-    </div>
+    <!-- DADOS -->
+    <section class="secao">
+      <h2 class="secao-titulo">Dados</h2>
+      <ul class="lista">
+        <li class="item">
+          <span class="rotulo">Limpar histórico de humor</span>
+          <button type="button" class="btn perigo" id="limparDados">Limpar</button>
+        </li>
+        <li class="item">
+          <span class="rotulo">Limpar dados aprendidos</span>
+          <button type="button" class="btn perigo" id="limparPreferencias">Limpar</button>
+        </li>
+        <li class="item">
+          <span class="rotulo">Apagar conta</span>
+          <button type="button" class="btn perigo" id="apagarConta">Apagar</button>
+        </li>
+      </ul>
+    </section>
 
-    <div class="config-item">
-      <label for="receitaDia">Receita diária</label>
-      <input type="checkbox" id="receitaDia">
-    </div>
+    <div class="footer-spacer" aria-hidden="true"></div>
+  </main>
 
-    <!-- Privacidade -->
-    <div class="config-item">
-      <a href="../politica/index.html" class="acao">Política de Privacidade</a>
-    </div>
-
-    <div class="config-item">
-      <button class="acao" id="limparDados">Limpar histórico de humor</button>
-    </div>
-
-    <div class="config-item">
-      <button class="acao" id="limparPreferencias">Limpar dados aprendidos</button>
-    </div>
-
-    <div class="config-item">
-      <button class="acao apagar" id="apagarConta">Apagar conta</button>
-    </div>
-
-  </div>
-
-  <!-- Pop-up genérico -->
-  <div class="popup-overlay" id="popupOverlay">
-    <div class="popup" id="popupBox">
-      <p id="popupMessage">Mensagem aqui</p>
+  <!-- POPUP -->
+  <div class="popup-overlay" id="popupOverlay" hidden>
+    <div class="popup">
+      <p id="popupMessage">Mensagem</p>
       <div class="popup-buttons">
-        <button id="popupOk">OK</button>
-        <button id="popupCancel" style="display:none;">Cancelar</button>
+        <button id="popupOk" class="btn">OK</button>
+        <button id="popupCancel" class="btn fantasma" style="display:none">Cancelar</button>
       </div>
     </div>
   </div>
 
+  <!-- RODAPÉ OFICIAL -->
   <footer class="curva">
-    <button class="btn-footer voltar" id="btnVoltar">
-      <img src="humor.png" alt="Voltar" />
+    <button class="btn-footer" id="btnVoltar" aria-label="Voltar para Home" type="button">
+      <img src="humor.png" alt="">
     </button>
-    <button class="btn-footer logo" id="btnLogo">
-      <img src="logocentral.png" alt="Logo" />
+    <button class="btn-footer btn-central" id="btnLogo" aria-label="Ir para Minhas Receitas" type="button">
+      <img src="logocentral.png" alt="">
     </button>
-    <button class="btn-footer geladeira" id="btnGeladeira">
-      <img src="geladeira.png" alt="Geladeira" />
+    <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira" type="button">
+      <img src="geladeira.png" alt="">
     </button>
   </footer>
-
-   <script>
-     document.getElementById("btnVoltar").addEventListener("click", () => {
-       window.location.href = "humor.html";
-     });
-
-     document.getElementById("btnLogo").addEventListener("click", () => {
-       window.location.href = "home.html";
-     });
-
-     document.getElementById("btnGeladeira").addEventListener("click", () => {
-       window.location.href = "minhageladeira.html";
-     });
-
-     // Perfil redireciona para dados pessoais
-     document.getElementById("editarPerfil").addEventListener("click", () => {
-       window.location.href = "../dados-pessoais/index.html";
-     });
-   </script>
-  
-  <script src="config.js"></script>
 </body>
 </html>
