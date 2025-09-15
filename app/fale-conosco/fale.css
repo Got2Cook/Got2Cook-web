@@ -141,3 +141,51 @@ footer.curva {
   height: 150%;
   object-fit: contain;
 }
+
+/* ====== Desktop (mantém mobile 100% igual) ====== */
+@media (min-width: 992px) {
+  /* Mais espaço lateral e respiro extra para o rodapé fixo */
+  .container{
+    max-width: 960px;
+    padding: 32px;
+    padding-bottom: 140px; /* evita sobrepor o rodapé */
+    box-sizing: border-box;
+  }
+
+  /* Título e texto levemente maiores */
+  .titulo{ font-size: 42px; }
+  .descricao{ font-size: 18px; max-width: 80%; }
+
+  /* Coloca contatos e formulário lado a lado mantendo a ordem do HTML */
+  .container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "titulo titulo"
+      "descricao descricao"
+      "contatos form";
+    column-gap: 24px;
+    row-gap: 16px;
+    justify-items: center;
+  }
+  .titulo{ grid-area: titulo; text-align: center; }
+  .descricao{ grid-area: descricao; text-align: center; }
+
+  .contatos{
+    grid-area: contatos;
+    width: 100%;
+    align-self: start;
+  }
+
+  .form-contato{
+    grid-area: form;
+    width: 100%;
+    align-self: start;
+  }
+
+  /* Reforça o layout do rodapé no desktop (sem alterar o mobile) */
+  footer.curva{
+    gap: 40px;
+    z-index: 10;
+  }
+}
