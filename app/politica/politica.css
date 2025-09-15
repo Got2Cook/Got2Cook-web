@@ -11,7 +11,7 @@ body {
 
 /* Container geral para centralizar conteúdo */
 .container-geral {
-  max-width: 600px;
+  max-width: 600px; /* mobile padrão */
   width: 100%;
   text-align: center;
 }
@@ -78,4 +78,19 @@ body {
 .btn-aceitar:hover {
   background-color: #7b7190;
   transform: translateY(-2px);
+}
+
+/* 🔹 Ajuste para desktop */
+@media (min-width: 1024px) {
+  .container-geral {
+    max-width: 900px; /* aumenta a largura no desktop */
+  }
+
+  .cabecalho-termo h1 {
+    font-size: 26px;
+  }
+
+  .texto-termo {
+    font-size: 14px;
+  }
 }
