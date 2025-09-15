@@ -1,0 +1,115 @@
+:root{
+  --bg:#c0ffa5;
+  --roxo:#7b7190;
+  --texto:#492f70;
+  --maxw:600px;
+}
+
+/* Base */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--texto);
+}
+
+/* Acessibilidade */
+:focus-visible{
+  outline: 3px solid #000;
+  outline-offset: 2px;
+}
+
+/* Layout principal mobile-first */
+#conteudo{
+  min-height: 100svh; /* considera barras móveis */
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.grid-web{
+  width:100%;
+  max-width: var(--maxw);
+  padding: 16px 16px 0;
+}
+
+/* Título principal (mesmo estilo base da tela de Configurações) */
+.titulo-pagina{
+  margin: 12px 0 10px;
+  font-size: 20px;
+  font-weight: 700;
+  text-align:center;
+}
+
+/* Conteúdo da política */
+.conteudo-politica{
+  background:#fff;
+  border:2px solid var(--texto);
+  border-radius: 16px;
+  padding:16px;
+  line-height:1.55;
+  color:#222;
+}
+.conteudo-politica h2{
+  font-size:16px;
+  margin:16px 0 8px;
+  color: var(--texto);
+}
+.conteudo-politica p{
+  margin: 0 0 10px;
+  color:#222;
+  text-align: justify;
+  word-wrap: break-word;
+}
+
+/* Respiro acima do rodapé */
+.footer-spacer{
+  height: 88px; /* respiro para não encostar no footer curvo */
+}
+
+/* Rodapé curvo oficial (padrão fixo) */
+.curva{
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 70px;
+  background: var(--roxo);
+  border-top-left-radius: 100% 50%;
+  border-top-right-radius: 100% 50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap: 40px;
+  padding: 0 16px;
+}
+
+/* Botões do rodapé */
+.btn-footer{
+  width:55px; height:55px;
+  border-radius:50%;
+  background:#fff;
+  border:none;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 250%; /* ícone (se for fonte/emoji) */
+  box-shadow: 0 4px 10px rgba(0,0,0,.15);
+}
+.btn-footer.btn-central{
+  width:150px; height:150px;
+  margin-top:-40px; /* elevado */
+  font-size:150%;
+  border-radius:50%;
+}
+
+/* Exemplo de ícones usando background-image (substitua pelos seus assets se necessário) */
+/* #btnVoltar{ background-image:url('../icons/voltar.svg'); background-repeat:no-repeat; background-position:center; background-size:50%; }
+#btnLogo{ background-image:url('../icons/logo.svg'); background-repeat:no-repeat; background-position:center; background-size:60%; }
+#btnGeladeira{ background-image:url('../icons/geladeira.svg'); background-repeat:no-repeat; background-position:center; background-size:55%; } */
+
+/* Responsividade leve */
+@media (min-width:480px){
+  .titulo-pagina{ font-size:22px }
+  .conteudo-politica{ padding:18px }
+}
