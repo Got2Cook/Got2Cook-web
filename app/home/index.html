@@ -1,72 +1,140 @@
-<header>
-  <!-- Perfil (esquerda) -->
-  <div class="icone perfil">
-    <img src="../../assets/perfil.png" alt="Perfil" id="perfilBtn" />
-    <nav class="menu-perfil hidden" id="perfilMenu" aria-label="Menu do perfil">
-      <div class="perfil-nome">
-        <img src="../../assets/perfil.png" alt="Ícone Perfil" />
-        <span id="perfil-nome"></span>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Got2Cook — Home</title>
+  <meta name="description" content="Página inicial do Got2Cook com sugestões de receitas baseadas no seu humor e atalhos rápidos." />
+  <link rel="stylesheet" href="./home.css" />
+</head>
+<body>
+  <div class="container">
+
+    <!-- ===== Cabeçalho: perfil (esq) e menu (dir) ===== -->
+    <header>
+      <!-- Perfil -->
+      <div class="icone perfil">
+        <img src="../../assets/perfil.png" alt="Perfil" id="perfilBtn" />
+        <nav class="menu-perfil hidden" id="perfilMenu" aria-label="Menu do perfil">
+          <div class="perfil-nome">
+            <img src="../../assets/perfil.png" alt="Ícone Perfil" />
+            <span id="perfil-nome"></span>
+          </div>
+          <ul>
+            <li onclick="window.location.href='../perfil/index.html'">
+              <span class="item-ico" aria-hidden="true">🧑‍💼</span>
+              <span>Dados pessoais</span>
+            </li>
+            <li onclick="window.location.href='../historico/index.html'">
+              <span class="item-ico" aria-hidden="true">📈</span>
+              <span>Meu histórico de humor</span>
+            </li>
+            <li onclick="window.location.href='../gostos/index.html'">
+              <!-- coração colorido (emoji com variation selector) -->
+              <span class="item-ico" aria-hidden="true">❤️</span>
+              <span>Meus gostos culinários</span>
+            </li>
+            <li onclick="window.location.href='../jornada/index.html'">
+              <span class="item-ico" aria-hidden="true">🗺️</span>
+              <span>Minha jornada culinária</span>
+            </li>
+          </ul>
+        </nav>
       </div>
-      <ul>
-        <!-- Trocar emoji por <img src="../../assets/icone-dados.png" alt=""> quando enviar -->
-        <li onclick="window.location.href='../perfil/index.html'">
-          <span class="item-ico" aria-hidden="true">🧑‍💼</span> <!-- icone-dados.png -->
-          <span>Dados pessoais</span>
-        </li>
-        <li onclick="window.location.href='../historico/index.html'">
-          <span class="item-ico" aria-hidden="true">📈</span> <!-- icone-humor.png -->
-          <span>Meu histórico de humor</span>
-        </li>
-        <li onclick="window.location.href='../gostos/index.html'">
-          <span class="item-ico" aria-hidden="true">❤️‍🔥</span> <!-- icone-gostos.png -->
-          <span>Meus gostos culinários</span>
-        </li>
-        <li onclick="window.location.href='../jornada/index.html'">
-          <span class="item-ico" aria-hidden="true">🗺️</span> <!-- icone-jornada.png -->
-          <span>Minha jornada culinária</span>
-        </li>
-      </ul>
-    </nav>
+
+      <!-- Menu principal -->
+      <div class="icone menu">
+        <img src="../../assets/menu.png" alt="Menu" id="menuBtn" />
+        <nav class="menu-principal hidden" id="menuPrincipal" aria-label="Menu principal">
+          <ul>
+            <li onclick="window.location.href='../meu-plano/index.html'">
+              <span class="item-ico" aria-hidden="true">💳</span>
+              <span>Gerenciar plano</span>
+            </li>
+            <li onclick="window.location.href='../historico/index.html'">
+              <span class="item-ico" aria-hidden="true">🕘</span>
+              <span>Meu histórico</span>
+            </li>
+            <li onclick="window.location.href='../config/index.html'">
+              <span class="item-ico" aria-hidden="true">⚙️</span>
+              <span>Configurações</span>
+            </li>
+            <li onclick="window.location.href='../faleconosco/index.html'">
+              <span class="item-ico" aria-hidden="true">💬</span>
+              <span>Fale conosco</span>
+            </li>
+            <li onclick="window.location.href='../politica/index.html'">
+              <span class="item-ico" aria-hidden="true">📜</span>
+              <span>Política de privacidade</span>
+            </li>
+            <li onclick="window.location.href='../tutorial/index.html'">
+              <span class="item-ico" aria-hidden="true">🎯</span>
+              <span>Tutorial / Como usar</span>
+            </li>
+            <li class="danger" onclick="window.location.href='../apagar-conta/index.html'">
+              <span class="item-ico" aria-hidden="true">🗑️</span>
+              <span>Apagar conta</span>
+            </li>
+            <li onclick="window.location.href='../../index.html'">
+              <span class="item-ico" aria-hidden="true">🚪</span>
+              <span>Sair para a landing</span>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ===== Saudação / fala do cozinheiro ===== -->
+    <div class="fala">
+      <img src="../../assets/cozinheiro.png" alt="Cozinheiro" class="cozinheiro" />
+      <div class="balao-fala">
+        Olá, <span id="usuario">Usuário</span>! O que vamos cozinhar hoje?
+      </div>
+    </div>
+
+    <!-- ===== Sugestões ===== -->
+    <section class="sugestoes" aria-labelledby="titulo-sugestoes">
+      <h2 id="titulo-sugestoes">Sugestões baseadas no seu humor</h2>
+
+      <!-- Cards estáticos (pode deixar só 4 ou duplicar quantos quiser) -->
+      <div class="sugestoes-grid" role="list">
+        <a href="../minhas-receitas/index.html" class="card" role="listitem">
+          <img src="../../assets/receita1.png" alt="Sugestão de receita 1" />
+        </a>
+        <a href="../minhas-receitas/index.html" class="card" role="listitem">
+          <img src="../../assets/receita2.png" alt="Sugestão de receita 2" />
+        </a>
+        <a href="../minhas-receitas/index.html" class="card" role="listitem">
+          <img src="../../assets/receita3.png" alt="Sugestão de receita 3" />
+        </a>
+        <a href="../minhas-receitas/index.html" class="card" role="listitem">
+          <img src="../../assets/receita4.png" alt="Sugestão de receita 4" />
+        </a>
+      </div>
+    </section>
+
+    <!-- ===== Atalhos rápidos (abrem pelo botão central) ===== -->
+    <section class="acessos-rapidos" id="atalhosRapidos" aria-label="Atalhos rápidos">
+      <button onclick="window.location.href='../minhas-receitas/index.html'" class="acesso-btn">MINHAS RECEITAS</button>
+      <button onclick="window.location.href='../gerar/index.html'" class="acesso-btn">GERAR RECEITA</button>
+    </section>
+
+    <!-- ===== Rodapé curvo fixo (preservado como memorizado) ===== -->
+    <footer class="curva" role="contentinfo" aria-label="Navegação inferior">
+      <button class="btn-footer voltar" id="btnVoltar" aria-label="Selecionar humor novamente">
+        <img src="../../assets/humor.png" alt="" />
+      </button>
+      <button class="btn-footer logo" id="btnLogo" aria-label="Abrir atalhos rápidos">
+        <img src="../../assets/logocentral.png" alt="" />
+      </button>
+      <button class="btn-footer geladeira" id="btnGeladeira" aria-label="Abrir Minha Geladeira">
+        <img src="../../assets/geladeira.png" alt="" />
+      </button>
+    </footer>
+
   </div>
 
-  <!-- Menu (direita) -->
-  <div class="icone menu">
-    <img src="../../assets/menu.png" alt="Menu" id="menuBtn" />
-    <nav class="menu-principal hidden" id="menuPrincipal" aria-label="Menu principal">
-      <ul>
-        <li onclick="window.location.href='../meu-plano/index.html'">
-          <span class="item-ico" aria-hidden="true">💳</span> <!-- icone-plano.png -->
-          <span>Gerenciar plano</span>
-        </li>
-        <li onclick="window.location.href='../historico/index.html'">
-          <span class="item-ico" aria-hidden="true">🕘</span> <!-- icone-historico.png -->
-          <span>Meu histórico</span>
-        </li>
-        <li onclick="window.location.href='../config/index.html'">
-          <span class="item-ico" aria-hidden="true">⚙️</span> <!-- icone-config.png -->
-          <span>Configurações</span>
-        </li>
-        <li onclick="window.location.href='../faleconosco/index.html'">
-          <span class="item-ico" aria-hidden="true">💬</span> <!-- icone-fale.png -->
-          <span>Fale conosco</span>
-        </li>
-        <li onclick="window.location.href='../politica/index.html'">
-          <span class="item-ico" aria-hidden="true">📜</span> <!-- icone-politica.png -->
-          <span>Política de privacidade</span>
-        </li>
-        <li onclick="window.location.href='../tutorial/index.html'">
-          <span class="item-ico" aria-hidden="true">🎯</span> <!-- icone-tutorial.png -->
-          <span>Tutorial / Como usar</span>
-        </li>
-        <li class="danger" onclick="window.location.href='../apagar-conta/index.html'">
-          <span class="item-ico" aria-hidden="true">🗑️</span> <!-- icone-apagar.png -->
-          <span>Apagar conta</span>
-        </li>
-        <li onclick="window.location.href='../../index.html'">
-          <span class="item-ico" aria-hidden="true">🚪</span> <!-- icone-sair.png -->
-          <span>Sair para a landing</span>
-        </li>
-      </ul>
-    </nav>
-  </div>
-</header>
+  <!-- Scripts -->
+  <script src="./home.js" defer></script>
+</body>
+</html>
