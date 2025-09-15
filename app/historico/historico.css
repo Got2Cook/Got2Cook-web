@@ -243,3 +243,19 @@ footer.curva{
 .btn-footer img{ width:250%; height:250%; object-fit:contain; }
 .btn-footer.btn-central{ width:150px; height:150px; transform:translateY(-20px); }
 .btn-footer.btn-central img{ width:150%; height:150%; object-fit:contain; }
+
+/* === Calendário fixo como antes (desktop) === */
+@media (min-width:1024px){
+  .layout-historico{
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+  .lado-calendario{
+    position: sticky;
+    top: 16px;        /* distância do topo ao fixar */
+    align-self: start;
+    z-index: 2;       /* fica acima do conteúdo ao lado */
+  }
+}
