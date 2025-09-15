@@ -1,12 +1,13 @@
-// Navegação do rodapé (sem localStorage)
-(function(){
-  const $ = (sel) => document.querySelector(sel);
+function voltarPagina() {
+  // Tenta recuperar página anterior salva
+  const origem = localStorage.getItem("pagina_origem");
 
-  const voltar   = $("#btnVoltar");
-  const logo     = $("#btnLogo");
-  const geladeira= $("#btnGeladeira");
-
-  if (voltar)    voltar.addEventListener("click",   () => location.href = "../config/index.html");
-  if (logo)      logo.addEventListener("click",     () => location.href = "../minhas-receitas/index.html");
-  if (geladeira) geladeira.addEventListener("click",() => location.href = "../geladeira/index.html");
-})();
+  if (origem) {
+    window.location.href = origem; // volta exatamente para a página que o usuário estava
+    localStorage.removeItem("pagina_origem"); // limpa para não acumular
+  } else if (document.referrer) {
+    window.location.href = document.referrer; // fallback para o histórico
+  } else {
+    window.location.href = "perfil.html"; // se abriu direto, vai para perfil
+  }
+}
