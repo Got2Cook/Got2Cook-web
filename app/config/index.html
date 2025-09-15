@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Configurações - Got2Cook</title>
+  <link rel="stylesheet" href="config.css" />
+  <script src="config.js" defer></script>
+</head>
+<body>
+  <main id="conteudo" class="wrap">
+
+    <header class="topo">
+      <h1 class="titulo-pagina" aria-label="Configurações do aplicativo">CONFIGURAÇÕES</h1>
+    </header>
+
+    <!-- PERFIL -->
+    <section class="secao" aria-labelledby="sec-perfil">
+      <h2 id="sec-perfil" class="secao-titulo">Perfil</h2>
+      <ul class="lista">
+        <li class="item perfil-item">
+          <div class="perfil-box">
+            <img id="perfilAvatar" class="avatar" src="" alt="Avatar do usuário" />
+            <div class="perfil-info">
+              <p class="perfil-nome" id="perfilNome" aria-live="polite">Chef</p>
+              <p class="perfil-email" id="perfilEmail" aria-live="polite"></p>
+            </div>
+          </div>
+          <button type="button" class="btn secundario" id="btnEditarPerfil" aria-haspopup="dialog" aria-controls="modalPerfil">
+            Editar perfil
+          </button>
+        </li>
+      </ul>
+    </section>
+
+    <!-- PREFERÊNCIAS -->
+    <section class="secao" aria-labelledby="sec-preferencias">
+      <h2 id="sec-preferencias" class="secao-titulo">Preferências</h2>
+      <ul class="lista">
+        <li class="item">
+          <div class="item-col">
+            <span id="lblTema">Tema do app</span>
+            <p class="item-desc">Padrão claro ou Escuro</p>
+          </div>
+          <div class="grupo-radio" role="radiogroup" aria-labelledby="lblTema">
+            <label class="radio">
+              <input type="radio" name="tema" value="padrao" id="temaPadrao">
+              <span>Padrão</span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="tema" value="escuro" id="temaEscuro">
+              <span>Escuro</span>
+            </label>
+          </div>
+        </li>
+
+        <li class="item">
+          <div class="item-col">
+            <label for="idiomaSel" id="lblIdioma">Idioma</label>
+            <p class="item-desc">Selecione o idioma da interface</p>
+          </div>
+          <select id="idiomaSel" aria-labelledby="lblIdioma">
+            <option value="pt-BR">Português (Brasil)</option>
+            <option value="en-US">English (US)</option>
+            <option value="es-ES">Español</option>
+          </select>
+        </li>
+
+        <li class="item">
+          <div class="item-col">
+            <span id="lblUnidades">Unidades</span>
+            <p class="item-desc">Conversões e medidas</p>
+          </div>
+          <div class="grupo-radio" role="radiogroup" aria-labelledby="lblUnidades">
+            <label class="radio">
+              <input type="radio" name="unidades" value="metric" id="unidMetric">
+              <span>Métrico</span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="unidades" value="imperial" id="unidImperial">
+              <span>Imperial</span>
+            </label>
+          </div>
+        </li>
+
+        <li class="item">
+          <div class="item-col">
+            <span id="lblDensidade">Densidade da lista</span>
+            <p class="item-desc">Espaçamento entre itens</p>
+          </div>
+          <div class="grupo-radio" role="radiogroup" aria-labelledby="lblDensidade">
+            <label class="radio">
+              <input type="radio" name="densidade" value="compacta" id="densCompacta">
+              <span>Compacta</span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="densidade" value="padrao" id="densPadrao">
+              <span>Padrão</span>
+            </label>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- NOTIFICAÇÕES -->
+    <section class="secao" aria-labelledby="sec-notificacoes">
+      <h2 id="sec-notificacoes" class="secao-titulo">Notificações</h2>
+      <ul class="lista">
+        <li class="item">
+          <div class="item-col">
+            <span id="lblNotifReceitas">Avisos de novas receitas</span>
+            <p class="item-desc">Receba alertas quando novas receitas forem sugeridas</p>
+          </div>
+          <button type="button" class="switch" role="switch" aria-checked="false" aria-labelledby="lblNotifReceitas" id="swNotifReceitas"></button>
+        </li>
+
+        <li class="item">
+          <div class="item-col">
+            <span id="lblNotifAtualiz">Dicas e atualizações do app</span>
+            <p class="item-desc">Notícias, melhorias e lembretes occasionais</p>
+          </div>
+          <button type="button" class="switch" role="switch" aria-checked="false" aria-labelledby="lblNotifAtualiz" id="swNotifAtualiz"></button>
+        </li>
+      </ul>
+    </section>
+
+    <!-- PRIVACIDADE -->
+    <section class="secao" aria-labelledby="sec-priv">
+      <h2 id="sec-priv" class="secao-titulo">Privacidade</h2>
+      <ul class="lista">
+        <li class="item">
+          <div class="item-col">
+            <span id="lblPersSug">Personalizar sugestões com uso local</span>
+            <p class="item-desc">Melhora as recomendações usando dados só no seu dispositivo</p>
+          </div>
+          <button type="button" class="switch" role="switch" aria-checked="false" aria-labelledby="lblPersSug" id="swPersonalizar"></button>
+        </li>
+
+        <li class="item">
+          <div class="item-col">
+            <span id="lblMetrAnon">Enviar métricas anônimas</span>
+            <p class="item-desc">Ajude a melhorar o app. Padrão: desativado</p>
+          </div>
+          <button type="button" class="switch" role="switch" aria-checked="false" aria-labelledby="lblMetrAnon" id="swMetricas"></button>
+        </li>
+
+        <li class="item item-link">
+          <a href="#" class="link">Política de privacidade</a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- DADOS & BACKUP -->
+    <section class="secao" aria-labelledby="sec-backup">
+      <h2 id="sec-backup" class="secao-titulo">Dados &amp; Backup</h2>
+      <ul class="lista">
+        <li class="item">
+          <div class="item-col">
+            <span>Exportar configurações</span>
+            <p class="item-desc">Baixe um .json com suas preferências</p>
+          </div>
+          <button type="button" class="btn primario" id="btnExportar">Exportar</button>
+        </li>
+
+        <li class="item">
+          <div class="item-col">
+            <label for="inpImportar">Importar configurações</label>
+            <p class="item-desc">Selecione um .json válido</p>
+          </div>
+          <div class="importar">
+            <input type="file" id="inpImportar" accept="application/json" />
+            <button type="button" class="btn secundario" id="btnImportar">Importar</button>
+          </div>
+        </li>
+
+        <li class="item">
+          <div class="item-col">
+            <span>Limpar histórico</span>
+            <p class="item-desc">Remove somente itens e filtros do Histórico de Receitas</p>
+          </div>
+          <button type="button" class="btn perigo" id="btnLimparHistorico">Limpar</button>
+        </li>
+
+        <li class="item">
+          <div class="item-col">
+            <span>Restaurar padrão</span>
+            <p class="item-desc">Reseta todas as configurações desta tela</p>
+          </div>
+          <button type="button" class="btn perigo" id="btnRestaurarPadrao">Restaurar</button>
+        </li>
+      </ul>
+    </section>
+
+    <!-- SOBRE -->
+    <section class="secao" aria-labelledby="sec-sobre">
+      <h2 id="sec-sobre" class="secao-titulo">Sobre</h2>
+      <ul class="lista">
+        <li class="item">
+          <div class="item-col">
+            <span>Versão</span>
+            <p class="item-desc" id="txtVersao">1.0.0 (placeholder)</p>
+          </div>
+          <button type="button" class="btn secundario" id="btnNovidades">Ver novidades</button>
+        </li>
+        <li class="item creditos">
+          <p>Got2Cook — Feito com ❤️ por Vitória.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Respiro fixo para o rodapé -->
+    <div class="footer-spacer" aria-hidden="true"></div>
+  </main>
+
+  <!-- MODAL EDITAR PERFIL -->
+  <div class="overlay" id="overlay" hidden></div>
+  <dialog class="modal" id="modalPerfil" aria-labelledby="modalTitulo" aria-modal="true">
+    <form method="dialog" class="modal-form" id="formPerfil">
+      <h3 id="modalTitulo">Editar perfil</h3>
+
+      <label for="inpNome">Nome</label>
+      <input id="inpNome" name="nome" type="text" autocomplete="name" />
+
+      <label for="inpEmail">E-mail</label>
+      <input id="inpEmail" name="email" type="email" autocomplete="email" />
+
+      <label for="inpAvatar">URL do avatar (opcional)</label>
+      <input id="inpAvatar" name="avatar" type="url" placeholder="https://..." />
+
+      <div class="modal-acoes">
+        <button type="button" class="btn fantasma" id="btnCancelarPerfil">Cancelar</button>
+        <button type="submit" class="btn primario" id="btnSalvarPerfil">Salvar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Rodapé oficial -->
+  <footer class="curva">
+    <button class="btn-footer" id="btnVoltar" aria-label="Voltar para Home" type="button">
+      <img src="humor.png" alt="">
+    </button>
+
+    <button class="btn-footer btn-central" id="btnLogo" aria-label="Ir para Minhas Receitas" type="button">
+      <img src="logocentral.png" alt="">
+    </button>
+
+    <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira" type="button">
+      <img src="geladeira.png" alt="">
+    </button>
+  </footer>
+</body>
+</html>
