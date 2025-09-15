@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FALE CONOSCO - Got2Cook</title>
+  <link rel="stylesheet" href="fale.css" />
+</head>
+<body>
+  <main class="container" role="main">
+    <h1 class="titulo">FALE CONOSCO</h1>
+
+    <form class="form-contato" id="formFale" novalidate>
+      <label class="sr-only" for="nome">Nome</label>
+      <input id="nome" name="nome" type="text" placeholder="Seu nome" autocomplete="name" />
+
+      <label class="sr-only" for="email">E-mail</label>
+      <input id="email" name="email" type="email" required placeholder="Seu e-mail" autocomplete="email" />
+
+      <label class="sr-only" for="mensagem">Mensagem</label>
+      <textarea id="mensagem" name="mensagem" required placeholder="Digite sua mensagem..."></textarea>
+
+      <button type="submit" class="btn-enviar" id="btnEnviar">Enviar</button>
+    </form>
+
+    <div class="footer-spacer" aria-hidden="true"></div>
+  </main>
+
+  <footer class="curva" aria-label="Navegação principal">
+    <button class="btn-footer" id="btnVoltar" aria-label="Voltar para Configurações">
+      <img src="humor.png" alt="" />
+    </button>
+
+    <button class="btn-footer logo" id="btnLogo" aria-label="Ir para Minhas Receitas">
+      <img src="logocentral.png" alt="" />
+    </button>
+
+    <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira">
+      <img src="geladeira.png" alt="" />
+    </button>
+  </footer>
+
+  <script src="fale.js"></script>
+</body>
+</html>
