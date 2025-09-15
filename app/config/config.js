@@ -1,91 +1,82 @@
-console.log("JS de configurações carregado ✅");
+console.log("Configurações carregadas");
 
 document.addEventListener('DOMContentLoaded', () => {
-  // === ELEMENTOS ===
-  const lembreteHumor = document.getElementById('lembreteHumor');
-  const receitaDia = document.getElementById('receitaDia');
+  // rotas do rodapé
+  document.getElementById("btnVoltar").addEventListener("click", () => {
+    window.location.href = "../home/index.html";
+  });
+  document.getElementById("btnLogo").addEventListener("click", () => {
+    window.location.href = "../minhas-receitas/index.html";
+  });
+  document.getElementById("btnGeladeira").addEventListener("click", () => {
+    window.location.href = "../geladeira/index.html";
+  });
 
-  const btnLimparHistorico = document.getElementById('limparDados');
-  const btnLimparPreferencias = document.getElementById('limparPreferencias');
-  const btnApagarConta = document.getElementById('apagarConta');
+  // perfil → dados pessoais
+  document.getElementById('editarPerfil').addEventListener('click', () => {
+    window.location.href = "../dados-pessoais/index.html";
+  });
 
-  // Elementos do pop-up
-  const popupOverlay = document.getElementById('popupOverlay');
-  const popupMessage = document.getElementById('popupMessage');
-  const popupOk = document.getElementById('popupOk');
-  const popupCancel = document.getElementById('popupCancel');
+  // popup utilitário
+  const overlay = document.getElementById('popupOverlay');
+  const msg = document.getElementById('popupMessage');
+  const ok = document.getElementById('popupOk');
+  const cancel = document.getElementById('popupCancel');
+  let resolver = null;
+  function showPopup(texto, confirm=false){
+    msg.textContent = texto;
+    cancel.style.display = confirm ? 'inline-block' : 'none';
+    overlay.classList.add('show'); overlay.removeAttribute('hidden');
+    return new Promise(r=>resolver=r);
+  }
+  ok.addEventListener('click', ()=>{ overlay.classList.remove('show'); overlay.setAttribute('hidden',''); resolver?.(true) });
+  cancel.addEventListener('click', ()=>{ overlay.classList.remove('show'); overlay.setAttribute('hidden',''); resolver?.(false) });
 
-  popupOverlay.style.display = 'none';
-
-  let popupResolve;
-
-  function showPopup(message, type='info', confirm=false) {
-    popupMessage.textContent = message;
-    popupOk.textContent = confirm ? 'Confirmar' : 'OK';
-    popupCancel.style.display = confirm ? 'inline-block' : 'none';
-
-    popupOk.classList.toggle('danger', type==='danger');
-    popupOverlay.style.display = 'flex';
-
-    return new Promise((resolve) => {
-      popupResolve = resolve;
-    });
+  // switches acessíveis
+  function setupSwitch(id, key){
+    const el = document.getElementById(id);
+    const toggle = () => {
+      const val = el.getAttribute('aria-checked') === 'true';
+      el.setAttribute('aria-checked', String(!val));
+      state[key] = !val; save();
+    };
+    el.addEventListener('click', toggle);
+    el.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle()} });
   }
 
-  popupOk.addEventListener('click', () => {
-    popupOverlay.style.display = 'none';
-    if (popupResolve) popupResolve(true);
-  });
+  // estado
+  const state = JSON.parse(localStorage.getItem('got2cook_config')) || {};
+  // idioma
+  const idiomaSel = document.getElementById('idioma');
+  if(state.idioma) idiomaSel.value = state.idioma;
+  idiomaSel.addEventListener('change', ()=>{ state.idioma = idiomaSel.value; save() });
 
-  popupCancel.addEventListener('click', () => {
-    popupOverlay.style.display = 'none';
-    if (popupResolve) popupResolve(false);
-  });
+  // switches
+  setupSwitch('lembreteHumor', 'lembreteHumor');
+  setupSwitch('receitaDia', 'receitaDia');
+  // refletir estado inicial
+  document.getElementById('lembreteHumor').setAttribute('aria-checked', String(!!state.lembreteHumor));
+  document.getElementById('receitaDia').setAttribute('aria-checked', String(!!state.receitaDia));
 
-  // === CARREGAR CONFIG SALVA ===
-  const config = JSON.parse(localStorage.getItem('got2cook_config')) || {};
-  if (config.lembreteHumor) lembreteHumor.checked = true;
-  if (config.receitaDia) receitaDia.checked = true;
-
-  // === EVENTOS ===
-  lembreteHumor.addEventListener('change', () => {
-    config.lembreteHumor = lembreteHumor.checked;
-    salvarConfig();
-  });
-
-  receitaDia.addEventListener('change', () => {
-    config.receitaDia = receitaDia.checked;
-    salvarConfig();
-  });
-
-  btnLimparHistorico.addEventListener('click', () => {
+  // ações
+  document.getElementById('limparDados').addEventListener('click', ()=>{
     localStorage.removeItem('historicoHumor');
-    showPopup('✅ Histórico de humor limpo com sucesso!');
+    showPopup('Histórico de humor limpo!');
   });
-
-  btnLimparPreferencias.addEventListener('click', () => {
-    localStorage.removeItem('got2cook_config');    
-    localStorage.removeItem('meusGostos');         
-    localStorage.removeItem('minhasReceitas');     
-    showPopup('✅ Dados aprendidos e preferências foram limpos!');
+  document.getElementById('limparPreferencias').addEventListener('click', ()=>{
+    localStorage.removeItem('got2cook_config');
+    localStorage.removeItem('meusGostos');
+    localStorage.removeItem('minhasReceitas');
+    showPopup('Dados aprendidos limpos!');
   });
-
-  btnApagarConta.addEventListener('click', async () => {
-    const confirmDelete = await showPopup(
-      '⚠️ Tem certeza que deseja apagar sua conta? Todos os dados serão perdidos.',
-      'danger',
-      true
-    );
-    if (confirmDelete) {
+  document.getElementById('apagarConta').addEventListener('click', async ()=>{
+    const ok = await showPopup('Tem certeza? Isso apagará todos os dados.', true);
+    if(ok){
       localStorage.clear();
-      showPopup('❌ Conta apagada e dados removidos.', 'danger');
-      setTimeout(() => {
-        window.location.href = 'home.html';
-      }, 1500);
+      await showPopup('Conta apagada.');
+      window.location.href = "../home/index.html";
     }
   });
 
-  function salvarConfig() {
-    localStorage.setItem('got2cook_config', JSON.stringify(config));
-  }
+  function save(){ localStorage.setItem('got2cook_config', JSON.stringify(state)) }
 });
