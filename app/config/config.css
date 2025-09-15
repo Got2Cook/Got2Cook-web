@@ -98,3 +98,9 @@ footer.curva{
   .wrap{padding:24px 0}
   .titulo{font-size:34px}
 }
+
+#versaoApp {
+  margin:0;
+  font-weight:700;
+  color: var(--verde);
+}
