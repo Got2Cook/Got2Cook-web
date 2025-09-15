@@ -1,45 +1,67 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FALE CONOSCO - Got2Cook</title>
-  <link rel="stylesheet" href="fale.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fale Conosco - Got2Cook</title>
+  <link rel="stylesheet" href="faleconosco.css">
 </head>
 <body>
-  <main class="container" role="main">
-    <h1 class="titulo">FALE CONOSCO</h1>
 
-    <form class="form-contato" id="formFale" novalidate>
-      <label class="sr-only" for="nome">Nome</label>
-      <input id="nome" name="nome" type="text" placeholder="Seu nome" autocomplete="name" />
+  <div class="container">
 
-      <label class="sr-only" for="email">E-mail</label>
-      <input id="email" name="email" type="email" required placeholder="Seu e-mail" autocomplete="email" />
+    <!-- Conteúdo principal -->
+    <h1 class="titulo">Fale Conosco</h1>
+    <p class="descricao">
+      Queremos ouvir você! Envie dúvidas, sugestões ou qualquer problema que encontrou no app.
+    </p>
 
-      <label class="sr-only" for="mensagem">Mensagem</label>
-      <textarea id="mensagem" name="mensagem" required placeholder="Digite sua mensagem..."></textarea>
+    <!-- Informações de contato -->
+    <div class="contatos">
+      <p><strong>📧 E-mail:</strong> suporte@got2cook.com</p>
+      <p><strong>📞 Telefone:</strong> (00) 00000-0000</p>
+    </div>
 
-      <button type="submit" class="btn-enviar" id="btnEnviar">Enviar</button>
+    <!-- Formulário de contato -->
+    <form class="form-contato">
+      <input type="text" name="nome" placeholder="Seu nome (opcional)">
+      <input type="email" name="email" placeholder="Seu e-mail" required>
+      <textarea name="mensagem" placeholder="Digite sua mensagem..." required></textarea>
+
+      <!-- Botão que abre o app de e-mail -->
+      <a href="mailto:suporte@got2cook.com?subject=Contato%20Got2Cook" class="btn-enviar">
+        Enviar Mensagem
+      </a>
     </form>
 
-    <div class="footer-spacer" aria-hidden="true"></div>
-  </main>
+    <!-- Rodapé padrão -->
+    <footer class="curva">
+      <button class="btn-footer voltar" id="btnVoltar">
+        <img src="humor.png" alt="Voltar" />
+      </button>
+      <button class="btn-footer logo" id="btnLogo">
+        <img src="logocentral.png" alt="Logo" />
+      </button>
+      <button class="btn-footer geladeira" id="btnGeladeira">
+        <img src="geladeira.png" alt="Geladeira" />
+      </button>
+    </footer>
 
-  <footer class="curva" aria-label="Navegação principal">
-    <button class="btn-footer" id="btnVoltar" aria-label="Voltar para Configurações">
-      <img src="humor.png" alt="" />
-    </button>
+     <script>
+       document.getElementById("btnVoltar").addEventListener("click", () => {
+         window.location.href = "humor.html";
+       });
 
-    <button class="btn-footer logo" id="btnLogo" aria-label="Ir para Minhas Receitas">
-      <img src="logocentral.png" alt="" />
-    </button>
+       document.getElementById("btnLogo").addEventListener("click", () => {
+         window.location.href = "home.html";
+       });
 
-    <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira">
-      <img src="geladeira.png" alt="" />
-    </button>
-  </footer>
+       document.getElementById("btnGeladeira").addEventListener("click", () => {
+         window.location.href = "minhageladeira.html";
+       });
+     </script>
 
-  <script src="fale.js"></script>
+  </div>
+
 </body>
 </html>
