@@ -59,29 +59,30 @@ body {
   padding: 16px;
   box-shadow: 0 6px 14px rgba(0,0,0,.08);
 
-  perspective: 1000px;         /* 3D para a aba */
-  overflow: hidden;             /* esconde campos quando "dentro" do envelope */
+  perspective: 1000px;     /* 3D para a aba */
+  overflow: hidden;         /* esconde campos quando "dentro" do envelope */
   transform-origin: center;
   will-change: transform, opacity;
 }
 
-/* Aba do envelope (triângulo) */
+/* Aba do envelope (inicialmente INVISÍVEL e recolhida) */
 .form-contato::before{
   content:"";
   position:absolute;
   left: 50%;
   top: -2px;
-  transform: translateX(-50%) rotateX(0deg);
+  transform: translateX(-50%) rotateX(180deg); /* recolhida */
   width: 100%;
   height: 54%;
   background: linear-gradient(#7b7190,#492f70);
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   transform-origin: top center;
-  transition: transform .5s ease;
+  transition: transform .5s ease, opacity .5s ease;
   pointer-events: none;
+  opacity: 0; /* escondida até enviar */
 }
 
-/* Frente do envelope (capa que sobe por cima dos campos) */
+/* “Capa” frontal (sobe por cima dos campos só ao enviar) */
 .form-contato::after{
   content:"";
   position:absolute;
@@ -91,10 +92,11 @@ body {
   border-top: 2px solid #492f70;
   clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
   transform: translateY(100%);
-  transition: transform .45s ease .25s;
+  transition: transform .45s ease .25s, opacity .25s ease;
   pointer-events: none;
   border-bottom-left-radius: 18px;
   border-bottom-right-radius: 18px;
+  opacity: 0; /* invisível até enviar */
 }
 
 /* Campos */
@@ -125,12 +127,15 @@ body {
 }
 .btn-enviar:hover { background-color: #7b7190; transform: translateY(-2px); }
 
-/* Estados: fechando, voando e voltando */
-.form-contato.is-closing::before{           /* aba desce e fecha */
-  transform: translateX(-50%) rotateX(180deg);
+/* ------- Estados da animação ------- */
+/* 1) Fechando: some campos, sobe a capa e aparece a aba fechando */
+.form-contato.is-closing::before{
+  transform: translateX(-50%) rotateX(0deg); /* fecha */
+  opacity: 1;
 }
-.form-contato.is-closing::after{            /* capa sobe por cima dos campos */
+.form-contato.is-closing::after{
   transform: translateY(0%);
+  opacity: 1;
 }
 .form-contato.is-closing > input,
 .form-contato.is-closing > textarea,
@@ -141,22 +146,22 @@ body {
   transition: transform .25s ease, opacity .25s ease, filter .25s ease;
 }
 
-/* Envelope "voando" para fora */
+/* 2) Envelope “voando” para a lateral */
 .form-contato.is-flying{
-  animation: env-fly-out .8s ease forwards;
+  animation: env-fly-side .85s ease forwards;
 }
-@keyframes env-fly-out{
+@keyframes env-fly-side{
   0%   { transform: translate(0,0) scale(1); opacity:1; }
-  60%  { transform: translate(48px,-72px) scale(.92); }
-  100% { transform: translate(160px,-240px) scale(.62); opacity:0; }
+  50%  { transform: translate(10vw,-4vh) scale(.96); }
+  100% { transform: translate(120vw,-8vh) scale(.92); opacity:0; } /* sai pela direita */
 }
 
-/* Volta ao lugar, aberto */
+/* 3) Volta ao lugar, aberto e vazio */
 .form-contato.is-returning{
   animation: env-return-in .6s ease forwards;
 }
 @keyframes env-return-in{
-  0%   { transform: translate(-18px,-18px) scale(.96); opacity:0; }
+  0%   { transform: translate(-2vw,-2vh) scale(.96); opacity:0; }
   100% { transform: translate(0,0) scale(1); opacity:1; }
 }
 
