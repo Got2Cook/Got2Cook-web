@@ -33,31 +33,68 @@ body {
   padding: 0 10px;
 }
 
-/* Contatos em container branco */
+/* Contatos */
 .contatos {
-  /* Suba sua imagem de caixa de correio e ajuste o caminho abaixo, se quiser ilustrar */
-  --mailbox-img: url("../assets/mailbox.png");
-  background: white;
+  background: #fff;
   border-radius: 20px;
   padding: 15px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,.1);
   width: 80%;
   text-align: center;
 }
+.contatos p { margin: 5px 0; color: #492f70; font-size: 15px; }
 
-.contatos p {
-  margin: 5px 0;
-  color: #492f70;
-  font-size: 15px;
-}
-
-/* Formulário */
+/* Formulário (envelope) */
 .form-contato {
+  width: 90%;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 90%;
+
+  position: relative;
+  background: #fff;
+  border: 2px solid #492f70;
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 6px 14px rgba(0,0,0,.08);
+
+  perspective: 1000px;         /* 3D para a aba */
+  overflow: hidden;             /* esconde campos quando "dentro" do envelope */
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+/* Aba do envelope (triângulo) */
+.form-contato::before{
+  content:"";
+  position:absolute;
+  left: 50%;
+  top: -2px;
+  transform: translateX(-50%) rotateX(0deg);
+  width: 100%;
+  height: 54%;
+  background: linear-gradient(#7b7190,#492f70);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  transition: transform .5s ease;
+  pointer-events: none;
+}
+
+/* Frente do envelope (capa que sobe por cima dos campos) */
+.form-contato::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:0;
+  height:58%;
+  background:#fff;
+  border-top: 2px solid #492f70;
+  clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
+  transform: translateY(100%);
+  transition: transform .45s ease .25s;
+  pointer-events: none;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
 }
 
 /* Campos */
@@ -71,32 +108,59 @@ body {
   box-sizing: border-box;
   background: #fff;
 }
-
-.form-contato textarea {
-  min-height: 100px;
-  resize: none;
-}
+.form-contato textarea { min-height: 100px; resize: none; }
 
 /* Botão enviar */
 .btn-enviar {
   display: block;
   background-color: #492f70;
-  color: white;
+  color: #fff;
   text-decoration: none;
   text-align: center;
   padding: 12px;
   border-radius: 30px;
   font-weight: bold;
   margin-top: 10px;
-  transition: 0.2s;
+  transition: .2s;
+}
+.btn-enviar:hover { background-color: #7b7190; transform: translateY(-2px); }
+
+/* Estados: fechando, voando e voltando */
+.form-contato.is-closing::before{           /* aba desce e fecha */
+  transform: translateX(-50%) rotateX(180deg);
+}
+.form-contato.is-closing::after{            /* capa sobe por cima dos campos */
+  transform: translateY(0%);
+}
+.form-contato.is-closing > input,
+.form-contato.is-closing > textarea,
+.form-contato.is-closing > .btn-enviar{
+  transform: translateY(10px) scale(.98);
+  opacity: 0;
+  filter: blur(1px);
+  transition: transform .25s ease, opacity .25s ease, filter .25s ease;
 }
 
-.btn-enviar:hover {
-  background-color: #7b7190;
-  transform: translateY(-2px);
+/* Envelope "voando" para fora */
+.form-contato.is-flying{
+  animation: env-fly-out .8s ease forwards;
+}
+@keyframes env-fly-out{
+  0%   { transform: translate(0,0) scale(1); opacity:1; }
+  60%  { transform: translate(48px,-72px) scale(.92); }
+  100% { transform: translate(160px,-240px) scale(.62); opacity:0; }
 }
 
-/* Rodapé padrão */
+/* Volta ao lugar, aberto */
+.form-contato.is-returning{
+  animation: env-return-in .6s ease forwards;
+}
+@keyframes env-return-in{
+  0%   { transform: translate(-18px,-18px) scale(.96); opacity:0; }
+  100% { transform: translate(0,0) scale(1); opacity:1; }
+}
+
+/* Rodapé curvo oficial */
 footer.curva {
   width: 100%;
   height: 70px;
@@ -104,149 +168,40 @@ footer.curva {
   border-top-left-radius: 100% 50%;
   border-top-right-radius: 100% 50%;
   position: fixed;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  bottom: 0; left: 0;
+  display: flex; justify-content: center; align-items: center;
   gap: 40px;
   z-index: 10;
 }
-
-.btn-footer {
-  background-color: transparent;
-  border: none;
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  cursor: pointer;
-  transform: translateY(-10px);
+.btn-footer{
+  background: transparent; border: none; border-radius: 50%;
+  width: 55px; height: 55px; padding: 0;
+  display: flex; justify-content: center; align-items: center;
+  overflow: hidden; cursor: pointer; transform: translateY(-10px);
 }
+.btn-footer img{ width: 250%; height: 250%; object-fit: contain; }
+.btn-footer.logo{ width:150px; height:150px; transform: translateY(-20px); }
+.btn-footer.logo img{ width:150%; height:150%; object-fit: contain; }
 
-.btn-footer img {
-  width: 250%;
-  height: 250%;
-  object-fit: contain;
-}
-
-.btn-footer.logo {
-  width: 150px;
-  height: 150px;
-  transform: translateY(-20px);
-}
-
-.btn-footer.logo img {
-  width: 150%;
-  height: 150%;
-  object-fit: contain;
-}
-
-/* ===== Desktop: contatos = mesma altura do formulário + imagem na base ===== */
-@media (min-width: 992px) {
+/* Desktop: contatos = mesma altura do formulário */
+@media (min-width: 992px){
   .container{
     max-width: 960px;
     padding: 32px;
-    padding-bottom: 140px; /* respiro pro rodapé fixo */
-
+    padding-bottom: 140px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
       "titulo titulo"
       "descricao descricao"
       "contatos form";
-    column-gap: 24px;
-    row-gap: 16px;
-    align-items: stretch; /* força mesma altura */
+    column-gap: 24px; row-gap: 16px;
+    align-items: stretch; /* iguala altura */
   }
-
-  .titulo{ grid-area: titulo; text-align: center; font-size: 42px; }
-  .descricao{ grid-area: descricao; text-align: center; font-size: 18px; max-width: 80%; justify-self: center; }
-
-  .contatos{
-    grid-area: contatos;
-    width: 100%;
-    align-self: stretch;
-    padding-bottom: 170px; /* espaço p/ imagem da caixa na base */
-    background-image: var(--mailbox-img);
-    background-repeat: no-repeat;
-    background-position: center calc(100% - 12px);
-    background-size: 70% auto;
-  }
-
-  .form-contato{
-    grid-area: form;
-    width: 100%;
-    align-self: stretch;
-  }
-}
-
-/* ===== EFEITO CARTA (sem alterar seu HTML) ===== */
-.form-contato{
-  position: relative;
-  border: 2px solid #492f70;
-  border-radius: 18px;
-  background: #fff;
-  padding: 16px;
-  box-shadow: 0 6px 14px rgba(0,0,0,.08);
-  transform-origin: center;
-  will-change: transform, opacity;
-}
-
-/* Aba (tampa) da carta */
-.form-contato::before{
-  content:"";
-  position:absolute;
-  left: 50%;
-  top: -14px;
-  transform: translateX(-50%) rotate(0deg);
-  width: 220px;
-  height: 26px;
-  background:#492f70;
-  border-radius: 12px 12px 0 0;
-  box-shadow: 0 2px 6px rgba(0,0,0,.15);
-  transform-origin: center bottom;
-  transition: transform .45s ease;
-}
-
-/* Vinco/volume interno */
-.form-contato::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius: 18px;
-  pointer-events:none;
-  box-shadow: inset 0 14px 22px rgba(0,0,0,.05);
-}
-
-/* Estados de animação */
-.form-contato.is-closing::before{
-  transform: translateX(-50%) rotate(-180deg); /* fecha a aba */
-}
-
-.form-contato.is-flying{
-  animation: g2c-fly-out .8s ease forwards;
-}
-
-.form-contato.is-returning{
-  animation: g2c-return-in .6s ease forwards;
-}
-
-/* Trajetória de saída */
-@keyframes g2c-fly-out{
-  0%   { transform: translate(0,0) scale(1); opacity:1; }
-  60%  { transform: translate(48px,-72px) scale(.92); }
-  100% { transform: translate(160px,-240px) scale(.62); opacity:0; }
-}
-
-/* Reaparecer aberta */
-@keyframes g2c-return-in{
-  0%   { transform: translate(-18px,-18px) scale(.96); opacity:0; }
-  100% { transform: translate(0,0) scale(1); opacity:1; }
+  .titulo{ grid-area: titulo; text-align:center; font-size:42px; }
+  .descricao{ grid-area: descricao; text-align:center; font-size:18px; max-width:80%; justify-self:center; }
+  .contatos{ grid-area: contatos; width:100%; align-self:stretch; padding-bottom: 24px; }
+  .form-contato{ grid-area: form; width:100%; align-self:stretch; }
 }
 
 /* Acessibilidade */
