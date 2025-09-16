@@ -1,3 +1,4 @@
+/* === base original (igual ao seu) === */
 body {
   font-family: 'Poppins', Arial, sans-serif;
   background-color: #c0ffa5;
@@ -35,13 +36,15 @@ body {
 
 /* Contatos em container branco */
 .contatos {
-  background: white;
+  --mailbox-img: url("../assets/mailbox.png"); /* troque o caminho quando subir sua arte */
+  background: #fff;
   border-radius: 20px;
   padding: 15px;
   margin-bottom: 20px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   width: 80%;
   text-align: center;
+  /* no mobile, mantém seu comportamento original */
 }
 
 .contatos p {
@@ -58,6 +61,42 @@ body {
   width: 90%;
 }
 
+/* “Caixa de correio” visual (sem mudar seu HTML) */
+.form-contato {
+  position: relative;
+  background: #fff;
+  border: 2px solid #492f70;
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0,0,0,.08);
+}
+
+/* Tampa da caixa (abre/fecha) */
+.form-contato::before{
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%) rotate(0deg);
+  width: 200px;
+  height: 22px;
+  background: #492f70;
+  border-radius: 10px 10px 0 0;
+  transition: transform .5s ease;
+  transform-origin: center bottom;
+}
+
+/* Frente da caixa (bocão) para dar profundidade */
+.form-contato::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  pointer-events: none;
+  box-shadow: inset 0 10px 20px rgba(0,0,0,.05);
+}
+
+/* Campos (mantém seu estilo) */
 .form-contato input,
 .form-contato textarea {
   width: 100%;
@@ -66,6 +105,7 @@ body {
   border: 2px solid #492f70;
   font-size: 14px;
   box-sizing: border-box;
+  background: #fff;
 }
 
 .form-contato textarea {
@@ -73,7 +113,7 @@ body {
   resize: none;
 }
 
-/* Botão enviar */
+/* Botão enviar (seu) */
 .btn-enviar {
   display: block;
   background-color: #492f70;
@@ -92,7 +132,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* Rodapé padrão */
+/* Rodapé padrão (seu) */
 footer.curva {
   width: 100%;
   height: 70px;
@@ -105,7 +145,7 @@ footer.curva {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 40px
+  gap: 40px;
   z-index: 10;
 }
 
@@ -142,22 +182,15 @@ footer.curva {
   object-fit: contain;
 }
 
-/* ====== Desktop (mantém mobile 100% igual) ====== */
+/* ===== Desktop: iguala alturas + imagem da caixa de correio no .contatos ===== */
 @media (min-width: 992px) {
-  /* Mais espaço lateral e respiro extra para o rodapé fixo */
   .container{
     max-width: 960px;
     padding: 32px;
-    padding-bottom: 140px; /* evita sobrepor o rodapé */
+    padding-bottom: 140px; /* respiro pro rodapé fixo */
     box-sizing: border-box;
-  }
 
-  /* Título e texto levemente maiores */
-  .titulo{ font-size: 42px; }
-  .descricao{ font-size: 18px; max-width: 80%; }
-
-  /* Coloca contatos e formulário lado a lado mantendo a ordem do HTML */
-  .container{
+    /* grid: contatos e formulário lado a lado, mesma linha */
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
@@ -166,26 +199,51 @@ footer.curva {
       "contatos form";
     column-gap: 24px;
     row-gap: 16px;
-    justify-items: center;
+    align-items: stretch; /* <<< força MESMA ALTURA */
   }
-  .titulo{ grid-area: titulo; text-align: center; }
-  .descricao{ grid-area: descricao; text-align: center; }
+
+  .titulo{ grid-area: titulo; text-align: center; font-size: 42px; }
+  .descricao{ grid-area: descricao; text-align: center; font-size: 18px; max-width: 80%; justify-self: center; }
 
   .contatos{
     grid-area: contatos;
     width: 100%;
-    align-self: start;
+    align-self: stretch;      /* <<< iguala a altura */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* espaço interno extra inferior para a imagem caber */
+    padding-bottom: 170px;
+
+    /* imagem da caixa de correio no “espaço branco” inferior */
+    background-image: var(--mailbox-img);
+    background-repeat: no-repeat;
+    background-position: center calc(100% - 12px);
+    background-size: 70% auto; /* ajuste conforme sua arte */
   }
 
   .form-contato{
     grid-area: form;
     width: 100%;
-    align-self: start;
+    align-self: stretch;      /* <<< iguala a altura */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
-  /* Reforça o layout do rodapé no desktop (sem alterar o mobile) */
-  footer.curva{
-    gap: 40px;
-    z-index: 10;
-  }
+  footer.curva{ gap: 40px; }
+}
+
+/* ===== Animação de “fechar a caixa” ao enviar ===== */
+.form-contato.is-sent::before{
+  transform: translateX(-50%) rotate(-180deg); /* tampa fecha */
+}
+
+.form-contato.is-sent{
+  animation: mailbox-bounce .6s ease forwards;
+}
+@keyframes mailbox-bounce{
+  0% { transform: translateY(0) }
+  40%{ transform: translateY(-6px) }
+  100%{ transform: translateY(0) }
 }
