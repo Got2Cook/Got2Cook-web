@@ -1,4 +1,4 @@
-// Navegação do rodapé (mantida)
+// Navegação rodapé
 document.getElementById("btnVoltar")?.addEventListener("click", () => {
   window.location.href = "humor.html";
 });
@@ -9,7 +9,7 @@ document.getElementById("btnGeladeira")?.addEventListener("click", () => {
   window.location.href = "minhageladeira.html";
 });
 
-// Envelope animado (restaurado)
+// Envelope animado
 (function(){
   const form = document.querySelector('.form-contato');
   const btn  = document.querySelector('.btn-enviar');
@@ -19,31 +19,22 @@ document.getElementById("btnGeladeira")?.addEventListener("click", () => {
 
   btn.addEventListener('click', function(e){
     e.preventDefault();
-
-    // 1) fecha o envelope (campos somem + aba aparece e fecha)
     form.classList.add('is-closing');
 
-    // 2) dispara o mailto enquanto fecha (não bloqueia animação)
     setTimeout(()=>{ if(mailto) window.location.href = mailto; }, 300);
-
-    // 3) envelope voa para a direita
     setTimeout(()=>{ form.classList.add('is-flying'); }, 400);
 
-    // 4) após o voo, limpa e volta aberto
     setTimeout(()=>{
       try{ form.reset(); }catch(_){}
       form.classList.remove('is-closing','is-flying');
-
-      // reflow para reiniciar animações
       void form.offsetWidth;
-
       form.classList.add('is-returning');
       setTimeout(()=>{ form.classList.remove('is-returning'); }, 1000);
-    }, 1800); // sincronizado com o CSS (1.5s voo + início/fechamento)
+    }, 1800);
   });
 })();
 
-// Efeito sutil no botão WhatsApp (opcional)
+// Efeito WhatsApp
 const btnWhats = document.querySelector(".btn-whatsapp");
 if (btnWhats) {
   btnWhats.addEventListener("mouseenter", () => {
