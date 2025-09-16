@@ -1,65 +1,67 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fale Conosco - Got2Cook</title>
-  <link rel="stylesheet" href="fale.css">
+  <link rel="stylesheet" href="fale.css" />
 </head>
 <body>
-
   <div class="container">
-
     <!-- Título e subtítulo -->
     <h1 class="titulo">Fale Conosco</h1>
-    <p class="descricao">
-      Queremos ouvir você! Envie dúvidas, sugestões ou qualquer problema que encontrou no app.
-    </p>
+    <p class="descricao">Queremos ouvir você! Envie dúvidas, sugestões ou qualquer problema que encontrou no app.</p>
 
-    <!-- Container moderno de contato -->
+    <!-- Container de contato moderno (mesmo formato das linhas de e-mail/telefone) -->
     <div class="contatos">
-      <p><strong>📧 E-mail:</strong> suporte@got2cook.com</p>
-      <p><strong>📞 Telefone:</strong> (00) 00000-0000</p>
-
-      <!-- Redes sociais -->
-      <div class="redes">
-        <a href="#"><img src="instagram.png" alt="Instagram"></a>
-        <a href="#"><img src="facebook.png" alt="Facebook"></a>
-        <a href="#"><img src="tiktok.png" alt="TikTok"></a>
+      <div class="linha">
+        <span class="ico" aria-hidden="true">📧</span>
+        <span class="texto"><strong>E-mail:</strong> suporte@got2cook.com</span>
+      </div>
+      <div class="linha">
+        <span class="ico" aria-hidden="true">📞</span>
+        <span class="texto"><strong>Telefone:</strong> (00) 00000-0000</span>
+      </div>
+      <hr class="sep" aria-hidden="true" />
+      <div class="linha">
+        <span class="ico" aria-hidden="true">📷</span>
+        <span class="texto"><strong>Instagram:</strong> @got2cookapp</span>
+      </div>
+      <div class="linha">
+        <span class="ico" aria-hidden="true">👍</span>
+        <span class="texto"><strong>Facebook:</strong> /got2cook</span>
+      </div>
+      <div class="linha">
+        <span class="ico" aria-hidden="true">🎵</span>
+        <span class="texto"><strong>TikTok:</strong> @got2cook</span>
       </div>
 
-      <!-- Botão WhatsApp -->
-      <a href="https://wa.me/5500000000000" class="btn-whatsapp">Falar no WhatsApp</a>
-
-      <!-- Slogan -->
+      <a href="https://wa.me/5500000000000" class="btn-whatsapp" aria-label="Falar no WhatsApp">Falar no WhatsApp</a>
       <p class="slogan">🍳 Cozinhar com humor é mais gostoso ✨</p>
     </div>
 
-    <!-- Formulário (envelope animado) -->
-    <form class="form-contato">
-      <input type="text" name="nome" placeholder="Seu nome (opcional)">
-      <input type="email" name="email" placeholder="Seu e-mail" required>
+    <!-- Formulário (envelope) -->
+    <form class="form-contato" novalidate>
+      <input type="text" name="nome" placeholder="Seu nome (opcional)" autocomplete="name" />
+      <input type="email" name="email" placeholder="Seu e-mail" required autocomplete="email" />
       <textarea name="mensagem" placeholder="Digite sua mensagem..." required></textarea>
-      <a href="mailto:suporte@got2cook.com?subject=Contato%20Got2Cook" class="btn-enviar">
-        Enviar Mensagem
-      </a>
+      <a href="mailto:suporte@got2cook.com?subject=Contato%20Got2Cook" class="btn-enviar">Enviar Mensagem</a>
     </form>
 
-    <!-- Rodapé -->
+    <!-- Rodapé curvo oficial -->
     <footer class="curva">
-      <button class="btn-footer voltar" id="btnVoltar">
-        <img src="humor.png" alt="Voltar" />
+      <button class="btn-footer voltar" id="btnVoltar" aria-label="Voltar">
+        <img src="humor.png" alt="" />
       </button>
-      <button class="btn-footer logo" id="btnLogo">
-        <img src="logocentral.png" alt="Logo" />
+      <button class="btn-footer logo" id="btnLogo" aria-label="Home">
+        <img src="logocentral.png" alt="" />
       </button>
-      <button class="btn-footer geladeira" id="btnGeladeira">
-        <img src="geladeira.png" alt="Geladeira" />
+      <button class="btn-footer geladeira" id="btnGeladeira" aria-label="Minha Geladeira">
+        <img src="geladeira.png" alt="" />
       </button>
     </footer>
-
-    <script src="fale.js"></script>
   </div>
 
+  <script src="fale.js"></script>
 </body>
 </html>
