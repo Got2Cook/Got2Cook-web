@@ -10,31 +10,42 @@
 
   <div class="container">
 
-    <!-- Conteúdo principal -->
+    <!-- Título e subtítulo -->
     <h1 class="titulo">Fale Conosco</h1>
     <p class="descricao">
       Queremos ouvir você! Envie dúvidas, sugestões ou qualquer problema que encontrou no app.
     </p>
 
-    <!-- Informações de contato -->
+    <!-- Container moderno de contato -->
     <div class="contatos">
       <p><strong>📧 E-mail:</strong> suporte@got2cook.com</p>
       <p><strong>📞 Telefone:</strong> (00) 00000-0000</p>
+
+      <!-- Redes sociais -->
+      <div class="redes">
+        <a href="#"><img src="instagram.png" alt="Instagram"></a>
+        <a href="#"><img src="facebook.png" alt="Facebook"></a>
+        <a href="#"><img src="tiktok.png" alt="TikTok"></a>
+      </div>
+
+      <!-- Botão WhatsApp -->
+      <a href="https://wa.me/5500000000000" class="btn-whatsapp">Falar no WhatsApp</a>
+
+      <!-- Slogan -->
+      <p class="slogan">🍳 Cozinhar com humor é mais gostoso ✨</p>
     </div>
 
-    <!-- Formulário de contato (envelope) -->
+    <!-- Formulário (envelope animado) -->
     <form class="form-contato">
       <input type="text" name="nome" placeholder="Seu nome (opcional)">
       <input type="email" name="email" placeholder="Seu e-mail" required>
       <textarea name="mensagem" placeholder="Digite sua mensagem..." required></textarea>
-
-      <!-- Botão que abre o app de e-mail -->
       <a href="mailto:suporte@got2cook.com?subject=Contato%20Got2Cook" class="btn-enviar">
         Enviar Mensagem
       </a>
     </form>
 
-    <!-- Rodapé padrão -->
+    <!-- Rodapé -->
     <footer class="curva">
       <button class="btn-footer voltar" id="btnVoltar">
         <img src="humor.png" alt="Voltar" />
@@ -47,22 +58,7 @@
       </button>
     </footer>
 
-    <!-- Navegação original (mantida) -->
-    <script>
-      document.getElementById("btnVoltar").addEventListener("click", () => {
-        window.location.href = "humor.html";
-      });
-      document.getElementById("btnLogo").addEventListener("click", () => {
-        window.location.href = "home.html";
-      });
-      document.getElementById("btnGeladeira").addEventListener("click", () => {
-        window.location.href = "minhageladeira.html";
-      });
-    </script>
-
-    <!-- Script da animação do envelope -->
     <script src="fale.js"></script>
-
   </div>
 
 </body>
