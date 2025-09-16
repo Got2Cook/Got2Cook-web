@@ -1,177 +1,240 @@
-body {
-  font-family: 'Poppins', Arial, sans-serif;
-  background-color: #c0ffa5;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
+/* Base */
+body{
+  font-family:'Poppins', Arial, sans-serif;
+  background:#c0ffa5;
+  margin:0;
+  padding:0;
+  display:flex;
+  justify-content:center;
+}
+.container{
+  width:100%;
+  max-width:600px;
+  min-height:100vh;
+  padding:20px;
+  box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
-.container {
-  width: 100%;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-  box-sizing: border-box;
+/* Cabeçalho compacto */
+.titulo{
+  color:#225c18;
+  font-size:35px;
+  margin-top:10px;
+  margin-bottom:4px;
+}
+.descricao{
+  font-size:16px;
+  color:#492f70;
+  text-align:center;
+  margin-bottom:20px;
+  padding:0 10px;
 }
 
-.titulo {
-  color: #225c18;
-  font-size: 35px;
-  margin-top: 10px;
-  margin-bottom: 4px;
+/* Contatos moderno (mesmo “visual de linha” de e-mail/telefone) */
+.contatos{
+  width:90%;
+  background:#fff;
+  border-radius:20px;
+  box-shadow:0 4px 8px rgba(0,0,0,.1);
+  padding:16px;
+  margin-bottom:12px;
+
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+
+  /* Para igualar a altura ao formulário quando lado a lado */
+  align-self:stretch;
+}
+.linha{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#492f70;
+  font-size:15px;
+}
+.linha .ico{ font-size:18px; line-height:1; }
+.sep{
+  border:none;
+  border-top:1.5px dashed #e4e0ee;
+  margin:4px 0;
 }
 
-.descricao {
-  font-size: 16px;
-  color: #492f70;
-  text-align: center;
-  margin-bottom: 20px;
-  padding: 0 10px;
+/* Botão WhatsApp e slogan */
+.btn-whatsapp{
+  align-self:center;
+  display:inline-block;
+  background:#25d366;
+  color:#fff;
+  text-decoration:none;
+  font-weight:bold;
+  padding:10px 16px;
+  border-radius:25px;
+  transition:background .2s, transform .2s, box-shadow .2s;
+  margin-top:6px;
+}
+.btn-whatsapp:hover{
+  background:#1ebc57;
+  transform:translateY(-2px);
+  box-shadow:0 0 12px rgba(37,211,102,.45);
+}
+.slogan{
+  font-size:14px;
+  font-style:italic;
+  color:#225c18;
+  text-align:center;
+  margin:6px 0 0;
 }
 
-/* Contatos moderno */
-.contatos {
-  background: #fff;
-  border-radius: 20px;
-  padding: 20px;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,.1);
-  width: 90%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 300px; /* mesma base da carta */
-}
+/* Formulário (envelope restaurado) */
+.form-contato{
+  width:90%;
+  background:#fff;
+  border:2px solid #492f70;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 6px 14px rgba(0,0,0,.08);
 
-.contatos p { margin: 6px 0; color: #492f70; font-size: 15px; }
+  display:flex;
+  flex-direction:column;
+  gap:10px;
 
-/* Redes sociais */
-.redes {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin: 10px 0;
-}
-.redes img {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  transition: transform .2s;
-}
-.redes img:hover { transform: scale(1.15); }
+  position:relative;
+  overflow:hidden;          /* esconde os campos quando “fechando” */
+  perspective:1000px;       /* efeito 3D da aba */
+  transform-origin:center;
+  will-change:transform, opacity;
 
-/* Botão WhatsApp */
-.btn-whatsapp {
-  display: inline-block;
-  background: #25d366;
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  padding: 10px 16px;
-  border-radius: 25px;
-  margin: 10px auto;
-  transition: background .2s, transform .2s;
+  /* esticar igual ao .contatos no desktop */
+  align-self:stretch;
 }
-.btn-whatsapp:hover {
-  background: #1ebc57;
-  transform: translateY(-2px);
-}
+/* Aba do envelope: invisível até enviar */
+.form-contato::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-2px;
+  width:100%;
+  height:54%;
+  transform:translateX(-50%) rotateX(180deg); /* recolhida */
+  transform-origin:top center;
+  opacity:0;                                   /* invisível */
+  transition:transform 1s ease, opacity 1s ease; /* movimento lento */
+  pointer-events:none;
 
-/* Slogan */
-.slogan {
-  font-size: 14px;
-  font-style: italic;
-  color: #225c18;
-  margin-top: auto;
+  /* cor da aba (sem linha no meio) */
+  background:linear-gradient(#7b7190,#492f70);
+  clip-path:polygon(0 0,100% 0,50% 100%);
 }
-
-/* Formulário (envelope animado simplificado) */
-.form-contato {
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background: #fff;
-  border: 2px solid #492f70;
-  border-radius: 18px;
-  padding: 16px;
-  box-shadow: 0 6px 14px rgba(0,0,0,.08);
-}
-
+/* Campos do formulário */
 .form-contato input,
-.form-contato textarea {
-  width: 100%;
-  padding: 10px;
-  border-radius: 15px;
-  border: 2px solid #492f70;
-  font-size: 14px;
-  box-sizing: border-box;
-  background: #fff;
+.form-contato textarea{
+  width:100%;
+  padding:10px;
+  border:2px solid #492f70;
+  border-radius:15px;
+  background:#fff;
+  font-size:14px;
+  box-sizing:border-box;
 }
-.form-contato textarea { min-height: 100px; resize: none; }
-
-.btn-enviar {
-  display: block;
-  background-color: #492f70;
-  color: #fff;
-  text-decoration: none;
-  text-align: center;
-  padding: 12px;
-  border-radius: 30px;
-  font-weight: bold;
-  margin-top: 10px;
-  transition: .2s;
+.form-contato textarea{ min-height:100px; resize:none; }
+/* Botão enviar */
+.btn-enviar{
+  display:block;
+  background:#492f70;
+  color:#fff;
+  text-align:center;
+  text-decoration:none;
+  padding:12px;
+  border-radius:30px;
+  font-weight:bold;
+  margin-top:10px;
+  transition:.2s;
 }
-.btn-enviar:hover { background-color: #7b7190; transform: translateY(-2px); }
+.btn-enviar:hover{ background:#7b7190; transform:translateY(-2px); }
 
-/* Rodapé curvo */
-footer.curva {
-  width: 100%;
-  height: 70px;
-  background-color: #7b7190;
-  border-top-left-radius: 100% 50%;
-  border-top-right-radius: 100% 50%;
-  position: fixed;
-  bottom: 0; left: 0;
-  display: flex; justify-content: center; align-items: center;
-  gap: 40px;
-  z-index: 10;
+/* ---------- Estados do envelope ---------- */
+/* 1) Fechando: aba aparece e fecha; campos somem suavemente */
+.form-contato.is-closing::before{
+  transform:translateX(-50%) rotateX(0deg);
+  opacity:1;
+}
+.form-contato.is-closing > input,
+.form-contato.is-closing > textarea,
+.form-contato.is-closing > .btn-enviar{
+  transform:translateY(10px) scale(.98);
+  opacity:0;
+  filter:blur(1px);
+  transition:transform .4s ease, opacity .4s ease, filter .4s ease;
+}
+/* 2) Voo lateral (mais lento) */
+.form-contato.is-flying{
+  animation:env-fly-side 1.5s ease forwards;
+}
+@keyframes env-fly-side{
+  0%   { transform:translate(0,0) scale(1); opacity:1; }
+  50%  { transform:translate(10vw,-4vh) scale(.96); }
+  100% { transform:translate(120vw,-8vh) scale(.92); opacity:0; } /* sai pela direita */
+}
+/* 3) Retorno aberto */
+.form-contato.is-returning{
+  animation:env-return-in 1s ease forwards;
+}
+@keyframes env-return-in{
+  0%   { transform:translate(-2vw,-2vh) scale(.96); opacity:0; }
+  100% { transform:translate(0,0) scale(1); opacity:1; }
+}
+
+/* Rodapé curvo oficial */
+footer.curva{
+  width:100%;
+  height:70px;
+  background:#7b7190;
+  border-top-left-radius:100% 50%;
+  border-top-right-radius:100% 50%;
+  position:fixed;
+  bottom:0; left:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:40px;
+  z-index:10;
 }
 .btn-footer{
-  background: transparent; border: none; border-radius: 50%;
-  width: 55px; height: 55px; padding: 0;
-  display: flex; justify-content: center; align-items: center;
-  overflow: hidden; cursor: pointer; transform: translateY(-10px);
+  background:transparent;
+  border:none;
+  border-radius:50%;
+  width:55px; height:55px; padding:0;
+  display:flex; justify-content:center; align-items:center;
+  overflow:hidden; cursor:pointer; transform:translateY(-10px);
 }
-.btn-footer img{ width: 250%; height: 250%; object-fit: contain; }
-.btn-footer.logo{ width:150px; height:150px; transform: translateY(-20px); }
-.btn-footer.logo img{ width:150%; height:150%; object-fit: contain; }
+.btn-footer img{ width:250%; height:250%; object-fit:contain; }
+.btn-footer.logo{ width:150px; height:150px; transform:translateY(-20px); }
+.btn-footer.logo img{ width:150%; height:150%; object-fit:contain; }
 
-/* Desktop layout */
-@media (min-width: 992px){
+/* Desktop: lado a lado, alturas iguais e respiro */
+@media (min-width:992px){
   .container{
-    max-width: 960px;
-    padding: 24px;
-    padding-bottom: 120px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    max-width:960px;
+    padding:24px;
+    padding-bottom:120px; /* respiro pro rodapé fixo */
+    display:grid;
+    grid-template-columns:1fr 1fr;
     grid-template-areas:
       "titulo titulo"
       "descricao descricao"
       "contatos form";
-    column-gap: 48px;
-    row-gap: 24px;
-    align-items: stretch;
+    column-gap:48px;
+    row-gap:24px;
+    align-items:stretch; /* <<< força mesma altura */
   }
-  .titulo{ grid-area: titulo; text-align:center; font-size:42px; }
-  .descricao{ grid-area: descricao; text-align:center; font-size:18px; max-width:80%; justify-self:center; }
-  .contatos{ grid-area: contatos; }
-  .form-contato{ grid-area: form; }
+  .titulo{ grid-area:titulo; text-align:center; font-size:42px; }
+  .descricao{ grid-area:descricao; text-align:center; font-size:18px; max-width:80%; justify-self:center; }
+  .contatos{ grid-area:contatos; }
+  .form-contato{ grid-area:form; }
 }
 
 /* Acessibilidade */
