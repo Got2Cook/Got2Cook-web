@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fale Conosco - Got2Cook</title>
-  <link rel="stylesheet" href="fale.css">
+  <link rel="stylesheet" href="faleconosco.css">
 </head>
 <body>
 
@@ -22,7 +22,7 @@
       <p><strong>📞 Telefone:</strong> (00) 00000-0000</p>
     </div>
 
-    <!-- Formulário de contato -->
+    <!-- Formulário de contato (vira uma "carta") -->
     <form class="form-contato">
       <input type="text" name="nome" placeholder="Seu nome (opcional)">
       <input type="email" name="email" placeholder="Seu e-mail" required>
@@ -47,6 +47,7 @@
       </button>
     </footer>
 
+     <!-- Navegação original (mantida) -->
      <script>
        document.getElementById("btnVoltar").addEventListener("click", () => {
          window.location.href = "humor.html";
@@ -61,27 +62,10 @@
        });
      </script>
 
+     <!-- Script da animação da carta -->
+     <script src="faleconosco.js"></script>
+
   </div>
 
 </body>
 </html>
-<script>
-  (function(){
-    const form = document.querySelector('.form-contato');
-    const sendBtn = document.querySelector('.btn-enviar');
-
-    if(form && sendBtn){
-      sendBtn.addEventListener('click', function(){
-        // Anima a “tampa” fechando
-        form.classList.add('is-sent');
-
-        // Opcional: reseta os campos um instante depois (não bloqueia o mailto)
-        setTimeout(()=>{ 
-          try { form.reset(); } catch(e){}
-          // reabre a tampa depois de um tempinho, para o usuário ver de novo
-          setTimeout(()=> form.classList.remove('is-sent'), 1200);
-        }, 600);
-      });
-    }
-  })();
-</script>
