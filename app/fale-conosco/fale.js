@@ -1,20 +1,34 @@
-// Navegação do rodapé (conforme solicitado)
-document.getElementById('btnVoltar')?.addEventListener('click', () => {
-  window.location.href = '../config/index.html';
-});
+(function(){
+  // Botão de enviar (anchor com mailto)
+  const form = document.querySelector('.form-contato');
+  const btn  = document.querySelector('.btn-enviar');
 
-document.getElementById('btnLogo')?.addEventListener('click', () => {
-  window.location.href = '../minhas-receitas/index.html';
-});
+  // Garante que o mailto continue funcionando
+  const mailto = btn ? (btn.getAttribute('href') || '') : '';
 
-document.getElementById('btnGeladeira')?.addEventListener('click', () => {
-  window.location.href = '../geladeira/index.html';
-});
+  if(form && btn){
+    btn.addEventListener('click', function(e){
+      // Evita sair da página antes da animação
+      e.preventDefault();
 
-// Formulário simples (sem salvar em localStorage)
-// Apenas impede recarregar a página por acidente neste MVP
-document.getElementById('formFale')?.addEventListener('submit', (e) => {
-  e.preventDefault();
-  // Aqui futuramente: envio ao back-end / e-mail.
-  alert('Mensagem registrada localmente (MVP). Em breve, envio real será habilitado.');
-});
+      // 1) Fecha a aba da carta
+      form.classList.add('is-closing');
+
+      // 2) Dispara o mailto no começo do voo (não bloqueia animação)
+      setTimeout(()=>{ if(mailto) window.location.href = mailto; }, 280);
+
+      // 3) Carta "voa para fora"
+      setTimeout(()=>{ form.classList.add('is-flying'); }, 300);
+
+      // 4) Após sair, limpa campos e reaparece aberta
+      setTimeout(()=>{
+        try{ form.reset(); }catch(_){}
+        form.classList.remove('is-closing','is-flying');
+        // reforça reflow antes de reabrir
+        void form.offsetWidth;
+        form.classList.add('is-returning');
+        setTimeout(()=>{ form.classList.remove('is-returning'); }, 650);
+      }, 1100);
+    });
+  }
+})();
