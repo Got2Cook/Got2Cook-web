@@ -1,12 +1,12 @@
 // Navegação do rodapé
 document.getElementById("btnVoltar")?.addEventListener("click", () => {
-  window.location.href = "humor.html";
+  window.location.href = "../humor/index.html";
 });
 document.getElementById("btnLogo")?.addEventListener("click", () => {
-  window.location.href = "home.html";
+  window.location.href = "../home/index.html";
 });
 document.getElementById("btnGeladeira")?.addEventListener("click", () => {
-  window.location.href = "minhageladeira.html";
+  window.location.href = "../geladeira/index.html";
 });
 
 // Envelope animado
