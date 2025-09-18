@@ -183,6 +183,7 @@ body{
   height:120px; /* suficiente para o botão central elevado */
 }
 
+/* Rodapé curvo oficial Got2Cook */
 footer.curva{
   width:100%;
   height:70px;
@@ -190,42 +191,47 @@ footer.curva{
   border-top-left-radius:100% 50%;
   border-top-right-radius:100% 50%;
   position:fixed;
-  bottom:0; left:0;
+  bottom:0;
+  left:0;
   display:flex;
   justify-content:center;
   align-items:center;
   gap:40px;
   z-index:999;
+  overflow:visible; /* permite que o botão central ultrapasse */
 }
 
+/* Botões laterais */
 .btn-footer{
   background:#fff;
   border:none;
   border-radius:50%;
-  width:80px;       /* <<< tamanho único */
-  height:80px;
+  width:55px;
+  height:55px;
   display:flex;
   justify-content:center;
   align-items:center;
   cursor:pointer;
   overflow:hidden;
+  transform:translateY(-10px);
   box-shadow:0 3px 6px rgba(0,0,0,.15);
 }
 .btn-footer img{
-  width:70%;       /* <<< ícone proporcional */
-  height:70%;
+  width:250%;
+  height:250%;
   object-fit:contain;
 }
 
-/* Central agora é igual */
+/* Botão central (maior e elevado) */
 .btn-footer.btn-central{
-  width:80px;
-  height:80px;
-  transform:none;   /* sem elevação */
+  width:150px;
+  height:150px;
+  transform:translateY(-20px);
 }
 .btn-footer.btn-central img{
-  width:70%;
-  height:70%;
+  width:150%;
+  height:150%;
+  object-fit:contain;
 }
 
 /* Desktop: lado a lado e alturas iguais */
