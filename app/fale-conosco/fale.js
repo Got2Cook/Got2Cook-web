@@ -1,4 +1,4 @@
-// Navegação rodapé
+// Navegação do rodapé
 document.getElementById("btnVoltar")?.addEventListener("click", () => {
   window.location.href = "humor.html";
 });
