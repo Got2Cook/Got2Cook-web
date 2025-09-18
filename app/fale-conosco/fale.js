@@ -34,7 +34,7 @@ document.getElementById("btnGeladeira")?.addEventListener("click", () => {
   });
 })();
 
-// Efeito WhatsApp
+// Efeito sutil no botão WhatsApp (opcional)
 const btnWhats = document.querySelector(".btn-whatsapp");
 if (btnWhats) {
   btnWhats.addEventListener("mouseenter", () => {
