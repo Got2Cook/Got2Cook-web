@@ -183,7 +183,7 @@ body{
   height:120px; /* suficiente para o botão central elevado */
 }
 
-/* Rodapé curvo oficial */
+/* Rodapé oficial */
 footer.curva{
   width:100%;
   height:70px;
@@ -196,11 +196,12 @@ footer.curva{
   justify-content:center;
   align-items:center;
   gap:40px;
-  z-index:999;             /* acima do conteúdo */
-  overflow:visible;        /* permite o botão central sair pra cima */
+  z-index:999;
+  overflow:visible;
 }
+
 .btn-footer{
-  background:#fff;
+  background:transparent;        /* <<< antes era branco */
   border:none;
   border-radius:50%;
   width:55px;
@@ -211,13 +212,14 @@ footer.curva{
   cursor:pointer;
   overflow:hidden;
   transform:translateY(-10px);
-  box-shadow:0 3px 6px rgba(0,0,0,.15);
 }
 .btn-footer img{
   width:250%;
   height:250%;
   object-fit:contain;
 }
+
+/* Botão central */
 .btn-footer.btn-central{
   width:150px;
   height:150px;
