@@ -197,3 +197,118 @@ footer.curva {
   /* Se quiser mostrar os benefícios nos cards também no desktop, ative a linha abaixo */
   /* .beneficios-card{ display:block; } */
 }
+
+/* ==== Desktop refinado (>= 992px) ==== */
+@media (min-width: 992px){
+
+  /* Layout geral */
+  .container{
+    max-width: 1040px;
+    padding: 36px 28px 140px; /* respiro pro rodapé */
+  }
+
+  .titulo{
+    font-size: 44px;
+    margin: 8px 0 18px;
+    letter-spacing: .5px;
+  }
+
+  /* Plano atual: 70% da largura, mais baixo/compacto */
+  .plano-atual{
+    width: 70%;
+    margin: 0 auto 22px;
+    padding: 18px 24px;     /* menos alto */
+    gap: 6px;
+  }
+  .plano-atual .nome-plano{ font-size: 22px; }
+  .plano-atual .renovacao{ font-size: 14px; }
+
+  /* Retira a tabela / subtítulo no desktop */
+  .subtitulo, .tabela-comparativa{ display:none !important; }
+
+  /* Cards: grade estável, chamativa e sem sobreposição */
+  .planos{
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(320px, 1fr));
+    gap: 28px;
+    justify-items: stretch;
+  }
+
+  .card-plano{
+    max-width: none;
+    min-height: 260px;
+    padding: 24px 18px;
+    border: 1px solid rgba(73,47,112,0.15);
+    position: relative;
+    overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    box-shadow: 0 6px 16px rgba(0,0,0,.10);
+  }
+
+  /* Faixa de destaque no topo do card (mantém efeitos anteriores) */
+  .card-plano::before{
+    content:"";
+    position:absolute; inset:0 0 auto 0; height:6px;
+    background: linear-gradient(90deg, #492f70, #7b7190);
+    opacity:.85;
+  }
+
+  .card-plano:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(73,47,112,.22);
+    border-color: rgba(73,47,112,0.25);
+  }
+
+  .card-plano.destaque{
+    border: 2px solid #492f70;
+    background: linear-gradient(180deg, #ffffff 0%, #f6edff 100%);
+    animation: pulsar 2s infinite;
+  }
+
+  .card-plano h3{
+    margin-top: 6px;
+    font-weight: 700;
+    letter-spacing: .3px;
+  }
+
+  .valor-plano{ font-size: 22px; }
+  .valor-plano span{ font-size: 13px; }
+  .valor-plano.destaque-valor{ font-size: 24px; }
+
+  /* Benefícios dentro dos cards (visível no desktop) */
+  .beneficios-card{
+    display: block;
+    list-style: none;
+    text-align: left;
+    margin: 8px 0 12px;
+    padding: 0;
+    color: #492f70;
+    font-size: 14px;
+  }
+  .beneficios-card li{
+    margin: 6px 0;
+    padding-left: 22px;
+    position: relative;
+    line-height: 1.25;
+  }
+  /* Ícones dos itens (mantendo estilo do seu código) */
+  .card-plano[data-plano="Premium"] .beneficios-card li::before{
+    content: "✓";
+    position:absolute; left:0; top:0;
+    color:#225c18; font-weight:700;
+  }
+  .card-plano[data-plano="Gratuito"] .beneficios-card li::before{
+    content: "–";
+    position:absolute; left:0; top:0;
+    color:#7b7190; font-weight:700;
+  }
+
+  /* Destaque do plano atual continua visível e mais chamativo */
+  .card-plano.selecionado{
+    outline: 3px solid #492f70;
+    box-shadow: 0 14px 32px rgba(73,47,112,0.28);
+  }
+
+  /* Rodapé mantém padrão oficial */
+  footer.curva{ height:70px; }
+}
