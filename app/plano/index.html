@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meu Plano - Got2Cook</title>
-  <link rel="stylesheet" href="plano.css">
+  <link rel="stylesheet" href="meuplano.css">
 </head>
 <body>
 
@@ -20,7 +20,7 @@
       <p class="renovacao" id="dataRenovacao"></p>
     </div>
 
-    <!-- Tabela comparativa -->
+    <!-- Tabela comparativa (mobile mantém; desktop oculta) -->
     <h2 class="subtitulo">Compare os planos</h2>
     <div class="tabela-comparativa">
       <table>
@@ -48,7 +48,18 @@
       <div class="card-plano" data-plano="Gratuito">
         <h3>🥗 Gratuito</h3>
         <div class="valor-plano">R$ 0<span>/mês</span></div>
-        <!-- Botão removido -->
+
+        <!-- Benefícios (visíveis no desktop, ocultos no mobile) -->
+        <ul class="beneficios-card">
+          <li>3 receitas por dia</li>
+          <li>Sem favoritos</li>
+          <li>Sem relatórios</li>
+          <li>Sem histórico de humor completo</li>
+          <li>Sem suporte prioritário</li>
+        </ul>
+
+        <!-- Novo botão para trocar para Gratuito (mobile e desktop) -->
+        <button class="btn-plano" onclick="mudarParaGratuito()">Mudar para Gratuito</button>
       </div>
 
       <!-- Card Premium -->
@@ -56,6 +67,16 @@
         <div class="selo-popular">⭐ Mais Popular</div>
         <h3>👑 Premium</h3>
         <div class="valor-plano destaque-valor">R$ 9,90<span>/mês</span></div>
+
+        <!-- Benefícios (visíveis no desktop, ocultos no mobile) -->
+        <ul class="beneficios-card">
+          <li>Receitas ilimitadas</li>
+          <li>Salvar favoritas</li>
+          <li>Relatórios detalhados</li>
+          <li>Histórico de humor completo</li>
+          <li>Suporte prioritário</li>
+        </ul>
+
         <button class="btn-plano" onclick="fazerLoginPremium()">Fazer Login Premium</button>
       </div>
 
@@ -76,6 +97,6 @@
 
   </div>
 
-  <script src="plano.js"></script>
+  <script src="meuplano.js"></script>
 </body>
 </html>
