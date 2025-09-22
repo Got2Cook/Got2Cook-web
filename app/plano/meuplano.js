@@ -19,7 +19,7 @@ function atualizarPlanoVisual() {
     nome.textContent = 'Gratuito ✅';
   }
 
-  // Data fictícia de renovação (1 mês à frente)
+  // Renovação (1 mês à frente)
   const hoje = new Date();
   hoje.setMonth(hoje.getMonth() + 1);
   document.getElementById('dataRenovacao').textContent =
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
   atualizarPlanoVisual();
 });
 
-/* Navegação do rodapé (igual ao seu) */
+/* Navegação do rodapé */
 document.getElementById("btnVoltar").addEventListener("click", () => {
   window.location.href = "humor.html";
 });
