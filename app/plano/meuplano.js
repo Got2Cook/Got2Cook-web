@@ -24,9 +24,16 @@ function atualizarPlanoVisual() {
     `Renovação: ${hoje.toLocaleDateString('pt-BR')}`;
 }
 
-// Botão Premium
+// Botão Premium (placeholder)
 function fazerLoginPremium() {
   alert("Faça login com sua conta Premium.\nSe ainda não assinou, acesse nosso site oficial.");
+}
+
+// Novo: botão para mudar para Gratuito (mobile e desktop)
+function mudarParaGratuito() {
+  localStorage.setItem('got2cook_plano', 'Gratuito');
+  atualizarPlanoVisual();
+  alert('Plano alterado para: Gratuito');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
