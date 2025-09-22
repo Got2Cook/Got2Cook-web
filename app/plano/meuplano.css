@@ -93,12 +93,12 @@ body {
   text-align: center;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
   display: flex; flex-direction: column; justify-content: flex-start;
-  gap: 12px; width: 75%; max-width: 180px; min-height: 160px;
+  gap: 12px; width: 75%; max-width: 180px; min-height: 170px;
   position: relative; transition: transform 0.2s, box-shadow 0.2s;
 }
 .card-plano:hover { transform: translateY(-4px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
 
-/* Destaque Premium (efeitos do seu código + pulsar) */
+/* Destaque Premium (efeitos + pulsar) */
 .card-plano.destaque {
   border: 2px solid #492f70;
   background: linear-gradient(180deg, #ffffff 0%, #f6edff 100%);
@@ -126,40 +126,55 @@ body {
   to { transform: translateY(-2px); }
 }
 
+/* Botões */
 .btn-plano {
   background: linear-gradient(90deg, #492f70, #7b7190);
   color: white; font-weight: bold; border: none;
-  border-radius: 20px; padding: 8px 12px; width: 100%;
-  cursor: pointer; transition: 0.2s; font-size: 13px;
+  border-radius: 20px; padding: 10px 14px; width: 100%;
+  cursor: pointer; transition: 0.2s; font-size: 14px;
 }
-.btn-plano:hover { opacity: 0.9; transform: translateY(-2px); }
+.btn-plano:hover { opacity: 0.92; transform: translateY(-2px); }
 .btn-plano.selecionado { background-color: gray; cursor: default; }
+
+/* CTA do Premium: mais chamativo */
+.btn-cta{
+  padding: 14px 16px;
+  font-size: 16px;
+  letter-spacing: .3px;
+  box-shadow: 0 8px 22px rgba(73,47,112,0.35);
+  animation: ctaPulse 2.2s infinite;
+}
+@keyframes ctaPulse{
+  0%{ box-shadow: 0 8px 22px rgba(73,47,112,0.35) }
+  50%{ box-shadow: 0 12px 28px rgba(73,47,112,0.45) }
+  100%{ box-shadow: 0 8px 22px rgba(73,47,112,0.35) }
+}
 
 /* Benefícios nos cards (desktop ON, mobile OFF) */
 .beneficios-card{
   display: none;
   list-style: none;
   text-align: left;
-  margin: 4px 0 8px;
+  margin: 6px 0 10px;
   padding: 0;
   color: #492f70;
   font-size: 13px;
 }
 .beneficios-card li{
   margin: 6px 0;
-  padding-left: 22px;
+  padding-left: 26px;
   position: relative;
-  line-height: 1.2;
+  line-height: 1.25;
 }
-.card-plano[data-plano="Premium"] .beneficios-card li::before{
-  content: "✓";
-  position: absolute; left: 0; top: 0;
-  font-weight: 700; color: #225c18;
+.beneficios-card li.tem::before{
+  content:"✓";
+  position:absolute; left:0; top:-1px;
+  color:#2e7d32; font-weight: 800; font-size: 18px;
 }
-.card-plano[data-plano="Gratuito"] .beneficios-card li::before{
-  content: "–";
-  position: absolute; left: 0; top: 0;
-  color: #7b7190; font-weight: 700;
+.beneficios-card li.nao::before{
+  content:"✕";
+  position:absolute; left:0; top:-1px;
+  color:#c62828; font-weight: 800; font-size: 18px;
 }
 
 /* Destaque do plano atual */
@@ -191,7 +206,7 @@ footer.curva {
 
   .container{
     max-width: 1040px;
-    padding: 36px 28px 140px;
+    padding: 34px 28px 140px;
   }
 
   .titulo{
@@ -200,11 +215,11 @@ footer.curva {
     letter-spacing: .5px;
   }
 
-  /* Plano atual: ainda MAIS largo (82%) e mais baixo */
+  /* Meu Plano: ainda mais largo (90%) e mais baixo */
   .plano-atual{
-    width: 82%;
-    margin: 0 auto 22px;
-    padding: 16px 22px;     /* menos alto */
+    width: 90%;
+    margin: 0 auto 20px;
+    padding: 12px 20px;
     gap: 6px;
   }
   .plano-atual .nome-plano{ font-size: 22px; }
@@ -213,9 +228,11 @@ footer.curva {
   /* Some tabela no desktop; benefícios entram nos cards */
   .subtitulo, .tabela-comparativa{ display:none !important; }
 
-  /* Grade dos cards: mesmos tamanhos e bem chamativos */
+  /* Cards centralizados, mesmo tamanho e chamativos */
   .planos{
     width: 100%;
+    max-width: 920px;
+    margin: 0 auto 80px;
     grid-template-columns: repeat(2, minmax(340px, 1fr));
     gap: 28px;
     justify-items: stretch;
@@ -223,31 +240,35 @@ footer.curva {
 
   .card-plano{
     max-width: none;
-    min-height: 280px;       /* altura igual entre os dois */
-    padding: 24px 18px;
+    min-height: 360px;          /* mesmo tamanho entre os dois */
+    padding: 24px 20px;
     border: 1px solid rgba(73,47,112,0.15);
     overflow: hidden;
     transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
     box-shadow: 0 6px 16px rgba(0,0,0,.10);
   }
-
   .card-plano:hover{
     transform: translateY(-6px);
     box-shadow: 0 12px 28px rgba(73,47,112,.22);
     border-color: rgba(73,47,112,0.25);
   }
 
-  .card-plano.destaque{
-    border: 2px solid #492f70;
-    background: linear-gradient(180deg, #ffffff 0%, #f6edff 100%);
-    animation: pulsar 2s infinite;
+  .beneficios-card{
+    display:block;
+    font-size: 16px;            /* mais aparente */
+    margin: 10px 0 14px;
   }
 
-  .beneficios-card{ display:block; }
   .valor-plano{ font-size: 22px; }
   .valor-plano span{ font-size: 13px; }
   .valor-plano.destaque-valor{ font-size: 24px; }
 
-  /* Mantém o selo mais visível no desktop */
   .selo-popular{ font-size: 12px; padding: 6px 12px; }
+
+  /* CTA do premium mais gritante no desktop */
+  .btn-cta{
+    padding: 16px 18px;
+    font-size: 17px;
+    box-shadow: 0 12px 28px rgba(73,47,112,0.45);
+  }
 }
