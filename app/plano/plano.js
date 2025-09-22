@@ -1,110 +1,62 @@
-console.log("Gerenciar Plano - JS carregado ✅");
+console.log("JS do Meu Plano carregado ✅");
 
-// Dados mock dos planos (base fiel ao seu padrão)
-const PLANOS = {
-  "Gratuito": {
-    beneficios: [
-      "3 receitas por dia",
-      "Sem favoritos",
-      "Sem relatórios",
-      "Sem histórico de humor completo",
-      "Sem suporte prioritário"
-    ],
-    valor: "R$ 0/mês",
-    icone: "🥗",
-    tema: "gratuito"
-  },
-  "Premium": {
-    beneficios: [
-      "Receitas ilimitadas",
-      "Salvar favoritas",
-      "Relatórios detalhados",
-      "Histórico de humor completo",
-      "Suporte prioritário"
-    ],
-    valor: "R$ 9,90/mês",
-    icone: "👑",
-    tema: "premium"
-  }
-};
+// 🔹 Controle de proteção de página
+const protegerPagina = true; // altere para false se quiser liberar acesso sem login
 
-// Atualiza o card superior com base no localStorage
 function atualizarPlanoVisual() {
-  const plano = localStorage.getItem("got2cook_plano") || "Gratuito";
+  const plano = localStorage.getItem('got2cook_plano') || 'Gratuito';
+  const card = document.getElementById('planoAtualCard');
+  const icone = document.getElementById('iconePlano');
+  const nome = document.getElementById('planoAtual');
 
-  const card = document.getElementById("planoAtualCard");
-  const icone = document.getElementById("iconePlano");
-  const nome = document.getElementById("planoAtual");
-  const renov = document.getElementById("dataRenovacao");
-  const status = document.getElementById("statusPlano");
+  // Remove classes antigas
+  card.classList.remove('plano-gratuito', 'plano-premium');
 
-  // tema visual simples
-  card.classList.remove("tema-premium","tema-gratuito");
-  card.classList.add(plano === "Premium" ? "tema-premium" : "tema-gratuito");
+  if (plano === 'Premium') {
+    card.classList.add('plano-premium');
+    icone.textContent = '👑';
+    nome.textContent = 'Premium ✅';
+  } else {
+    card.classList.add('plano-gratuito');
+    icone.textContent = '🥗';
+    nome.textContent = 'Gratuito ✅';
+  }
 
-  icone.textContent = PLANOS[plano].icone;
-  nome.textContent = `${plano} ✅`;
-
-  const validade = new Date();
-  validade.setMonth(validade.getMonth() + 1);
-  const dataStr = validade.toLocaleDateString("pt-BR");
-  renov.textContent = `Renovação: ${dataStr}`;
-  status.textContent = `Seu plano atual é válido até ${dataStr}`;
-
-  // Box detalhe
-  document.getElementById("nomePlanoBox").textContent = plano;
-  document.getElementById("valorPlanoBox").textContent = PLANOS[plano].valor;
-
-  const ul = document.getElementById("beneficiosBox");
-  ul.innerHTML = "";
-  PLANOS[plano].beneficios.forEach(b => {
-    const li = document.createElement("li");
-    li.textContent = b;
-    ul.appendChild(li);
-  });
+  // Atualiza data fictícia de renovação
+  const hoje = new Date();
+  hoje.setMonth(hoje.getMonth() + 1);
+  document.getElementById('dataRenovacao').textContent =
+    `Renovação: ${hoje.toLocaleDateString('pt-BR')}`;
 }
 
-// Ações dos botões (placeholders sem backend)
-function bindBotoes() {
-  document.getElementById("btnAlterar").addEventListener("click", () => {
-    const atual = localStorage.getItem("got2cook_plano") || "Gratuito";
-    const novo = atual === "Gratuito" ? "Premium" : "Gratuito";
-    localStorage.setItem("got2cook_plano", novo);
-    atualizarPlanoVisual();
-    alert(`Plano alterado para: ${novo}`);
-  });
+// Botão Premium
+function fazerLoginPremium() {
+  alert("Faça login com sua conta Premium.\nSe ainda não assinou, acesse nosso site oficial.");
+  // Aqui futuramente entra o login real
+}
 
-  document.getElementById("btnCancelar").addEventListener("click", () => {
-    const atual = localStorage.getItem("got2cook_plano") || "Gratuito";
-    if (atual === "Gratuito") {
-      alert("Você já está no plano Gratuito.");
+document.addEventListener('DOMContentLoaded', () => {
+  // 🔹 Proteção de página: só abre se estiver logado
+  if (protegerPagina) {
+    const logado = localStorage.getItem('usuarioLogado') === 'true';
+    if (!logado) {
+      alert("Você precisa estar logado para acessar esta página.");
+      window.location.href = "index.html"; // volta para login
       return;
     }
-    localStorage.setItem("got2cook_plano", "Gratuito");
-    atualizarPlanoVisual();
-    alert("Assinatura cancelada. Você voltou ao plano Gratuito.");
-  });
+  }
 
-  document.getElementById("btnHistorico").addEventListener("click", () => {
-    alert("Histórico de pagamentos indisponível no momento.");
-  });
-}
-
-// Navegação do rodapé (conforme solicitado)
-function bindRodape() {
-  document.getElementById("btnVoltar").addEventListener("click", () => {
-    window.location.href = "../config/index.html";
-  });
-  document.getElementById("btnLogo").addEventListener("click", () => {
-    window.location.href = "../minhas-receitas/index.html";
-  });
-  document.getElementById("btnGeladeira").addEventListener("click", () => {
-    window.location.href = "../geladeira/index.html";
-  });
-}
-
-document.addEventListener("DOMContentLoaded", () => {
+  // Atualiza card do plano ao abrir
   atualizarPlanoVisual();
-  bindBotoes();
-  bindRodape();
+});
+
+// Navegação do rodapé
+document.getElementById("btnVoltar").addEventListener("click", () => {
+  window.location.href = "humor.html";
+});
+document.getElementById("btnLogo").addEventListener("click", () => {
+  window.location.href = "home.html";
+});
+document.getElementById("btnGeladeira").addEventListener("click", () => {
+  window.location.href = "minhageladeira.html";
 });
