@@ -19,25 +19,27 @@ function atualizarPlanoVisual() {
     nome.textContent = 'Gratuito ✅';
   }
 
-  // Data fictícia de renovação
+  // Data fictícia de renovação (1 mês à frente)
   const hoje = new Date();
   hoje.setMonth(hoje.getMonth() + 1);
   document.getElementById('dataRenovacao').textContent =
     `Renovação: ${hoje.toLocaleDateString('pt-BR')}`;
 
-  // Destaque do plano atual nos cards (desktop ganha glow; mobile mantém)
+  // Destaque do plano atual nos cards
   const cardG = document.querySelector('.card-plano[data-plano="Gratuito"]');
   const cardP = document.querySelector('.card-plano[data-plano="Premium"]');
   [cardG, cardP].forEach(c => c && c.classList.remove('selecionado'));
   (plano === 'Premium' ? cardP : cardG)?.classList.add('selecionado');
 }
 
-// Botão Premium (placeholder)
-function fazerLoginPremium() {
-  alert("Faça login com sua conta Premium.\nSe ainda não assinou, acesse nosso site oficial.");
+/* Troca direta para Premium (sem login por enquanto) */
+function mudarParaPremium() {
+  localStorage.setItem('got2cook_plano', 'Premium');
+  atualizarPlanoVisual();
+  alert('Plano alterado para: Premium');
 }
 
-// Mudar para Gratuito (mobile e desktop)
+/* Troca para Gratuito */
 function mudarParaGratuito() {
   localStorage.setItem('got2cook_plano', 'Gratuito');
   atualizarPlanoVisual();
@@ -48,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
   atualizarPlanoVisual();
 });
 
-// Navegação do rodapé
+/* Navegação do rodapé (igual ao seu) */
 document.getElementById("btnVoltar").addEventListener("click", () => {
   window.location.href = "humor.html";
 });
