@@ -1,0 +1,161 @@
+:root{
+  --bg:#c0ffa5;
+  --roxo:#492f70;
+  --roxo-escuro:#7b7190;
+  --verde:#225c18;
+  --chip:#e9ffd7;
+}
+
+/* Base */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:'Poppins', Arial, sans-serif;
+  background:var(--bg);
+  color:var(--verde);
+  display:flex;
+  justify-content:center;
+}
+
+/* Acessibilidade */
+:focus{outline:none}
+:focus-visible{outline:2px dotted var(--roxo); outline-offset:4px}
+
+.container{
+  width:100%;
+  max-width:600px;
+  min-height:100vh;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* Título */
+.titulo{
+  font-size:35px;
+  color:var(--verde);
+  margin:20px 0 15px;
+  text-align:center;
+}
+
+/* Card plano atual (baseado no seu modelo) */
+.plano-atual{
+  border-radius:20px;
+  padding:25px 20px;
+  width:85%;
+  text-align:center;
+  box-shadow:0 6px 15px rgba(0,0,0,0.1);
+  margin-bottom:16px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  transition:0.3s;
+  background:linear-gradient(180deg,#ffffff 0%,#f6fff0 100%);
+  border:3px solid #c0ffa5;
+}
+.icone-plano{font-size:40px; margin-bottom:5px}
+.nome-plano{font-size:18px; font-weight:bold; margin:0; color:var(--verde)}
+.renovacao{font-size:13px; margin:0; color:var(--roxo)}
+.status{font-size:13px; margin:0; color:var(--roxo-escuro)}
+
+/* Card detalhe do plano */
+.card-detalhe{
+  width:100%;
+  background:#fff;
+  border-radius:18px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.12);
+  padding:18px;
+  margin-bottom:20px;
+}
+.card-detalhe h3{
+  margin:0 0 10px;
+  color:var(--roxo);
+  font-size:20px;
+}
+.beneficios{
+  margin:0 0 12px;
+  padding-left:18px;
+  color:var(--roxo);
+}
+.beneficios li{margin:4px 0}
+.valor-plano{
+  font-weight:bold;
+  color:var(--roxo);
+  margin-bottom:12px;
+}
+.acoes{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+}
+.btn-plano{
+  background:linear-gradient(90deg, var(--roxo), var(--roxo-escuro));
+  color:#fff; border:none; border-radius:20px;
+  padding:10px 14px; cursor:pointer; font-weight:bold;
+  transition:transform .2s, opacity .2s; font-size:14px;
+}
+.btn-plano:hover{opacity:.92; transform:translateY(-2px)}
+.btn-plano.secundario{
+  background:#fff; color:var(--roxo);
+  border:2px solid var(--roxo);
+}
+.btn-plano.fantasma{
+  background:transparent; color:var(--roxo);
+  border:2px dashed var(--roxo);
+}
+
+/* Subtítulo e tabela comparativa (igual ao padrão que você usa) */
+.subtitulo{ color:var(--verde); margin:10px 0 10px; font-size:20px; width:100%; }
+.tabela-comparativa{ width:100%; overflow-x:auto; margin-bottom:20px; }
+.tabela-comparativa table{
+  width:100%; border-collapse:collapse; background:#fff;
+  border-radius:15px; overflow:hidden;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+.tabela-comparativa th{
+  background:var(--roxo); color:#fff; font-size:14px;
+  padding:10px; text-align:center;
+}
+.tabela-comparativa td{
+  padding:10px; text-align:center; font-size:13px;
+  color:var(--roxo); border-top:1px solid #eee;
+}
+.tabela-comparativa tr:nth-child(even) td{ background:#f9f9f9 }
+
+/* Espaço antes do rodapé */
+.footer-spacer{ height:110px }
+
+/* Rodapé curvo oficial */
+footer.curva{
+  width:100%; height:70px; background-color:var(--roxo-escuro);
+  border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
+  position:fixed; bottom:0; left:0;
+  display:flex; justify-content:center; align-items:center;
+  gap:40px;
+  z-index:10;
+}
+.btn-footer{
+  background-color:transparent; border:none; border-radius:50%;
+  width:55px; height:55px; padding:0;
+  display:flex; justify-content:center; align-items:center;
+  overflow:hidden; cursor:pointer; transform:translateY(-10px);
+}
+.btn-footer img{ width:250%; height:250%; object-fit:contain }
+.btn-footer.logo{ width:150px; height:150px; transform:translateY(-20px) }
+.btn-footer.logo img{ width:150%; height:150%; object-fit:contain }
+
+/* Utilidades */
+.sr-only{
+  position:absolute !important;
+  height:1px; width:1px; overflow:hidden;
+  clip:rect(1px,1px,1px,1px);
+  white-space:nowrap; border:0; padding:0; margin:-1px;
+}
+
+/* Responsivo simples */
+@media (min-width:520px){
+  .acoes{ grid-template-columns:1fr 1fr 1fr }
+}
