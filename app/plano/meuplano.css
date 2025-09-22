@@ -1,3 +1,4 @@
+/* ===== Base (mobile first) ===== */
 body {
   font-family: 'Poppins', Arial, sans-serif;
   background-color: #c0ffa5;
@@ -15,6 +16,7 @@ body {
   align-items: center;
   min-height: 100vh;
   padding: 20px;
+  padding-bottom: 120px; /* respiro pro rodapé fixo */
   box-sizing: border-box;
 }
 
@@ -24,7 +26,7 @@ body {
   margin: 20px 0 15px;
 }
 
-/* Card base do plano atual */
+/* Card do plano atual */
 .plano-atual {
   border-radius: 20px;
   padding: 25px 20px;
@@ -38,12 +40,11 @@ body {
   gap: 8px;
   transition: 0.3s;
 }
-
 .icone-plano { font-size: 40px; margin-bottom: 5px; }
 .plano-atual .nome-plano { font-size: 18px; font-weight: bold; margin: 0; }
 .plano-atual .renovacao { font-size: 13px; margin: 0; }
 
-/* Estilos dinâmicos */
+/* Temas */
 .plano-gratuito {
   background: linear-gradient(180deg, #ffffff 0%, #f6fff0 100%);
   border: 3px solid #c0ffa5;
@@ -58,7 +59,7 @@ body {
 .plano-premium .nome-plano { color: #492f70; }
 .plano-premium .renovacao { color: #7b7190; }
 
-/* Subtítulo e tabela (mobile mantém) */
+/* Tabela (mobile mantém) */
 .subtitulo { color: #225c18; margin-bottom: 15px; font-size: 20px; }
 .tabela-comparativa { width: 100%; overflow-x: auto; margin-bottom: 30px; }
 .tabela-comparativa table {
@@ -92,34 +93,18 @@ body {
   text-align: center;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
   display: flex; flex-direction: column; justify-content: center;
-  gap: 12px; width: 75%; max-width: 160px; min-height: 140px;
+  gap: 12px; width: 75%; max-width: 180px; min-height: 150px;
   position: relative; transition: transform 0.2s, box-shadow 0.2s;
 }
 .card-plano:hover { transform: translateY(-4px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
 .card-plano.destaque {
   border: 2px solid #492f70;
   background: linear-gradient(180deg, #ffffff 0%, #f6edff 100%);
-  animation: pulsar 2s infinite;
-}
-@keyframes pulsar {
-  0% { box-shadow: 0 0 8px rgba(73,47,112,0.3); }
-  50% { box-shadow: 0 0 16px rgba(73,47,112,0.6); }
-  100% { box-shadow: 0 0 8px rgba(73,47,112,0.3); }
 }
 .valor-plano { font-size: 18px; font-weight: bold; color: #492f70; line-height: 1; }
 .valor-plano span { font-size: 12px; color: #7b7190; display: block; }
 .valor-plano.destaque-valor { font-size: 20px; color: #225c18; }
-.selo-popular {
-  position: absolute; top: -10px; right: -10px;
-  background: #492f70; color: white; font-weight: bold; font-size: 10px;
-  padding: 4px 10px; border-radius: 15px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  animation: destaque 1.5s infinite alternate;
-}
-@keyframes destaque {
-  from { transform: translateY(0); }
-  to { transform: translateY(-2px); }
-}
+
 .btn-plano {
   background: linear-gradient(90deg, #492f70, #7b7190);
   color: white; font-weight: bold; border: none;
@@ -129,7 +114,7 @@ body {
 .btn-plano:hover { opacity: 0.9; transform: translateY(-2px); }
 .btn-plano.selecionado { background-color: gray; cursor: default; }
 
-/* Benefícios dentro dos cards (desktop on, mobile off) */
+/* Benefícios dentro dos cards (desligado por padrão para evitar poluir o mobile) */
 .beneficios-card{
   display: none;
   list-style: none;
@@ -145,32 +130,14 @@ body {
   position: relative;
   line-height: 1.2;
 }
-.card-plano[data-plano="Premium"] .beneficios-card li::before{
-  content: "✓";
-  position: absolute; left: 0; top: 0;
-  font-weight: 700; color: #225c18;
-}
-.card-plano[data-plano="Gratuito"] .beneficios-card li::before{
-  content: "–";
-  position: absolute; left: 0; top: 0;
-  color: #7b7190; font-weight: 700;
-}
 
-/* Seleção visual do plano atual */
+/* Destaque do plano atual */
 .card-plano.selecionado{
   outline: 3px solid #492f70;
   box-shadow: 0 10px 24px rgba(73,47,112,0.25);
 }
-.card-plano.selecionado::after{
-  content: "Plano atual";
-  position: absolute;
-  top: 8px; left: 8px;
-  background: #492f70; color:#fff;
-  font-size: 11px; font-weight: 700;
-  padding: 4px 8px; border-radius: 10px;
-}
 
-/* Rodapé */
+/* Rodapé fixo padrão */
 footer.curva {
   width: 100%; height: 70px; background-color: #7b7190;
   border-top-left-radius: 100% 50%; border-top-right-radius: 100% 50%;
@@ -188,69 +155,45 @@ footer.curva {
 .btn-footer.logo { width: 150px; height: 150px; transform: translateY(-20px); }
 .btn-footer.logo img { width: 150%; height: 150%; object-fit: contain; }
 
-/* === Desktop-only (mantendo o mobile como está) === */
+/* ===== Desktop (organizado, sem sobreposição) ===== */
 @media (min-width: 992px){
-  /* Shape de fundo suave */
   .container{
-    max-width: 1040px;
-    padding: 40px 28px 28px;
-    position: relative;
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    grid-template-areas:
-      "titulo  titulo"
-      "atual   planos"
-      "tabela  tabela";
-    gap: 24px 28px;
-  }
-  .container::before{
-    content:"";
-    position:absolute; inset:auto -10% 120px -10%;
-    height: 320px;
-    background: radial-gradient(60% 60% at 30% 50%, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%),
-                radial-gradient(50% 50% at 80% 30%, rgba(255,230,255,0.5) 0%, rgba(255,230,255,0) 70%);
-    filter: blur(20px);
-    pointer-events:none;
-    z-index: 0;
+    max-width: 980px;
+    padding: 32px 24px 140px;
   }
 
-  .titulo{ grid-area: titulo; font-size: 44px; margin: 8px 0 4px; z-index: 1; }
+  .titulo{
+    font-size: 44px;
+    margin: 10px 0 18px;
+  }
 
+  /* Mantém a tabela no desktop (como no código original) */
+  .subtitulo{ margin-top: 8px; }
+  .tabela-comparativa{ display:block; margin-bottom: 28px; }
+
+  /* Plano atual um pouco maior, centralizado e sem sticky */
   .plano-atual{
-    grid-area: atual;
-    width: 100%;
-    padding: 30px 26px;
-    position: sticky;
-    top: 24px;
-    z-index: 1;
+    width: 60%;
+    padding: 28px 24px;
+    margin-bottom: 18px;
   }
   .plano-atual .nome-plano{ font-size: 22px; }
   .plano-atual .renovacao{ font-size: 14px; }
 
-  /* Cards viram “coluna” rica */
+  /* Cards lado a lado, com largura confortável e sem empilhar por cima */
   .planos{
-    grid-area: planos;
-    width: 100%;
-    justify-items: stretch;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
     gap: 24px;
-    grid-template-columns: 1fr;
-    z-index: 1;
+    justify-items: stretch;
+    width: 100%;
   }
   .card-plano{
     max-width: none;
-    min-height: 260px;
-    padding: 22px 18px;
+    min-height: 220px;
+    padding: 22px 16px;
     border: 1px solid rgba(73,47,112,0.15);
-    backdrop-filter: saturate(120%) blur(2px);
   }
-  .beneficios-card{ display:block; }
-  .valor-plano{ font-size: 22px; }
-  .valor-plano span{ font-size: 13px; }
-  .valor-plano.destaque-valor{ font-size: 24px; }
-  .selo-popular{ font-size: 12px; padding: 6px 12px; }
 
-  /* Esconde a tabela e o subtítulo no desktop */
-  .tabela-comparativa, .subtitulo{ display:none; }
-
-  footer.curva{ height: 70px; }
+  /* Se quiser mostrar os benefícios nos cards também no desktop, ative a linha abaixo */
+  /* .beneficios-card{ display:block; } */
 }
