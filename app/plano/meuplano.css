@@ -129,6 +129,18 @@ body {
 .btn-plano:hover { opacity: 0.9; transform: translateY(-2px); }
 .btn-plano.selecionado { background-color: gray; cursor: default; }
 
+/* Benefícios dentro dos cards (desktop on, mobile off) */
+.beneficios-card{
+  display: none;
+  list-style: disc;
+  text-align: left;
+  margin: 4px 0 8px;
+  padding-left: 18px;
+  color: #492f70;
+  font-size: 13px;
+}
+.beneficios-card li{ margin: 3px 0; }
+
 /* Rodapé */
 footer.curva {
   width: 100%; height: 70px; background-color: #7b7190;
@@ -159,7 +171,6 @@ footer.curva {
     margin: 24px 0 20px;
   }
 
-  /* Plano atual mais “compacto” no centro no desktop */
   .plano-atual{
     width: 60%;
     padding: 28px 24px;
@@ -167,18 +178,11 @@ footer.curva {
   .plano-atual .nome-plano{ font-size: 22px; }
   .plano-atual .renovacao{ font-size: 14px; }
 
-  /* Tabela comparativa mais confortável */
-  .tabela-comparativa{ margin-bottom: 40px; }
-  .tabela-comparativa th{
-    font-size: 16px;
-    padding: 14px;
-  }
-  .tabela-comparativa td{
-    font-size: 14px;
-    padding: 12px;
-  }
+  /* Esconde a tabela no desktop */
+  .tabela-comparativa{ display:none; }
 
-  /* Cards dos planos maiores e lado a lado */
+  /* Mostra os benefícios dentro dos cards e amplia o tamanho */
+  .beneficios-card{ display:block; }
   .planos{
     grid-template-columns: repeat(2, minmax(260px, 1fr));
     gap: 24px;
@@ -187,7 +191,7 @@ footer.curva {
   }
   .card-plano{
     max-width: none;
-    min-height: 200px;
+    min-height: 260px;
     padding: 22px 16px;
   }
   .valor-plano{ font-size: 22px; }
@@ -198,6 +202,5 @@ footer.curva {
     padding: 6px 12px;
   }
 
-  /* Rodapé mantém o padrão; sem alterações funcionais */
   footer.curva{ height: 70px; }
 }
