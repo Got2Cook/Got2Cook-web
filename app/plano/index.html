@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gerenciar Plano - Got2Cook</title>
+  <link rel="stylesheet" href="plano.css"/>
+</head>
+<body>
+  <div class="container">
+
+    <h1 class="titulo">GERENCIAR PLANO</h1>
+
+    <!-- Plano atual -->
+    <section class="plano-atual" id="planoAtualCard" aria-live="polite">
+      <div class="icone-plano" id="iconePlano" aria-hidden="true"></div>
+      <h2 class="sr-only">Plano atual</h2>
+      <p class="nome-plano" id="planoAtual">—</p>
+      <p class="renovacao" id="dataRenovacao">—</p>
+      <p class="status" id="statusPlano">Seu plano atual é válido até —</p>
+    </section>
+
+    <!-- Box do plano selecionado -->
+    <section class="card-detalhe" id="cardDetalhe">
+      <h3 id="nomePlanoBox">—</h3>
+      <ul class="beneficios" id="beneficiosBox" aria-label="Benefícios do plano">
+        <li>—</li>
+      </ul>
+      <div class="valor-plano" id="valorPlanoBox">—</div>
+      <div class="acoes">
+        <button class="btn-plano" id="btnAlterar">Alterar Plano</button>
+        <button class="btn-plano secundario" id="btnCancelar">Cancelar Assinatura</button>
+        <button class="btn-plano fantasma" id="btnHistorico">Histórico de Pagamentos</button>
+      </div>
+    </section>
+
+    <!-- Tabela comparativa (baseada no seu modelo) -->
+    <h2 class="subtitulo">Compare os planos</h2>
+    <div class="tabela-comparativa" role="region" aria-label="Tabela comparativa de planos">
+      <table>
+        <thead>
+          <tr>
+            <th>Benefício</th>
+            <th>🥗 Gratuito</th>
+            <th>👑 Premium</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Receitas por dia</td><td>3</td><td>✅ Ilimitadas</td></tr>
+          <tr><td>Salvar receitas favoritas</td><td>❌</td><td>✅</td></tr>
+          <tr><td>Relatórios detalhados</td><td>❌</td><td>✅</td></tr>
+          <tr><td>Histórico de humor completo</td><td>❌</td><td>✅</td></tr>
+          <tr><td>Suporte prioritário</td><td>❌</td><td>✅</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Espaço antes do rodapé -->
+    <div class="footer-spacer" aria-hidden="true"></div>
+
+    <!-- Rodapé oficial -->
+    <footer class="curva">
+      <button class="btn-footer voltar" id="btnVoltar" aria-label="Voltar para Configurações">
+        <img src="../_assets/humor.png" alt="Voltar"/>
+      </button>
+      <button class="btn-footer logo" id="btnLogo" aria-label="Ir para Minhas Receitas">
+        <img src="../_assets/logocentral.png" alt="Minhas Receitas"/>
+      </button>
+      <button class="btn-footer geladeira" id="btnGeladeira" aria-label="Ir para Minha Geladeira">
+        <img src="../_assets/geladeira.png" alt="Minha Geladeira"/>
+      </button>
+    </footer>
+
+  </div>
+
+  <script src="plano.js"></script>
+</body>
+</html>
