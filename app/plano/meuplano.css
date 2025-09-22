@@ -58,7 +58,7 @@ body {
 .plano-premium .nome-plano { color: #492f70; }
 .plano-premium .renovacao { color: #7b7190; }
 
-/* Subtítulo e tabela */
+/* Subtítulo e tabela (mobile mantém) */
 .subtitulo { color: #225c18; margin-bottom: 15px; font-size: 20px; }
 .tabela-comparativa { width: 100%; overflow-x: auto; margin-bottom: 30px; }
 .tabela-comparativa table {
@@ -132,21 +132,50 @@ body {
 /* Benefícios dentro dos cards (desktop on, mobile off) */
 .beneficios-card{
   display: none;
-  list-style: disc;
+  list-style: none;
   text-align: left;
   margin: 4px 0 8px;
-  padding-left: 18px;
+  padding: 0;
   color: #492f70;
   font-size: 13px;
 }
-.beneficios-card li{ margin: 3px 0; }
+.beneficios-card li{
+  margin: 6px 0;
+  padding-left: 22px;
+  position: relative;
+  line-height: 1.2;
+}
+.card-plano[data-plano="Premium"] .beneficios-card li::before{
+  content: "✓";
+  position: absolute; left: 0; top: 0;
+  font-weight: 700; color: #225c18;
+}
+.card-plano[data-plano="Gratuito"] .beneficios-card li::before{
+  content: "–";
+  position: absolute; left: 0; top: 0;
+  color: #7b7190; font-weight: 700;
+}
+
+/* Seleção visual do plano atual */
+.card-plano.selecionado{
+  outline: 3px solid #492f70;
+  box-shadow: 0 10px 24px rgba(73,47,112,0.25);
+}
+.card-plano.selecionado::after{
+  content: "Plano atual";
+  position: absolute;
+  top: 8px; left: 8px;
+  background: #492f70; color:#fff;
+  font-size: 11px; font-weight: 700;
+  padding: 4px 8px; border-radius: 10px;
+}
 
 /* Rodapé */
 footer.curva {
   width: 100%; height: 70px; background-color: #7b7190;
   border-top-left-radius: 100% 50%; border-top-right-radius: 100% 50%;
   position: fixed; bottom: 0; left: 0;
-  display: flex; justify-content: center; align-items: center; gap: 40px
+  display: flex; justify-content: center; align-items: center; gap: 40px;
   z-index: 10;
 }
 .btn-footer {
@@ -160,47 +189,68 @@ footer.curva {
 .btn-footer.logo img { width: 150%; height: 150%; object-fit: contain; }
 
 /* === Desktop-only (mantendo o mobile como está) === */
-@media (min-width: 768px){
+@media (min-width: 992px){
+  /* Shape de fundo suave */
   .container{
-    max-width: 980px;
-    padding: 32px 24px 24px;
+    max-width: 1040px;
+    padding: 40px 28px 28px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-areas:
+      "titulo  titulo"
+      "atual   planos"
+      "tabela  tabela";
+    gap: 24px 28px;
+  }
+  .container::before{
+    content:"";
+    position:absolute; inset:auto -10% 120px -10%;
+    height: 320px;
+    background: radial-gradient(60% 60% at 30% 50%, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%),
+                radial-gradient(50% 50% at 80% 30%, rgba(255,230,255,0.5) 0%, rgba(255,230,255,0) 70%);
+    filter: blur(20px);
+    pointer-events:none;
+    z-index: 0;
   }
 
-  .titulo{
-    font-size: 42px;
-    margin: 24px 0 20px;
-  }
+  .titulo{ grid-area: titulo; font-size: 44px; margin: 8px 0 4px; z-index: 1; }
 
   .plano-atual{
-    width: 60%;
-    padding: 28px 24px;
+    grid-area: atual;
+    width: 100%;
+    padding: 30px 26px;
+    position: sticky;
+    top: 24px;
+    z-index: 1;
   }
   .plano-atual .nome-plano{ font-size: 22px; }
   .plano-atual .renovacao{ font-size: 14px; }
 
-  /* Esconde a tabela no desktop */
-  .tabela-comparativa{ display:none; }
-
-  /* Mostra os benefícios dentro dos cards e amplia o tamanho */
-  .beneficios-card{ display:block; }
+  /* Cards viram “coluna” rica */
   .planos{
-    grid-template-columns: repeat(2, minmax(260px, 1fr));
-    gap: 24px;
+    grid-area: planos;
     width: 100%;
     justify-items: stretch;
+    gap: 24px;
+    grid-template-columns: 1fr;
+    z-index: 1;
   }
   .card-plano{
     max-width: none;
     min-height: 260px;
-    padding: 22px 16px;
+    padding: 22px 18px;
+    border: 1px solid rgba(73,47,112,0.15);
+    backdrop-filter: saturate(120%) blur(2px);
   }
+  .beneficios-card{ display:block; }
   .valor-plano{ font-size: 22px; }
   .valor-plano span{ font-size: 13px; }
   .valor-plano.destaque-valor{ font-size: 24px; }
-  .selo-popular{
-    font-size: 12px;
-    padding: 6px 12px;
-  }
+  .selo-popular{ font-size: 12px; padding: 6px 12px; }
+
+  /* Esconde a tabela e o subtítulo no desktop */
+  .tabela-comparativa, .subtitulo{ display:none; }
 
   footer.curva{ height: 70px; }
 }
