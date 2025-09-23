@@ -1,99 +1,147 @@
+<!-- /app/plano/index.html -->
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meu Plano - Got2Cook</title>
-  <link rel="stylesheet" href="meuplano.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gerenciar Plano — Got2Cook</title>
+  <link rel="stylesheet" href="./meuplano.css" />
 </head>
 <body>
+  <main class="wrap" id="topo">
+    <h1 class="titulo">GERENCIAR PLANO</h1>
 
-  <div class="container">
+    <!-- Meu Plano Atual -->
+    <section class="meu-plano" aria-live="polite">
+      <div class="meu-plano__icone" id="meuPlanoIcone" aria-hidden="true">🥗</div>
+      <div class="meu-plano__texto">
+        <p class="meu-plano__nome">
+          Plano atual: <strong id="meuPlanoNome">Gratuito</strong>
+        </p>
+        <p class="meu-plano__status" id="meuPlanoStatus">Válido até —</p>
+      </div>
+      <div class="meu-plano__acoes">
+        <button type="button" class="btn secundario" id="btnAlterar">Alterar plano</button>
+        <button type="button" class="btn fantasma" id="btnCancelar">Cancelar assinatura</button>
+      </div>
+    </section>
 
-    <h1 class="titulo">Meu Plano</h1>
+    <!-- Seleção de Plano (Radio Group) -->
+    <section class="selecionar" aria-labelledby="tituloSelecao">
+      <h2 id="tituloSelecao" class="sr-only">Selecione seu plano</h2>
 
-    <!-- Card do plano atual -->
-    <div class="plano-atual" id="planoAtualCard">
-      <div class="icone-plano" id="iconePlano"></div>
-      <h2>Meu Plano Atual</h2>
-      <p class="nome-plano" id="planoAtual"></p>
-      <p class="renovacao" id="dataRenovacao"></p>
-    </div>
+      <!-- Mobile: cartões empilhados -->
+      <div class="cards-mobile" role="radiogroup" aria-labelledby="tituloSelecao">
+        <!-- Card Gratuito -->
+        <label class="card plano--free" tabindex="0">
+          <input type="radio" name="plano" value="Gratuito" class="radio-plano" aria-label="Selecionar plano Gratuito" />
+          <div class="card__topo">
+            <span class="plano__icone" aria-hidden="true">🥗</span>
+            <div class="plano__titulos">
+              <span class="plano__nome">Gratuito</span>
+              <span class="plano__preco">R$ 0/mês</span>
+            </div>
+          </div>
+          <ul class="beneficios">
+            <li><span class="ok" aria-hidden="true">✓</span> 3 receitas/dia</li>
+            <li><span class="no" aria-hidden="true">✕</span> Favoritar receitas</li>
+            <li><span class="no" aria-hidden="true">✕</span> Relatórios detalhados</li>
+            <li><span class="no" aria-hidden="true">✕</span> Histórico de humor completo</li>
+            <li><span class="no" aria-hidden="true">✕</span> Suporte prioritário</li>
+          </ul>
+        </label>
 
-    <!-- Tabela comparativa (apenas mobile; some no desktop via CSS) -->
-    <h2 class="subtitulo">Compare os planos</h2>
-    <div class="tabela-comparativa">
-      <table>
-        <thead>
-          <tr>
-            <th>Benefício</th>
-            <th>🥗 Gratuito</th>
-            <th>👑 Premium</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Receitas por dia</td><td>3</td><td>✅ Ilimitadas</td></tr>
-          <tr><td>Salvar receitas favoritas</td><td>❌</td><td>✅</td></tr>
-          <tr><td>Relatórios detalhados</td><td>❌</td><td>✅</td></tr>
-          <tr><td>Histórico de humor completo</td><td>❌</td><td>✅</td></tr>
-          <tr><td>Suporte prioritário</td><td>❌</td><td>✅</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Cards de planos -->
-    <div class="planos">
-
-      <!-- Card Gratuito -->
-      <div class="card-plano" data-plano="Gratuito">
-        <h3>🥗 Gratuito</h3>
-        <div class="valor-plano">R$ 0<span>/mês</span></div>
-
-        <ul class="beneficios-card">
-          <li class="tem">3 receitas por dia</li>
-          <li class="nao">Salvar receitas favoritas</li>
-          <li class="nao">Relatórios detalhados</li>
-          <li class="nao">Histórico de humor completo</li>
-          <li class="nao">Suporte prioritário</li>
-        </ul>
-
-        <button class="btn-plano" onclick="mudarParaGratuito()">Mudar para Gratuito</button>
+        <!-- Card Premium -->
+        <label class="card plano--premium" tabindex="0">
+          <span class="selo-popular" aria-hidden="true">⭐ Mais Popular</span>
+          <input type="radio" name="plano" value="Premium" class="radio-plano" aria-label="Selecionar plano Premium" />
+          <div class="card__topo">
+            <span class="plano__icone" aria-hidden="true">👑</span>
+            <div class="plano__titulos">
+              <span class="plano__nome">Premium</span>
+              <span class="plano__preco">R$ 9,90/mês</span>
+            </div>
+          </div>
+          <ul class="beneficios">
+            <li><span class="ok" aria-hidden="true">✓</span> Receitas ilimitadas</li>
+            <li><span class="ok" aria-hidden="true">✓</span> Favoritar receitas</li>
+            <li><span class="ok" aria-hidden="true">✓</span> Relatórios detalhados</li>
+            <li><span class="ok" aria-hidden="true">✓</span> Histórico de humor completo</li>
+            <li><span class="ok" aria-hidden="true">✓</span> Suporte prioritário</li>
+          </ul>
+        </label>
       </div>
 
-      <!-- Card Premium -->
-      <div class="card-plano destaque" data-plano="Premium">
-        <div class="selo-popular">⭐ Mais Popular</div>
-        <h3>👑 Premium</h3>
-        <div class="valor-plano destaque-valor">R$ 9,90<span>/mês</span></div>
+      <!-- Desktop: comparação em colunas -->
+      <div class="tabela-desktop" role="radiogroup" aria-labelledby="tituloSelecao">
+        <div class="tabela__cabecalho">
+          <div class="tabela__col tabela__col--rotulo" aria-hidden="true"></div>
+          <label class="tabela__col tabela__col--free" tabindex="0">
+            <input type="radio" name="planoDesktop" value="Gratuito" class="radio-plano" aria-label="Selecionar plano Gratuito" />
+            <div class="tabela__head">
+              <span class="plano__nome">Gratuito</span>
+              <span class="plano__preco">R$ 0/mês</span>
+            </div>
+          </label>
+          <label class="tabela__col tabela__col--premium" tabindex="0">
+            <span class="selo-popular" aria-hidden="true">⭐ Mais Popular</span>
+            <input type="radio" name="planoDesktop" value="Premium" class="radio-plano" aria-label="Selecionar plano Premium" />
+            <div class="tabela__head premium-head">
+              <span class="plano__nome">Premium</span>
+              <span class="plano__preco">R$ 9,90/mês</span>
+            </div>
+          </label>
+        </div>
 
-        <ul class="beneficios-card">
-          <li class="tem">Receitas ilimitadas</li>
-          <li class="tem">Salvar favoritas</li>
-          <li class="tem">Relatórios detalhados</li>
-          <li class="tem">Histórico de humor completo</li>
-          <li class="tem">Suporte prioritário</li>
-        </ul>
-
-        <button class="btn-plano" onclick="mudarParaPremium()">Assinar Premium</button>
+        <div class="tabela__linha">
+          <div class="tabela__rotulo">Receitas por dia</div>
+          <div class="tabela__cel">3</div>
+          <div class="tabela__cel tabela__cel--premium">Ilimitadas</div>
+        </div>
+        <div class="tabela__linha">
+          <div class="tabela__rotulo">Favoritar receitas</div>
+          <div class="tabela__cel"><span class="no">✕</span></div>
+          <div class="tabela__cel tabela__cel--premium"><span class="ok">✓</span></div>
+        </div>
+        <div class="tabela__linha">
+          <div class="tabela__rotulo">Relatórios detalhados</div>
+          <div class="tabela__cel"><span class="no">✕</span></div>
+          <div class="tabela__cel tabela__cel--premium"><span class="ok">✓</span></div>
+        </div>
+        <div class="tabela__linha">
+          <div class="tabela__rotulo">Histórico de humor</div>
+          <div class="tabela__cel"><span class="no">✕</span></div>
+          <div class="tabela__cel tabela__cel--premium"><span class="ok">✓</span></div>
+        </div>
+        <div class="tabela__linha">
+          <div class="tabela__rotulo">Suporte prioritário</div>
+          <div class="tabela__cel"><span class="no">✕</span></div>
+          <div class="tabela__cel tabela__cel--premium"><span class="ok">✓</span></div>
+        </div>
       </div>
+    </section>
 
-    </div>
+    <!-- Ações extras -->
+    <section class="extras">
+      <button type="button" class="btn secundario" id="btnHistorico">Histórico de Pagamentos</button>
+    </section>
 
-    <!-- Rodapé padrão -->
-    <footer class="curva">
-      <button class="btn-footer voltar" id="btnVoltar">
-        <img src="humor.png" alt="Voltar" />
-      </button>
-      <button class="btn-footer logo" id="btnLogo">
-        <img src="logocentral.png" alt="Logo" />
-      </button>
-      <button class="btn-footer geladeira" id="btnGeladeira">
-        <img src="geladeira.png" alt="Geladeira" />
-      </button>
-    </footer>
+    <!-- Espaço para não cobrir o conteúdo pelo CTA fixo e rodapé -->
+    <div class="footer-spacer"></div>
+  </main>
 
+  <!-- CTA fixo -->
+  <div class="cta-fixo" role="region" aria-label="Ação principal">
+    <button type="button" class="btn primario" id="btnConfirmar" aria-live="polite">Continuar</button>
   </div>
 
-  <script src="meuplano.js"></script>
+  <!-- Rodapé curvo oficial -->
+  <footer class="curva" aria-label="Navegação principal">
+    <button class="btn-footer" id="btnVoltar" aria-label="Voltar para Configurações">⟵</button>
+    <button class="btn-footer btn-central" id="btnLogo" aria-label="Ir para Minhas Receitas">🍳</button>
+    <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira">🧊</button>
+  </footer>
+
+  <script src="./meuplano.js"></script>
 </body>
 </html>
