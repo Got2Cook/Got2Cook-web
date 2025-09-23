@@ -265,3 +265,39 @@ footer.curva {
     width: 100%;
   }
 }
+
+/* ==== Desktop fix: cards mais estreitos e com gap, centralizados ==== */
+@media (min-width: 992px){
+  /* grid centralizado com largura exata pros 2 cards + gap */
+  .planos{
+    grid-template-columns: repeat(2, 300px);  /* 2 cards de 300px */
+    column-gap: 40px;                         /* gap visível entre eles */
+    row-gap: 28px;
+    max-width: calc(2 * 300px + 40px);        /* 640px totais */
+    width: 100%;
+    margin: 0 auto 80px;                      /* centraliza na tela */
+    justify-content: center;
+    justify-items: center;                    /* alinha cada card no centro da coluna */
+  }
+
+  /* cards mais estreitos (e iguais) */
+  .card-plano{
+    width: 300px;
+    max-width: 300px;
+    min-height: 330px;                        /* ajuste fino da altura pra conteúdo */
+    padding: 22px 18px;
+  }
+
+  /* opcional: se o sticker encostar, afasta um pouco mais */
+  .selo-popular{
+    top: -18px;
+    right: -18px;
+  }
+
+  /* botões do mesmo tamanho */
+  .btn-plano{
+    padding: 16px 18px;
+    font-size: 16px;
+    width: 100%;
+  }
+}
