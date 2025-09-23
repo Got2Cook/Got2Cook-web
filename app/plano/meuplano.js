@@ -117,3 +117,9 @@
   selecionarRadiosDePlano(planoInicial);
   atualizarCTA();
 })();
+
+// /app/plano/plano.js — OPCIONAL: focar acessibilidade nas vantagens (cole ao final)
+document.querySelectorAll('.vant-item').forEach(item=>{
+  // permite foco pelo teclado no bloco todo
+  item.setAttribute('tabindex','0');
+});
