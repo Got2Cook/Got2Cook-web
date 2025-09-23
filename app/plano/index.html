@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gerenciar Plano — Got2Cook</title>
-  <link rel="stylesheet" href="./meuplano.css" />
+  <link rel="stylesheet" href="./plano.css" />
 </head>
 <body>
   <main class="wrap" id="topo">
@@ -121,48 +121,43 @@
       </div>
     </section>
 
-    <!-- /app/plano/index.html — ADICIONE ANTES DA <section class="extras"> -->
-<section class="vantagens" aria-labelledby="titVantagens">
-  <h2 id="titVantagens">Por que você vai amar o Premium</h2>
+    <!-- Vantagens Premium (clean, com suas imagens) -->
+    <section class="vantagens" aria-labelledby="titVantagens">
+      <h2 id="titVantagens" class="vant-h2">Por que você vai amar o Premium</h2>
 
-  <ul class="vantagens__grid">
-    <li class="vant-item">
-      <span class="vant-icone" aria-hidden="true">✨</span>
-      <h3 class="vant-titulo">Sem anúncios</h3>
-      <p class="vant-texto">Navegue e gere receitas sem interrupções.</p>
-    </li>
-
-    <li class="vant-item">
-      <span class="vant-icone" aria-hidden="true">⚡</span>
-      <h3 class="vant-titulo">Sugestões turbo</h3>
-      <p class="vant-texto">Recomendações mais rápidas e personalizadas.</p>
-    </li>
-
-    <li class="vant-item">
-      <span class="vant-icone" aria-hidden="true">📊</span>
-      <h3 class="vant-titulo">Relatórios completos</h3>
-      <p class="vant-texto">Histórico de humor, hábitos e estatísticas detalhadas.</p>
-    </li>
-
-    <li class="vant-item">
-      <span class="vant-icone" aria-hidden="true">👥</span>
-      <h3 class="vant-titulo">Até 2 aparelhos</h3>
-      <p class="vant-texto">Acesse em dois dispositivos ao mesmo tempo.</p>
-    </li>
-
-    <li class="vant-item">
-      <span class="vant-icone" aria-hidden="true">💾</span>
-      <h3 class="vant-titulo">Salvar e favoritar</h3>
-      <p class="vant-texto">Guarde receitas, listas e crie coleções.</p>
-    </li>
-
-    <li class="vant-item">
-      <span class="vant-icone" aria-hidden="true">🎧</span>
-      <h3 class="vant-titulo">Suporte prioritário</h3>
-      <p class="vant-texto">Atendimento rápido quando você precisar.</p>
-    </li>
-  </ul>
-</section>
+      <ul class="vantagens__grid">
+        <li class="vant-item">
+          <img class="vant-img" src="./imgs/sem-anuncios.png" alt="Sem anúncios" />
+          <h3 class="vant-titulo">Sem anúncios</h3>
+          <p class="vant-texto">Use o Got2Cook sem interrupções.</p>
+        </li>
+        <li class="vant-item">
+          <img class="vant-img" src="./imgs/sugestoes-turbo.png" alt="Sugestões turbo" />
+          <h3 class="vant-titulo">Sugestões turbo</h3>
+          <p class="vant-texto">Recomendações mais rápidas e personalizadas.</p>
+        </li>
+        <li class="vant-item">
+          <img class="vant-img" src="./imgs/relatorios.png" alt="Relatórios completos" />
+          <h3 class="vant-titulo">Relatórios completos</h3>
+          <p class="vant-texto">Estatísticas e histórico de humor detalhados.</p>
+        </li>
+        <li class="vant-item">
+          <img class="vant-img" src="./imgs/multi-dispositivos.png" alt="Até 2 aparelhos" />
+          <h3 class="vant-titulo">Até 2 aparelhos</h3>
+          <p class="vant-texto">Acesse em dois dispositivos simultaneamente.</p>
+        </li>
+        <li class="vant-item">
+          <img class="vant-img" src="./imgs/favoritos.png" alt="Salvar e favoritar" />
+          <h3 class="vant-titulo">Salvar e favoritar</h3>
+          <p class="vant-texto">Guarde receitas e listas em coleções.</p>
+        </li>
+        <li class="vant-item">
+          <img class="vant-img" src="./imgs/suporte.png" alt="Suporte prioritário" />
+          <h3 class="vant-titulo">Suporte prioritário</h3>
+          <p class="vant-texto">Atendimento rápido quando precisar.</p>
+        </li>
+      </ul>
+    </section>
 
     <!-- Ações extras -->
     <section class="extras">
@@ -185,6 +180,6 @@
     <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira">🧊</button>
   </footer>
 
-  <script src="./meuplano.js"></script>
+  <script src="./plano.js"></script>
 </body>
 </html>
