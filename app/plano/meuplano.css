@@ -204,6 +204,40 @@ body{
 
 .tabela__col--rotulo{border:none;background:transparent}
 
+/* --- Vantagens Premium (CLEAN, SEM CONTAINER COLORIDO) --- */
+.vantagens{
+  margin:24px 0 8px;
+  padding:0;
+  background:none;
+  box-shadow:none;
+}
+.vant-h2{
+  margin:0 0 18px;
+  text-align:center;
+  font-size:22px;
+  color:var(--verde);
+}
+.vantagens__grid{
+  list-style:none; margin:0; padding:0;
+  display:grid; gap:22px;
+  grid-template-columns:1fr;          /* mobile */
+}
+.vant-item{
+  display:flex; flex-direction:column;
+  align-items:center; text-align:center;
+  gap:8px;
+}
+.vant-img{
+  width:84px; height:84px; object-fit:contain;
+  display:block; margin:0 auto;
+}
+.vant-titulo{
+  margin:4px 0 2px; font-size:16px; font-weight:700; color:var(--verde);
+}
+.vant-texto{
+  margin:0; font-size:14px; line-height:1.35; color:#2b2b2b;
+}
+
 /* CTA fixo */
 .cta-fixo{
   position:fixed; left:0; right:0; bottom:90px;
@@ -254,74 +288,8 @@ body{
     max-width:700px; margin:0 auto; padding:12px 14px;
   }
 
+  .vantagens__grid{ grid-template-columns:repeat(3, 1fr); }
+  .vant-h2{ font-size:24px }
+
   .cta-fixo .btn{min-width:640px}
-}
-
-/* /app/plano/plano.css — ADICIONE AO FINAL DO ARQUIVO */
-
-/* Vantagens Premium (estilo “Netflix”, com visual Got2Cook + dourado) */
-.vantagens{
-  margin:28px 0 10px;
-  padding:28px 20px;
-  border-radius:24px;
-  position:relative;
-  color:#fff;
-  background:
-    radial-gradient(120% 120% at 80% -10%, rgba(212,175,55,.35) 0%, rgba(212,175,55,0) 55%),
-    radial-gradient(120% 120% at 0% 0%, rgba(73,47,112,.55) 0%, rgba(73,47,112,.15) 50%, rgba(73,47,112,0) 70%),
-    linear-gradient(180deg, #1b0f2f 0%, #2a1548 60%, #1a0f2a 100%);
-  box-shadow: inset 0 0 0 2px rgba(212,175,55,.35), 0 20px 40px rgba(0,0,0,.25);
-}
-.vantagens:before{
-  /* halo dourado suave */
-  content:""; position:absolute; inset:-2px;
-  border-radius:24px;
-  box-shadow:0 0 0 2px rgba(212,175,55,.5);
-  pointer-events:none; opacity:.35;
-}
-.vantagens h2{
-  margin:0 0 18px;
-  text-align:center;
-  font-size:22px;
-  font-weight:700;
-  color:#fff;
-}
-
-.vantagens__grid{
-  list-style:none; margin:0; padding:0;
-  display:grid; gap:22px;
-  grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
-}
-
-.vant-item{
-  display:grid; grid-template-columns:56px 1fr; gap:10px;
-  align-items:flex-start;
-  padding:14px 12px;
-  border-radius:16px;
-  background:rgba(255,255,255,.04);
-  outline:1px solid rgba(212,175,55,.22);
-}
-.vant-item:focus-within{ outline:2px dashed var(--ouro); }
-
-.vant-icone{
-  width:56px; height:56px; border-radius:14px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:28px;
-  background:linear-gradient(135deg, var(--grad-a), var(--grad-b));
-  color:#1b1405; font-weight:700;
-  box-shadow:0 8px 18px rgba(212,175,55,.25);
-}
-
-.vant-titulo{
-  margin:2px 0 4px; font-size:16px; color:#fff;
-}
-.vant-texto{
-  margin:0; color:#eaddff; /* roxinho claro para contraste */
-  font-size:14px; line-height:1.35;
-}
-
-/* Ajustes desktop */
-@media (min-width:992px){
-  .vantagens{ padding:36px 28px; }
-  .vantagens h2{ font-size:26px; }
 }
