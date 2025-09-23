@@ -99,16 +99,16 @@ body {
 }
 .card-plano:hover { transform: translateY(-4px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
 
-/* Destaque Premium (efeitos garantidos) */
+/* ===== EFEITOS ORIGINAIS do Premium ===== */
 .card-plano.destaque {
   border: 2px solid #492f70;
   background: linear-gradient(180deg, #ffffff 0%, #f6edff 100%);
   animation: pulsar 2s infinite;
 }
 @keyframes pulsar {
-  0% { box-shadow: 0 0 8px rgba(73,47,112,0.30); }
-  50% { box-shadow: 0 0 16px rgba(73,47,112,0.55); }
-  100% { box-shadow: 0 0 8px rgba(73,47,112,0.30); }
+  0% { box-shadow: 0 0 8px rgba(73,47,112,0.3); }
+  50% { box-shadow: 0 0 16px rgba(73,47,112,0.6); }
+  100% { box-shadow: 0 0 8px rgba(73,47,112,0.3); }
 }
 
 .valor-plano { font-size: 18px; font-weight: bold; color: #492f70; line-height: 1; }
@@ -129,7 +129,7 @@ body {
   to { transform: translateY(-3px); }
 }
 
-/* Botões */
+/* Botões (mesmo tamanho no desktop; iguais entre si) */
 .btn-plano {
   background: linear-gradient(90deg, #492f70, #7b7190);
   color: white; font-weight: bold; border: none;
@@ -138,20 +138,6 @@ body {
 }
 .btn-plano:hover { opacity: 0.92; transform: translateY(-2px); }
 .btn-plano.selecionado { background-color: gray; cursor: default; }
-
-/* CTA do Premium */
-.btn-cta{
-  padding: 12px 16px;
-  font-size: 15px;
-  letter-spacing: .3px;
-  box-shadow: 0 8px 22px rgba(73,47,112,0.35);
-  animation: ctaPulse 2.2s infinite;
-}
-@keyframes ctaPulse{
-  0%{ box-shadow: 0 8px 22px rgba(73,47,112,0.35) }
-  50%{ box-shadow: 0 12px 28px rgba(73,47,112,0.45) }
-  100%{ box-shadow: 0 8px 22px rgba(73,47,112,0.35) }
-}
 
 /* Benefícios nos cards (desktop ON, mobile OFF) */
 .beneficios-card{
@@ -208,7 +194,7 @@ footer.curva {
 @media (min-width: 992px){
 
   .container{
-    max-width: 1200px;              /* container geral mais largo */
+    max-width: 1200px;
     padding: 32px 28px 140px;
   }
 
@@ -218,34 +204,36 @@ footer.curva {
     letter-spacing: .5px;
   }
 
-  /* Meu Plano: mais largo e mais baixo */
+  /* Meu Plano: mais largo e baixo */
   .plano-atual{
-    width: 80%;                     /* mais largo */
+    width: 82%;
     margin: 0 auto 18px;
-    padding: 10px 18px;             /* mais baixo */
+    padding: 10px 18px;
   }
   .plano-atual .nome-plano{ font-size: 22px; }
   .plano-atual .renovacao{ font-size: 14px; }
 
-  /* Tabela oculta no desktop */
+  /* Tabela some no desktop */
   .subtitulo, .tabela-comparativa{ display:none !important; }
 
-  /* Grid centralizado com mesma distância dos lados */
+  /* Grid centralizado com LEVE GAP e mesma distância dos lados */
   .planos{
-    grid-template-columns: repeat(2, 360px);   /* 2 cards iguais */
-    gap: 28px;
     width: 100%;
-    max-width: calc(2 * 360px + 28px);         /* 748px */
-    margin: 0 auto 80px;                       /* centraliza */
-    justify-content: center;                   /* garante centro */
+    /* dois cards iguais de 360px, gap leve de 24px */
+    grid-template-columns: repeat(2, 360px);
+    column-gap: 24px;          /* leve gap entre eles */
+    row-gap: 28px;
+    max-width: calc(2 * 360px + 24px); /* 744px totais -> centralizado */
+    margin: 0 auto 80px;       /* mesma distância dos lados */
+    justify-content: center;   /* garante centro */
     justify-items: stretch;
   }
 
-  /* Cards iguais, alinhados e com sticker sobreposto */
+  /* Cards iguais */
   .card-plano{
     width: 360px;
     max-width: 360px;
-    min-height: 360px;                         /* mesmo tamanho */
+    min-height: 340px;
     padding: 24px 20px;
     border: 1px solid rgba(73,47,112,0.15);
     overflow: visible;
@@ -270,14 +258,10 @@ footer.curva {
 
   .selo-popular{ top: -18px; right: -18px; font-size: 12px; padding: 7px 14px; }
 
-  /* Botões com MESMO tamanho; Premium segue chamativo pelo CTA */
-  .btn-plano,
-  .btn-cta{
+  /* Botões MESMO tamanho no desktop */
+  .btn-plano{
     padding: 16px 18px;
     font-size: 16px;
     width: 100%;
-  }
-  .btn-cta{
-    box-shadow: 0 12px 28px rgba(73,47,112,0.45);
   }
 }
