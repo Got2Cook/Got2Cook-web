@@ -99,7 +99,7 @@ body {
 }
 .card-plano:hover { transform: translateY(-4px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
 
-/* Destaque Premium (efeitos + pulsar) */
+/* Destaque Premium (efeitos garantidos) */
 .card-plano.destaque {
   border: 2px solid #492f70;
   background: linear-gradient(180deg, #ffffff 0%, #f6edff 100%);
@@ -115,8 +115,9 @@ body {
 .valor-plano span { font-size: 12px; color: #7b7190; display: block; }
 .valor-plano.destaque-valor { font-size: 20px; color: #225c18; }
 
+/* Sticker sobreposto */
 .selo-popular {
-  position: absolute; top: -14px; right: -14px; /* sobrepõe mais */
+  position: absolute; top: -16px; right: -16px;
   background: #492f70; color: white; font-weight: bold; font-size: 11px;
   padding: 6px 12px; border-radius: 16px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.25);
@@ -128,7 +129,7 @@ body {
   to { transform: translateY(-3px); }
 }
 
-/* Botões (base) */
+/* Botões */
 .btn-plano {
   background: linear-gradient(90deg, #492f70, #7b7190);
   color: white; font-weight: bold; border: none;
@@ -137,6 +138,20 @@ body {
 }
 .btn-plano:hover { opacity: 0.92; transform: translateY(-2px); }
 .btn-plano.selecionado { background-color: gray; cursor: default; }
+
+/* CTA do Premium */
+.btn-cta{
+  padding: 12px 16px;
+  font-size: 15px;
+  letter-spacing: .3px;
+  box-shadow: 0 8px 22px rgba(73,47,112,0.35);
+  animation: ctaPulse 2.2s infinite;
+}
+@keyframes ctaPulse{
+  0%{ box-shadow: 0 8px 22px rgba(73,47,112,0.35) }
+  50%{ box-shadow: 0 12px 28px rgba(73,47,112,0.45) }
+  100%{ box-shadow: 0 8px 22px rgba(73,47,112,0.35) }
+}
 
 /* Benefícios nos cards (desktop ON, mobile OFF) */
 .beneficios-card{
@@ -189,12 +204,12 @@ footer.curva {
 .btn-footer.logo { width: 150px; height: 150px; transform: translateY(-20px); }
 .btn-footer.logo img { width: 150%; height: 150%; object-fit: contain; }
 
-/* ===== Desktop refinado (>= 992px) ===== */
+/* ===== Desktop (>= 992px) ===== */
 @media (min-width: 992px){
 
   .container{
-    max-width: 1040px;
-    padding: 34px 28px 140px;
+    max-width: 1200px;              /* container geral mais largo */
+    padding: 32px 28px 140px;
   }
 
   .titulo{
@@ -203,37 +218,37 @@ footer.curva {
     letter-spacing: .5px;
   }
 
-  /* Meu Plano: MAIS estreito e mais baixo */
+  /* Meu Plano: mais largo e mais baixo */
   .plano-atual{
-    width: 68%;              /* mais estreito */
-    margin: 0 auto 20px;
-    padding: 10px 18px;      /* mais baixo */
-    gap: 6px;
+    width: 80%;                     /* mais largo */
+    margin: 0 auto 18px;
+    padding: 10px 18px;             /* mais baixo */
   }
   .plano-atual .nome-plano{ font-size: 22px; }
   .plano-atual .renovacao{ font-size: 14px; }
 
-  /* Some tabela no desktop; benefícios entram nos cards */
+  /* Tabela oculta no desktop */
   .subtitulo, .tabela-comparativa{ display:none !important; }
 
-  /* Cards centralizados, mesmo tamanho */
+  /* Grid centralizado com mesma distância dos lados */
   .planos{
-    width: 100%;
-    max-width: 860px;
-    margin: 0 auto 80px;     /* centraliza o grid */
-    grid-template-columns: repeat(2, minmax(340px, 1fr));
+    grid-template-columns: repeat(2, 360px);   /* 2 cards iguais */
     gap: 28px;
-    justify-content: center; /* centraliza trilhas do grid */
+    width: 100%;
+    max-width: calc(2 * 360px + 28px);         /* 748px */
+    margin: 0 auto 80px;                       /* centraliza */
+    justify-content: center;                   /* garante centro */
     justify-items: stretch;
-    align-items: start;
   }
 
+  /* Cards iguais, alinhados e com sticker sobreposto */
   .card-plano{
-    max-width: none;
-    min-height: 360px;       /* MESMO tamanho para ambos */
+    width: 360px;
+    max-width: 360px;
+    min-height: 360px;                         /* mesmo tamanho */
     padding: 24px 20px;
     border: 1px solid rgba(73,47,112,0.15);
-    overflow: visible;       /* permite sticker sobrepor */
+    overflow: visible;
     transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
     box-shadow: 0 6px 16px rgba(0,0,0,.10);
   }
@@ -245,7 +260,7 @@ footer.curva {
 
   .beneficios-card{
     display:block;
-    font-size: 16px;         /* mais aparente */
+    font-size: 16px;
     margin: 10px 0 16px;
   }
 
@@ -253,12 +268,9 @@ footer.curva {
   .valor-plano span{ font-size: 13px; }
   .valor-plano.destaque-valor{ font-size: 24px; }
 
-  .selo-popular{
-    top: -16px; right: -16px; /* sobreposição mais evidente */
-    font-size: 12px; padding: 7px 14px;
-  }
+  .selo-popular{ top: -18px; right: -18px; font-size: 12px; padding: 7px 14px; }
 
-  /* Botões com MESMO tamanho; Premium continua chamativo pela sombra */
+  /* Botões com MESMO tamanho; Premium segue chamativo pelo CTA */
   .btn-plano,
   .btn-cta{
     padding: 16px 18px;
