@@ -26,7 +26,7 @@ body {
   margin: 20px 0 15px;
 }
 
-/* Card do plano atual */
+/* Card do plano atual (topo) */
 .plano-atual {
   border-radius: 20px;
   padding: 25px 20px;
@@ -59,7 +59,7 @@ body {
 .plano-premium .nome-plano { color: #492f70; }
 .plano-premium .renovacao { color: #7b7190; }
 
-/* Tabela (mobile mantém; desktop some) */
+/* Tabela (mobile mantém; desktop some via media query) */
 .subtitulo { color: #225c18; margin-bottom: 15px; font-size: 20px; }
 .tabela-comparativa { width: 100%; overflow-x: auto; margin-bottom: 30px; }
 .tabela-comparativa table {
@@ -77,7 +77,7 @@ body {
 }
 .tabela-comparativa tr:nth-child(even) td { background: #f9f9f9; }
 
-/* Cards dos planos */
+/* Cards (mobile) */
 .planos {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -86,6 +86,7 @@ body {
   justify-items: center;
   margin-bottom: 80px;
 }
+
 .card-plano {
   background: white;
   border-radius: 18px;
@@ -99,7 +100,7 @@ body {
 }
 .card-plano:hover { transform: translateY(-4px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
 
-/* ===== EFEITOS ORIGINAIS do Premium ===== */
+/* Premium (efeitos base no mobile) */
 .card-plano.destaque {
   border: 2px solid #492f70;
   background: linear-gradient(180deg, #ffffff 0%, #f6edff 100%);
@@ -129,7 +130,7 @@ body {
   to { transform: translateY(-3px); }
 }
 
-/* Botões (mesmo tamanho no desktop; iguais entre si) */
+/* Botões */
 .btn-plano {
   background: linear-gradient(90deg, #492f70, #7b7190);
   color: white; font-weight: bold; border: none;
@@ -139,7 +140,7 @@ body {
 .btn-plano:hover { opacity: 0.92; transform: translateY(-2px); }
 .btn-plano.selecionado { background-color: gray; cursor: default; }
 
-/* Benefícios nos cards (desktop ON, mobile OFF) */
+/* Benefícios (mobile off; desktop on) */
 .beneficios-card{
   display: none;
   list-style: none;
@@ -193,6 +194,12 @@ footer.curva {
 /* ===== Desktop (>= 992px) ===== */
 @media (min-width: 992px){
 
+  /* Largura dos cards e gap entre eles (fácil de ajustar) */
+  :root{
+    --plano-card-w: 300px;   /* largura de cada card */
+    --plano-card-gap: 56px;  /* espaço entre os dois */
+  }
+
   .container{
     max-width: 1200px;
     padding: 32px 28px 140px;
@@ -204,7 +211,7 @@ footer.curva {
     letter-spacing: .5px;
   }
 
-  /* Meu Plano: mais largo e baixo */
+  /* Meu Plano (topo): mais largo e baixo */
   .plano-atual{
     width: 82%;
     margin: 0 auto 18px;
@@ -213,28 +220,27 @@ footer.curva {
   .plano-atual .nome-plano{ font-size: 22px; }
   .plano-atual .renovacao{ font-size: 14px; }
 
-  /* Tabela some no desktop */
+  /* Tabela some no desktop; usamos benefícios nos cards */
   .subtitulo, .tabela-comparativa{ display:none !important; }
 
-  /* Grid centralizado com LEVE GAP e mesma distância dos lados */
+  /* Grid centralizado com a MESMA distância dos lados */
   .planos{
-    width: 100%;
-    /* dois cards iguais de 360px, gap leve de 24px */
-    grid-template-columns: repeat(2, 360px);
-    column-gap: 24px;          /* leve gap entre eles */
+    grid-template-columns: repeat(2, var(--plano-card-w));
+    column-gap: var(--plano-card-gap);  /* gap visível */
     row-gap: 28px;
-    max-width: calc(2 * 360px + 24px); /* 744px totais -> centralizado */
-    margin: 0 auto 80px;       /* mesma distância dos lados */
-    justify-content: center;   /* garante centro */
-    justify-items: stretch;
+    max-width: calc(2 * var(--plano-card-w) + var(--plano-card-gap));
+    width: 100%;
+    margin: 0 auto 80px;               /* centraliza o grid */
+    justify-content: center;
+    justify-items: center;
   }
 
-  /* Cards iguais */
+  /* Cards iguais e mais estreitos */
   .card-plano{
-    width: 360px;
-    max-width: 360px;
+    width: var(--plano-card-w);
+    max-width: var(--plano-card-w);
     min-height: 340px;
-    padding: 24px 20px;
+    padding: 22px 18px;
     border: 1px solid rgba(73,47,112,0.15);
     overflow: visible;
     transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
@@ -246,6 +252,7 @@ footer.curva {
     border-color: rgba(73,47,112,0.25);
   }
 
+  /* Benefícios maiores e visíveis no desktop */
   .beneficios-card{
     display:block;
     font-size: 16px;
@@ -256,48 +263,40 @@ footer.curva {
   .valor-plano span{ font-size: 13px; }
   .valor-plano.destaque-valor{ font-size: 24px; }
 
-  .selo-popular{ top: -18px; right: -18px; font-size: 12px; padding: 7px 14px; }
+  /* Sticker confortável com o glow */
+  .selo-popular{ top: -20px; right: -20px; font-size: 12px; padding: 7px 14px; }
 
-  /* Botões MESMO tamanho no desktop */
+  /* Botões do MESMO tamanho no desktop */
   .btn-plano{
     padding: 16px 18px;
     font-size: 16px;
     width: 100%;
   }
-}
 
-/* ==== Desktop fix: cards mais estreitos e com gap, centralizados ==== */
-@media (min-width: 992px){
-  /* grid centralizado com largura exata pros 2 cards + gap */
-  .planos{
-    grid-template-columns: repeat(2, 300px);  /* 2 cards de 300px */
-    column-gap: 40px;                         /* gap visível entre eles */
-    row-gap: 28px;
-    max-width: calc(2 * 300px + 40px);        /* 640px totais */
-    width: 100%;
-    margin: 0 auto 80px;                      /* centraliza na tela */
-    justify-content: center;
-    justify-items: center;                    /* alinha cada card no centro da coluna */
+  /* === Premium MAIS aparente (mantendo seu estilo original) === */
+  .card-plano.destaque{
+    border: 3px solid #492f70; /* reforça a borda */
+    background: linear-gradient(180deg, #ffffff 0%, #f6edff 100%);
+    position: relative;
+    animation: pulsar 1.6s infinite;  /* pulsar mais marcante */
+    box-shadow:
+      0 0 0 3px rgba(73,47,112,.15),
+      0 14px 34px rgba(73,47,112,.35);
   }
-
-  /* cards mais estreitos (e iguais) */
-  .card-plano{
-    width: 300px;
-    max-width: 300px;
-    min-height: 330px;                        /* ajuste fino da altura pra conteúdo */
-    padding: 22px 18px;
+  /* halo/brilho em volta do Premium */
+  .card-plano.destaque::after{
+    content:"";
+    position:absolute; inset:-8px;
+    border-radius: 22px;
+    pointer-events:none;
+    background: radial-gradient(120% 120% at 50% -10%,
+                rgba(121,81,169,.35) 0%,
+                rgba(121,81,169,0) 60%);
+    opacity:.75;
+    animation: brilhoPremium 2.4s ease-in-out infinite;
   }
-
-  /* opcional: se o sticker encostar, afasta um pouco mais */
-  .selo-popular{
-    top: -18px;
-    right: -18px;
-  }
-
-  /* botões do mesmo tamanho */
-  .btn-plano{
-    padding: 16px 18px;
-    font-size: 16px;
-    width: 100%;
+  @keyframes brilhoPremium{
+    0%,100% { opacity:.65; transform: scale(1); }
+    50%     { opacity:.9;  transform: scale(1.02); }
   }
 }
