@@ -300,3 +300,330 @@ footer.curva {
     50%     { opacity:.9;  transform: scale(1.02); }
   }
 }
+
+/* ===== Base (mobile first) ===== */
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  background-color: #c0ffa5;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  padding-bottom: 120px; /* respiro para o rodapé fixo */
+  box-sizing: border-box;
+}
+
+.titulo {
+  color: #225c18;
+  font-size: 35px;
+  margin: 20px 0 15px;
+}
+
+/* Card do plano atual (topo) */
+.plano-atual {
+  border-radius: 20px;
+  padding: 25px 20px;
+  width: 85%;
+  text-align: center;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: 0.3s;
+}
+.icone-plano { font-size: 40px; margin-bottom: 5px; }
+.plano-atual .nome-plano { font-size: 18px; font-weight: bold; margin: 0; }
+.plano-atual .renovacao { font-size: 13px; margin: 0; }
+
+/* Temas do plano atual */
+.plano-gratuito {
+  background: linear-gradient(180deg, #ffffff 0%, #f6fff0 100%);
+  border: 3px solid #c0ffa5;
+}
+.plano-gratuito .nome-plano { color: #225c18; }
+.plano-gratuito .renovacao { color: #492f70; }
+
+.plano-premium {
+  background: linear-gradient(180deg, #fff9e6 0%, #f6edff 100%);
+  border: 3px solid #d4af37;
+}
+.plano-premium .nome-plano { color: #492f70; }
+.plano-premium .renovacao { color: #7b7190; }
+
+/* Tabela (mobile mantém; desktop some via media query) */
+.subtitulo { color: #225c18; margin-bottom: 15px; font-size: 20px; }
+.tabela-comparativa { width: 100%; overflow-x: auto; margin-bottom: 30px; }
+.tabela-comparativa table {
+  width: 100%; border-collapse: collapse; background: white;
+  border-radius: 15px; overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.tabela-comparativa th {
+  background: #492f70; color: white; font-size: 14px;
+  padding: 10px; text-align: center;
+}
+.tabela-comparativa td {
+  padding: 10px; text-align: center; font-size: 13px;
+  color: #492f70; border-top: 1px solid #eee;
+}
+.tabela-comparativa tr:nth-child(even) td { background: #f9f9f9; }
+
+/* Cards (mobile) */
+.planos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  width: 100%;
+  justify-items: center;
+  margin-bottom: 80px;
+}
+
+.card-plano {
+  background: white;
+  border-radius: 18px;
+  padding: 18px 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  display: flex; flex-direction: column; justify-content: flex-start;
+  gap: 12px; width: 75%; max-width: 180px; min-height: 170px;
+  position: relative; transition: transform 0.2s, box-shadow 0.2s;
+  overflow: visible; /* permite o sticker sobrepor */
+}
+.card-plano:hover { transform: translateY(-4px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
+
+/* Premium base (mobile) */
+.card-plano.destaque {
+  border: 2px solid #492f70;
+  background: linear-gradient(180deg, #ffffff 0%, #f6edff 100%);
+  animation: pulsar 2s infinite;
+}
+@keyframes pulsar {
+  0% { box-shadow: 0 0 8px rgba(73,47,112,0.30); }
+  50% { box-shadow: 0 0 16px rgba(73,47,112,0.60); }
+  100% { box-shadow: 0 0 8px rgba(73,47,112,0.30); }
+}
+
+.valor-plano { font-size: 18px; font-weight: bold; color: #492f70; line-height: 1; }
+.valor-plano span { font-size: 12px; color: #7b7190; display: block; }
+.valor-plano.destaque-valor { font-size: 20px; color: #225c18; }
+
+/* Sticker sobreposto */
+.selo-popular {
+  position: absolute; top: -16px; right: -16px;
+  background: #492f70; color: white; font-weight: bold; font-size: 11px;
+  padding: 6px 12px; border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  animation: destaque 1.5s infinite alternate;
+  z-index: 2;
+}
+@keyframes destaque {
+  from { transform: translateY(0); }
+  to { transform: translateY(-3px); }
+}
+
+/* Botões */
+.btn-plano {
+  background: linear-gradient(90deg, #492f70, #7b7190);
+  color: white; font-weight: bold; border: none;
+  border-radius: 20px; padding: 10px 14px; width: 100%;
+  cursor: pointer; transition: 0.2s; font-size: 14px;
+}
+.btn-plano:hover { opacity: 0.92; transform: translateY(-2px); }
+.btn-plano.selecionado { background-color: gray; cursor: default; }
+
+/* Benefícios (mobile off; desktop on) */
+.beneficios-card{
+  display: none;
+  list-style: none;
+  text-align: left;
+  margin: 6px 0 10px;
+  padding: 0;
+  color: #492f70;
+  font-size: 13px;
+}
+.beneficios-card li{
+  margin: 6px 0;
+  padding-left: 26px;
+  position: relative;
+  line-height: 1.25;
+}
+.beneficios-card li.tem::before{
+  content:"✓";
+  position:absolute; left:0; top:-1px;
+  color:#2e7d32; font-weight: 800; font-size: 18px;
+}
+.beneficios-card li.nao::before{
+  content:"✕";
+  position:absolute; left:0; top:-1px;
+  color:#c62828; font-weight: 800; font-size: 18px;
+}
+
+/* Destaque do plano atual */
+.card-plano.selecionado{
+  outline: 3px solid #492f70;
+  box-shadow: 0 10px 24px rgba(73,47,112,0.25);
+}
+
+/* Rodapé fixo padrão */
+footer.curva {
+  width: 100%; height: 70px; background-color: #7b7190;
+  border-top-left-radius: 100% 50%; border-top-right-radius: 100% 50%;
+  position: fixed; bottom: 0; left: 0;
+  display: flex; justify-content: center; align-items: center; gap: 40px;
+  z-index: 10;
+}
+.btn-footer {
+  background-color: transparent; border: none; border-radius: 50%;
+  width: 55px; height: 55px; padding: 0;
+  display: flex; justify-content: center; align-items: center;
+  overflow: hidden; cursor: pointer; transform: translateY(-10px);
+}
+.btn-footer img { width: 250%; height: 250%; object-fit: contain; }
+.btn-footer.logo { width: 150px; height: 150px; transform: translateY(-20px); }
+.btn-footer.logo img { width: 150%; height: 150%; object-fit: contain; }
+
+/* ===== Desktop (>= 992px) ===== */
+@media (min-width: 992px){
+
+  /* Largura dos cards e gap entre eles — aumentei o gap! */
+  :root{
+    --plano-card-w: 290px;   /* cards mais estreitos */
+    --plano-card-gap: 80px;  /* MAIS espaço entre eles */
+  }
+
+  .container{
+    max-width: 1200px;
+    padding: 32px 28px 140px;
+  }
+
+  .titulo{
+    font-size: 44px;
+    margin: 8px 0 18px;
+    letter-spacing: .5px;
+  }
+
+  /* Meu Plano (topo): um pouco mais largo e mais baixo */
+  .plano-atual{
+    width: 82%;
+    margin: 0 auto 18px;
+    padding: 10px 18px;
+  }
+  .plano-atual .nome-plano{ font-size: 22px; }
+  .plano-atual .renovacao{ font-size: 14px; }
+
+  /* Tabela some no desktop; usamos benefícios nos cards */
+  .subtitulo, .tabela-comparativa{ display:none !important; }
+
+  /* Grid centralizado com a MESMA distância dos lados */
+  .planos{
+    grid-template-columns: repeat(2, var(--plano-card-w));
+    column-gap: var(--plano-card-gap);   /* gap grande e visível */
+    row-gap: 28px;
+    max-width: calc(2 * var(--plano-card-w) + var(--plano-card-gap));
+    width: 100%;
+    margin: 0 auto 80px;                /* centraliza o grid */
+    justify-content: center;
+    justify-items: center;
+  }
+
+  /* Cards iguais e estreitos */
+  .card-plano{
+    width: var(--plano-card-w);
+    max-width: var(--plano-card-w);
+    min-height: 340px;
+    padding: 22px 18px;
+    border: 1px solid rgba(73,47,112,0.15);
+    overflow: visible;
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    box-shadow: 0 6px 16px rgba(0,0,0,.10);
+  }
+  .card-plano:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(73,47,112,.22);
+    border-color: rgba(73,47,112,0.25);
+  }
+
+  /* Benefícios maiores e visíveis no desktop */
+  .beneficios-card{
+    display:block;
+    font-size: 16px;
+    margin: 10px 0 16px;
+  }
+
+  .valor-plano{ font-size: 22px; }
+  .valor-plano span{ font-size: 13px; }
+  .valor-plano.destaque-valor{ font-size: 24px; }
+
+  /* Sticker confortável com o glow */
+  .selo-popular{ top: -20px; right: -20px; font-size: 12px; padding: 7px 14px; }
+
+  /* Botões do MESMO tamanho no desktop */
+  .btn-plano{
+    padding: 16px 18px;
+    font-size: 16px;
+    width: 100%;
+  }
+
+  /* === Premium MAIS ATRATIVO e com MENOS roxo === */
+  .card-plano.destaque{
+    /* lilás claro no lugar do roxo pesado */
+    border: 2px solid #8f7cc6; /* antes #492f70 */
+    background: linear-gradient(180deg, #ffffff 0%, #faf7ff 50%, #f4efff 100%);
+    position: relative;
+    animation: pulsarStrong 1.6s infinite;   /* pulsar um pouco mais forte */
+    box-shadow:
+      0 0 0 2px rgba(143,124,198,.20),       /* anel suave lilás */
+      0 16px 36px rgba(143,124,198,.35);     /* glow mais visível */
+  }
+  /* halo/brilho suave */
+  .card-plano.destaque::after{
+    content:"";
+    position:absolute; inset:-8px;
+    border-radius: 22px;
+    pointer-events:none;
+    background: radial-gradient(120% 120% at 50% -10%,
+                rgba(175,156,226,.32) 0%,
+                rgba(175,156,226,0) 60%);
+    opacity:.8;
+    animation: brilhoPremium 2.4s ease-in-out infinite;
+  }
+  /* “sheen” de luz varrendo na diagonal */
+  .card-plano.destaque::before{
+    content:"";
+    position:absolute;
+    top:-40%; left:-60%;
+    width: 60%; height: 180%;
+    transform: rotate(20deg);
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.65) 50%, rgba(255,255,255,0) 100%);
+    filter: blur(8px);
+    opacity:.35;
+    animation: sheenSweep 3.2s linear infinite;
+    pointer-events:none;
+  }
+
+  @keyframes pulsarStrong{
+    0%   { box-shadow: 0 0 12px rgba(143,124,198,.45), 0 16px 34px rgba(143,124,198,.28); }
+    50%  { box-shadow: 0 0 28px rgba(143,124,198,.70), 0 24px 48px rgba(143,124,198,.40); }
+    100% { box-shadow: 0 0 12px rgba(143,124,198,.45), 0 16px 34px rgba(143,124,198,.28); }
+  }
+  @keyframes brilhoPremium{
+    0%,100% { opacity:.65; transform: scale(1); }
+    50%     { opacity:.9;  transform: scale(1.02); }
+  }
+  @keyframes sheenSweep{
+    0%   { transform: translateX(0) rotate(20deg); }
+    100% { transform: translateX(220%) rotate(20deg); }
+  }
+}
