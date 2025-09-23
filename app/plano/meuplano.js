@@ -55,22 +55,18 @@
     return localStorage.getItem(STORAGE_KEY) || 'Gratuito';
   }
   function selecionarRadiosDePlano(plano){
-    // Marca o grupo correto (mobile/desktop)
     qsa(`.radio-plano[value="${plano}"]`).forEach(r=>{ r.checked = true; });
-    // Destaques visuais acontecem via :has(input:checked) no CSS
   }
   function planoSelecionadoAtual(){
     const r = radios.find(x=>x.checked);
     return r ? r.value : null;
   }
 
-  // Eventos de seleção (tanto mobile quanto desktop)
+  // Eventos de seleção
   radios.forEach(radio=>{
-    // clique na label inteira
     const label = radio.closest('label');
     if(label){
-      label.addEventListener('click', (e)=>{
-        // Permite seleção via clique na área do card/coluna
+      label.addEventListener('click', ()=>{
         radio.checked = true;
         atualizarCTA();
       });
@@ -82,7 +78,6 @@
         }
       });
     }
-    // mudança direta no radio
     radio.addEventListener('change', atualizarCTA);
   });
 
@@ -91,16 +86,13 @@
     btnConfirmar.textContent = (plano === 'Premium') ? 'Continuar' : 'Assinar Premium';
   }
 
-  // CTA confirma (salva no localStorage e atualiza "meu plano")
+  // CTA confirma
   btnConfirmar.addEventListener('click', ()=>{
     const plano = planoSelecionadoAtual() || carregarPlano();
-
-    // Se usuário está no Gratuito e clica "Assinar Premium", força Premium
     const alvo = (btnConfirmar.textContent.includes('Assinar')) ? 'Premium' : plano;
 
     salvarPlano(alvo);
 
-    // Feedback simples
     alert(`Plano definido como: ${alvo}`);
     selecionarRadiosDePlano(alvo);
     atualizarCTA();
@@ -116,10 +108,7 @@
   setPlanoAtualUI(planoInicial);
   selecionarRadiosDePlano(planoInicial);
   atualizarCTA();
-})();
 
-// /app/plano/plano.js — OPCIONAL: focar acessibilidade nas vantagens (cole ao final)
-document.querySelectorAll('.vant-item').forEach(item=>{
-  // permite foco pelo teclado no bloco todo
-  item.setAttribute('tabindex','0');
-});
+  // Acessibilidade nas vantagens (bloco focável)
+  document.querySelectorAll('.vant-item').forEach(el=>el.setAttribute('tabindex','0'));
+})();
