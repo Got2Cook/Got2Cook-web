@@ -95,6 +95,7 @@ body {
   display: flex; flex-direction: column; justify-content: flex-start;
   gap: 12px; width: 75%; max-width: 180px; min-height: 170px;
   position: relative; transition: transform 0.2s, box-shadow 0.2s;
+  overflow: visible; /* permite o sticker sobrepor */
 }
 .card-plano:hover { transform: translateY(-4px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
 
@@ -115,18 +116,19 @@ body {
 .valor-plano.destaque-valor { font-size: 20px; color: #225c18; }
 
 .selo-popular {
-  position: absolute; top: -10px; right: -10px;
-  background: #492f70; color: white; font-weight: bold; font-size: 10px;
-  padding: 4px 10px; border-radius: 15px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  position: absolute; top: -14px; right: -14px; /* sobrepõe mais */
+  background: #492f70; color: white; font-weight: bold; font-size: 11px;
+  padding: 6px 12px; border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
   animation: destaque 1.5s infinite alternate;
+  z-index: 2;
 }
 @keyframes destaque {
   from { transform: translateY(0); }
-  to { transform: translateY(-2px); }
+  to { transform: translateY(-3px); }
 }
 
-/* Botões */
+/* Botões (base) */
 .btn-plano {
   background: linear-gradient(90deg, #492f70, #7b7190);
   color: white; font-weight: bold; border: none;
@@ -135,20 +137,6 @@ body {
 }
 .btn-plano:hover { opacity: 0.92; transform: translateY(-2px); }
 .btn-plano.selecionado { background-color: gray; cursor: default; }
-
-/* CTA do Premium: mais chamativo */
-.btn-cta{
-  padding: 14px 16px;
-  font-size: 16px;
-  letter-spacing: .3px;
-  box-shadow: 0 8px 22px rgba(73,47,112,0.35);
-  animation: ctaPulse 2.2s infinite;
-}
-@keyframes ctaPulse{
-  0%{ box-shadow: 0 8px 22px rgba(73,47,112,0.35) }
-  50%{ box-shadow: 0 12px 28px rgba(73,47,112,0.45) }
-  100%{ box-shadow: 0 8px 22px rgba(73,47,112,0.35) }
-}
 
 /* Benefícios nos cards (desktop ON, mobile OFF) */
 .beneficios-card{
@@ -215,11 +203,11 @@ footer.curva {
     letter-spacing: .5px;
   }
 
-  /* Meu Plano: ainda mais largo (90%) e mais baixo */
+  /* Meu Plano: MAIS estreito e mais baixo */
   .plano-atual{
-    width: 90%;
+    width: 68%;              /* mais estreito */
     margin: 0 auto 20px;
-    padding: 12px 20px;
+    padding: 10px 18px;      /* mais baixo */
     gap: 6px;
   }
   .plano-atual .nome-plano{ font-size: 22px; }
@@ -228,22 +216,24 @@ footer.curva {
   /* Some tabela no desktop; benefícios entram nos cards */
   .subtitulo, .tabela-comparativa{ display:none !important; }
 
-  /* Cards centralizados, mesmo tamanho e chamativos */
+  /* Cards centralizados, mesmo tamanho */
   .planos{
     width: 100%;
-    max-width: 920px;
-    margin: 0 auto 80px;
+    max-width: 860px;
+    margin: 0 auto 80px;     /* centraliza o grid */
     grid-template-columns: repeat(2, minmax(340px, 1fr));
     gap: 28px;
+    justify-content: center; /* centraliza trilhas do grid */
     justify-items: stretch;
+    align-items: start;
   }
 
   .card-plano{
     max-width: none;
-    min-height: 360px;          /* mesmo tamanho entre os dois */
+    min-height: 360px;       /* MESMO tamanho para ambos */
     padding: 24px 20px;
     border: 1px solid rgba(73,47,112,0.15);
-    overflow: hidden;
+    overflow: visible;       /* permite sticker sobrepor */
     transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
     box-shadow: 0 6px 16px rgba(0,0,0,.10);
   }
@@ -255,20 +245,27 @@ footer.curva {
 
   .beneficios-card{
     display:block;
-    font-size: 16px;            /* mais aparente */
-    margin: 10px 0 14px;
+    font-size: 16px;         /* mais aparente */
+    margin: 10px 0 16px;
   }
 
   .valor-plano{ font-size: 22px; }
   .valor-plano span{ font-size: 13px; }
   .valor-plano.destaque-valor{ font-size: 24px; }
 
-  .selo-popular{ font-size: 12px; padding: 6px 12px; }
+  .selo-popular{
+    top: -16px; right: -16px; /* sobreposição mais evidente */
+    font-size: 12px; padding: 7px 14px;
+  }
 
-  /* CTA do premium mais gritante no desktop */
+  /* Botões com MESMO tamanho; Premium continua chamativo pela sombra */
+  .btn-plano,
   .btn-cta{
     padding: 16px 18px;
-    font-size: 17px;
+    font-size: 16px;
+    width: 100%;
+  }
+  .btn-cta{
     box-shadow: 0 12px 28px rgba(73,47,112,0.45);
   }
 }
