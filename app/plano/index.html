@@ -1,4 +1,4 @@
-<!-- /app/plano/index.html -->
+<!-- /app/meu-plano/index.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -20,18 +20,24 @@
         </p>
         <p class="meu-plano__status" id="meuPlanoStatus">Válido até —</p>
       </div>
+
+      <!-- ações: esquerda (Alterar), direita (Cancelar + Histórico encostado no canto) -->
       <div class="meu-plano__acoes">
-        <button type="button" class="btn secundario" id="btnAlterar">Alterar plano</button>
-        <button type="button" class="btn fantasma" id="btnCancelar">Cancelar assinatura</button>
+        <div class="acoes-esq">
+          <button type="button" class="btn secundario" id="btnAlterar">Alterar plano</button>
+        </div>
+        <div class="acoes-dir">
+          <button type="button" class="btn fantasma" id="btnCancelar">Cancelar assinatura</button>
+          <button type="button" class="btn secundario btn-historico" id="btnHistorico">Histórico de Pagamentos</button>
+        </div>
       </div>
     </section>
 
-    <!-- Seleção de Plano (Radio Group) -->
+    <!-- Seleção de Plano (sem tabela comparativa) -->
     <section class="selecionar" aria-labelledby="tituloSelecao">
       <h2 id="tituloSelecao" class="sr-only">Selecione seu plano</h2>
 
-      <!-- Mobile: cartões empilhados -->
-      <div class="cards-mobile" role="radiogroup" aria-labelledby="tituloSelecao">
+      <div class="cards" role="radiogroup" aria-labelledby="tituloSelecao">
         <!-- Card Gratuito -->
         <label class="card plano--free" tabindex="0">
           <input type="radio" name="plano" value="Gratuito" class="radio-plano" aria-label="Selecionar plano Gratuito" />
@@ -71,54 +77,6 @@
           </ul>
         </label>
       </div>
-
-      <!-- Desktop: comparação em colunas -->
-      <div class="tabela-desktop" role="radiogroup" aria-labelledby="tituloSelecao">
-        <div class="tabela__cabecalho">
-          <div class="tabela__col tabela__col--rotulo" aria-hidden="true"></div>
-          <label class="tabela__col tabela__col--free" tabindex="0">
-            <input type="radio" name="planoDesktop" value="Gratuito" class="radio-plano" aria-label="Selecionar plano Gratuito" />
-            <div class="tabela__head">
-              <span class="plano__nome">Gratuito</span>
-              <span class="plano__preco">R$ 0/mês</span>
-            </div>
-          </label>
-          <label class="tabela__col tabela__col--premium" tabindex="0">
-            <span class="selo-popular" aria-hidden="true">⭐ Mais Popular</span>
-            <input type="radio" name="planoDesktop" value="Premium" class="radio-plano" aria-label="Selecionar plano Premium" />
-            <div class="tabela__head premium-head">
-              <span class="plano__nome">Premium</span>
-              <span class="plano__preco">R$ 9,90/mês</span>
-            </div>
-          </label>
-        </div>
-
-        <div class="tabela__linha">
-          <div class="tabela__rotulo">Receitas por dia</div>
-          <div class="tabela__cel">3</div>
-          <div class="tabela__cel tabela__cel--premium">Ilimitadas</div>
-        </div>
-        <div class="tabela__linha">
-          <div class="tabela__rotulo">Favoritar receitas</div>
-          <div class="tabela__cel"><span class="no">✕</span></div>
-          <div class="tabela__cel tabela__cel--premium"><span class="ok">✓</span></div>
-        </div>
-        <div class="tabela__linha">
-          <div class="tabela__rotulo">Relatórios detalhados</div>
-          <div class="tabela__cel"><span class="no">✕</span></div>
-          <div class="tabela__cel tabela__cel--premium"><span class="ok">✓</span></div>
-        </div>
-        <div class="tabela__linha">
-          <div class="tabela__rotulo">Histórico de humor</div>
-          <div class="tabela__cel"><span class="no">✕</span></div>
-          <div class="tabela__cel tabela__cel--premium"><span class="ok">✓</span></div>
-        </div>
-        <div class="tabela__linha">
-          <div class="tabela__rotulo">Suporte prioritário</div>
-          <div class="tabela__cel"><span class="no">✕</span></div>
-          <div class="tabela__cel tabela__cel--premium"><span class="ok">✓</span></div>
-        </div>
-      </div>
     </section>
 
     <!-- Vantagens Premium (clean, com suas imagens) -->
@@ -152,11 +110,6 @@
           <p class="vant-texto">Atendimento rápido quando precisar.</p>
         </li>
       </ul>
-    </section>
-
-    <!-- Ações extras -->
-    <section class="extras">
-      <button type="button" class="btn secundario" id="btnHistorico">Histórico de Pagamentos</button>
     </section>
 
     <!-- Espaço para não cobrir o conteúdo pelo CTA fixo e rodapé -->
