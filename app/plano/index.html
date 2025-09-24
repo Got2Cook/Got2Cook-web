@@ -21,10 +21,8 @@
         <p class="meu-plano__status" id="meuPlanoStatus">Válido até —</p>
       </div>
 
+      <!-- ações: somente Cancelar e Histórico (Alterar foi removido) -->
       <div class="meu-plano__acoes">
-        <div class="acoes-esq">
-          <button type="button" class="btn secundario" id="btnAlterar">Alterar plano</button>
-        </div>
         <div class="acoes-dir">
           <button type="button" class="btn fantasma" id="btnCancelar">Cancelar assinatura</button>
           <button type="button" class="btn secundario btn-historico" id="btnHistorico">Histórico de Pagamentos</button>
@@ -32,7 +30,7 @@
       </div>
     </section>
 
-    <!-- Seleção de Plano (sem radios; cards compactos; preço maior; premium com preço antigo riscado) -->
+    <!-- Seleção de Plano (sem radios; cards compactos) -->
     <section class="selecao-planos" aria-labelledby="tituloSelecao">
       <h2 id="tituloSelecao" class="subtitulo">Selecione seu plano</h2>
 
@@ -67,7 +65,7 @@
       </div>
     </section>
 
-    <!-- Vantagens Premium (seção separada) -->
+    <!-- Vantagens Premium -->
     <section class="vantagens" aria-labelledby="titVantagens">
       <h2 id="titVantagens" class="vant-h2">Por que você vai amar o Premium</h2>
       <ul class="vantagens__grid">
@@ -102,7 +100,7 @@
     <div class="footer-spacer"></div>
   </main>
 
-  <!-- CTA fixo (só aparece no GRATUITO; dourado pulsante com efeito raro) -->
+  <!-- CTA fixo (só aparece no GRATUITO; dourado pulsante) -->
   <div class="cta-fixo" id="ctaWrap" role="region" aria-label="Ação principal">
     <button type="button" class="btn btn--ouro" id="btnConfirmar">Assinar Premium</button>
   </div>
@@ -113,6 +111,20 @@
     <button class="btn-footer btn-central" id="btnLogo" aria-label="Ir para Minhas Receitas">🍳</button>
     <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira">🧊</button>
   </footer>
+
+  <!-- Modal agradável (substitui alert/confirm) -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal__scrim" data-close="true"></div>
+    <div class="modal__card" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+      <h3 id="modalTitle" class="modal__title">Título</h3>
+      <p id="modalDesc" class="modal__desc">Mensagem</p>
+      <div class="modal__actions">
+        <button type="button" class="btn secundario" id="modalCancel">Cancelar</button>
+        <button type="button" class="btn primario" id="modalOk">OK</button>
+      </div>
+      <button class="modal__close" aria-label="Fechar" id="modalClose">×</button>
+    </div>
+  </div>
 
   <script src="./meu-plano.js"></script>
 </body>
