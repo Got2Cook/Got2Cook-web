@@ -252,3 +252,79 @@ body{
 @media (min-width: 992px){
   .cta-fixo .btn{ min-width: 680px; font-size: 19px; padding: 16px 26px }
 }
+
+/* === CTA Premium chamativo apenas quando usuário está no gratuito === */
+
+.footer-spacer{
+  height: 260px; /* espaço extra para não colidir com o rodapé */
+}
+
+.cta-fixo{
+  position: fixed;
+  left: 0; right: 0;
+  bottom: calc(110px + env(safe-area-inset-bottom));
+  display: flex; justify-content: center;
+  padding: 0 16px;
+  pointer-events: none;
+  z-index: 11;
+}
+
+.cta-fixo .btn{
+  pointer-events: auto;
+  min-width: min(560px, 94vw);
+  border-radius: 999px;
+  padding: 16px 24px;
+  font-size: 18px;
+  font-weight: 700;
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+
+/* estilo raro dourado — usado só no plano gratuito */
+.cta-fixo .btn.is-upgrade{
+  position: relative;
+  color: #1b1405;
+  background: linear-gradient(135deg, #fff8d7, #d4af37, #c49a2f);
+  border: 2px solid #d4af37;
+  box-shadow:
+    0 0 25px rgba(212,175,55,.55),
+    0 12px 28px rgba(0,0,0,.25);
+  text-shadow: 0 1px 0 rgba(255,255,255,.4);
+  isolation: isolate;
+}
+
+/* efeito pulsar dourado */
+.cta-fixo .btn.is-upgrade::before{
+  content:"";
+  position:absolute; inset:-8px;
+  border-radius: inherit;
+  box-shadow: 0 0 35px rgba(212,175,55,.75);
+  animation: ctaPulse 2.4s ease-in-out infinite;
+  z-index:-1;
+}
+
+@keyframes ctaPulse{
+  0%,100%{ transform: scale(1); opacity:.4 }
+  50%    { transform: scale(1.08); opacity:.9 }
+}
+
+/* interações */
+.cta-fixo .btn.is-upgrade:hover{ transform: translateY(-3px); filter: brightness(1.05) }
+.cta-fixo .btn.is-upgrade:active{ transform: translateY(-1px) }
+.cta-fixo .btn.is-upgrade:focus-visible{ outline: 3px dashed #d4af37; outline-offset: 4px }
+
+/* estilo neutro (quando já é premium) */
+.cta-fixo .btn.primario{
+  background:#492f70;
+  color:#fff;
+  border:none;
+  box-shadow:none;
+}
+
+/* Desktop maior */
+@media (min-width: 992px){
+  .cta-fixo .btn{
+    min-width: 680px;
+    font-size: 20px;
+    padding: 18px 30px;
+  }
+}
