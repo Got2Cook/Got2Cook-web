@@ -112,3 +112,40 @@
   // Acessibilidade nas vantagens (bloco focável)
   document.querySelectorAll('.vant-item').forEach(el=>el.setAttribute('tabindex','0'));
 })();
+
+// pegue a referência do CTA como você já tem:
+const btnConfirmar  = document.querySelector('#btnConfirmar');
+
+// função já existente — só adicione a parte que alterna a classe is-premium
+function atualizarCTA(){
+  const plano = (document.querySelectorAll('.radio-plano')||[])
+                  .length ? [...document.querySelectorAll('.radio-plano')]
+                    .find(x=>x.checked)?.value : null;
+
+  const selecionado = plano || (localStorage.getItem('got2cook_plano') || 'Gratuito');
+
+  // texto do botão
+  btnConfirmar.textContent = (selecionado === 'Premium') ? 'Assinar Premium' : 'Continuar';
+
+  // aplica ou remove o “look raro”
+  if(selecionado === 'Premium'){
+    btnConfirmar.classList.add('is-premium');
+  }else{
+    btnConfirmar.classList.remove('is-premium');
+  }
+}
+
+// chame atualizarCTA() nos mesmos pontos em que você já atualiza o botão
+// por exemplo, após marcar radios, ao carregar a página, etc.
+document.addEventListener('DOMContentLoaded', atualizarCTA);
+(document.querySelectorAll('.radio-plano')||[]).forEach(r=>{
+  r.addEventListener('change', atualizarCTA);
+});
+
+// quando confirmar, também garanta a classe
+btnConfirmar.addEventListener('click', ()=>{
+  const checked = [...document.querySelectorAll('.radio-plano')].find(x=>x.checked)?.value;
+  const alvo = checked || localStorage.getItem('got2cook_plano') || 'Gratuito';
+  // ... seu fluxo de salvar ...
+  atualizarCTA();
+});
