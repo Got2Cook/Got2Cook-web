@@ -1,4 +1,4 @@
-/* /app/plano/plano.css */
+/* /app/meu-plano/meu-plano.css */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 :root{
@@ -64,10 +64,19 @@ body{
 .meu-plano__icone{font-size:28px}
 .meu-plano__nome{margin:0 0 4px}
 .meu-plano__status{margin:0;color:#2f6d25}
+
+/* Ações: esquerda e direita */
 .meu-plano__acoes{
   grid-column:1 / -1;
+  display:flex; align-items:center; gap:12px;
+  margin-top:2px;
+}
+.acoes-esq{display:flex; gap:10px}
+.acoes-dir{
+  margin-left:auto;                 /* encosta no canto direito */
   display:flex; gap:10px; flex-wrap:wrap;
 }
+.btn-historico{ margin-right:0; }
 
 /* Botões base */
 .btn{
@@ -91,8 +100,11 @@ body{
   border:2px dashed var(--roxo);
 }
 
-/* Cards mobile */
-.cards-mobile{display:grid; gap:14px; margin:16px 0}
+/* Cards (seleção de plano) */
+.cards{
+  display:grid; gap:14px; margin:16px 0;
+  grid-template-columns:1fr;
+}
 .card{
   display:block;
   position:relative;
@@ -154,57 +166,7 @@ body{
   100%{transform:translateX(40%) rotate(20deg)}
 }
 
-/* Tabela desktop estilo Netflix */
-.tabela-desktop{display:none; margin:22px 0}
-.tabela__cabecalho{
-  display:grid; grid-template-columns: 1fr 1fr 1fr; gap:32px; align-items:stretch;
-}
-.tabela__col{
-  position:relative;
-  border:2px solid var(--roxo-escuro);
-  border-radius:18px;
-  background:#fff;
-  overflow:hidden;
-  transition:border-color .15s ease, box-shadow .15s ease;
-}
-.tabela__col:has(input:checked){
-  border-color:var(--roxo);
-  box-shadow:0 12px 26px rgba(0,0,0,.12);
-}
-.tabela__head{
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  padding:18px 12px; gap:6px;
-}
-.tabela__col input[type="radio"]{
-  position:absolute; top:12px; left:12px; width:22px; height:22px; accent-color:var(--roxo);
-}
-.premium-head{
-  background:linear-gradient(180deg,var(--grad-a),var(--grad-b));
-  border-bottom:2px solid var(--ouro);
-  position:relative;
-}
-.tabela__col--premium{
-  border-color:var(--ouro);
-  animation:pulsar 5s ease-in-out infinite;
-}
-.tabela__col--premium .selo-popular{top:14px; right:14px}
-
-@keyframes pulsar{
-  0%,100%{box-shadow:0 0 0 rgba(212,175,55,0)}
-  50%{box-shadow:0 0 24px rgba(212,175,55,.35)}
-}
-
-.tabela__linha{
-  display:grid; grid-template-columns: 1fr 1fr 1fr; gap:32px;
-  align-items:center; padding:14px 0; border-bottom:1px dashed #6aa35a;
-}
-.tabela__rotulo{font-weight:600}
-.tabela__cel{text-align:center}
-.tabela__cel--premium{font-weight:700}
-
-.tabela__col--rotulo{border:none;background:transparent}
-
-/* --- Vantagens Premium (CLEAN, SEM CONTAINER COLORIDO) --- */
+/* Vantagens Premium (clean, sem container colorido) */
 .vantagens{
   margin:24px 0 8px;
   padding:0;
@@ -229,7 +191,7 @@ body{
 }
 .vant-img{
   width:84px; height:84px; object-fit:contain;
-  display:block; margin:0 auto;
+  display:block; margin:0 auto;         /* imagem centralizada */
 }
 .vant-titulo{
   margin:4px 0 2px; font-size:16px; font-weight:700; color:var(--verde);
@@ -276,20 +238,23 @@ body{
 :focus{outline:none}
 :focus-visible{outline:3px dotted var(--roxo); outline-offset:4px}
 
-/* Desktop >= 992px */
+/* Responsivo */
+@media (min-width: 768px){
+  .cards{ grid-template-columns:repeat(2, 1fr); }
+}
 @media (min-width: 992px){
   :root{ --wrap: 980px; --gap: 24px }
   .titulo{font-size:32px}
-
-  .cards-mobile{display:none}
-  .tabela-desktop{display:block}
 
   .meu-plano{
     max-width:700px; margin:0 auto; padding:12px 14px;
   }
 
-  .vantagens__grid{ grid-template-columns:repeat(3, 1fr); }
-  .vant-h2{ font-size:24px }
+  .vantagens__grid{
+    /* vira flex para centralizar as 2 últimas vantagens */
+    display:flex; flex-wrap:wrap; gap:32px 56px; justify-content:center;
+  }
+  .vant-item{ width:260px; }
 
   .cta-fixo .btn{min-width:640px}
 }
