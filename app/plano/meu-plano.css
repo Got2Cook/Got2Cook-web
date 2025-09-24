@@ -16,21 +16,11 @@
 
 *{box-sizing:border-box}
 html,body{height:100%}
-body{
-  margin:0;
-  font-family:Poppins, Arial, sans-serif;
-  background:var(--bg);
-  color:var(--verde);
-}
+body{margin:0;font-family:Poppins, Arial, sans-serif;background:var(--bg);color:var(--verde)}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:16px 16px 0}
 
 /* Título */
-.titulo{
-  margin:20px 0 12px;
-  font-size:28px;
-  text-align:center;
-  color:var(--verde);
-}
+.titulo{margin:20px 0 12px;font-size:28px;text-align:center;color:var(--verde)}
 
 /* Meu Plano Atual */
 .meu-plano{
@@ -47,64 +37,46 @@ body{
 .acoes-dir{margin-left:auto; display:flex; gap:10px; flex-wrap:wrap}
 .btn-historico{margin-right:0}
 
-/* Botões */
+/* Botões utilitários */
 .btn{appearance:none;border:0;border-radius:14px;padding:12px 16px;font-weight:700;cursor:pointer}
-.btn.primario{background:var(--roxo);color:#fff}
+.btn.primario{background:#492f70;color:#fff}
 .btn.secundario{background:#fff;color:var(--roxo);border:2px solid var(--roxo)}
 .btn.fantasma{background:transparent;color:var(--roxo);border:2px dashed var(--roxo)}
 :focus-visible{outline:3px dotted var(--roxo);outline-offset:4px}
 
-/* Seleção de planos — estilo base (mobile) */
-.cards{
-  display:grid; gap:14px; margin:16px 0;
-  grid-template-columns:1fr;
-}
+/* Seleção de planos */
+.cards{display:grid;gap:14px;margin:16px 0;grid-template-columns:1fr}
 .card{
-  position:relative; display:block;
+  position:relative; display:block; overflow:hidden;
   background:#fff; border:2px solid var(--roxo-escuro);
   border-radius:18px; padding:16px 16px 52px;
   transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-  overflow:hidden;
 }
 .card:hover{transform:translateY(-2px)}
 .card:has(input:checked){border-color:var(--roxo); box-shadow:0 8px 22px rgba(0,0,0,.12)}
-.card input[type="radio"]{
-  position:absolute; bottom:14px; left:14px; width:22px; height:22px; accent-color:var(--roxo);
-}
-
-/* Conteúdo compacto (sem vantagens) */
-.card__conteudo{
-  display:flex; align-items:center; gap:12px;
-}
+.card input[type="radio"]{position:absolute;bottom:14px;left:14px;width:22px;height:22px;accent-color:var(--roxo)}
+.card__conteudo{display:flex;align-items:center;gap:12px}
 .card__icone{font-size:28px}
-.card__titulos{display:flex; flex-direction:column}
-.card__nome{font-weight:700; font-size:18px}
-.card__preco{color:#2b2b2b; font-weight:600}
+.card__titulos{display:flex;flex-direction:column}
+.card__nome{font-weight:700;font-size:18px}
+.card__preco{color:#2b2b2b;font-weight:600}
 
-/* Premium dourado com efeito “raro” */
-.plano--premium{
-  border:2px solid var(--ouro);
-  background:linear-gradient(180deg,var(--grad-a),var(--grad-b));
-}
+/* Premium dourado (efeito “raro”) */
+.plano--premium{border:2px solid var(--ouro);background:linear-gradient(180deg,var(--grad-a),var(--grad-b))}
 .plano--premium::after{
-  /* sheen diagonal sutil */
-  content:""; position:absolute; inset:-50% -50% auto auto;
-  width:200%; height:40%; transform:rotate(20deg);
-  background:linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
-  animation:sheen 6s linear infinite; pointer-events:none;
+  content:"";position:absolute;inset:-50% -50% auto auto;width:200%;height:40%;
+  transform:rotate(20deg);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
+  animation:sheen 6s linear infinite;pointer-events:none;
 }
-@keyframes sheen{
-  0% {transform:translateX(-60%) rotate(20deg)}
-  100%{transform:translateX(40%) rotate(20deg)}
-}
+@keyframes sheen{0%{transform:translateX(-60%) rotate(20deg)}100%{transform:translateX(40%) rotate(20deg)}}
 
 /* Selo “Mais Popular” */
 .selo-popular{
-  position:absolute; top:10px; right:10px;
+  position:absolute;top:10px;right:10px;
   background:linear-gradient(135deg,var(--ouro),var(--ouro-escuro));
-  color:#1b1405; font-weight:700; font-size:12px;
-  padding:6px 10px; border-radius:999px;
-  box-shadow:0 6px 14px rgba(0,0,0,.15);
+  color:#1b1405;font-weight:700;font-size:12px;
+  padding:6px 10px;border-radius:999px;box-shadow:0 6px 14px rgba(0,0,0,.15);
 }
 
 /* Vantagens (seção separada) */
@@ -116,215 +88,54 @@ body{
 .vant-titulo{margin:4px 0 2px;font-size:16px;font-weight:700;color:var(--verde)}
 .vant-texto{margin:0;font-size:14px;line-height:1.35;color:#2b2b2b}
 
-/* CTA fixo */
-.cta-fixo{position:fixed;left:0;right:0;bottom:90px;display:flex;justify-content:center;padding:8px 16px;pointer-events:none}
-.cta-fixo .btn{min-width:min(520px,92vw);pointer-events:auto}
+/* CTA fixo — só aparece no GRATUITO (dourado pulsando) */
+.footer-spacer{height:260px}
+.cta-fixo{
+  position:fixed;left:0;right:0;bottom:calc(110px + env(safe-area-inset-bottom));
+  display:flex;justify-content:center;padding:0 16px;pointer-events:none;z-index:11;
+}
+.cta-fixo.hidden{display:none}
+.cta-fixo .btn{
+  pointer-events:auto;min-width:min(560px,94vw);border-radius:999px;
+  padding:16px 24px;font-size:18px;font-weight:700;
+  transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+/* dourado pulsante */
+.cta-fixo .btn--ouro{
+  position:relative;color:#1b1405;background:linear-gradient(135deg,#fff8d7,#d4af37,#c49a2f);
+  border:2px solid #d4af37;
+  box-shadow:0 0 25px rgba(212,175,55,.55),0 12px 28px rgba(0,0,0,.25);
+  text-shadow:0 1px 0 rgba(255,255,255,.4);isolation:isolate;
+}
+.cta-fixo .btn--ouro::before{
+  content:"";position:absolute;inset:-8px;border-radius:inherit;
+  box-shadow:0 0 35px rgba(212,175,55,.75);
+  animation:ctaPulse 2.4s ease-in-out infinite;z-index:-1;
+}
+@keyframes ctaPulse{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.08);opacity:.9}}
+.cta-fixo .btn--ouro:hover{transform:translateY(-3px);filter:brightness(1.05)}
+.cta-fixo .btn--ouro:active{transform:translateY(-1px)}
+.cta-fixo .btn--ouro:focus-visible{outline:3px dashed #d4af37;outline-offset:4px}
 
 /* Rodapé curvo oficial */
-.curva{
-  position:fixed;left:0;right:0;bottom:0;height:70px;background:var(--roxo-escuro);
-  border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
-  display:flex;align-items:center;justify-content:center;gap:40px;z-index:10
-}
+.curva{position:fixed;left:0;right:0;bottom:0;height:70px;background:var(--roxo-escuro);
+  border-top-left-radius:100% 50%;border-top-right-radius:100% 50%;
+  display:flex;align-items:center;justify-content:center;gap:40px;z-index:10}
 .btn-footer{width:55px;height:55px;border-radius:50%;background:#fff;border:0;cursor:pointer;font-size:250%;display:flex;align-items:center;justify-content:center}
 .btn-footer.btn-central{width:150px;height:150px;border-radius:50%;margin-top:-40px;font-size:150%;box-shadow:0 8px 20px rgba(0,0,0,.2)}
-.footer-spacer{height:180px}
 
-/* Desktop — dois cards grandes lado a lado, look “tabela Netflix” (sem features) */
+/* Responsivo */
+@media (min-width:768px){.cards{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:992px){
-  :root{ --wrap: 980px }
+  :root{--wrap:980px}
   .titulo{font-size:32px}
-
-  .cards{
-    grid-template-columns:1fr 1fr;
-    gap:24px;
-  }
-  .card{
-    padding:26px 22px 62px;
-    min-height:180px;
-    border-radius:22px;
-    box-shadow:0 8px 24px rgba(0,0,0,.06);
-  }
+  .cards{gap:24px}
+  .card{padding:26px 22px 62px;min-height:180px;border-radius:22px;box-shadow:0 8px 24px rgba(0,0,0,.06)}
   .card__icone{font-size:32px}
   .card__nome{font-size:20px}
   .card__preco{font-size:18px}
-
-  /* Destaque sutil do selecionado no desktop */
-  .card:has(input:checked){
-    transform:translateY(-3px);
-    box-shadow:0 16px 34px rgba(0,0,0,.12);
-  }
-
+  .card:has(input:checked){transform:translateY(-3px);box-shadow:0 16px 34px rgba(0,0,0,.12)}
   .meu-plano{max-width:700px;margin:0 auto}
   .vant-h2{font-size:24px}
-  .cta-fixo .btn{min-width:640px}
-}
-
-/* === CTA premium turbinado e posição segura === */
-
-/* aumenta o “respiro” geral pra não colidir com o rodapé curvo */
-.footer-spacer{
-  height: 220px; /* antes era 180px */
-}
-
-/* fixa o CTA acima do rodapé, respeitando safe-area (iPhone etc.) */
-.cta-fixo{
-  position: fixed;
-  left: 0; right: 0;
-  /* 70px = altura do rodapé + 16px de folga + safe-area */
-  bottom: calc(70px + 16px + env(safe-area-inset-bottom));
-  display: flex; justify-content: center;
-  padding: 0 16px;
-  pointer-events: none;  /* mantém o clique só no botão */
-  z-index: 11;          /* acima do rodapé (rodapé está em z-index:10) */
-}
-
-/* estilo base do botão */
-.cta-fixo .btn{
-  pointer-events: auto;
-  min-width: min(560px, 94vw);
-  border-radius: 999px;
-  padding: 14px 22px;
-  font-size: 18px;
-  letter-spacing: .2px;
-  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
-}
-
-/* versão “premium” — roxo com efeitos */
-.cta-fixo .btn.is-premium{
-  position: relative;
-  color: #fff;
-  border: 2px solid rgba(255,255,255,.18);
-  background:
-    radial-gradient(120% 120% at 50% -20%, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 60%),
-    linear-gradient(135deg, #5b3a8e, #492f70 45%, #3b235a 100%);
-  box-shadow:
-    0 14px 26px rgba(73,47,112,.35),
-    0 0 0 2px rgba(212,175,55,.22) inset; /* leve toque dourado */
-  isolation: isolate; /* para os pseudo-elements */
-}
-
-/* brilho “sheen” que passa por cima */
-.cta-fixo .btn.is-premium::after{
-  content:"";
-  position:absolute; inset:0;
-  border-radius: inherit;
-  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.5) 50%, transparent 70%);
-  transform: translateX(-120%);
-  animation: ctaSheen 3.2s ease-in-out infinite;
-  mix-blend-mode: screen;
-}
-
-/* pulsar suave */
-.cta-fixo .btn.is-premium::before{
-  content:"";
-  position:absolute; inset:-6px;
-  border-radius: inherit;
-  box-shadow: 0 0 28px rgba(212,175,55,.35);
-  opacity:.0;
-  animation: ctaPulse 2.8s ease-in-out infinite;
-}
-
-/* interações */
-.cta-fixo .btn.is-premium:hover{ transform: translateY(-3px); filter: brightness(1.04) }
-.cta-fixo .btn.is-premium:active{ transform: translateY(-1px) }
-.cta-fixo .btn.is-premium:focus-visible{
-  outline: 3px dashed #d4af37; outline-offset: 4px;
-}
-
-/* fallback quando o plano não é premium (continua roxo, mas sem “efeitos raros”) */
-.cta-fixo .btn.primario{
-  background: #492f70;
-}
-
-/* animações */
-@keyframes ctaSheen{
-  0%   { transform: translateX(-120%) }
-  55%  { transform: translateX(120%) }
-  100% { transform: translateX(120%) }
-}
-@keyframes ctaPulse{
-  0%,100%{ opacity:.0 }
-  50%    { opacity:.55 }
-}
-
-/* Desktop: botão um pouco maior */
-@media (min-width: 992px){
-  .cta-fixo .btn{ min-width: 680px; font-size: 19px; padding: 16px 26px }
-}
-
-/* === CTA Premium chamativo apenas quando usuário está no gratuito === */
-
-.footer-spacer{
-  height: 260px; /* espaço extra para não colidir com o rodapé */
-}
-
-.cta-fixo{
-  position: fixed;
-  left: 0; right: 0;
-  bottom: calc(110px + env(safe-area-inset-bottom));
-  display: flex; justify-content: center;
-  padding: 0 16px;
-  pointer-events: none;
-  z-index: 11;
-}
-
-.cta-fixo .btn{
-  pointer-events: auto;
-  min-width: min(560px, 94vw);
-  border-radius: 999px;
-  padding: 16px 24px;
-  font-size: 18px;
-  font-weight: 700;
-  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
-}
-
-/* estilo raro dourado — usado só no plano gratuito */
-.cta-fixo .btn.is-upgrade{
-  position: relative;
-  color: #1b1405;
-  background: linear-gradient(135deg, #fff8d7, #d4af37, #c49a2f);
-  border: 2px solid #d4af37;
-  box-shadow:
-    0 0 25px rgba(212,175,55,.55),
-    0 12px 28px rgba(0,0,0,.25);
-  text-shadow: 0 1px 0 rgba(255,255,255,.4);
-  isolation: isolate;
-}
-
-/* efeito pulsar dourado */
-.cta-fixo .btn.is-upgrade::before{
-  content:"";
-  position:absolute; inset:-8px;
-  border-radius: inherit;
-  box-shadow: 0 0 35px rgba(212,175,55,.75);
-  animation: ctaPulse 2.4s ease-in-out infinite;
-  z-index:-1;
-}
-
-@keyframes ctaPulse{
-  0%,100%{ transform: scale(1); opacity:.4 }
-  50%    { transform: scale(1.08); opacity:.9 }
-}
-
-/* interações */
-.cta-fixo .btn.is-upgrade:hover{ transform: translateY(-3px); filter: brightness(1.05) }
-.cta-fixo .btn.is-upgrade:active{ transform: translateY(-1px) }
-.cta-fixo .btn.is-upgrade:focus-visible{ outline: 3px dashed #d4af37; outline-offset: 4px }
-
-/* estilo neutro (quando já é premium) */
-.cta-fixo .btn.primario{
-  background:#492f70;
-  color:#fff;
-  border:none;
-  box-shadow:none;
-}
-
-/* Desktop maior */
-@media (min-width: 992px){
-  .cta-fixo .btn{
-    min-width: 680px;
-    font-size: 20px;
-    padding: 18px 30px;
-  }
+  .cta-fixo .btn{min-width:680px;font-size:20px;padding:18px 30px}
 }
