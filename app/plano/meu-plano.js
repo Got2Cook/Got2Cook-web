@@ -12,9 +12,7 @@
   const btnConfirmar  = $('#btnConfirmar');
   const ctaWrap       = $('#ctaWrap');
 
-  const radios = $$('.radio-plano');
-
-  // Rodapé navegação
+  // Navegação rodapé
   $('#btnVoltar').addEventListener('click', ()=>location.href='../config/index.html');
   $('#btnLogo').addEventListener('click', ()=>location.href='../minhas-receitas/index.html');
   $('#btnGeladeira').addEventListener('click', ()=>location.href='../geladeira/index.html');
@@ -30,59 +28,47 @@
   function carregarPlano(){ return localStorage.getItem(STORAGE_KEY) || 'Gratuito'; }
   function salvarPlano(p){ localStorage.setItem(STORAGE_KEY,p); }
 
-  function syncRadios(plano){ $$('.radio-plano').forEach(r=>r.checked = (r.value===plano)); }
-
   function atualizarUI(plano){
     // Header "Meu Plano Atual"
     meuPlanoNome.textContent = plano;
     meuPlanoIcone.textContent = (plano === 'Premium') ? '👑' : '🥗';
     meuPlanoStatus.textContent = `Válido até ${br(addDays(new Date(), 30))}`;
 
-    // CTA: dourado e pulsante para GRATUITO; oculto no PREMIUM
+    // CTA: aparece SÓ no GRATUITO
     if(plano === 'Gratuito'){
       ctaWrap.classList.remove('hidden');
       btnConfirmar.textContent = 'Assinar Premium';
-      btnConfirmar.classList.add('btn--ouro');
     }else{
-      ctaWrap.classList.add('hidden');          // <<< some quando Premium
-      btnConfirmar.classList.remove('btn--ouro');
+      ctaWrap.classList.add('hidden');
     }
   }
 
-  // Eventos de seleção
-  radios.forEach(r=>{
-    const label = r.closest('label');
-    if(label){
-      label.addEventListener('click', ()=>{ r.checked = true; });
-      label.addEventListener('keydown', e=>{
-        if(e.key==='Enter' || e.key===' '){ e.preventDefault(); r.checked=true; }
-      });
-    }
-    r.addEventListener('change', ()=>{
-      const plano = r.value;
-      // Apenas muda o texto/estilo do CTA conforme seleção atual (não salva ainda)
+  // Clique nos cards (sem radios)
+  $$('.card--click').forEach(card=>{
+    card.addEventListener('click', ()=>{
+      const plano = card.dataset.plano;
       if(plano === 'Premium'){
-        btnConfirmar.textContent = 'Assinar Premium';
-        btnConfirmar.classList.add('btn--ouro');
-        ctaWrap.classList.remove('hidden');
-      }else{
-        btnConfirmar.textContent = 'Assinar Premium';
-        btnConfirmar.classList.add('btn--ouro');
-        ctaWrap.classList.remove('hidden');
+        // se clicar no card premium, já chama CTA (scroll) ou efetiva no clique do CTA
+        document.getElementById('btnConfirmar').focus({preventScroll:false});
+        window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'});
+      }
+    });
+
+    card.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        card.click();
       }
     });
   });
 
-  // Confirmar CTA: define Premium e atualiza tudo
+  // Confirmar CTA: define Premium e oculta CTA
   btnConfirmar.addEventListener('click', ()=>{
     salvarPlano('Premium');
     alert('🎉 Parabéns! Você agora é Premium.');
-    syncRadios('Premium');
-    atualizarUI('Premium'); // isto esconde o CTA
+    atualizarUI('Premium'); // esconde CTA
   });
 
-  // Inicialização
-  const planoInicial = carregarPlano();
-  syncRadios(planoInicial);
-  atualizarUI(planoInicial);
+  // Init
+  atualizarUI(carregarPlano());
 })();
