@@ -128,3 +128,10 @@ body{margin:0;font-family:Poppins, Arial, sans-serif;background:var(--bg);color:
   .vant-h2{font-size:24px}
   .cta-fixo .btn{min-width:680px;font-size:20px;padding:18px 30px}
 }
+
+/* /app/meu-plano/meu-plano.css */
+.preco-sufixo {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+}
