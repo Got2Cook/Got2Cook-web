@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gerenciar Plano — Got2Cook</title>
-  <link rel="stylesheet" href="./meuplano.css" />
+  <link rel="stylesheet" href="./meu-plano.css" />
 </head>
 <body>
   <main class="wrap" id="topo">
@@ -21,7 +21,6 @@
         <p class="meu-plano__status" id="meuPlanoStatus">Válido até —</p>
       </div>
 
-      <!-- ações: esquerda (Alterar), direita (Cancelar + Histórico encostado no canto) -->
       <div class="meu-plano__acoes">
         <div class="acoes-esq">
           <button type="button" class="btn secundario" id="btnAlterar">Alterar plano</button>
@@ -33,10 +32,9 @@
       </div>
     </section>
 
-    <!-- Seleção de Plano (sem tabela comparativa) -->
-    <section class="selecionar" aria-labelledby="tituloSelecao">
+    <!-- Seleção de Plano -->
+    <section class="selecao-planos" aria-labelledby="tituloSelecao">
       <h2 id="tituloSelecao" class="sr-only">Selecione seu plano</h2>
-
       <div class="cards" role="radiogroup" aria-labelledby="tituloSelecao">
         <!-- Card Gratuito -->
         <label class="card plano--free" tabindex="0">
@@ -49,17 +47,17 @@
             </div>
           </div>
           <ul class="beneficios">
-            <li><span class="ok" aria-hidden="true">✓</span> 3 receitas/dia</li>
-            <li><span class="no" aria-hidden="true">✕</span> Favoritar receitas</li>
-            <li><span class="no" aria-hidden="true">✕</span> Relatórios detalhados</li>
-            <li><span class="no" aria-hidden="true">✕</span> Histórico de humor completo</li>
-            <li><span class="no" aria-hidden="true">✕</span> Suporte prioritário</li>
+            <li><span class="ok">✓</span> 3 receitas/dia</li>
+            <li><span class="no">✕</span> Favoritar receitas</li>
+            <li><span class="no">✕</span> Relatórios detalhados</li>
+            <li><span class="no">✕</span> Histórico de humor completo</li>
+            <li><span class="no">✕</span> Suporte prioritário</li>
           </ul>
         </label>
 
         <!-- Card Premium -->
         <label class="card plano--premium" tabindex="0">
-          <span class="selo-popular" aria-hidden="true">⭐ Mais Popular</span>
+          <span class="selo-popular">⭐ Mais Popular</span>
           <input type="radio" name="plano" value="Premium" class="radio-plano" aria-label="Selecionar plano Premium" />
           <div class="card__topo">
             <span class="plano__icone" aria-hidden="true">👑</span>
@@ -69,20 +67,19 @@
             </div>
           </div>
           <ul class="beneficios">
-            <li><span class="ok" aria-hidden="true">✓</span> Receitas ilimitadas</li>
-            <li><span class="ok" aria-hidden="true">✓</span> Favoritar receitas</li>
-            <li><span class="ok" aria-hidden="true">✓</span> Relatórios detalhados</li>
-            <li><span class="ok" aria-hidden="true">✓</span> Histórico de humor completo</li>
-            <li><span class="ok" aria-hidden="true">✓</span> Suporte prioritário</li>
+            <li><span class="ok">✓</span> Receitas ilimitadas</li>
+            <li><span class="ok">✓</span> Favoritar receitas</li>
+            <li><span class="ok">✓</span> Relatórios detalhados</li>
+            <li><span class="ok">✓</span> Histórico de humor completo</li>
+            <li><span class="ok">✓</span> Suporte prioritário</li>
           </ul>
         </label>
       </div>
     </section>
 
-    <!-- Vantagens Premium (clean, com suas imagens) -->
+    <!-- Vantagens Premium -->
     <section class="vantagens" aria-labelledby="titVantagens">
       <h2 id="titVantagens" class="vant-h2">Por que você vai amar o Premium</h2>
-
       <ul class="vantagens__grid">
         <li class="vant-item">
           <img class="vant-img" src="../../assets/sem-anuncios.png" alt="Sem anúncios" />
@@ -112,7 +109,6 @@
       </ul>
     </section>
 
-    <!-- Espaço para não cobrir o conteúdo pelo CTA fixo e rodapé -->
     <div class="footer-spacer"></div>
   </main>
 
@@ -128,6 +124,6 @@
     <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira">🧊</button>
   </footer>
 
-  <script src="./meuplano.js"></script>
+  <script src="./meu-plano.js"></script>
 </body>
 </html>
