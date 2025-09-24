@@ -6,7 +6,6 @@
   --verde:#225c18;
   --roxo:#492f70;
   --roxo-escuro:#7b7190;
-  --ok:#1b8f3a;
   --ouro:#d4af37;
   --ouro-escuro:#c49a2f;
   --grad-a:#fff8d7;
@@ -19,8 +18,9 @@ html,body{height:100%}
 body{margin:0;font-family:Poppins, Arial, sans-serif;background:var(--bg);color:var(--verde)}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:16px 16px 0}
 
-/* Título */
+/* Títulos */
 .titulo{margin:20px 0 12px;font-size:28px;text-align:center;color:var(--verde)}
+.subtitulo{margin:8px 0 8px;font-size:22px;font-weight:700;color:var(--verde)}
 
 /* Meu Plano Atual */
 .meu-plano{
@@ -35,34 +35,44 @@ body{margin:0;font-family:Poppins, Arial, sans-serif;background:var(--bg);color:
 .meu-plano__acoes{grid-column:1 / -1; display:flex; align-items:center; gap:12px; margin-top:2px}
 .acoes-esq{display:flex; gap:10px}
 .acoes-dir{margin-left:auto; display:flex; gap:10px; flex-wrap:wrap}
-.btn-historico{margin-right:0}
-
-/* Botões utilitários */
 .btn{appearance:none;border:0;border-radius:14px;padding:12px 16px;font-weight:700;cursor:pointer}
-.btn.primario{background:#492f70;color:#fff}
 .btn.secundario{background:#fff;color:var(--roxo);border:2px solid var(--roxo)}
 .btn.fantasma{background:transparent;color:var(--roxo);border:2px dashed var(--roxo)}
 :focus-visible{outline:3px dotted var(--roxo);outline-offset:4px}
 
-/* Seleção de planos */
-.cards{display:grid;gap:14px;margin:16px 0;grid-template-columns:1fr}
+/* Cards — desktop-friendly, sem radios, altura menor */
+.cards{
+  display:grid; gap:18px; margin:12px 0;
+  grid-template-columns:1fr; /* mobile */
+}
 .card{
   position:relative; display:block; overflow:hidden;
   background:#fff; border:2px solid var(--roxo-escuro);
-  border-radius:18px; padding:16px 16px 52px;
+  border-radius:18px; padding:16px 18px;
+  min-height:120px; /* altura menor */
   transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  box-shadow:0 4px 16px rgba(0,0,0,.06);
 }
 .card:hover{transform:translateY(-2px)}
-.card:has(input:checked){border-color:var(--roxo); box-shadow:0 8px 22px rgba(0,0,0,.12)}
-.card input[type="radio"]{position:absolute;bottom:14px;left:14px;width:22px;height:22px;accent-color:var(--roxo)}
-.card__conteudo{display:flex;align-items:center;gap:12px}
+.card--click{cursor:pointer}
+.card__conteudo{display:flex;align-items:center;gap:16px}
 .card__icone{font-size:28px}
-.card__titulos{display:flex;flex-direction:column}
-.card__nome{font-weight:700;font-size:18px}
-.card__preco{color:#2b2b2b;font-weight:600}
+.card__titulos{display:flex;flex-direction:column;gap:4px}
+.card__nome{font-weight:700;font-size:19px;line-height:1}
+.card__precos{display:flex;align-items:baseline;gap:10px;line-height:1}
+.preco-antigo{
+  font-size:16px;color:#826c18;text-decoration:line-through;opacity:.8;
+}
+.preco-atual{
+  font-size:22px;font-weight:800;color:#1b1b1b;
+}
+.preco-atual.destaque{font-size:24px}
 
-/* Premium dourado (efeito “raro”) */
-.plano--premium{border:2px solid var(--ouro);background:linear-gradient(180deg,var(--grad-a),var(--grad-b))}
+/* Premium dourado (efeito “raro” no card) */
+.plano--premium{
+  border:2px solid var(--ouro);
+  background:linear-gradient(180deg,var(--grad-a),var(--grad-b));
+}
 .plano--premium::after{
   content:"";position:absolute;inset:-50% -50% auto auto;width:200%;height:40%;
   transform:rotate(20deg);
@@ -80,7 +90,7 @@ body{margin:0;font-family:Poppins, Arial, sans-serif;background:var(--bg);color:
 }
 
 /* Vantagens (seção separada) */
-.vantagens{margin:40px 0 8px}
+.vantagens{margin:36px 0 8px}
 .vant-h2{text-align:center;font-size:22px;color:var(--verde);margin-bottom:22px}
 .vantagens__grid{list-style:none;display:flex;flex-wrap:wrap;gap:32px 56px;justify-content:center;margin:0;padding:0}
 .vant-item{width:260px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
@@ -88,7 +98,7 @@ body{margin:0;font-family:Poppins, Arial, sans-serif;background:var(--bg);color:
 .vant-titulo{margin:4px 0 2px;font-size:16px;font-weight:700;color:var(--verde)}
 .vant-texto{margin:0;font-size:14px;line-height:1.35;color:#2b2b2b}
 
-/* CTA fixo — só aparece no GRATUITO (dourado pulsando) */
+/* CTA fixo — dourado pulsante; só aparece no gratuito */
 .footer-spacer{height:260px}
 .cta-fixo{
   position:fixed;left:0;right:0;bottom:calc(110px + env(safe-area-inset-bottom));
@@ -100,22 +110,22 @@ body{margin:0;font-family:Poppins, Arial, sans-serif;background:var(--bg);color:
   padding:16px 24px;font-size:18px;font-weight:700;
   transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
 }
-/* dourado pulsante */
-.cta-fixo .btn--ouro{
+/* dourado pulsante com “raro” */
+.btn--ouro{
   position:relative;color:#1b1405;background:linear-gradient(135deg,#fff8d7,#d4af37,#c49a2f);
   border:2px solid #d4af37;
   box-shadow:0 0 25px rgba(212,175,55,.55),0 12px 28px rgba(0,0,0,.25);
   text-shadow:0 1px 0 rgba(255,255,255,.4);isolation:isolate;
 }
-.cta-fixo .btn--ouro::before{
+.btn--ouro::before{
   content:"";position:absolute;inset:-8px;border-radius:inherit;
   box-shadow:0 0 35px rgba(212,175,55,.75);
   animation:ctaPulse 2.4s ease-in-out infinite;z-index:-1;
 }
 @keyframes ctaPulse{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.08);opacity:.9}}
-.cta-fixo .btn--ouro:hover{transform:translateY(-3px);filter:brightness(1.05)}
-.cta-fixo .btn--ouro:active{transform:translateY(-1px)}
-.cta-fixo .btn--ouro:focus-visible{outline:3px dashed #d4af37;outline-offset:4px}
+.btn--ouro:hover{transform:translateY(-3px);filter:brightness(1.05)}
+.btn--ouro:active{transform:translateY(-1px)}
+.btn--ouro:focus-visible{outline:3px dashed var(--ouro);outline-offset:4px}
 
 /* Rodapé curvo oficial */
 .curva{position:fixed;left:0;right:0;bottom:0;height:70px;background:var(--roxo-escuro);
@@ -130,11 +140,11 @@ body{margin:0;font-family:Poppins, Arial, sans-serif;background:var(--bg);color:
   :root{--wrap:980px}
   .titulo{font-size:32px}
   .cards{gap:24px}
-  .card{padding:26px 22px 62px;min-height:180px;border-radius:22px;box-shadow:0 8px 24px rgba(0,0,0,.06)}
+  .card{min-height:130px;border-radius:22px}
   .card__icone{font-size:32px}
   .card__nome{font-size:20px}
-  .card__preco{font-size:18px}
-  .card:has(input:checked){transform:translateY(-3px);box-shadow:0 16px 34px rgba(0,0,0,.12)}
+  .preco-atual{font-size:26px}
+  .preco-atual.destaque{font-size:28px}
   .meu-plano{max-width:700px;margin:0 auto}
   .vant-h2{font-size:24px}
   .cta-fixo .btn{min-width:680px;font-size:20px;padding:18px 30px}
