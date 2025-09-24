@@ -32,35 +32,38 @@
       </div>
     </section>
 
-    <!-- Seleção de Plano (sem vantagens dentro dos cards) -->
+    <!-- Seleção de Plano (sem radios; cards compactos; preço maior; premium com preço antigo riscado) -->
     <section class="selecao-planos" aria-labelledby="tituloSelecao">
-      <h2 id="tituloSelecao" class="sr-only">Selecione seu plano</h2>
+      <h2 id="tituloSelecao" class="subtitulo">Selecione seu plano</h2>
 
-      <div class="cards" role="radiogroup" aria-labelledby="tituloSelecao">
+      <div class="cards" aria-describedby="tituloSelecao">
         <!-- Card Gratuito -->
-        <label class="card plano--free" tabindex="0">
-          <input type="radio" name="plano" value="Gratuito" class="radio-plano" aria-label="Selecionar plano Gratuito" />
+        <div class="card card--click" tabindex="0" role="button" aria-label="Plano Gratuito, R$ 0 por mês" data-plano="Gratuito">
           <div class="card__conteudo">
             <div class="card__icone" aria-hidden="true">🥗</div>
             <div class="card__titulos">
               <span class="card__nome">Gratuito</span>
-              <span class="card__preco">R$ 0/mês</span>
+              <div class="card__precos">
+                <span class="preco-atual">R$ 0/mês</span>
+              </div>
             </div>
           </div>
-        </label>
+        </div>
 
         <!-- Card Premium -->
-        <label class="card plano--premium" tabindex="0">
+        <div class="card plano--premium card--click" tabindex="0" role="button" aria-label="Plano Premium, promoção de R$ 15,00 por R$ 9,90 por mês" data-plano="Premium">
           <span class="selo-popular" aria-hidden="true">⭐ Mais Popular</span>
-          <input type="radio" name="plano" value="Premium" class="radio-plano" aria-label="Selecionar plano Premium" />
           <div class="card__conteudo">
             <div class="card__icone" aria-hidden="true">👑</div>
             <div class="card__titulos">
               <span class="card__nome">Premium</span>
-              <span class="card__preco">R$ 9,90/mês</span>
+              <div class="card__precos">
+                <span class="preco-antigo">R$ 15,00</span>
+                <span class="preco-atual destaque">R$ 9,90/mês</span>
+              </div>
             </div>
           </div>
-        </label>
+        </div>
       </div>
     </section>
 
@@ -99,9 +102,9 @@
     <div class="footer-spacer"></div>
   </main>
 
-  <!-- CTA fixo (aparece dourado pulsante APENAS no plano gratuito) -->
+  <!-- CTA fixo (só aparece no GRATUITO; dourado pulsante com efeito raro) -->
   <div class="cta-fixo" id="ctaWrap" role="region" aria-label="Ação principal">
-    <button type="button" class="btn primario" id="btnConfirmar">Assinar Premium</button>
+    <button type="button" class="btn btn--ouro" id="btnConfirmar">Assinar Premium</button>
   </div>
 
   <!-- Rodapé curvo oficial -->
