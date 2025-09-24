@@ -33,23 +33,21 @@ body{margin:0;font-family:Poppins, Arial, sans-serif;background:var(--bg);color:
 .meu-plano__nome{margin:0 0 4px}
 .meu-plano__status{margin:0;color:#2f6d25}
 .meu-plano__acoes{grid-column:1 / -1; display:flex; align-items:center; gap:12px; margin-top:2px}
-.acoes-esq{display:flex; gap:10px}
 .acoes-dir{margin-left:auto; display:flex; gap:10px; flex-wrap:wrap}
+
 .btn{appearance:none;border:0;border-radius:14px;padding:12px 16px;font-weight:700;cursor:pointer}
+.btn.primario{background:#492f70;color:#fff}
 .btn.secundario{background:#fff;color:var(--roxo);border:2px solid var(--roxo)}
 .btn.fantasma{background:transparent;color:var(--roxo);border:2px dashed var(--roxo)}
 :focus-visible{outline:3px dotted var(--roxo);outline-offset:4px}
 
-/* Cards — desktop-friendly, sem radios, altura menor */
-.cards{
-  display:grid; gap:18px; margin:12px 0;
-  grid-template-columns:1fr; /* mobile */
-}
+/* Cards — sem radios; altura menor; preço maior */
+.cards{display:grid; gap:18px; margin:12px 0; grid-template-columns:1fr}
 .card{
   position:relative; display:block; overflow:hidden;
   background:#fff; border:2px solid var(--roxo-escuro);
   border-radius:18px; padding:16px 18px;
-  min-height:120px; /* altura menor */
+  min-height:120px;
   transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
   box-shadow:0 4px 16px rgba(0,0,0,.06);
 }
@@ -60,36 +58,21 @@ body{margin:0;font-family:Poppins, Arial, sans-serif;background:var(--bg);color:
 .card__titulos{display:flex;flex-direction:column;gap:4px}
 .card__nome{font-weight:700;font-size:19px;line-height:1}
 .card__precos{display:flex;align-items:baseline;gap:10px;line-height:1}
-.preco-antigo{
-  font-size:16px;color:#826c18;text-decoration:line-through;opacity:.8;
-}
-.preco-atual{
-  font-size:22px;font-weight:800;color:#1b1b1b;
-}
+.preco-antigo{font-size:16px;color:#826c18;text-decoration:line-through;opacity:.85}
+.preco-atual{font-size:22px;font-weight:800;color:#1b1b1b}
 .preco-atual.destaque{font-size:24px}
 
-/* Premium dourado (efeito “raro” no card) */
-.plano--premium{
-  border:2px solid var(--ouro);
-  background:linear-gradient(180deg,var(--grad-a),var(--grad-b));
-}
+/* Premium card “raro” */
+.plano--premium{border:2px solid var(--ouro);background:linear-gradient(180deg,var(--grad-a),var(--grad-b))}
 .plano--premium::after{
   content:"";position:absolute;inset:-50% -50% auto auto;width:200%;height:40%;
-  transform:rotate(20deg);
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:rotate(20deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
   animation:sheen 6s linear infinite;pointer-events:none;
 }
 @keyframes sheen{0%{transform:translateX(-60%) rotate(20deg)}100%{transform:translateX(40%) rotate(20deg)}}
+.selo-popular{position:absolute;top:10px;right:10px;background:linear-gradient(135deg,var(--ouro),var(--ouro-escuro));color:#1b1405;font-weight:700;font-size:12px;padding:6px 10px;border-radius:999px;box-shadow:0 6px 14px rgba(0,0,0,.15)}
 
-/* Selo “Mais Popular” */
-.selo-popular{
-  position:absolute;top:10px;right:10px;
-  background:linear-gradient(135deg,var(--ouro),var(--ouro-escuro));
-  color:#1b1405;font-weight:700;font-size:12px;
-  padding:6px 10px;border-radius:999px;box-shadow:0 6px 14px rgba(0,0,0,.15);
-}
-
-/* Vantagens (seção separada) */
+/* Vantagens */
 .vantagens{margin:36px 0 8px}
 .vant-h2{text-align:center;font-size:22px;color:var(--verde);margin-bottom:22px}
 .vantagens__grid{list-style:none;display:flex;flex-wrap:wrap;gap:32px 56px;justify-content:center;margin:0;padding:0}
@@ -98,39 +81,35 @@ body{margin:0;font-family:Poppins, Arial, sans-serif;background:var(--bg);color:
 .vant-titulo{margin:4px 0 2px;font-size:16px;font-weight:700;color:var(--verde)}
 .vant-texto{margin:0;font-size:14px;line-height:1.35;color:#2b2b2b}
 
-/* CTA fixo — dourado pulsante; só aparece no gratuito */
+/* CTA fixo — dourado pulsante; só no gratuito */
 .footer-spacer{height:260px}
-.cta-fixo{
-  position:fixed;left:0;right:0;bottom:calc(110px + env(safe-area-inset-bottom));
-  display:flex;justify-content:center;padding:0 16px;pointer-events:none;z-index:11;
-}
+.cta-fixo{position:fixed;left:0;right:0;bottom:calc(110px + env(safe-area-inset-bottom));display:flex;justify-content:center;padding:0 16px;pointer-events:none;z-index:11}
 .cta-fixo.hidden{display:none}
-.cta-fixo .btn{
-  pointer-events:auto;min-width:min(560px,94vw);border-radius:999px;
-  padding:16px 24px;font-size:18px;font-weight:700;
-  transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
-}
-/* dourado pulsante com “raro” */
-.btn--ouro{
-  position:relative;color:#1b1405;background:linear-gradient(135deg,#fff8d7,#d4af37,#c49a2f);
-  border:2px solid #d4af37;
-  box-shadow:0 0 25px rgba(212,175,55,.55),0 12px 28px rgba(0,0,0,.25);
-  text-shadow:0 1px 0 rgba(255,255,255,.4);isolation:isolate;
-}
-.btn--ouro::before{
-  content:"";position:absolute;inset:-8px;border-radius:inherit;
-  box-shadow:0 0 35px rgba(212,175,55,.75);
-  animation:ctaPulse 2.4s ease-in-out infinite;z-index:-1;
-}
+.cta-fixo .btn{pointer-events:auto;min-width:min(560px,94vw);border-radius:999px;padding:16px 24px;font-size:18px;font-weight:700;transition:transform .18s ease, box-shadow .18s ease, filter .18s ease}
+.btn--ouro{position:relative;color:#1b1405;background:linear-gradient(135deg,#fff8d7,#d4af37,#c49a2f);border:2px solid #d4af37;box-shadow:0 0 25px rgba(212,175,55,.55),0 12px 28px rgba(0,0,0,.25);text-shadow:0 1px 0 rgba(255,255,255,.4);isolation:isolate}
+.btn--ouro::before{content:"";position:absolute;inset:-8px;border-radius:inherit;box-shadow:0 0 35px rgba(212,175,55,.75);animation:ctaPulse 2.4s ease-in-out infinite;z-index:-1}
 @keyframes ctaPulse{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(1.08);opacity:.9}}
 .btn--ouro:hover{transform:translateY(-3px);filter:brightness(1.05)}
 .btn--ouro:active{transform:translateY(-1px)}
 .btn--ouro:focus-visible{outline:3px dashed var(--ouro);outline-offset:4px}
 
+/* Modal agradável (substitui alert/confirm) */
+.modal{position:fixed;inset:0;display:none;z-index:100}
+.modal.is-open{display:block}
+.modal__scrim{position:absolute;inset:0;background:rgba(0,0,0,.25);backdrop-filter:blur(2px)}
+.modal__card{
+  position:relative;max-width:520px;margin:12vh auto 0;background:#f3ffe9;border:2px solid #3e6529;border-radius:22px;
+  box-shadow:0 18px 48px rgba(0,0,0,.22);padding:22px 18px 16px;color:#184313
+}
+.modal__title{margin:0 0 8px;font-size:20px}
+.modal__desc{margin:0 0 16px;color:#2b2b2b}
+.modal__actions{display:flex;gap:10px;justify-content:flex-end}
+.modal__close{position:absolute;top:6px;right:10px;background:#fff;border:2px solid #3e6529;border-radius:999px;width:32px;height:32px;cursor:pointer;font-size:18px;line-height:1}
+.modal--warn .modal__card{border-color:var(--ouro);box-shadow:0 18px 48px rgba(212,175,55,.35)}
+.modal--warn .modal__title{color:#6a530e}
+
 /* Rodapé curvo oficial */
-.curva{position:fixed;left:0;right:0;bottom:0;height:70px;background:var(--roxo-escuro);
-  border-top-left-radius:100% 50%;border-top-right-radius:100% 50%;
-  display:flex;align-items:center;justify-content:center;gap:40px;z-index:10}
+.curva{position:fixed;left:0;right:0;bottom:0;height:70px;background:var(--roxo-escuro);border-top-left-radius:100% 50%;border-top-right-radius:100% 50%;display:flex;align-items:center;justify-content:center;gap:40px;z-index:10}
 .btn-footer{width:55px;height:55px;border-radius:50%;background:#fff;border:0;cursor:pointer;font-size:250%;display:flex;align-items:center;justify-content:center}
 .btn-footer.btn-central{width:150px;height:150px;border-radius:50%;margin-top:-40px;font-size:150%;box-shadow:0 8px 20px rgba(0,0,0,.2)}
 
@@ -148,13 +127,4 @@ body{margin:0;font-family:Poppins, Arial, sans-serif;background:var(--bg);color:
   .meu-plano{max-width:700px;margin:0 auto}
   .vant-h2{font-size:24px}
   .cta-fixo .btn{min-width:680px;font-size:20px;padding:18px 30px}
-}
-
-/* /app/meu-plano/meu-plano.css — ACRESCENTE AO FINAL (efeito de destaque ao alterar) */
-@keyframes pulseBorderGold{
-  0%{ box-shadow:0 0 0 0 rgba(212,175,55,.65) }
-  100%{ box-shadow:0 0 0 26px rgba(212,175,55,0) }
-}
-.card.pulse-gold{
-  animation: pulseBorderGold 1s ease-out 2;
 }
