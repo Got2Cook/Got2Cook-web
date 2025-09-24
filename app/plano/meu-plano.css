@@ -159,3 +159,96 @@ body{
   .vant-h2{font-size:24px}
   .cta-fixo .btn{min-width:640px}
 }
+
+/* === CTA premium turbinado e posição segura === */
+
+/* aumenta o “respiro” geral pra não colidir com o rodapé curvo */
+.footer-spacer{
+  height: 220px; /* antes era 180px */
+}
+
+/* fixa o CTA acima do rodapé, respeitando safe-area (iPhone etc.) */
+.cta-fixo{
+  position: fixed;
+  left: 0; right: 0;
+  /* 70px = altura do rodapé + 16px de folga + safe-area */
+  bottom: calc(70px + 16px + env(safe-area-inset-bottom));
+  display: flex; justify-content: center;
+  padding: 0 16px;
+  pointer-events: none;  /* mantém o clique só no botão */
+  z-index: 11;          /* acima do rodapé (rodapé está em z-index:10) */
+}
+
+/* estilo base do botão */
+.cta-fixo .btn{
+  pointer-events: auto;
+  min-width: min(560px, 94vw);
+  border-radius: 999px;
+  padding: 14px 22px;
+  font-size: 18px;
+  letter-spacing: .2px;
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+
+/* versão “premium” — roxo com efeitos */
+.cta-fixo .btn.is-premium{
+  position: relative;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,.18);
+  background:
+    radial-gradient(120% 120% at 50% -20%, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 60%),
+    linear-gradient(135deg, #5b3a8e, #492f70 45%, #3b235a 100%);
+  box-shadow:
+    0 14px 26px rgba(73,47,112,.35),
+    0 0 0 2px rgba(212,175,55,.22) inset; /* leve toque dourado */
+  isolation: isolate; /* para os pseudo-elements */
+}
+
+/* brilho “sheen” que passa por cima */
+.cta-fixo .btn.is-premium::after{
+  content:"";
+  position:absolute; inset:0;
+  border-radius: inherit;
+  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.5) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: ctaSheen 3.2s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+/* pulsar suave */
+.cta-fixo .btn.is-premium::before{
+  content:"";
+  position:absolute; inset:-6px;
+  border-radius: inherit;
+  box-shadow: 0 0 28px rgba(212,175,55,.35);
+  opacity:.0;
+  animation: ctaPulse 2.8s ease-in-out infinite;
+}
+
+/* interações */
+.cta-fixo .btn.is-premium:hover{ transform: translateY(-3px); filter: brightness(1.04) }
+.cta-fixo .btn.is-premium:active{ transform: translateY(-1px) }
+.cta-fixo .btn.is-premium:focus-visible{
+  outline: 3px dashed #d4af37; outline-offset: 4px;
+}
+
+/* fallback quando o plano não é premium (continua roxo, mas sem “efeitos raros”) */
+.cta-fixo .btn.primario{
+  background: #492f70;
+}
+
+/* animações */
+@keyframes ctaSheen{
+  0%   { transform: translateX(-120%) }
+  55%  { transform: translateX(120%) }
+  100% { transform: translateX(120%) }
+}
+@keyframes ctaPulse{
+  0%,100%{ opacity:.0 }
+  50%    { opacity:.55 }
+}
+
+/* Desktop: botão um pouco maior */
+@media (min-width: 992px){
+  .cta-fixo .btn{ min-width: 680px; font-size: 19px; padding: 16px 26px }
+}
