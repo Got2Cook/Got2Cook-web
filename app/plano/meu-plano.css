@@ -149,3 +149,12 @@ body{margin:0;font-family:Poppins, Arial, sans-serif;background:var(--bg);color:
   .vant-h2{font-size:24px}
   .cta-fixo .btn{min-width:680px;font-size:20px;padding:18px 30px}
 }
+
+/* /app/meu-plano/meu-plano.css — ACRESCENTE AO FINAL (efeito de destaque ao alterar) */
+@keyframes pulseBorderGold{
+  0%{ box-shadow:0 0 0 0 rgba(212,175,55,.65) }
+  100%{ box-shadow:0 0 0 26px rgba(212,175,55,0) }
+}
+.card.pulse-gold{
+  animation: pulseBorderGold 1s ease-out 2;
+}
