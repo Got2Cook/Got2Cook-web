@@ -32,52 +32,39 @@
       </div>
     </section>
 
-    <!-- Seleção de Plano -->
+    <!-- Seleção de Plano (sem vantagens dentro dos cards) -->
     <section class="selecao-planos" aria-labelledby="tituloSelecao">
       <h2 id="tituloSelecao" class="sr-only">Selecione seu plano</h2>
+
       <div class="cards" role="radiogroup" aria-labelledby="tituloSelecao">
         <!-- Card Gratuito -->
         <label class="card plano--free" tabindex="0">
           <input type="radio" name="plano" value="Gratuito" class="radio-plano" aria-label="Selecionar plano Gratuito" />
-          <div class="card__topo">
-            <span class="plano__icone" aria-hidden="true">🥗</span>
-            <div class="plano__titulos">
-              <span class="plano__nome">Gratuito</span>
-              <span class="plano__preco">R$ 0/mês</span>
+          <div class="card__conteudo">
+            <div class="card__icone" aria-hidden="true">🥗</div>
+            <div class="card__titulos">
+              <span class="card__nome">Gratuito</span>
+              <span class="card__preco">R$ 0/mês</span>
             </div>
           </div>
-          <ul class="beneficios">
-            <li><span class="ok">✓</span> 3 receitas/dia</li>
-            <li><span class="no">✕</span> Favoritar receitas</li>
-            <li><span class="no">✕</span> Relatórios detalhados</li>
-            <li><span class="no">✕</span> Histórico de humor completo</li>
-            <li><span class="no">✕</span> Suporte prioritário</li>
-          </ul>
         </label>
 
         <!-- Card Premium -->
         <label class="card plano--premium" tabindex="0">
-          <span class="selo-popular">⭐ Mais Popular</span>
+          <span class="selo-popular" aria-hidden="true">⭐ Mais Popular</span>
           <input type="radio" name="plano" value="Premium" class="radio-plano" aria-label="Selecionar plano Premium" />
-          <div class="card__topo">
-            <span class="plano__icone" aria-hidden="true">👑</span>
-            <div class="plano__titulos">
-              <span class="plano__nome">Premium</span>
-              <span class="plano__preco">R$ 9,90/mês</span>
+          <div class="card__conteudo">
+            <div class="card__icone" aria-hidden="true">👑</div>
+            <div class="card__titulos">
+              <span class="card__nome">Premium</span>
+              <span class="card__preco">R$ 9,90/mês</span>
             </div>
           </div>
-          <ul class="beneficios">
-            <li><span class="ok">✓</span> Receitas ilimitadas</li>
-            <li><span class="ok">✓</span> Favoritar receitas</li>
-            <li><span class="ok">✓</span> Relatórios detalhados</li>
-            <li><span class="ok">✓</span> Histórico de humor completo</li>
-            <li><span class="ok">✓</span> Suporte prioritário</li>
-          </ul>
         </label>
       </div>
     </section>
 
-    <!-- Vantagens Premium -->
+    <!-- Vantagens Premium (seção separada dos cards) -->
     <section class="vantagens" aria-labelledby="titVantagens">
       <h2 id="titVantagens" class="vant-h2">Por que você vai amar o Premium</h2>
       <ul class="vantagens__grid">
