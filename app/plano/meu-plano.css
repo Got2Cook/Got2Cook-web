@@ -176,12 +176,9 @@ body{margin:0;font-family:Poppins, Arial, sans-serif;background:var(--bg);color:
   gap:10px;
 }
 .vant-img{
-  width:72px;
-  height:72px;
+  width:80px;
+  height:80px;
   object-fit:contain;
-  border-radius:50%;
-  background:rgba(255,255,255,.8);
-  padding:12px;
 }
 .vant-titulo{
   margin:6px 0 4px;
