@@ -306,43 +306,18 @@ body{margin:0;font-family:Poppins, Arial, sans-serif;background:var(--bg);color:
 
 /* Rodapé curvo oficial - ESPECIFICAÇÃO EXATA */
 .curva{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  height:70px;
+  position:fixed; left:0; right:0; bottom:0; height:70px;
   background:var(--roxo-escuro);
-  border-top-left-radius:100% 50%;
-  border-top-right-radius:100% 50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:40px;
-  z-index:10;
+  border-top-left-radius:100% 50%; border-top-right-radius:100% 50%;
+  display:flex; align-items:center; justify-content:center;
+  z-index:10; padding:0 16px;
 }
-.btn-footer{
-  width:55px;
-  height:55px;
-  border-radius:50%;
-  background:#fff;
-  border:0;
-  cursor:pointer;
-  font-size:250%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:transform 0.1s ease;
-}
-.btn-footer:hover{transform:scale(1.05)}
-.btn-footer.btn-central{
-  width:150px;
-  height:150px;
-  border-radius:50%;
-  margin-top:-40px;
-  font-size:150%;
-  box-shadow:0 8px 20px rgba(0,0,0,.2);
-}
-
+.curva__nav{display:flex; align-items:center; gap:40px}
+.btn-footer{width:55px; height:55px; border:none; background:transparent; border-radius:50%;
+  padding:0; display:flex; align-items:center; justify-content:center; transform:translateY(-10px)}
+.btn-footer img{width:250%; height:250%; object-fit:contain}
+.btn-central{width:150px; height:150px; transform:translateY(-20px)}
+.btn-central img{width:150%; height:150%; object-fit:contain}
 /* Responsivo */
 @media (min-width:600px){
   .cards{
