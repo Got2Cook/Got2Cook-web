@@ -39,47 +39,69 @@
   document.getElementById('btnGeladeira').addEventListener('click', () => location.href = '../minha-geladeira/index.html');
 
   // MODO DEMONSTRAÇÃO - Gera dados mais realistas para 3 meses
+  // MODO DEV: Adicione ?dev=vitoria na URL para ver dados de teste
   (function demoAutoSeed() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isDev = urlParams.get('dev') === 'vitoria';
+    
     const historico = getHistorico();
-    if (Object.keys(historico).length < 20) { // Se tem poucos dados, gerar mais
+    
+    if (isDev) {
+      // MODO DESENVOLVEDOR - Dados ricos para teste
+      console.log('🔧 Modo desenvolvedor ativado');
+      
       const hoje = new Date();
       const demo = {};
       
-      // Gerar dados para últimos 90 dias com padrões realistas
-      for (let i = 0; i < 90; i++) {
+      // Gerar padrões realistas para 60 dias
+      for (let i = 0; i < 60; i++) {
         const d = new Date(hoje);
         d.setDate(d.getDate() - i);
         const data = d.toISOString().slice(0, 10);
         
-        // Simular padrões mais realistas baseados no dia da semana
+        let emojiIdx;
         const diaSemana = d.getDay();
-        let emojiProb;
+        const semana = Math.floor(i / 7);
         
-        if (diaSemana === 0 || diaSemana === 6) { // Fins de semana mais felizes
-          emojiProb = [0.1, 0.05, 0.15, 0.1, 0.2, 0.3, 0.1]; // Mais felicidade
-        } else if (diaSemana === 1) { // Segunda mais difícil
-          emojiProb = [0.2, 0.15, 0.1, 0.2, 0.15, 0.15, 0.05]; // Mais negatividade
-        } else { // Dias normais
-          emojiProb = [0.1, 0.1, 0.15, 0.15, 0.2, 0.2, 0.1];
-        }
-        
-        // Escolher emoji baseado nas probabilidades
-        const rand = Math.random();
-        let acum = 0;
-        let emojiIdx = 0;
-        for (let j = 0; j < emojiProb.length; j++) {
-          acum += emojiProb[j];
-          if (rand <= acum) {
-            emojiIdx = j;
-            break;
-          }
+        // Simular diferentes cenários por período
+        if (semana < 2) {
+          // 2 semanas recentes - tendência de melhoria
+          if (diaSemana === 1) emojiIdx = Math.random() > 0.7 ? 3 : 4; // Segunda melhor
+          else if (diaSemana === 5) emojiIdx = Math.random() > 0.3 ? 5 : 6; // Sexta ótima
+          else if (diaSemana === 0 || diaSemana === 6) emojiIdx = Math.random() > 0.2 ? 5 : 6; // Fins de semana felizes
+          else emojiIdx = 2 + Math.floor(Math.random() * 4); // Meio termo
+        } else if (semana < 5) {
+          // 3 semanas do meio - mais variado
+          if (diaSemana === 1) emojiIdx = Math.floor(Math.random() * 4); // Segunda difícil
+          else if (diaSemana === 5) emojiIdx = 3 + Math.floor(Math.random() * 4); // Sexta melhor
+          else emojiIdx = 1 + Math.floor(Math.random() * 5); // Variado
+        } else {
+          // Semanas mais antigas - período mais difícil
+          if (diaSemana === 1) emojiIdx = Math.floor(Math.random() * 3); // Segundas ruins
+          else if (diaSemana === 0 || diaSemana === 6) emojiIdx = 2 + Math.floor(Math.random() * 3); // Fins de semana OK
+          else emojiIdx = Math.floor(Math.random() * 5); // Mais disperso
         }
         
         demo[data] = EMOJIS[emojiIdx];
       }
       
-      localStorage.setItem("got2cook_mood_history", JSON.stringify({...historico, ...demo}));
-      console.log('Modo demonstração ativado - histórico expandido para', Object.keys(demo).length, 'dias');
+      // Sobrescrever com dados de teste
+      localStorage.setItem("got2cook_mood_history", JSON.stringify(demo));
+      
+    } else if (Object.keys(historico).length < 5) {
+      // MODO USUÁRIO NORMAL - Apenas alguns dados de exemplo se vazio
+      const hoje = new Date();
+      const demo = {};
+      
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(hoje);
+        d.setDate(d.getDate() - (6 - i));
+        const data = d.toISOString().slice(0, 10);
+        demo[data] = EMOJIS[4 + Math.floor(Math.random() * 3)]; // Só emojis positivos
+      }
+      
+      localStorage.setItem("got2cook_mood_history", JSON.stringify(demo));
+      console.log('📱 Dados de exemplo criados');
     }
   })();
 
