@@ -362,44 +362,50 @@ canvas{
 
 /* Rodapé curvo oficial - ESPECIFICAÇÃO EXATA */
 .curva{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  height:70px;
-  background:var(--roxo-escuro);
-  border-top-left-radius:100% 50%;
-  border-top-right-radius:100% 50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:40px;
-  z-index:10;
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 70px;                /* altura oficial */
+  background: #7b7190;         /* cor oficial */
+  border-top-left-radius: 100% 50%;
+  border-top-right-radius: 100% 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;                    /* distância entre os 3 botões */
+  z-index: 50;
 }
 
+/* Botões laterais (55x55) */
 .btn-footer{
-  width:55px;
-  height:55px;
-  border-radius:50%;
-  background:#fff;
-  border:0;
-  cursor:pointer;
-  font-size:250%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:transform 0.1s ease;
-  color:var(--verde);
+  width: 55px;
+  height: 55px;
+  border: 0;
+  background: transparent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transform: translateY(-10px);
+  cursor: pointer;
+  overflow: hidden;
 }
-.btn-footer:hover{transform:scale(1.05)}
+.btn-footer img{
+  width: 250%;                  /* ícone interno 250% */
+  height: 250%;
+  object-fit: contain;
+}
 
+/* Botão central elevado (150x150) */
 .btn-footer.btn-central{
-  width:150px;
-  height:150px;
-  border-radius:50%;
-  margin-top:-40px;
-  font-size:150%;
-  box-shadow:0 8px 20px rgba(0,0,0,.2);
+  width: 150px;
+  height: 150px;
+  transform: translateY(-20px); /* elevação do central */
+}
+.btn-footer.btn-central img{
+  width: 150%;                  /* ícone interno 150% */
+  height: 150%;
+  object-fit: contain;
 }
 
 /* Responsivo */
