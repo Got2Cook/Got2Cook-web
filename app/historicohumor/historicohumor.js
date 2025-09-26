@@ -11,12 +11,7 @@
   const canvasPizza = document.getElementById('graficoPizza');
   const periodoSel = document.getElementById('periodo');
 
-  // Navegação
-  document.getElementById('btnPerfil').addEventListener('click', () => location.href = '../perfil/index.html');
-  document.getElementById('btnMenu').addEventListener('click', () => {
-    // TODO: Implementar menu lateral quando criado
-    console.log('Menu clicado - implementar futuramente');
-  });
+  // Navegação rodapé
   document.getElementById('btnVoltar').addEventListener('click', () => history.back());
   document.getElementById('btnLogo').addEventListener('click', () => location.href = '../minhas-receitas/index.html');
   document.getElementById('btnGeladeira').addEventListener('click', () => location.href = '../minha-geladeira/index.html');
