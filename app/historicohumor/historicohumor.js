@@ -10,7 +10,7 @@
   // Estado da aplicação
   let estadoAtual = {
     periodo: 'semana',
-    offset: 0, // 0 = atual, -1 = anterior, 1 = próximo
+    offset: 0,
     filtroEmoji: 'todos'
   };
 
@@ -21,126 +21,123 @@
   const periodoAtual = document.getElementById('periodoAtual');
   const btnAnterior = document.getElementById('btnAnterior');
   const btnProximo = document.getElementById('btnProximo');
-  const resumoStats = document.getElementById('resumoStats');
   const totalDias = document.getElementById('totalDias');
   const humorDominante = document.getElementById('humorDominante');
   const tendencia = document.getElementById('tendencia');
 
-  // Modal elements
-  const modal = document.getElementById('modal');
-  const modalTitulo = document.getElementById('modalTitulo');
-  const modalMensagem = document.getElementById('modalMensagem');
-  const modalConfirmar = document.getElementById('modalConfirmar');
-  const modalCancelar = document.getElementById('modalCancelar');
-
   // Navegação rodapé
-  document.getElementById('btnVoltar').addEventListener('click', () => history.back());
-  document.getElementById('btnLogo').addEventListener('click', () => location.href = '../minhas-receitas/index.html');
-  document.getElementById('btnGeladeira').addEventListener('click', () => location.href = '../minha-geladeira/index.html');
+  if (document.getElementById('btnVoltar')) {
+    document.getElementById('btnVoltar').addEventListener('click', () => history.back());
+  }
+  if (document.getElementById('btnLogo')) {
+    document.getElementById('btnLogo').addEventListener('click', () => location.href = '../minhas-receitas/index.html');
+  }
+  if (document.getElementById('btnGeladeira')) {
+    document.getElementById('btnGeladeira').addEventListener('click', () => location.href = '../minha-geladeira/index.html');
+  }
 
-  // MODO DEMONSTRAÇÃO - Gera dados mais realistas para 3 meses
-  // MODO DEV: Adicione ?dev=vitoria na URL para ver dados de teste
-  (function demoAutoSeed() {
+  // Geração de dados para teste
+  function gerarDadosTeste() {
     const urlParams = new URLSearchParams(window.location.search);
     const isDev = urlParams.get('dev') === 'vitoria';
     
-    const historico = getHistorico();
-    
     if (isDev) {
-      // MODO DESENVOLVEDOR - Dados ricos para teste
       console.log('🔧 Modo desenvolvedor ativado');
       
       const hoje = new Date();
       const demo = {};
       
-      // Gerar padrões realistas para 60 dias
       for (let i = 0; i < 60; i++) {
         const d = new Date(hoje);
         d.setDate(d.getDate() - i);
         const data = d.toISOString().slice(0, 10);
         
-        let emojiIdx;
+        // Padrões realistas
         const diaSemana = d.getDay();
         const semana = Math.floor(i / 7);
+        let emojiIdx;
         
-        // Simular diferentes cenários por período
         if (semana < 2) {
-          // 2 semanas recentes - tendência de melhoria
-          if (diaSemana === 1) emojiIdx = Math.random() > 0.7 ? 3 : 4; // Segunda melhor
-          else if (diaSemana === 5) emojiIdx = Math.random() > 0.3 ? 5 : 6; // Sexta ótima
-          else if (diaSemana === 0 || diaSemana === 6) emojiIdx = Math.random() > 0.2 ? 5 : 6; // Fins de semana felizes
-          else emojiIdx = 2 + Math.floor(Math.random() * 4); // Meio termo
+          // Semanas recentes - melhor
+          if (diaSemana === 1) emojiIdx = 3; // Segunda OK
+          else if (diaSemana === 5 || diaSemana === 0 || diaSemana === 6) emojiIdx = 5; // Sexta/fim de semana feliz
+          else emojiIdx = 4; // Outros dias bom
         } else if (semana < 5) {
-          // 3 semanas do meio - mais variado
-          if (diaSemana === 1) emojiIdx = Math.floor(Math.random() * 4); // Segunda difícil
-          else if (diaSemana === 5) emojiIdx = 3 + Math.floor(Math.random() * 4); // Sexta melhor
-          else emojiIdx = 1 + Math.floor(Math.random() * 5); // Variado
+          // Meio - variado
+          if (diaSemana === 1) emojiIdx = 1; // Segunda difícil
+          else if (diaSemana === 5) emojiIdx = 5; // Sexta boa
+          else emojiIdx = 3; // Outros neutro
         } else {
-          // Semanas mais antigas - período mais difícil
-          if (diaSemana === 1) emojiIdx = Math.floor(Math.random() * 3); // Segundas ruins
-          else if (diaSemana === 0 || diaSemana === 6) emojiIdx = 2 + Math.floor(Math.random() * 3); // Fins de semana OK
-          else emojiIdx = Math.floor(Math.random() * 5); // Mais disperso
+          // Antigas - mais difícil
+          if (diaSemana === 1) emojiIdx = 0; // Segunda ruim
+          else if (diaSemana === 0 || diaSemana === 6) emojiIdx = 3; // Fim de semana OK
+          else emojiIdx = 2; // Outros variado
         }
         
         demo[data] = EMOJIS[emojiIdx];
       }
       
-      // Sobrescrever com dados de teste
       localStorage.setItem("got2cook_mood_history", JSON.stringify(demo));
-      
-    } else if (Object.keys(historico).length < 5) {
-      // MODO USUÁRIO NORMAL - Apenas alguns dados de exemplo se vazio
-      const hoje = new Date();
-      const demo = {};
-      
-      for (let i = 0; i < 7; i++) {
-        const d = new Date(hoje);
-        d.setDate(d.getDate() - (6 - i));
-        const data = d.toISOString().slice(0, 10);
-        demo[data] = EMOJIS[4 + Math.floor(Math.random() * 3)]; // Só emojis positivos
+      return true;
+    } else {
+      const historico = getHistorico();
+      if (Object.keys(historico).length < 5) {
+        const hoje = new Date();
+        const demo = {};
+        
+        for (let i = 0; i < 7; i++) {
+          const d = new Date(hoje);
+          d.setDate(d.getDate() - (6 - i));
+          const data = d.toISOString().slice(0, 10);
+          demo[data] = EMOJIS[4 + Math.floor(Math.random() * 3)];
+        }
+        
+        localStorage.setItem("got2cook_mood_history", JSON.stringify(demo));
+        console.log('📱 Dados de exemplo criados');
+        return true;
       }
-      
-      localStorage.setItem("got2cook_mood_history", JSON.stringify(demo));
-      console.log('📱 Dados de exemplo criados');
     }
-  })();
+    return false;
+  }
 
   // Funções de dados
   function getHistorico() {
     try {
       return JSON.parse(localStorage.getItem("got2cook_mood_history")) || {};
     } catch (e) {
-      console.warn('Erro ao ler histórico de humor:', e);
+      console.warn('Erro ao ler histórico:', e);
       return {};
     }
-  }
-
-  function salvarHistorico(dados) {
-    localStorage.setItem("got2cook_mood_history", JSON.stringify(dados));
   }
 
   function emojiIndex(emoji) {
     return EMOJIS.indexOf(emoji);
   }
 
-  // Funções de período e navegação
+  function contarFrequencia(listaEmojis) {
+    const freq = Array(7).fill(0);
+    listaEmojis.forEach(emoji => {
+      const idx = emojiIndex(emoji);
+      if (idx >= 0) freq[idx]++;
+    });
+    return freq;
+  }
+
+  // Funções de período
   function getDatasPeriodo() {
     const hoje = new Date();
     let inicio, fim;
 
     if (estadoAtual.periodo === 'semana') {
-      // Semana (domingo a sábado)
       const diaAtual = hoje.getDay();
       inicio = new Date(hoje);
       inicio.setDate(hoje.getDate() - diaAtual - (estadoAtual.offset * 7));
       fim = new Date(inicio);
       fim.setDate(inicio.getDate() + 6);
     } else if (estadoAtual.periodo === 'mes') {
-      // Mês
       inicio = new Date(hoje.getFullYear(), hoje.getMonth() - estadoAtual.offset, 1);
       fim = new Date(hoje.getFullYear(), hoje.getMonth() - estadoAtual.offset + 1, 0);
     } else if (estadoAtual.periodo === 'trimestre') {
-      // Trimestre
       const trimestreAtual = Math.floor(hoje.getMonth() / 3);
       const trimestreOffset = trimestreAtual - estadoAtual.offset;
       inicio = new Date(hoje.getFullYear(), trimestreOffset * 3, 1);
@@ -156,14 +153,14 @@
     if (estadoAtual.periodo === 'semana') {
       if (estadoAtual.offset === 0) return 'Esta semana';
       if (estadoAtual.offset === -1) return 'Semana passada';
-      return `${inicio.getDate()}/${inicio.getMonth()+1} - ${fim.getDate()}/${fim.getMonth()+1}`;
+      return inicio.getDate() + '/' + (inicio.getMonth()+1) + ' - ' + fim.getDate() + '/' + (fim.getMonth()+1);
     } else if (estadoAtual.periodo === 'mes') {
       if (estadoAtual.offset === 0) return 'Este mês';
       if (estadoAtual.offset === -1) return 'Mês passado';
-      return `${MESES[inicio.getMonth()]} ${inicio.getFullYear()}`;
+      return MESES[inicio.getMonth()] + ' ' + inicio.getFullYear();
     } else {
       const trimestre = Math.floor(inicio.getMonth() / 3) + 1;
-      return `${trimestre}º Tri ${inicio.getFullYear()}`;
+      return trimestre + 'º Tri ' + inicio.getFullYear();
     }
   }
 
@@ -174,7 +171,6 @@
     const labels = [];
 
     if (estadoAtual.periodo === 'semana') {
-      // 7 dias da semana
       for (let i = 0; i < 7; i++) {
         const data = new Date(inicio);
         data.setDate(inicio.getDate() + i);
@@ -188,60 +184,17 @@
         }
         labels.push(DIAS[i]);
       }
-    } else if (estadoAtual.periodo === 'mes') {
-      // Semanas do mês
-      const semanas = [];
-      let dataAtual = new Date(inicio);
-      
+    } else {
+      // Simplificado para outros períodos
+      const dataAtual = new Date(inicio);
       while (dataAtual <= fim) {
-        const fimSemana = new Date(dataAtual);
-        fimSemana.setDate(dataAtual.getDate() + 6);
-        if (fimSemana > fim) fimSemana.setTime(fim.getTime());
-        
-        const humojesSemana = [];
-        for (let d = new Date(dataAtual); d <= fimSemana; d.setDate(d.getDate() + 1)) {
-          const chave = d.toISOString().slice(0, 10);
-          const emoji = historico[chave];
-          if (emoji && (estadoAtual.filtroEmoji === 'todos' || emoji === estadoAtual.filtroEmoji)) {
-            humojesSemana.push(emojiIndex(emoji));
-          }
+        const chave = dataAtual.toISOString().slice(0, 10);
+        const emoji = historico[chave];
+        if (emoji && (estadoAtual.filtroEmoji === 'todos' || emoji === estadoAtual.filtroEmoji)) {
+          dados.push(emoji);
         }
-        
-        // Média da semana
-        if (humojesSemana.length > 0) {
-          const media = humojesSemana.reduce((a, b) => a + b, 0) / humojesSemana.length;
-          semanas.push(EMOJIS[Math.round(media)]);
-        } else {
-          semanas.push(null);
-        }
-        
-        labels.push(`Sem ${Math.ceil(dataAtual.getDate() / 7)}`);
-        dataAtual.setDate(dataAtual.getDate() + 7);
-      }
-      dados = semanas;
-    } else if (estadoAtual.periodo === 'trimestre') {
-      // 3 meses do trimestre
-      for (let mes = 0; mes < 3; mes++) {
-        const inicioMes = new Date(inicio.getFullYear(), inicio.getMonth() + mes, 1);
-        const fimMes = new Date(inicio.getFullYear(), inicio.getMonth() + mes + 1, 0);
-        
-        const humoresMes = [];
-        for (let d = new Date(inicioMes); d <= fimMes; d.setDate(d.getDate() + 1)) {
-          const chave = d.toISOString().slice(0, 10);
-          const emoji = historico[chave];
-          if (emoji && (estadoAtual.filtroEmoji === 'todos' || emoji === estadoAtual.filtroEmoji)) {
-            humoresMes.push(emojiIndex(emoji));
-          }
-        }
-        
-        if (humoresMes.length > 0) {
-          const media = humoresMes.reduce((a, b) => a + b, 0) / humoresMes.length;
-          dados.push(EMOJIS[Math.round(media)]);
-        } else {
-          dados.push(null);
-        }
-        
-        labels.push(MESES[inicioMes.getMonth()]);
+        labels.push(dataAtual.getDate().toString());
+        dataAtual.setDate(dataAtual.getDate() + 1);
       }
     }
 
@@ -264,32 +217,7 @@
     return humores;
   }
 
-  // Funções de análise
-  function contarFrequencia(listaEmojis) {
-    const freq = Array(7).fill(0);
-    listaEmojis.forEach(emoji => {
-      const idx = emojiIndex(emoji);
-      if (idx >= 0) freq[idx]++;
-    });
-    return freq;
-  }
-
-  function calcularTendencia(dados) {
-    const valores = dados.filter(Boolean).map(emoji => emojiIndex(emoji)).filter(idx => idx >= 0);
-    if (valores.length < 2) return '➡️'; // Neutro se poucos dados
-    
-    const metadeAnterior = valores.slice(0, Math.floor(valores.length / 2));
-    const metadePosterior = valores.slice(-Math.floor(valores.length / 2));
-    
-    const mediaAnterior = metadeAnterior.reduce((a, b) => a + b, 0) / metadeAnterior.length;
-    const mediaPosterior = metadePosterior.reduce((a, b) => a + b, 0) / metadePosterior.length;
-    
-    if (mediaPosterior > mediaAnterior + 0.5) return '↗️'; // Melhorando
-    if (mediaPosterior < mediaAnterior - 0.5) return '↘️'; // Piorando
-    return '➡️'; // Estável
-  }
-
-  // Funções de canvas responsivo
+  // Canvas functions
   function fitCanvas(canvas, cssWidth, cssHeight) {
     const dpr = window.devicePixelRatio || 1;
     
@@ -308,8 +236,10 @@
     return { w: rect.width, h: rect.height };
   }
 
-  // Gráfico de linha melhorado
+  // Gráficos
   function drawLineChart(canvas, dados, labels) {
+    if (!canvas) return;
+    
     const { w, h } = getCssSize(canvas);
     const ctx = fitCanvas(canvas, w, h);
     
@@ -323,15 +253,13 @@
       return;
     }
 
-    // Área do gráfico
-    const margin = 50;
+    const margin = 40;
     const gx = margin, gy = margin, gw = w - margin * 2, gh = h - margin * 2;
 
-    // Grid e eixos
+    // Grid
     ctx.strokeStyle = 'rgba(34,92,24,0.1)';
     ctx.lineWidth = 1;
     
-    // Linhas horizontais
     for (let i = 0; i <= 6; i++) {
       const y = gy + (gh / 6) * i;
       ctx.beginPath();
@@ -340,7 +268,7 @@
       ctx.stroke();
     }
 
-    // Labels dos emojis (eixo Y)
+    // Labels Y
     ctx.font = '14px Apple Color Emoji';
     ctx.textAlign = 'right';
     ctx.textBaseline = 'middle';
@@ -349,7 +277,7 @@
       ctx.fillText(EMOJIS[6 - i], gx - 8, y);
     }
 
-    // Labels do período (eixo X)
+    // Labels X
     ctx.fillStyle = '#225c18';
     ctx.font = '11px Arial';
     ctx.textAlign = 'center';
@@ -361,12 +289,12 @@
       ctx.fillText(label, x, gy + gh + 8);
     });
 
-    // Linha de dados
+    // Linha
     const dadosValidos = dados.map((emoji, i) => ({ emoji, index: i })).filter(d => d.emoji);
     
     if (dadosValidos.length > 0) {
       ctx.strokeStyle = '#492f70';
-      ctx.lineWidth = 3;
+      ctx.lineWidth = 2;
       ctx.beginPath();
       
       dadosValidos.forEach((d, i) => {
@@ -380,7 +308,7 @@
       
       ctx.stroke();
 
-      // Pontos de dados
+      // Pontos
       ctx.fillStyle = '#492f70';
       dadosValidos.forEach(d => {
         const emojiIdx = emojiIndex(d.emoji);
@@ -388,19 +316,15 @@
         const y = gy + gh - (emojiIdx / 6) * gh;
         
         ctx.beginPath();
-        ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
         ctx.fill();
-        
-        // Emoji no ponto
-        ctx.font = '12px Apple Color Emoji';
-        ctx.textAlign = 'center';
-        ctx.fillText(d.emoji, x, y - 12);
       });
     }
   }
 
-  // Gráfico de pizza melhorado
   function drawPieChart(canvas, frequencias) {
+    if (!canvas) return;
+    
     const { w, h } = getCssSize(canvas);
     const ctx = fitCanvas(canvas, w, h);
     
@@ -411,26 +335,15 @@
       ctx.fillStyle = '#666';
       ctx.font = '14px Arial';
       ctx.textAlign = 'center';
-      ctx.fillText('Sem dados para mostrar', w/2, h/2);
+      ctx.fillText('Sem dados', w/2, h/2);
       return;
     }
 
     const cx = w / 2, cy = h / 2, r = Math.min(w, h) * 0.3;
-    
-    // Cores harmoniosas para cada emoji
-    const cores = [
-      '#ff6b6b', // 😭 - vermelho suave
-      '#ff8e53', // 😡 - laranja
-      '#4ecdc4', // 👏 - teal
-      '#45b7d1', // 😢 - azul claro
-      '#96ceb4', // 😋 - verde suave
-      '#ffeaa7', // 🥰 - amarelo suave
-      '#a8e6cf'  // 😀 - verde claro
-    ];
+    const cores = ['#ff6b6b', '#ff8e53', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#a8e6cf'];
 
     let startAngle = -Math.PI / 2;
     
-    // Desenhar fatias
     for (let i = 0; i < 7; i++) {
       const freq = frequencias[i];
       if (freq === 0) continue;
@@ -438,7 +351,6 @@
       const frac = freq / total;
       const endAngle = startAngle + frac * 2 * Math.PI;
       
-      // Fatia
       ctx.beginPath();
       ctx.moveTo(cx, cy);
       ctx.arc(cx, cy, r, startAngle, endAngle);
@@ -446,89 +358,45 @@
       ctx.fillStyle = cores[i];
       ctx.fill();
       
-      // Borda
       ctx.strokeStyle = 'rgba(255,255,255,0.5)';
       ctx.lineWidth = 2;
       ctx.stroke();
 
-      // Percentual no centro da fatia (só se > 5%)
       if (frac > 0.05) {
         const midAngle = (startAngle + endAngle) / 2;
         const textX = cx + Math.cos(midAngle) * r * 0.7;
         const textY = cy + Math.sin(midAngle) * r * 0.7;
         
         ctx.fillStyle = '#000';
-        ctx.font = 'bold 12px Arial';
+        ctx.font = 'bold 10px Arial';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(Math.round(frac * 100) + '%', textX, textY);
       }
 
-      // Emoji e label externos
       const midAngle = (startAngle + endAngle) / 2;
-      const emojiX = cx + Math.cos(midAngle) * (r + 35);
-      const emojiY = cy + Math.sin(midAngle) * (r + 35);
+      const emojiX = cx + Math.cos(midAngle) * (r + 30);
+      const emojiY = cy + Math.sin(midAngle) * (r + 30);
       
-      ctx.font = '20px Apple Color Emoji';
+      ctx.font = '18px Apple Color Emoji';
       ctx.textAlign = 'center';
       ctx.fillText(EMOJIS[i], emojiX, emojiY);
 
       startAngle = endAngle;
     }
-    
-    // Centro com total
-    ctx.fillStyle = '#225c18';
-    ctx.font = 'bold 14px Arial';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(total, cx, cy - 8);
-    ctx.font = '10px Arial';
-    ctx.fillText('registros', cx, cy + 8);
   }
 
-  // Atualizar resumo estatístico
+  // Atualizar resumo
   function atualizarResumo() {
     const humores = getTodosHumoresPeriodo();
-    const { dados } = getDadosPeriodo();
     
-    // Total de dias
-    totalDias.textContent = humores.length;
+    if (totalDias) totalDias.textContent = humores.length;
     
-    // Humor dominante
     const freq = contarFrequencia(humores);
     const maxIdx = freq.indexOf(Math.max(...freq));
-    humorDominante.textContent = freq[maxIdx] > 0 ? EMOJIS[maxIdx] : '😐';
+    if (humorDominante) humorDominante.textContent = freq[maxIdx] > 0 ? EMOJIS[maxIdx] : '😐';
     
-    // Tendência
-    tendencia.textContent = calcularTendencia(dados);
-  }
-
-  // Modal helper
-  function mostrarModal(titulo, mensagem, callback = null) {
-    modalTitulo.textContent = titulo;
-    modalMensagem.textContent = mensagem;
-    modal.classList.add('ativo');
-    modal.setAttribute('aria-hidden', 'false');
-    
-    const fecharModal = () => {
-      modal.classList.remove('ativo');
-      modal.setAttribute('aria-hidden', 'true');
-      modalConfirmar.onclick = null;
-    };
-    
-    modalConfirmar.onclick = () => {
-      if (callback) callback();
-      fecharModal();
-    };
-    
-    modalCancelar.onclick = fecharModal;
-    
-    // Fechar ao clicar no backdrop
-    modal.addEventListener('click', (e) => {
-      if (e.target.dataset.close) fecharModal();
-    }, { once: true });
-    
-    modalConfirmar.focus();
+    if (tendencia) tendencia.textContent = '➡️';
   }
 
   // Atualização principal
@@ -541,76 +409,66 @@
     drawPieChart(canvasPizza, frequencias);
     atualizarResumo();
     
-    // Atualizar texto do período
-    periodoAtual.textContent = formatarPeriodoAtual();
+    if (periodoAtual) periodoAtual.textContent = formatarPeriodoAtual();
     
-    // Habilitar/desabilitar botões de navegação
     const hoje = new Date();
     const { fim } = getDatasPeriodo();
-    btnProximo.disabled = (fim >= hoje);
+    if (btnProximo) btnProximo.disabled = (fim >= hoje);
   }
 
   // Event listeners
-  periodoSel.addEventListener('change', () => {
-    estadoAtual.periodo = periodoSel.value;
-    estadoAtual.offset = 0; // Resetar para período atual
-    atualizar();
-  });
-
-  btnAnterior.addEventListener('click', () => {
-    estadoAtual.offset--;
-    atualizar();
-  });
-
-  btnProximo.addEventListener('click', () => {
-    if (!btnProximo.disabled) {
-      estadoAtual.offset++;
+  if (periodoSel) {
+    periodoSel.addEventListener('change', () => {
+      estadoAtual.periodo = periodoSel.value;
+      estadoAtual.offset = 0;
       atualizar();
-    }
-  });
+    });
+  }
 
-  // Filtros de emoji
+  if (btnAnterior) {
+    btnAnterior.addEventListener('click', () => {
+      estadoAtual.offset--;
+      atualizar();
+    });
+  }
+
+  if (btnProximo) {
+    btnProximo.addEventListener('click', () => {
+      if (!btnProximo.disabled) {
+        estadoAtual.offset++;
+        atualizar();
+      }
+    });
+  }
+
+  // Filtros
   document.querySelectorAll('.filtro-emoji').forEach(btn => {
     btn.addEventListener('click', () => {
-      // Remover ativo de todos
       document.querySelectorAll('.filtro-emoji').forEach(b => b.classList.remove('ativo'));
-      
-      // Ativar clicado
       btn.classList.add('ativo');
       estadoAtual.filtroEmoji = btn.dataset.emoji;
-      
       atualizar();
     });
   });
 
-  // Exportar dados
-  document.getElementById('btnExportar').addEventListener('click', () => {
-    const historico = getHistorico();
-    const dataStr = JSON.stringify(historico, null, 2);
-    const blob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `historico-humor-${new Date().toISOString().slice(0, 10)}.json`;
-    a.click();
-    
-    URL.revokeObjectURL(url);
-  });
+  // Exportar
+  if (document.getElementById('btnExportar')) {
+    document.getElementById('btnExportar').addEventListener('click', () => {
+      const historico = getHistorico();
+      const dataStr = JSON.stringify(historico, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'historico-humor-' + new Date().toISOString().slice(0, 10) + '.json';
+      a.click();
+      
+      URL.revokeObjectURL(url);
+    });
+  }
 
-  // Limpar histórico
-  document.getElementById('btnLimpar').addEventListener('click', () => {
-    mostrarModal(
-      'Limpar Histórico',
-      'Tem certeza de que deseja apagar todo o histórico de humor? Esta ação não pode ser desfeita.',
-      () => {
-        localStorage.removeItem('got2cook_mood_history');
-        atualizar();
-      }
-    );
-  });
-
-  // Resize handler com debounce
+  // Resize
   let resizeTimer;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
@@ -619,7 +477,12 @@
 
   // Inicialização
   document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(atualizar, 50);
+    gerarDadosTeste();
+    setTimeout(atualizar, 100);
   });
 
-})();)
+  // Expor função globalmente para debug
+  window.atualizar = atualizar;
+  window.getHistorico = getHistorico;
+
+})();
