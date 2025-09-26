@@ -13,20 +13,12 @@
 
     <!-- Controles superiores -->
     <div class="controles">
-      <!-- Seletor de período -->
-      <div class="periodo-grupo">
-        <select id="periodo" class="dropdown" aria-label="Selecionar tipo de período">
-          <option value="semana">Semanal</option>
-          <option value="mes">Mensal</option>
-          <option value="trimestre">Trimestral</option>
-        </select>
-      </div>
-
       <!-- Navegação temporal -->
       <div class="navegacao-temporal">
-        <button class="btn-nav" id="btnAnterior" aria-label="Período anterior">‹</button>
+        <button class="btn-nav" id="btnAnterior" aria-label="Semana anterior">‹</button>
         <span class="periodo-atual" id="periodoAtual">Esta semana</span>
-        <button class="btn-nav" id="btnProximo" aria-label="Próximo período">›</button>
+        <button class="btn-nav" id="btnProximo" aria-label="Próxima semana">›</button>
+        <button class="btn-hoje" id="btnHoje" aria-label="Voltar para esta semana">Hoje</button>
       </div>
     </div>
 
