@@ -1,22 +1,36 @@
+// assets/main.js
+
 // Ano automático no rodapé
-document.addEventListener("DOMContentLoaded", () => {
-  const yearEl = document.getElementById("year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Scroll suave para âncoras internas (fallback para browsers sem CSS smooth)
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', e=>{
+    const id = a.getAttribute('href');
+    if(id.length>1){
+      const el = document.querySelector(id);
+      if(el){
+        e.preventDefault();
+        el.scrollIntoView({behavior:'smooth', block:'start'});
+        // Move focus para acessibilidade
+        setTimeout(()=>{ el.setAttribute('tabindex','-1'); el.focus(); }, 500);
+      }
+    }
+  });
 });
 
-// Fallback simples para rolagem suave (quando CSS não suportar)
-(function enableSmoothScrollFallback() {
-  if ("scrollBehavior" in document.documentElement.style) return;
-  const links = document.querySelectorAll('a[href^="#"]');
-  links.forEach((a) => {
-    a.addEventListener("click", (e) => {
-      const id = a.getAttribute("href");
-      if (!id || id === "#") return;
-      const target = document.querySelector(id);
-      if (!target) return;
-      e.preventDefault();
-      const top = target.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({ top, left: 0 });
-    });
+// Revelar elementos ao rolar (aplique .reveal nas seções/cards que quiser)
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    }
   });
-})();
+},{threshold:.12});
+
+document.querySelectorAll('.section, .feature, .blog-card, .plano-card, .card')
+  .forEach(el=>{
+    el.classList.add('reveal');
+    observer.observe(el);
+  });
