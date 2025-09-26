@@ -11,19 +11,63 @@
   <main class="wrap">
     <h1 class="titulo">HISTÓRICO DE HUMOR</h1>
 
-    <!-- Dropdown de período -->
-    <div class="periodo">
-      <select id="periodo" class="dropdown" aria-label="Selecionar período de visualização">
-        <option value="semana">POR SEMANA</option>
-        <option value="mes">POR MÊS</option>
-      </select>
+    <!-- Controles superiores -->
+    <div class="controles">
+      <!-- Seletor de período -->
+      <div class="periodo-grupo">
+        <select id="periodo" class="dropdown" aria-label="Selecionar tipo de período">
+          <option value="semana">Semanal</option>
+          <option value="mes">Mensal</option>
+          <option value="trimestre">Trimestral</option>
+        </select>
+      </div>
+
+      <!-- Navegação temporal -->
+      <div class="navegacao-temporal">
+        <button class="btn-nav" id="btnAnterior" aria-label="Período anterior">‹</button>
+        <span class="periodo-atual" id="periodoAtual">Esta semana</span>
+        <button class="btn-nav" id="btnProximo" aria-label="Próximo período">›</button>
+      </div>
+
+      <!-- Filtros de humor -->
+      <div class="filtros-humor">
+        <label class="filtro-label">Filtrar:</label>
+        <div class="filtros-grupo">
+          <button class="filtro-emoji ativo" data-emoji="todos" aria-label="Mostrar todos os humores">Todos</button>
+          <button class="filtro-emoji" data-emoji="😀" aria-label="Filtrar humor feliz">😀</button>
+          <button class="filtro-emoji" data-emoji="🥰" aria-label="Filtrar humor apaixonado">🥰</button>
+          <button class="filtro-emoji" data-emoji="😋" aria-label="Filtrar humor satisfeito">😋</button>
+          <button class="filtro-emoji" data-emoji="😢" aria-label="Filtrar humor triste">😢</button>
+          <button class="filtro-emoji" data-emoji="😭" aria-label="Filtrar humor chorando">😭</button>
+          <button class="filtro-emoji" data-emoji="😡" aria-label="Filtrar humor bravo">😡</button>
+          <button class="filtro-emoji" data-emoji="👏" aria-label="Filtrar humor animado">👏</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resumo estatístico -->
+    <div class="resumo-stats" id="resumoStats">
+      <div class="stat-item">
+        <span class="stat-valor" id="totalDias">0</span>
+        <span class="stat-label">dias registrados</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-emoji" id="humorDominante">😊</span>
+        <span class="stat-label">humor dominante</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-tendencia" id="tendencia">↗️</span>
+        <span class="stat-label">tendência</span>
+      </div>
     </div>
 
     <!-- Container dos gráficos lado a lado -->
     <div class="graficos-container">
       <!-- Card do gráfico de linha -->
       <section class="card" aria-labelledby="tituloLinha">
-        <h2 id="tituloLinha" class="sr-only">Evolução do humor ao longo do tempo</h2>
+        <div class="card-header">
+          <h2 id="tituloLinha" class="card-title">Evolução Temporal</h2>
+        </div>
         <div class="grafico-container">
           <canvas id="graficoLinha" role="img" aria-label="Gráfico de linha mostrando evolução do humor"></canvas>
         </div>
@@ -31,11 +75,25 @@
 
       <!-- Card do gráfico de pizza -->
       <section class="card" aria-labelledby="tituloPizza">
-        <h2 id="tituloPizza" class="sr-only">Distribuição dos humores</h2>
+        <div class="card-header">
+          <h2 id="tituloPizza" class="card-title">Distribuição</h2>
+        </div>
         <div class="grafico-container">
           <canvas id="graficoPizza" role="img" aria-label="Gráfico de pizza mostrando distribuição percentual dos humores"></canvas>
         </div>
       </section>
+    </div>
+
+    <!-- Ações adicionais -->
+    <div class="acoes-extras">
+      <button class="btn-acao" id="btnExportar">
+        <span class="btn-icone">📊</span>
+        Exportar Dados
+      </button>
+      <button class="btn-acao" id="btnLimpar">
+        <span class="btn-icone">🗑️</span>
+        Limpar Histórico
+      </button>
     </div>
 
     <div class="footer-spacer"></div>
@@ -47,6 +105,19 @@
     <button class="btn-footer btn-central" id="btnLogo" aria-label="Ir para Minhas Receitas">🍳</button>
     <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira">🧊</button>
   </footer>
+
+  <!-- Modal de confirmação -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="true"></div>
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+      <h3 id="modalTitulo" class="modal-titulo">Confirmar Ação</h3>
+      <p id="modalMensagem" class="modal-mensagem">Deseja realmente continuar?</p>
+      <div class="modal-acoes">
+        <button class="btn-modal secundario" id="modalCancelar">Cancelar</button>
+        <button class="btn-modal primario" id="modalConfirmar">Confirmar</button>
+      </div>
+    </div>
+  </div>
 
   <script src="historicohumor.js"></script>
 </body>
