@@ -419,9 +419,23 @@
     });
   }
 
-  // Filtros - REMOVIDO (não mais necessário)
-
-  // Exportar
+  // Limpar histórico
+  if (document.getElementById('btnLimpar')) {
+    document.getElementById('btnLimpar').addEventListener('click', () => {
+      // Modal simples com confirm nativo (mais confiável)
+      const confirmou = confirm('Tem certeza de que deseja apagar todo o histórico de humor? Esta ação não pode ser desfeita.');
+      
+      if (confirmou) {
+        localStorage.removeItem('got2cook_mood_history');
+        console.log('Histórico de humor limpo');
+        atualizar();
+        
+        // Feedback visual
+        if (totalDias) totalDias.textContent = '0';
+        if (humorDominante) humorDominante.textContent = '😐';
+      }
+    });
+  }
   if (document.getElementById('btnExportar')) {
     document.getElementById('btnExportar').addEventListener('click', () => {
       const historico = getHistorico();
@@ -445,25 +459,36 @@
     resizeTimer = setTimeout(atualizar, 100);
   });
 
-  // Inicialização
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log('Inicializando histórico de humor...');
+  // Função de inicialização forçada
+  function inicializar() {
+    console.log('Executando inicialização...');
     gerarDadosTeste();
+    
+    // Aguardar elementos estarem prontos
     setTimeout(() => {
-      atualizar();
-      console.log('Gráficos atualizados');
-    }, 100);
-  });
-
-  // Se DOM já carregou, executar imediatamente
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    console.log('DOM já carregado, executando...');
-    gerarDadosTeste();
-    setTimeout(() => {
-      atualizar();
-      console.log('Gráficos atualizados (direto)');
-    }, 50);
+      if (canvasLinha && canvasPizza) {
+        atualizar();
+        console.log('Gráficos renderizados com sucesso');
+      } else {
+        console.error('Elementos canvas não encontrados');
+      }
+    }, 200);
   }
+
+  // Múltiplas tentativas de inicialização
+  document.addEventListener('DOMContentLoaded', inicializar);
+  
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    inicializar();
+  }
+  
+  // Fallback adicional
+  setTimeout(inicializar, 500);
+  
+  // Última tentativa
+  window.addEventListener('load', () => {
+    setTimeout(inicializar, 100);
+  });
 
   // Expor função globalmente para debug
   window.atualizar = atualizar;
