@@ -5,49 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Got2Cook — Receitas pelo seu humor</title>
   <meta name="description" content="Got2Cook: combine seu humor com os ingredientes da geladeira e receba receitas perfeitas." />
-
-  <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-
-  <!-- CSS da landing -->
   <link rel="stylesheet" href="assets/style-landing.css">
 </head>
 <body id="topo">
 
-  <!-- HERO (primeira dobra, verde) -->
+  <!-- HERO -->
   <header class="hero" role="banner">
-    <!-- Cabeçalho no topo: logo à esquerda + botão Login à direita -->
+    <!-- Cabeçalho fixo -->
     <div class="site-header">
       <div class="container header-inner">
         <a href="#topo" class="site-logo" aria-label="Ir para o início">
           <img src="assets/logo.png" alt="Logo Got2Cook">
         </a>
-        <nav aria-label="Acesso">
+        <nav class="site-nav" aria-label="Acesso">
+          <a class="nav-link" href="#sobre">Sobre</a>
+          <a class="nav-link" href="#recursos">Recursos</a>
+          <a class="nav-link" href="#blog">Blog</a>
           <a class="btn btn--ghost" href="#" aria-label="Fazer login">Login</a>
         </nav>
       </div>
     </div>
 
-    <!-- Conteúdo central do hero (tudo centralizado) -->
+    <!-- Centro do hero (tela cheia) -->
     <div class="hero__center container">
-      <!-- Logo acima do texto -->
       <img class="hero__logo" src="assets/logo.png" alt="Logo Got2Cook">
-
       <h1 class="hero__title">Cozinhe de acordo com seu humor</h1>
       <p class="hero__subtitle">Seu humor + sua geladeira = <strong>receita perfeita</strong>. Descubra opções rápidas e gostosas sem complicação.</p>
-
-      <!-- Botão centralizado abaixo do texto -->
       <div class="hero__actions">
         <a class="btn btn--primary" href="app/humor/index.html">Abrir Web App</a>
       </div>
     </div>
 
-    <!-- “Saiba mais” no rodapé da página verde, com pulsar e âncora para Sobre -->
+    <!-- Âncora para Sobre -->
     <div class="hero__bottom">
       <a class="link-more pulse" href="#sobre" aria-label="Saber mais sobre o Got2Cook">
-        Saiba mais
-        <span aria-hidden="true">↓</span>
+        Saiba mais <span aria-hidden="true">↓</span>
       </a>
     </div>
   </header>
@@ -57,7 +51,6 @@
     <section id="sobre" class="section section--sobre" aria-labelledby="titulo-sobre">
       <div class="container">
         <h2 id="titulo-sobre" class="section__title">Sobre</h2>
-
         <article class="card">
           <h3 class="card__title">A fórmula</h3>
           <p class="card__text">
@@ -68,32 +61,72 @@
       </div>
     </section>
 
+    <!-- CTA BLOG (nova seção logo abaixo de Sobre) -->
+    <section id="cta-blog" class="section section--cta-blog" aria-labelledby="titulo-cta-blog">
+      <div class="container cta-blog__wrap">
+        <div class="cta-blog__content">
+          <h2 id="titulo-cta-blog" class="section__title">Acesse nosso Blog</h2>
+          <p class="cta-blog__text">Dicas práticas, aproveitamento total dos ingredientes, receitas por humor e bastidores do Got2Cook.</p>
+          <div class="cta-blog__actions">
+            <a class="btn btn--primary" href="blog/index.html">Ler artigos</a>
+            <a class="btn btn--ghost" href="#blog">Ver destaques</a>
+          </div>
+        </div>
+        <div class="cta-blog__image" aria-hidden="true">
+          <img src="assets/blog-cta.jpg" alt="" />
+        </div>
+      </div>
+    </section>
+
     <!-- RECURSOS -->
     <section id="recursos" class="section section--recursos" aria-labelledby="titulo-recursos">
       <div class="container">
         <h2 id="titulo-recursos" class="section__title">Recursos</h2>
-
         <ul class="features" role="list">
           <li class="feature">
             <h3 class="feature__title">Humor</h3>
             <p class="feature__text">Escolha como você se sente e veja receitas que combinam com o momento.</p>
           </li>
-
           <li class="feature">
             <h3 class="feature__title">Minha Geladeira</h3>
             <p class="feature__text">Adicione os ingredientes que você tem para receber sugestões realistas.</p>
           </li>
-
           <li class="feature">
             <h3 class="feature__title">Minhas Receitas</h3>
             <p class="feature__text">Salve suas favoritas e acesse quando quiser.</p>
           </li>
-
           <li class="feature">
             <h3 class="feature__title">Histórico</h3>
             <p class="feature__text">Acompanhe o que você mais curte e seus hábitos na cozinha.</p>
           </li>
         </ul>
+      </div>
+    </section>
+
+    <!-- BLOG (destaques) -->
+    <section id="blog" class="section section--blog" aria-labelledby="titulo-blog">
+      <div class="container">
+        <h2 id="titulo-blog" class="section__title">Nosso Blog</h2>
+        <div class="blog-grid">
+          <article class="blog-card">
+            <img src="assets/blog1.jpg" alt="Aproveite sua geladeira">
+            <h3 class="blog-card__title">5 dicas para aproveitar sua geladeira</h3>
+            <a href="blog/index.html" class="btn btn--ghost">Ler mais</a>
+          </article>
+          <article class="blog-card">
+            <img src="assets/blog2.jpg" alt="Cozinhando com humor">
+            <h3 class="blog-card__title">Cozinhando com humor: como funciona</h3>
+            <a href="blog/index.html" class="btn btn--ghost">Ler mais</a>
+          </article>
+          <article class="blog-card">
+            <img src="assets/blog3.jpg" alt="Receitas rápidas">
+            <h3 class="blog-card__title">Receitas rápidas para o dia a dia</h3>
+            <a href="blog/index.html" class="btn btn--ghost">Ler mais</a>
+          </article>
+        </div>
+        <div class="center">
+          <a class="btn btn--primary" href="blog/index.html">Acessar Blog Completo</a>
+        </div>
       </div>
     </section>
   </main>
@@ -104,6 +137,7 @@
       <a href="#topo" class="footer__link">Início</a>
       <a href="#sobre" class="footer__link">Sobre</a>
       <a href="#recursos" class="footer__link">Recursos</a>
+      <a href="#blog" class="footer__link">Blog</a>
     </nav>
     <p class="footer__copy">© <span id="year"></span> Got2Cook. Todos os direitos reservados.</p>
   </footer>
