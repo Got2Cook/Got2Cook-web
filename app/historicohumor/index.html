@@ -1,0 +1,62 @@
+<!-- /app/historico-humor/index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Histórico de Humor — Got2Cook</title>
+  <link rel="stylesheet" href="historicohumor.css" />
+</head>
+<body>
+  <!-- Cabeçalho padrão -->
+  <header class="cabecalho">
+    <button class="btn-perfil" id="btnPerfil" aria-label="Ir para Perfil">
+      <img src="../../public/assets/img/icons/perfil.png" alt="Perfil" class="perfil-img" />
+    </button>
+    <button class="btn-menu" id="btnMenu" aria-label="Abrir Menu">
+      <span class="menu-linha"></span>
+      <span class="menu-linha"></span>
+      <span class="menu-linha"></span>
+    </button>
+  </header>
+
+  <main class="wrap">
+    <h1 class="titulo">HISTÓRICO DE HUMOR</h1>
+
+    <!-- Dropdown de período -->
+    <div class="periodo">
+      <select id="periodo" class="dropdown" aria-label="Selecionar período de visualização">
+        <option value="semana">POR SEMANA</option>
+        <option value="mes">POR MÊS</option>
+      </select>
+    </div>
+
+    <!-- Card do gráfico de linha -->
+    <section class="card" aria-labelledby="tituloLinha">
+      <h2 id="tituloLinha" class="sr-only">Evolução do humor ao longo do tempo</h2>
+      <div class="grafico-container">
+        <canvas id="graficoLinha" role="img" aria-label="Gráfico de linha mostrando evolução do humor"></canvas>
+      </div>
+    </section>
+
+    <!-- Card do gráfico de pizza -->
+    <section class="card" aria-labelledby="tituloPizza">
+      <h2 id="tituloPizza" class="sr-only">Distribuição dos humores</h2>
+      <div class="grafico-container">
+        <canvas id="graficoPizza" role="img" aria-label="Gráfico de pizza mostrando distribuição percentual dos humores"></canvas>
+      </div>
+    </section>
+
+    <div class="footer-spacer"></div>
+  </main>
+
+  <!-- Rodapé curvo oficial -->
+  <footer class="curva" aria-label="Navegação principal">
+    <button class="btn-footer" id="btnVoltar" aria-label="Voltar para tela anterior">⟵</button>
+    <button class="btn-footer btn-central" id="btnLogo" aria-label="Ir para Minhas Receitas">🍳</button>
+    <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira">🧊</button>
+  </footer>
+
+  <script src="historicohumor.js"></script>
+</body>
+</html>
