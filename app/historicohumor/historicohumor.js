@@ -10,8 +10,7 @@
   // Estado da aplicação
   let estadoAtual = {
     periodo: 'semana',
-    offset: 0,
-    filtroEmoji: 'todos'
+    offset: 0
   };
 
   // Elements
@@ -177,11 +176,7 @@
         const chave = data.toISOString().slice(0, 10);
         const emoji = historico[chave];
         
-        if (estadoAtual.filtroEmoji === 'todos' || emoji === estadoAtual.filtroEmoji) {
-          dados.push(emoji || null);
-        } else {
-          dados.push(null);
-        }
+        dados.push(emoji || null);
         labels.push(DIAS[i]);
       }
     } else {
@@ -190,7 +185,7 @@
       while (dataAtual <= fim) {
         const chave = dataAtual.toISOString().slice(0, 10);
         const emoji = historico[chave];
-        if (emoji && (estadoAtual.filtroEmoji === 'todos' || emoji === estadoAtual.filtroEmoji)) {
+        if (emoji) {
           dados.push(emoji);
         }
         labels.push(dataAtual.getDate().toString());
@@ -209,7 +204,7 @@
     for (let d = new Date(inicio); d <= fim; d.setDate(d.getDate() + 1)) {
       const chave = d.toISOString().slice(0, 10);
       const emoji = historico[chave];
-      if (emoji && (estadoAtual.filtroEmoji === 'todos' || emoji === estadoAtual.filtroEmoji)) {
+      if (emoji) {
         humores.push(emoji);
       }
     }
@@ -411,9 +406,13 @@
     
     if (periodoAtual) periodoAtual.textContent = formatarPeriodoAtual();
     
-    const hoje = new Date();
-    const { fim } = getDatasPeriodo();
-    if (btnProximo) btnProximo.disabled = (fim >= hoje);
+    // Corrigir lógica de navegação - permitir voltar para presente
+    if (btnProximo) {
+      btnProximo.disabled = (estadoAtual.offset >= 0);
+    }
+    if (btnAnterior) {
+      btnAnterior.disabled = false; // Sempre permitir ir para trás
+    }
   }
 
   // Event listeners
@@ -441,15 +440,7 @@
     });
   }
 
-  // Filtros
-  document.querySelectorAll('.filtro-emoji').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filtro-emoji').forEach(b => b.classList.remove('ativo'));
-      btn.classList.add('ativo');
-      estadoAtual.filtroEmoji = btn.dataset.emoji;
-      atualizar();
-    });
-  });
+  // Filtros - REMOVIDO (não mais necessário)
 
   // Exportar
   if (document.getElementById('btnExportar')) {
