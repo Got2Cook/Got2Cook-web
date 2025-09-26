@@ -7,19 +7,19 @@
   const DIAS = ['SEG','TER','QUA','QUI','SEX','SÁB','DOM'];
   const MESES = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
   
-  // Estado da aplicação
+  // Estado da aplicação (apenas semanal)
   let estadoAtual = {
-    periodo: 'semana',
+    periodo: 'semana', // Fixo em semana
     offset: 0
   };
 
   // Elements
   const canvasLinha = document.getElementById('graficoLinha');
   const canvasPizza = document.getElementById('graficoPizza');
-  const periodoSel = document.getElementById('periodo');
   const periodoAtual = document.getElementById('periodoAtual');
   const btnAnterior = document.getElementById('btnAnterior');
   const btnProximo = document.getElementById('btnProximo');
+  const btnHoje = document.getElementById('btnHoje');
   const totalDias = document.getElementById('totalDias');
   const humorDominante = document.getElementById('humorDominante');
   const tendencia = document.getElementById('tendencia');
@@ -125,42 +125,26 @@
   // Funções de período
   function getDatasPeriodo() {
     const hoje = new Date();
-    let inicio, fim;
-
-    if (estadoAtual.periodo === 'semana') {
-      const diaAtual = hoje.getDay();
-      inicio = new Date(hoje);
-      inicio.setDate(hoje.getDate() - diaAtual - (estadoAtual.offset * 7));
-      fim = new Date(inicio);
-      fim.setDate(inicio.getDate() + 6);
-    } else if (estadoAtual.periodo === 'mes') {
-      inicio = new Date(hoje.getFullYear(), hoje.getMonth() - estadoAtual.offset, 1);
-      fim = new Date(hoje.getFullYear(), hoje.getMonth() - estadoAtual.offset + 1, 0);
-    } else if (estadoAtual.periodo === 'trimestre') {
-      const trimestreAtual = Math.floor(hoje.getMonth() / 3);
-      const trimestreOffset = trimestreAtual - estadoAtual.offset;
-      inicio = new Date(hoje.getFullYear(), trimestreOffset * 3, 1);
-      fim = new Date(hoje.getFullYear(), (trimestreOffset + 1) * 3, 0);
-    }
+    
+    // Sempre semanal - domingo a sábado
+    const diaAtual = hoje.getDay();
+    const inicio = new Date(hoje);
+    inicio.setDate(hoje.getDate() - diaAtual - (estadoAtual.offset * 7));
+    const fim = new Date(inicio);
+    fim.setDate(inicio.getDate() + 6);
 
     return { inicio, fim };
   }
 
   function formatarPeriodoAtual() {
-    const { inicio, fim } = getDatasPeriodo();
+    if (estadoAtual.offset === 0) return 'Esta semana';
+    if (estadoAtual.offset === -1) return 'Semana passada';
+    if (estadoAtual.offset === -2) return 'Há 2 semanas';
+    if (estadoAtual.offset === -3) return 'Há 3 semanas';
+    if (estadoAtual.offset <= -4) return 'Há ' + Math.abs(estadoAtual.offset) + ' semanas';
     
-    if (estadoAtual.periodo === 'semana') {
-      if (estadoAtual.offset === 0) return 'Esta semana';
-      if (estadoAtual.offset === -1) return 'Semana passada';
-      return inicio.getDate() + '/' + (inicio.getMonth()+1) + ' - ' + fim.getDate() + '/' + (fim.getMonth()+1);
-    } else if (estadoAtual.periodo === 'mes') {
-      if (estadoAtual.offset === 0) return 'Este mês';
-      if (estadoAtual.offset === -1) return 'Mês passado';
-      return MESES[inicio.getMonth()] + ' ' + inicio.getFullYear();
-    } else {
-      const trimestre = Math.floor(inicio.getMonth() / 3) + 1;
-      return trimestre + 'º Tri ' + inicio.getFullYear();
-    }
+    const { inicio, fim } = getDatasPeriodo();
+    return inicio.getDate() + '/' + (inicio.getMonth()+1) + ' - ' + fim.getDate() + '/' + (fim.getMonth()+1);
   }
 
   function getDadosPeriodo() {
@@ -169,28 +153,15 @@
     const dados = [];
     const labels = [];
 
-    if (estadoAtual.periodo === 'semana') {
-      for (let i = 0; i < 7; i++) {
-        const data = new Date(inicio);
-        data.setDate(inicio.getDate() + i);
-        const chave = data.toISOString().slice(0, 10);
-        const emoji = historico[chave];
-        
-        dados.push(emoji || null);
-        labels.push(DIAS[i]);
-      }
-    } else {
-      // Simplificado para outros períodos
-      const dataAtual = new Date(inicio);
-      while (dataAtual <= fim) {
-        const chave = dataAtual.toISOString().slice(0, 10);
-        const emoji = historico[chave];
-        if (emoji) {
-          dados.push(emoji);
-        }
-        labels.push(dataAtual.getDate().toString());
-        dataAtual.setDate(dataAtual.getDate() + 1);
-      }
+    // Sempre 7 dias da semana
+    for (let i = 0; i < 7; i++) {
+      const data = new Date(inicio);
+      data.setDate(inicio.getDate() + i);
+      const chave = data.toISOString().slice(0, 10);
+      const emoji = historico[chave];
+      
+      dados.push(emoji || null);
+      labels.push(DIAS[i]);
     }
 
     return { dados, labels };
@@ -406,24 +377,25 @@
     
     if (periodoAtual) periodoAtual.textContent = formatarPeriodoAtual();
     
-    // Corrigir lógica de navegação - permitir voltar para presente
+    // Gerenciar visibilidade dos botões
     if (btnProximo) {
       btnProximo.disabled = (estadoAtual.offset >= 0);
     }
     if (btnAnterior) {
       btnAnterior.disabled = false; // Sempre permitir ir para trás
     }
+    
+    // Botão "Hoje" só aparece quando não estiver na semana atual
+    if (btnHoje) {
+      if (estadoAtual.offset === 0) {
+        btnHoje.classList.add('hidden');
+      } else {
+        btnHoje.classList.remove('hidden');
+      }
+    }
   }
 
   // Event listeners
-  if (periodoSel) {
-    periodoSel.addEventListener('change', () => {
-      estadoAtual.periodo = periodoSel.value;
-      estadoAtual.offset = 0;
-      atualizar();
-    });
-  }
-
   if (btnAnterior) {
     btnAnterior.addEventListener('click', () => {
       estadoAtual.offset--;
@@ -437,6 +409,13 @@
         estadoAtual.offset++;
         atualizar();
       }
+    });
+  }
+
+  if (btnHoje) {
+    btnHoje.addEventListener('click', () => {
+      estadoAtual.offset = 0;
+      atualizar();
     });
   }
 
