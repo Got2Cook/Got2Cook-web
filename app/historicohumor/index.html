@@ -8,18 +8,6 @@
   <link rel="stylesheet" href="historicohumor.css" />
 </head>
 <body>
-  <!-- Cabeçalho padrão -->
-  <header class="cabecalho">
-    <button class="btn-perfil" id="btnPerfil" aria-label="Ir para Perfil">
-      <img src="../../public/assets/img/icons/perfil.png" alt="Perfil" class="perfil-img" />
-    </button>
-    <button class="btn-menu" id="btnMenu" aria-label="Abrir Menu">
-      <span class="menu-linha"></span>
-      <span class="menu-linha"></span>
-      <span class="menu-linha"></span>
-    </button>
-  </header>
-
   <main class="wrap">
     <h1 class="titulo">HISTÓRICO DE HUMOR</h1>
 
@@ -31,21 +19,24 @@
       </select>
     </div>
 
-    <!-- Card do gráfico de linha -->
-    <section class="card" aria-labelledby="tituloLinha">
-      <h2 id="tituloLinha" class="sr-only">Evolução do humor ao longo do tempo</h2>
-      <div class="grafico-container">
-        <canvas id="graficoLinha" role="img" aria-label="Gráfico de linha mostrando evolução do humor"></canvas>
-      </div>
-    </section>
+    <!-- Container dos gráficos lado a lado -->
+    <div class="graficos-container">
+      <!-- Card do gráfico de linha -->
+      <section class="card" aria-labelledby="tituloLinha">
+        <h2 id="tituloLinha" class="sr-only">Evolução do humor ao longo do tempo</h2>
+        <div class="grafico-container">
+          <canvas id="graficoLinha" role="img" aria-label="Gráfico de linha mostrando evolução do humor"></canvas>
+        </div>
+      </section>
 
-    <!-- Card do gráfico de pizza -->
-    <section class="card" aria-labelledby="tituloPizza">
-      <h2 id="tituloPizza" class="sr-only">Distribuição dos humores</h2>
-      <div class="grafico-container">
-        <canvas id="graficoPizza" role="img" aria-label="Gráfico de pizza mostrando distribuição percentual dos humores"></canvas>
-      </div>
-    </section>
+      <!-- Card do gráfico de pizza -->
+      <section class="card" aria-labelledby="tituloPizza">
+        <h2 id="tituloPizza" class="sr-only">Distribuição dos humores</h2>
+        <div class="grafico-container">
+          <canvas id="graficoPizza" role="img" aria-label="Gráfico de pizza mostrando distribuição percentual dos humores"></canvas>
+        </div>
+      </section>
+    </div>
 
     <div class="footer-spacer"></div>
   </main>
