@@ -447,9 +447,23 @@
 
   // Inicialização
   document.addEventListener('DOMContentLoaded', () => {
+    console.log('Inicializando histórico de humor...');
     gerarDadosTeste();
-    setTimeout(atualizar, 100);
+    setTimeout(() => {
+      atualizar();
+      console.log('Gráficos atualizados');
+    }, 100);
   });
+
+  // Se DOM já carregou, executar imediatamente
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    console.log('DOM já carregado, executando...');
+    gerarDadosTeste();
+    setTimeout(() => {
+      atualizar();
+      console.log('Gráficos atualizados (direto)');
+    }, 50);
+  }
 
   // Expor função globalmente para debug
   window.atualizar = atualizar;
