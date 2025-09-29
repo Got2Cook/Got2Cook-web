@@ -1,9 +1,7 @@
-// assets/main.js
-
-// Ano automático no rodapé
+// Ano no rodapé
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Scroll suave para âncoras internas (fallback para browsers sem CSS smooth)
+// Scroll suave e foco
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click', e=>{
     const id = a.getAttribute('href');
@@ -12,14 +10,13 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
       if(el){
         e.preventDefault();
         el.scrollIntoView({behavior:'smooth', block:'start'});
-        // Move focus para acessibilidade
         setTimeout(()=>{ el.setAttribute('tabindex','-1'); el.focus(); }, 500);
       }
     }
   });
 });
 
-// Revelar elementos ao rolar (aplique .reveal nas seções/cards que quiser)
+// Reveal on scroll
 const observer = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -29,8 +26,26 @@ const observer = new IntersectionObserver((entries)=>{
   });
 },{threshold:.12});
 
-document.querySelectorAll('.section, .feature, .blog-card, .plano-card, .card')
+document.querySelectorAll('.section, .feature, .blog-card, .card, .testimonial, .value')
   .forEach(el=>{
     el.classList.add('reveal');
     observer.observe(el);
   });
+
+// Newsletter fake submit (sem backend por enquanto)
+const form = document.getElementById('form-newsletter');
+if(form){
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const email = (document.getElementById('news-email')?.value || '').trim();
+    const fb = document.getElementById('news-feedback');
+    if(!email || !/^\S+@\S+\.\S+$/.test(email)){
+      fb.textContent = 'Informe um e-mail válido.';
+      fb.classList.remove('success'); fb.classList.add('error');
+      return;
+    }
+    fb.textContent = 'Inscrição registrada! Em breve você recebe novidades.';
+    fb.classList.remove('error'); fb.classList.add('success');
+    form.reset();
+  });
+}
