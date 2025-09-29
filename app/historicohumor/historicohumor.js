@@ -13,6 +13,17 @@
     offset: 0
   };
 
+  // Elements - TODOS declarados juntos
+  const canvasLinha = document.getElementById('graficoLinha');
+  const canvasPizza = document.getElementById('graficoPizza');
+  const periodoAtual = document.getElementById('periodoAtual');
+  const btnAnterior = document.getElementById('btnAnterior');
+  const btnProximo = document.getElementById('btnProximo');
+  const btnHoje = document.getElementById('btnHoje');
+  const totalDias = document.getElementById('totalDias');
+  const humorDominante = document.getElementById('humorDominante');
+  const tendencia = document.getElementById('tendencia');
+  
   // Modal elements
   const modal = document.getElementById('modal');
   const modalTitulo = document.getElementById('modalTitulo');
@@ -493,33 +504,45 @@
 
   // Função de inicialização forçada
   function inicializar() {
-    console.log('Executando inicialização...');
+    console.log('=== Iniciando histórico de humor ===');
+    
+    // Verificar elementos críticos
+    if (!canvasLinha) {
+      console.error('Canvas linha não encontrado!');
+      return;
+    }
+    if (!canvasPizza) {
+      console.error('Canvas pizza não encontrado!');
+      return;
+    }
+    
+    console.log('Elementos encontrados OK');
+    
+    // Gerar dados de teste
     gerarDadosTeste();
     
-    // Aguardar elementos estarem prontos
+    // Executar atualização
     setTimeout(() => {
-      if (canvasLinha && canvasPizza) {
+      try {
         atualizar();
-        console.log('Gráficos renderizados com sucesso');
-      } else {
-        console.error('Elementos canvas não encontrados');
+        console.log('=== Gráficos renderizados com sucesso ===');
+      } catch(e) {
+        console.error('Erro ao atualizar:', e);
       }
-    }, 200);
+    }, 250);
   }
 
   // Múltiplas tentativas de inicialização
-  document.addEventListener('DOMContentLoaded', inicializar);
-  
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    inicializar();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', inicializar);
+  } else {
+    // DOM já carregado
+    setTimeout(inicializar, 100);
   }
   
-  // Fallback adicional
-  setTimeout(inicializar, 500);
-  
-  // Última tentativa
+  // Fallback para garantir execução
   window.addEventListener('load', () => {
-    setTimeout(inicializar, 100);
+    setTimeout(inicializar, 200);
   });
 
   // Expor função globalmente para debug
