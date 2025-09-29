@@ -5,30 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Got2Cook — Receitas pelo seu humor</title>
   <meta name="description" content="Got2Cook: combine seu humor com os ingredientes da geladeira e receba receitas perfeitas." />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style-landing.css">
 </head>
 <body id="topo">
 
-  <!-- HERO -->
+  <!-- HERO (tela cheia) -->
   <header class="hero" role="banner">
     <!-- Cabeçalho fixo -->
     <div class="site-header">
       <div class="container header-inner">
-        <a href="#topo" class="site-logo" aria-label="Ir para o início">
+        <a href="#topo" class="site-logo" aria-label="Início">
           <img src="assets/logo.png" alt="Logo Got2Cook">
         </a>
-        <nav class="site-nav" aria-label="Acesso">
+        <nav class="site-nav" aria-label="Navegação principal">
           <a class="nav-link" href="#sobre">Sobre</a>
           <a class="nav-link" href="#recursos">Recursos</a>
           <a class="nav-link" href="#blog">Blog</a>
-          <a class="btn btn--ghost" href="#" aria-label="Fazer login">Login</a>
+          <a class="nav-link" href="#depoimentos">Depoimentos</a>
+          <a class="nav-link" href="#faq">FAQ</a>
+          <a class="btn btn--ghost" href="#" aria-label="Login">Login</a>
         </nav>
       </div>
     </div>
 
-    <!-- Centro do hero (tela cheia) -->
+    <!-- Centro do hero -->
     <div class="hero__center container">
       <img class="hero__logo" src="assets/logo.png" alt="Logo Got2Cook">
       <h1 class="hero__title">Cozinhe de acordo com seu humor</h1>
@@ -38,15 +40,14 @@
       </div>
     </div>
 
-    <!-- Âncora para Sobre -->
+    <!-- Âncora -->
     <div class="hero__bottom">
-      <a class="link-more pulse" href="#sobre" aria-label="Saber mais sobre o Got2Cook">
-        Saiba mais <span aria-hidden="true">↓</span>
-      </a>
+      <a class="link-more pulse" href="#sobre" aria-label="Saber mais">Saiba mais <span aria-hidden="true">↓</span></a>
     </div>
   </header>
 
   <main id="conteudo" role="main">
+
     <!-- SOBRE -->
     <section id="sobre" class="section section--sobre" aria-labelledby="titulo-sobre">
       <div class="container">
@@ -61,7 +62,7 @@
       </div>
     </section>
 
-    <!-- CTA BLOG (nova seção logo abaixo de Sobre) -->
+    <!-- CTA BLOG (logo após Sobre) -->
     <section id="cta-blog" class="section section--cta-blog" aria-labelledby="titulo-cta-blog">
       <div class="container cta-blog__wrap">
         <div class="cta-blog__content">
@@ -73,7 +74,20 @@
           </div>
         </div>
         <div class="cta-blog__image" aria-hidden="true">
-          <img src="assets/blog-cta.jpg" alt="" />
+          <img src="assets/blog-cta.jpg" alt="">
+        </div>
+      </div>
+    </section>
+
+    <!-- MISSÃO / VALORES -->
+    <section id="missao" class="section section--missao" aria-labelledby="titulo-missao">
+      <div class="container">
+        <h2 id="titulo-missao" class="section__title">Nossa Missão & Valores</h2>
+        <div class="values-grid">
+          <article class="value"><h3>🌱 Sustentabilidade</h3><p>Aproveitar ao máximo os alimentos e reduzir desperdício.</p></article>
+          <article class="value"><h3>✨ Criatividade</h3><p>Transformar ingredientes simples em experiências saborosas.</p></article>
+          <article class="value"><h3>🤝 Comunidade</h3><p>Rede de pessoas que cozinham juntas, mesmo à distância.</p></article>
+          <article class="value"><h3>🧠 Tecnologia</h3><p>IA para simplificar escolhas e personalizar receitas.</p></article>
         </div>
       </div>
     </section>
@@ -103,7 +117,15 @@
       </div>
     </section>
 
-    <!-- BLOG (destaques) -->
+    <!-- CTA BANNER -->
+    <section class="section section--cta-banner" aria-hidden="false">
+      <div class="container cta-banner__inner">
+        <h3>Pronta para cozinhar algo novo hoje?</h3>
+        <a class="btn btn--primary" href="app/humor/index.html">Abrir Web App</a>
+      </div>
+    </section>
+
+    <!-- BLOG DESTAQUES -->
     <section id="blog" class="section section--blog" aria-labelledby="titulo-blog">
       <div class="container">
         <h2 id="titulo-blog" class="section__title">Nosso Blog</h2>
@@ -129,6 +151,104 @@
         </div>
       </div>
     </section>
+
+    <!-- DEPOIMENTOS -->
+    <section id="depoimentos" class="section section--depoimentos" aria-labelledby="titulo-depoimentos">
+      <div class="container">
+        <h2 id="titulo-depoimentos" class="section__title">O que dizem</h2>
+        <div class="testimonials">
+          <figure class="testimonial">
+            <blockquote>“O Got2Cook mudou minha rotina na cozinha. Parei de desperdiçar e ainda como melhor.”</blockquote>
+            <figcaption>— Maria S.</figcaption>
+          </figure>
+          <figure class="testimonial">
+            <blockquote>“Adoro cozinhar por humor! Nos dias corridos, ele decide por mim.”</blockquote>
+            <figcaption>— João P.</figcaption>
+          </figure>
+          <figure class="testimonial">
+            <blockquote>“Minhas receitas favoritas ficam salvas. É rápido, simples e bonito.”</blockquote>
+            <figcaption>— Ana R.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOWNLOAD -->
+    <section id="download" class="section section--download" aria-labelledby="titulo-download">
+      <div class="container download__wrap">
+        <div class="download__text">
+          <h2 id="titulo-download" class="section__title">Baixe o App (em breve)</h2>
+          <p>Enquanto isso, use nosso Web App gratuitamente.</p>
+          <div class="store-badges">
+            <a class="badge disabled" href="#" aria-disabled="true" title="Em breve na App Store">App Store</a>
+            <a class="badge disabled" href="#" aria-disabled="true" title="Em breve no Google Play">Google Play</a>
+            <a class="btn btn--primary" href="app/humor/index.html">Abrir Web App</a>
+          </div>
+        </div>
+        <div class="download__mockup" aria-hidden="true">
+          <img src="assets/mockup-app.png" alt="">
+        </div>
+      </div>
+    </section>
+
+    <!-- PARCERIAS -->
+    <section id="parcerias" class="section section--parcerias" aria-labelledby="titulo-parcerias">
+      <div class="container">
+        <h2 id="titulo-parcerias" class="section__title">Parcerias & Imprensa</h2>
+        <div class="logos">
+          <img src="assets/logo-parceiro1.png" alt="Parceiro 1">
+          <img src="assets/logo-parceiro2.png" alt="Parceiro 2">
+          <img src="assets/logo-parceiro3.png" alt="Parceiro 3">
+          <img src="assets/logo-parceiro4.png" alt="Parceiro 4">
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section id="newsletter" class="section section--newsletter" aria-labelledby="titulo-news">
+      <div class="container">
+        <h2 id="titulo-news" class="section__title">Receba novidades e dicas</h2>
+        <form id="form-newsletter" class="newsletter__form" novalidate>
+          <label class="sr-only" for="news-email">E-mail</label>
+          <input id="news-email" name="email" type="email" required placeholder="Seu e-mail" aria-label="Seu e-mail">
+          <button class="btn btn--primary" type="submit">Quero receber</button>
+          <p id="news-feedback" class="news-feedback" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section section--faq" aria-labelledby="titulo-faq">
+      <div class="container">
+        <h2 id="titulo-faq" class="section__title">Perguntas Frequentes</h2>
+        <div class="faq">
+          <details class="faq-item">
+            <summary>O app é grátis?</summary>
+            <p>Sim. Há versão Free e a Premium (sem anúncios e com extras).</p>
+          </details>
+          <details class="faq-item">
+            <summary>Funciona em qualquer celular?</summary>
+            <p>Sim. O Web App roda no navegador. Apps nativos chegam em breve.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Preciso de internet?</summary>
+            <p>Para gerar receitas e sincronizar dados, sim. Algumas funções funcionam offline no navegador.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Posso sugerir receitas?</summary>
+            <p>Pode! Envie ideias via Blog/Contato ou pelas redes sociais.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="section section--cta-final" aria-hidden="false">
+      <div class="container cta-final__inner">
+        <h3>Vamos cozinhar melhor, com menos desperdício?</h3>
+        <a class="btn btn--primary" href="app/humor/index.html">Começar agora</a>
+      </div>
+    </section>
   </main>
 
   <!-- RODAPÉ -->
@@ -138,6 +258,8 @@
       <a href="#sobre" class="footer__link">Sobre</a>
       <a href="#recursos" class="footer__link">Recursos</a>
       <a href="#blog" class="footer__link">Blog</a>
+      <a href="#depoimentos" class="footer__link">Depoimentos</a>
+      <a href="#faq" class="footer__link">FAQ</a>
     </nav>
     <p class="footer__copy">© <span id="year"></span> Got2Cook. Todos os direitos reservados.</p>
   </footer>
