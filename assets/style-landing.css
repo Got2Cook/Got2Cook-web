@@ -144,6 +144,7 @@ body {
   min-height: 100vh;
   display: flex;
   align-items: center;
+  background: linear-gradient(135deg, var(--bg) 0%, #dfffbb 100%);
 }
 
 .hero .container {
@@ -237,9 +238,84 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
   position: relative;
   overflow: hidden;
+  padding: 40px 20px;
+}
+
+.emoji-clickable {
+  font-size: 56px;
+  background: white;
+  border: 3px solid var(--verde);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.emoji-clickable:hover {
+  transform: scale(1.15);
+  border-color: var(--roxo);
+  box-shadow: 0 8px 24px rgba(73, 47, 112, 0.3);
+}
+
+.emoji-clickable:active {
+  transform: scale(0.95);
+}
+
+.emoji-clickable.clicked {
+  animation: emojiPop 0.6s ease;
+}
+
+@keyframes emojiPop {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.3) rotate(-10deg);
+  }
+  50% {
+    transform: scale(1.4) rotate(10deg);
+  }
+  75% {
+    transform: scale(1.3) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Partículas de confete ao clicar */
+.confetti {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--ouro);
+  pointer-events: none;
+  border-radius: 2px;
+  z-index: 10;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx, 0), var(--ty, 100px)) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.confetti {
+  animation: confettiFall 1s ease-out forwards;
 }
 
 .emoji-float {
