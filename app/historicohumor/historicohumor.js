@@ -67,13 +67,13 @@
 
   // Navegação rodapé
   if (document.getElementById('btnVoltar')) {
-    document.getElementById('btnVoltar').addEventListener('click', () => history.back());
+    document.getElementById('btnVoltar').addEventListener('click', () => location.href = '../humor/index.html');
   }
   if (document.getElementById('btnLogo')) {
-    document.getElementById('btnLogo').addEventListener('click', () => location.href = '../minhas-receitas/index.html');
+    document.getElementById('btnLogo').addEventListener('click', () => location.href = '../home/index.html');
   }
   if (document.getElementById('btnGeladeira')) {
-    document.getElementById('btnGeladeira').addEventListener('click', () => location.href = '../minha-geladeira/index.html');
+    document.getElementById('btnGeladeira').addEventListener('click', () => location.href = '../geladeira/index.html');
   }
 
   // Geração de dados para teste
