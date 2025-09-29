@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="./login.css" />
 </head>
 <body>
+  <!-- Cabeçalho simples com marca -->
   <header class="topo" role="banner">
     <div class="wrap header-wrap">
       <a href="/" class="logo" aria-label="Got2Cook — início">
@@ -16,11 +17,18 @@
     </div>
   </header>
 
+  <!-- Conteúdo -->
   <main id="conteudo" class="wrap layout-auth" role="main">
     <!-- Coluna visual (desktop) -->
-    <aside class="auth-aside" aria-hidden="true"></aside>
+    <aside class="auth-aside" aria-hidden="true">
+      <div class="aside-art">
+        <div class="bubble b1" aria-hidden="true"></div>
+        <div class="bubble b2" aria-hidden="true"></div>
+        <div class="bubble b3" aria-hidden="true"></div>
+      </div>
+    </aside>
 
-    <!-- Coluna do formulário -->
+    <!-- Card de login -->
     <section class="auth-card" aria-labelledby="tituloLogin">
       <h1 id="tituloLogin" class="titulo">Entrar</h1>
       <p class="sub">Escolha um perfil ou adicione um novo.</p>
@@ -30,20 +38,20 @@
 
       <hr class="divisor" />
 
-      <!-- Ações de login -->
+      <!-- Botões de login -->
       <div class="acoes" aria-label="Opções de login">
         <button class="login-btn google" type="button" aria-label="Entrar com Google">
-          <span class="ico">🟢</span>
+          <span class="ico" aria-hidden="true">🟢</span>
           <span class="txt">Continuar com Google</span>
         </button>
 
         <button class="login-btn apple" type="button" aria-label="Entrar com Apple">
-          <span class="ico">⚪</span>
+          <span class="ico" aria-hidden="true">⚪</span>
           <span class="txt">Continuar com Apple</span>
         </button>
 
         <button class="login-btn email" type="button" aria-label="Entrar com e-mail">
-          <span class="ico">✉️</span>
+          <span class="ico" aria-hidden="true">✉️</span>
           <span class="txt">Entrar com e-mail</span>
         </button>
       </div>
@@ -54,17 +62,12 @@
     </section>
   </main>
 
+  <!-- Rodapé curvo padrão Got2Cook -->
   <footer class="curva" role="contentinfo" aria-label="Rodapé">
     <div class="wrap curva-inner">
-      <button class="btn-footer" type="button" aria-label="Voltar">
-        ⬅️
-      </button>
-      <button class="btn-footer btn-central" id="btnLogo" type="button" aria-label="Acessar painel">
-        🍳
-      </button>
-      <button class="btn-footer" type="button" aria-label="Minha geladeira">
-        🧊
-      </button>
+      <button class="btn-footer" type="button" aria-label="Voltar">⬅️</button>
+      <button class="btn-footer btn-central" id="btnLogo" type="button" aria-label="Acessar painel">🍳</button>
+      <button class="btn-footer" type="button" aria-label="Minha geladeira">🧊</button>
     </div>
   </footer>
 
