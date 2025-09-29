@@ -2,19 +2,20 @@
 (function() {
   'use strict';
 
-  // Emojis clicáveis com animação
+  // Emojis clicáveis com animação de chuva
   const emojiButtons = document.querySelectorAll('.emoji-clickable');
   
   emojiButtons.forEach(btn => {
     btn.addEventListener('click', function(e) {
       const emoji = this;
       const emojiType = emoji.dataset.emoji;
+      const emojiChar = emoji.textContent;
       
-      // Adicionar classe de animação
+      // Adicionar classe de animação no botão
       emoji.classList.add('clicked');
       
-      // Criar efeito de confete
-      createConfetti(emoji, e);
+      // Criar chuva de emojis
+      createEmojiRain(emoji, emojiChar);
       
       // Vibração no mobile (se suportado)
       if (navigator.vibrate) {
@@ -24,41 +25,45 @@
       // Remover classe após animação
       setTimeout(() => {
         emoji.classList.remove('clicked');
-      }, 600);
+      }, 500);
       
       // Log para tracking
       trackEvent('Emoji', 'click', emojiType);
       
-      // Opcional: Mostrar mensagem
+      // Mostrar mensagem
       showEmojiMessage(emojiType, emoji);
     });
   });
   
-  // Criar efeito de confete/partículas
-  function createConfetti(element, event) {
-    const colors = ['#d4af37', '#492f70', '#225c18', '#c0ffa5', '#ff6b6b'];
-    const particleCount = 12;
+  // Criar efeito de chuva de emojis
+  function createEmojiRain(element, emojiChar) {
+    const phoneScreen = element.parentElement;
+    const screenRect = phoneScreen.getBoundingClientRect();
+    const rainCount = 15; // Quantidade de emojis na chuva
     
-    for (let i = 0; i < particleCount; i++) {
-      const particle = document.createElement('div');
-      particle.classList.add('confetti');
-      particle.style.left = event.offsetX + 'px';
-      particle.style.top = event.offsetY + 'px';
-      particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-      particle.style.animationDelay = Math.random() * 0.1 + 's';
+    for (let i = 0; i < rainCount; i++) {
+      const rainEmoji = document.createElement('div');
+      rainEmoji.classList.add('emoji-rain');
+      rainEmoji.textContent = emojiChar;
       
-      // Direção aleatória
-      const angle = (Math.PI * 2 * i) / particleCount;
-      const velocity = 50 + Math.random() * 50;
-      particle.style.setProperty('--tx', Math.cos(angle) * velocity + 'px');
-      particle.style.setProperty('--ty', Math.sin(angle) * velocity + 'px');
+      // Posição inicial aleatória no topo da tela
+      const startX = Math.random() * 100;
+      rainEmoji.style.left = startX + '%';
+      rainEmoji.style.top = '-50px';
       
-      element.parentElement.appendChild(particle);
+      // Duração variada para efeito mais natural
+      const duration = 1.5 + Math.random() * 1;
+      rainEmoji.style.animationDuration = duration + 's';
+      
+      // Delay escalonado para efeito cascata
+      rainEmoji.style.animationDelay = (i * 0.08) + 's';
+      
+      phoneScreen.appendChild(rainEmoji);
       
       // Remover após animação
       setTimeout(() => {
-        particle.remove();
-      }, 1000);
+        rainEmoji.remove();
+      }, (duration + (i * 0.08)) * 1000);
     }
   }
   
@@ -78,12 +83,15 @@
       mockupText.textContent = message;
       mockupText.style.color = 'var(--roxo)';
       mockupText.style.fontWeight = '700';
+      mockupText.style.transform = 'scale(1.05)';
+      mockupText.style.transition = 'all 0.3s ease';
       
       setTimeout(() => {
         mockupText.textContent = originalText;
         mockupText.style.color = '';
         mockupText.style.fontWeight = '';
-      }, 2000);
+        mockupText.style.transform = '';
+      }, 2500);
     }
   }
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
