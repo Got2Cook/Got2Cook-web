@@ -1,3 +1,4 @@
+/* ===== Base igual ao seu padrão ===== */
 :root{
   --bg:#c0ffa5;
   --roxo:#492f70;
@@ -5,210 +6,190 @@
   --verde:#225c18;
   --cartao:#dfffbb;
   --div:#b3e698;
-
-  /* Desktop helpers */
-  --aside-w: 420px;
-  --card-w: 560px;
 }
 
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
-  margin:0;
-  font-family: Arial, Helvetica, sans-serif;
-  background:var(--bg);
-  color:var(--verde);
+  background-color: var(--bg);
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  animation: fadeIn 0.6s ease-in-out;
 }
 
-/* Foco acessível */
-:focus{outline:none}
-:focus-visible{outline:2px dotted var(--roxo); outline-offset:4px}
-
-/* Containers */
-.wrap{max-width:600px; margin:0 auto; padding:16px}
-
-/* Header */
-.topo{
-  position:sticky; top:0; z-index:10;
-  background:color-mix(in srgb, var(--bg) 92%, white 8%);
-  border-bottom: 1px solid color-mix(in srgb, var(--div) 70%, white 30%);
-  backdrop-filter: blur(6px);
-}
-.header-wrap{display:flex; align-items:center; justify-content:center; min-height:56px}
-.logo-marca{
-  display:inline-block;
-  font-weight:800;
-  letter-spacing:.5px;
-  color:var(--roxo);
-  border:2px solid var(--roxo);
-  padding:6px 10px;
-  border-radius:10px;
-  background:#fff3;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Layout Auth */
-.layout-auth{
-  display:grid;
-  grid-template-columns: 1fr;
-  gap:16px;
-  min-height: calc(100svh - 56px - 90px);
-  align-content:center;
-}
-
-/* Aside (decorativo) */
-.auth-aside{
-  display:none;
-  min-height: 420px;
-  border:2px solid var(--roxo);
-  border-radius:18px;
-  background: linear-gradient(180deg, #ffffffb3, #ffffff66);
-  box-shadow: 0 10px 24px rgba(0,0,0,.10);
-  overflow:hidden;
-}
-.aside-art{position:relative; width:100%; height:100%}
-.bubble{
-  position:absolute; border-radius:50%;
-  filter: blur(6px);
-  opacity:.65;
-}
-.b1{width:160px;height:160px; left:8%; top:12%; background:#c0ffa5}
-.b2{width:220px;height:220px; right:6%; bottom:10%; background:#b3e698}
-.b3{width:120px;height:120px; left:55%; top:45%; background:#dfffbb}
-
-/* Card */
-.auth-card{
+/* ===== Cartão/Container central ===== */
+.login-container{
+  width: min(92vw, 600px);
   background: linear-gradient(180deg, #ffffff, var(--cartao));
-  border:2px solid var(--roxo);
-  border-radius:18px;
-  padding:16px;
+  border: 2px solid var(--roxo);
+  border-radius: 18px;
+  padding: 20px 16px;
+  color: var(--verde);
   box-shadow: 0 10px 24px rgba(0,0,0,.12);
 }
+
+/* topo visual */
+.logo-circulo{
+  width: 88px; height: 88px;
+  border-radius: 50%;
+  border: 2px solid var(--roxo);
+  background: #fff;
+  display: grid; place-items: center;
+  font-size: 42px;
+  color: var(--roxo);
+  margin: 0 auto 10px;
+}
+
 .titulo{
-  margin:4px 0 4px;
-  font-size:28px;
-  color:var(--verde);
-  text-align:center;
+  margin: 4px 0 4px;
+  font-size: 28px;
+  color: var(--verde);
+  text-align: center;
 }
 .sub{
-  margin:0 0 12px;
-  text-align:center;
-  color:color-mix(in srgb, var(--verde) 75%, #000 25%);
-  font-size:14px;
+  margin: 0 0 12px;
+  text-align: center;
+  color: color-mix(in srgb, var(--verde) 75%, #000 25%);
+  font-size: 14px;
 }
 
-/* Perfis */
+/* ===== Perfis salvos ===== */
 .perfis{
-  display:grid;
+  width: 100%;
+  display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap:12px;
+  gap: 12px;
+  margin-bottom: 8px;
 }
 .perfil-box{display:grid; gap:6px; justify-items:center}
+
 .perfil{
-  width:86px; height:86px;
-  border-radius:50%;
-  border:2px solid var(--roxo);
-  background:#fff;
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer;
+  width: 86px; height: 86px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 2px solid var(--roxo);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
   transition: transform .12s ease, box-shadow .12s ease;
 }
-.perfil:hover{transform:translateY(-2px); box-shadow:0 6px 14px rgba(0,0,0,.12)}
-.perfil[aria-pressed="true"]{box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--roxo-escuro)}
-.icone-perfil{font-size:32px; line-height:1}
+.perfil:hover{ transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,.12) }
+.perfil[aria-pressed="true"]{ box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--roxo-escuro) }
+
+.icone-perfil{ font-size: 32px; line-height: 1 }
+
 .nome-perfil{
-  max-width:100px; text-align:center; font-size:12px; color:var(--roxo);
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  max-width: 100px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--roxo);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
+
+/* botão “+” (galeria) — mantido igual às suas classes */
 .adicionar-conta{
-  width:86px; height:86px;
-  border-radius:50%;
-  border:2px dashed var(--roxo);
-  background:#fff;
-  color:var(--roxo);
-  font-size:32px;
-  cursor:pointer;
+  width: 86px; height: 86px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px dashed var(--roxo);
+  font-size: 32px;
+  color: var(--roxo);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
   transition: background .12s ease;
 }
-.adicionar-conta:hover{background: #f8f5ff}
+.adicionar-conta:hover{ background: #f8f5ff }
 
-/* Divisor */
-.divisor{
-  border:none; border-top:1px solid var(--div);
-  margin:16px 0;
+.dica{
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: 12px;
+  color: color-mix(in srgb, var(--roxo) 70%, #000 30%);
 }
 
-/* Ações (botões) */
-.acoes{display:grid; gap:10px}
+/* divisor */
+.divisor{
+  border: none; border-top: 1px solid var(--div);
+  margin: 16px 0;
+}
+
+/* ===== Botões de login ===== */
+.botoes{
+  width: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 15px;
+  margin-bottom: 16px;
+}
 .login-btn{
-  display:flex; align-items:center; gap:10px;
-  width:100%;
-  border-radius:12px;
-  padding:12px 14px;
-  border:2px solid var(--roxo);
-  background:#fff;
-  color:var(--roxo);
-  cursor:pointer;
-  font-size:15px;
+  display: flex; align-items: center; gap: 10px;
+  width: 100%;
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 2px solid var(--roxo);
+  background: #fff;
+  color: var(--roxo);
+  cursor: pointer;
+  font-size: 15px;
   transition: transform .1s ease, box-shadow .1s ease, background .1s ease;
 }
-.login-btn:hover{transform:translateY(-1px); box-shadow:0 8px 16px rgba(0,0,0,.10)}
-.login-btn .ico{font-size:18px; line-height:1}
+.login-btn:hover{ transform: translateY(-1px); box-shadow: 0 8px 16px rgba(0,0,0,.10) }
+.login-btn .ico{ font-size: 18px; line-height: 1 }
 
-.nota-acesso{
-  margin:10px 0 0;
-  text-align:center;
-  font-size:12px;
-  color:color-mix(in srgb, var(--roxo) 70%, #000 30%);
+/* CTA criar conta — mantém id existente */
+.cta-criar{
+  text-align: center;
+  margin: 0;
+  font-size: 13px;
+  color: color-mix(in srgb, var(--roxo) 70%, #000 30%);
 }
-
-/* Rodapé curvo padrão (fixo) */
-.curva{
-  position:sticky; bottom:0; z-index:5;
-  background: var(--roxo-escuro);
-  height:70px;
-  border-top-left-radius: 100% 50%;
-  border-top-right-radius: 100% 50%;
-  display:flex; align-items:center; justify-content:center;
-}
-.curva-inner{
-  width:100%;
-  max-width:600px;
-  display:flex; align-items:center; justify-content:space-between;
-  gap:40px; padding:0 24px;
-}
-.btn-footer{
-  width:55px; height:55px;
-  border-radius:50%;
-  background:#fff;
-  border:2px solid var(--roxo);
-  display:flex; align-items:center; justify-content:center;
-  font-size:250%;
-  color:var(--roxo);
-  cursor:pointer;
-}
-.btn-footer.btn-central{
-  width:150px; height:150px; transform: translateY(-40%);
-  border-radius:50%;
-  background:#fff;
-  border:2px solid var(--roxo);
-  font-size:150%;
+.link-btn{
+  background: none; border: none; padding: 0 2px;
+  color: var(--roxo); cursor: pointer; text-decoration: underline;
+  font-size: inherit;
 }
 
-/* Saída suave opcional */
-.fade-out{animation: fadeOut .45s ease forwards}
-@keyframes fadeOut{to{opacity:0; transform:translateY(6px)}}
+/* ===== Pequenas animações ===== */
+.fade-out{ animation: fadeOut .45s ease forwards }
+@keyframes fadeOut{ to{ opacity:0; transform: translateY(6px) } }
 
-/* ===== Desktop ===== */
+/* ===== Desktop (adaptação) ===== */
 @media (min-width: 960px){
-  .wrap{max-width: min(1100px, 92vw)}
-  .layout-auth{
-    grid-template-columns: var(--aside-w) minmax(480px, var(--card-w));
-    gap:20px;
-    align-items: center;
-    min-height: calc(100svh - 56px - 120px);
+  body{ align-items: center }
+  .login-container{
+    width: min(92vw, 960px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 24px;
   }
-  .auth-aside{display:block}
-  .auth-card{padding:20px 20px 18px}
-  .perfis{grid-template-columns: repeat(4, 1fr)}
-  .perfil, .adicionar-conta{width:96px; height:96px}
+
+  /* Coluna esquerda: perfis; direita: botões */
+  #perfilContainer{ grid-column: 1/2 }
+  .botoes, .cta-criar, .divisor, .dica{ grid-column: 2/3 }
+
+  .perfis{ grid-template-columns: repeat(4, 1fr) }
+  .perfil, .adicionar-conta{ width: 96px; height: 96px }
+
+  .logo-circulo{
+    grid-column: 1/2; grid-row: 1/2;
+    margin: 0 0 6px 0; justify-self: start;
+  }
+  .titulo{
+    grid-column: 2/3; grid-row: 1/2;
+    align-self: center; text-align: left; margin: 0;
+    font-size: 30px;
+  }
+  .sub{
+    grid-column: 2/3; grid-row: 1/2;
+    align-self: end; text-align: left; margin-top: 40px;
+  }
 }
