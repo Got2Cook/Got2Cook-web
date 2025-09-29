@@ -6,11 +6,11 @@
 const LS_PROFILES_KEY = "got2cook_profiles";
 const LS_CURRENT_PROFILE_KEY = "got2cook_current_profile";
 
-/* ====== Estado em memória ====== */
+/* ====== Estado ====== */
 let profiles = [];
 let selectedProfileId = null;
 
-/* ====== Utilitários ====== */
+/* ====== Utils ====== */
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
@@ -261,7 +261,7 @@ function openGalleryModal() {
 
   $("#btnCancelarModal", modal).addEventListener("click", () => closeModal(overlay));
 
-  // Acessibilidade: foco e trap
+  // Acessibilidade: trap e foco inicial
   trapFocus(overlay);
   $("#np_nome", modal).focus();
 }
@@ -283,19 +283,20 @@ function wireLoginButtons() {
       alert(`Login via ${provider} (demo)\nPerfil: ${curr ? curr.name : "—"}`);
       console.log("[Got2Cook] Tentativa de login:", { provider, profile: curr });
 
+      // efeito de saída (opcional)
       document.body.classList.add("fade-out");
       // setTimeout(() => { window.location.href = "/app/home/"; }, 450);
     });
   });
 }
 
-/* ====== Inicialização ====== */
+/* ====== Init ====== */
 document.addEventListener("DOMContentLoaded", () => {
   loadProfiles();
   renderProfiles();
   wireLoginButtons();
 
-  // Atalho de teclado básico
+  // Enter em botões focados
   document.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && document.activeElement?.tagName === "BUTTON") {
       document.activeElement.click();
