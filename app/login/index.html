@@ -1,76 +1,79 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Got2Cook — Login</title>
-  <meta name="description" content="Entre no Got2Cook e continue sua jornada culinária." />
-  <link rel="stylesheet" href="./login.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Got2Cook - Login</title>
+
+  <!-- Igual ao seu: CSS principal desta tela -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Igual ao seu: PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#7b7190">
+
+  <!-- Igual ao seu: Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log("Service Worker registrado!"));
+    }
+  </script>
 </head>
 <body>
-  <!-- Cabeçalho simples com marca -->
-  <header class="topo" role="banner">
-    <div class="wrap header-wrap">
-      <a href="/" class="logo" aria-label="Got2Cook — início">
-        <span class="logo-marca">Got2Cook</span>
-      </a>
+  <!-- CONTAINER CENTRAL -->
+  <div class="login-container" role="main" aria-labelledby="tituloLogin">
+    <!-- LOGO / AVATAR SUPERIOR (igual ao padrão do app) -->
+    <div class="logo-circulo" aria-hidden="true">🍳</div>
+
+    <!-- TÍTULO -->
+    <h1 id="tituloLogin" class="titulo">Entrar</h1>
+    <p class="sub">Escolha um perfil salvo ou continue com uma opção de login.</p>
+
+    <!-- PERFIS SALVOS -->
+    <div id="perfilContainer" class="perfis" aria-label="Perfis salvos">
+      <!-- Preenchido via login.js (mantém IDs/classes) -->
     </div>
-  </header>
 
-  <!-- Conteúdo -->
-  <main id="conteudo" class="wrap layout-auth" role="main">
-    <!-- Coluna visual (desktop) -->
-    <aside class="auth-aside" aria-hidden="true">
-      <div class="aside-art">
-        <div class="bubble b1" aria-hidden="true"></div>
-        <div class="bubble b2" aria-hidden="true"></div>
-        <div class="bubble b3" aria-hidden="true"></div>
-      </div>
-    </aside>
+    <!-- GALERIA (“+”) — o botão é injetado no JS com a classe .adicionar-conta -->
+    <p class="dica">Dica: clique no “+” para abrir a galeria e criar/selecionar perfis.</p>
 
-    <!-- Card de login -->
-    <section class="auth-card" aria-labelledby="tituloLogin">
-      <h1 id="tituloLogin" class="titulo">Entrar</h1>
-      <p class="sub">Escolha um perfil ou adicione um novo.</p>
+    <hr class="divisor" />
 
-      <!-- Perfis salvos -->
-      <div id="perfilContainer" class="perfis" aria-label="Perfis salvos"></div>
+    <!-- BOTÕES DE LOGIN (mantendo classes que seu JS espera) -->
+    <div class="botoes" aria-label="Opções de login">
+      <button type="button" class="login-btn google" aria-label="Continuar com Google">
+        <span class="ico" aria-hidden="true">🟢</span>
+        <span class="txt">Continuar com Google</span>
+      </button>
 
-      <hr class="divisor" />
+      <button type="button" class="login-btn apple" aria-label="Continuar com Apple">
+        <span class="ico" aria-hidden="true">⚪</span>
+        <span class="txt">Continuar com Apple</span>
+      </button>
 
-      <!-- Botões de login -->
-      <div class="acoes" aria-label="Opções de login">
-        <button class="login-btn google" type="button" aria-label="Entrar com Google">
-          <span class="ico" aria-hidden="true">🟢</span>
-          <span class="txt">Continuar com Google</span>
-        </button>
-
-        <button class="login-btn apple" type="button" aria-label="Entrar com Apple">
-          <span class="ico" aria-hidden="true">⚪</span>
-          <span class="txt">Continuar com Apple</span>
-        </button>
-
-        <button class="login-btn email" type="button" aria-label="Entrar com e-mail">
-          <span class="ico" aria-hidden="true">✉️</span>
-          <span class="txt">Entrar com e-mail</span>
-        </button>
-      </div>
-
-      <p class="nota-acesso" role="note">
-        Dica: o botão “+” abre a galeria para criar/selecionar perfis.
-      </p>
-    </section>
-  </main>
-
-  <!-- Rodapé curvo padrão Got2Cook -->
-  <footer class="curva" role="contentinfo" aria-label="Rodapé">
-    <div class="wrap curva-inner">
-      <button class="btn-footer" type="button" aria-label="Voltar">⬅️</button>
-      <button class="btn-footer btn-central" id="btnLogo" type="button" aria-label="Acessar painel">🍳</button>
-      <button class="btn-footer" type="button" aria-label="Minha geladeira">🧊</button>
+      <button type="button" class="login-btn email" aria-label="Entrar com e-mail">
+        <span class="ico" aria-hidden="true">✉️</span>
+        <span class="txt">Entrar com e-mail</span>
+      </button>
     </div>
-  </footer>
 
-  <script src="./login.js"></script>
+    <!-- CTA já existente no seu arquivo (mantive o id) -->
+    <p class="cta-criar">Não tem conta?
+      <button id="btnCriarConta" class="link-btn" type="button" aria-label="Criar conta">Criar conta</button>
+    </p>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="login.js"></script>
+  <script>
+    // Igual ao seu: redireciona para cadastro
+    const btnCriarConta = document.getElementById("btnCriarConta");
+    if (btnCriarConta) {
+      btnCriarConta.addEventListener("click", () => {
+        window.location.href = "cadastro.html";
+      });
+    }
+  </script>
 </body>
 </html>
