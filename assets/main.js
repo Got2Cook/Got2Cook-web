@@ -1,7 +1,7 @@
 // Ano no rodapé
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Scroll suave e foco
+// Scroll suave para âncoras + foco acessível
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click', e=>{
     const id = a.getAttribute('href');
@@ -10,13 +10,13 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
       if(el){
         e.preventDefault();
         el.scrollIntoView({behavior:'smooth', block:'start'});
-        setTimeout(()=>{ el.setAttribute('tabindex','-1'); el.focus(); }, 500);
+        setTimeout(()=>{ el.setAttribute('tabindex','-1'); el.focus(); }, 400);
       }
     }
   });
 });
 
-// Reveal on scroll
+// Animação "reveal" ao rolar
 const observer = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -32,7 +32,7 @@ document.querySelectorAll('.section, .feature, .blog-card, .card, .testimonial, 
     observer.observe(el);
   });
 
-// Newsletter fake submit (sem backend por enquanto)
+// Newsletter (mock)
 const form = document.getElementById('form-newsletter');
 if(form){
   form.addEventListener('submit', (e)=>{
