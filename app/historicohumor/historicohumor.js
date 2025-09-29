@@ -13,26 +13,56 @@
     offset: 0
   };
 
-  // Elements
-  const canvasLinha = document.getElementById('graficoLinha');
-  const canvasPizza = document.getElementById('graficoPizza');
-  const periodoAtual = document.getElementById('periodoAtual');
-  const btnAnterior = document.getElementById('btnAnterior');
-  const btnProximo = document.getElementById('btnProximo');
-  const btnHoje = document.getElementById('btnHoje');
-  const totalDias = document.getElementById('totalDias');
-  const humorDominante = document.getElementById('humorDominante');
-  const tendencia = document.getElementById('tendencia');
+  // Modal elements
+  const modal = document.getElementById('modal');
+  const modalTitulo = document.getElementById('modalTitulo');
+  const modalMensagem = document.getElementById('modalMensagem');
+  const modalConfirmar = document.getElementById('modalConfirmar');
+  const modalCancelar = document.getElementById('modalCancelar');
+
+  // Modal helper
+  function mostrarModal(titulo, mensagem, callback = null) {
+    if (!modal) return;
+    
+    modalTitulo.textContent = titulo;
+    modalMensagem.textContent = mensagem;
+    modal.classList.add('ativo');
+    modal.setAttribute('aria-hidden', 'false');
+    
+    const fecharModal = () => {
+      modal.classList.remove('ativo');
+      modal.setAttribute('aria-hidden', 'true');
+      modalConfirmar.onclick = null;
+      modalCancelar.onclick = null;
+    };
+    
+    modalConfirmar.onclick = () => {
+      if (callback) callback();
+      fecharModal();
+    };
+    
+    modalCancelar.onclick = fecharModal;
+    
+    // Fechar ao clicar no backdrop
+    const handleBackdrop = (e) => {
+      if (e.target.classList.contains('modal-backdrop')) {
+        fecharModal();
+      }
+    };
+    modal.addEventListener('click', handleBackdrop, { once: true });
+    
+    modalConfirmar.focus();
+  }
 
   // Navegação rodapé
   if (document.getElementById('btnVoltar')) {
-    document.getElementById('btnVoltar').addEventListener('click', () => location.href = '../humor/index.html');
+    document.getElementById('btnVoltar').addEventListener('click', () => history.back());
   }
   if (document.getElementById('btnLogo')) {
-    document.getElementById('btnLogo').addEventListener('click', () => location.href = '../home/index.html');
+    document.getElementById('btnLogo').addEventListener('click', () => location.href = '../minhas-receitas/index.html');
   }
   if (document.getElementById('btnGeladeira')) {
-    document.getElementById('btnGeladeira').addEventListener('click', () => location.href = '../geladeira/index.html');
+    document.getElementById('btnGeladeira').addEventListener('click', () => location.href = '../minha-geladeira/index.html');
   }
 
   // Geração de dados para teste
@@ -422,18 +452,20 @@
   // Limpar histórico
   if (document.getElementById('btnLimpar')) {
     document.getElementById('btnLimpar').addEventListener('click', () => {
-      // Modal simples com confirm nativo (mais confiável)
-      const confirmou = confirm('Tem certeza de que deseja apagar todo o histórico de humor? Esta ação não pode ser desfeita.');
-      
-      if (confirmou) {
-        localStorage.removeItem('got2cook_mood_history');
-        console.log('Histórico de humor limpo');
-        atualizar();
-        
-        // Feedback visual
-        if (totalDias) totalDias.textContent = '0';
-        if (humorDominante) humorDominante.textContent = '😐';
-      }
+      mostrarModal(
+        'Limpar Histórico',
+        'Tem certeza de que deseja apagar todo o histórico de humor? Esta ação não pode ser desfeita.',
+        () => {
+          localStorage.removeItem('got2cook_mood_history');
+          console.log('Histórico de humor limpo');
+          atualizar();
+          
+          // Feedback visual imediato
+          if (totalDias) totalDias.textContent = '0';
+          if (humorDominante) humorDominante.textContent = '😐';
+          if (tendencia) tendencia.textContent = '➡️';
+        }
+      );
     });
   }
   if (document.getElementById('btnExportar')) {
