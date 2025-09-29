@@ -2,7 +2,90 @@
 (function() {
   'use strict';
 
-  // Smooth scroll para links de âncora
+  // Emojis clicáveis com animação
+  const emojiButtons = document.querySelectorAll('.emoji-clickable');
+  
+  emojiButtons.forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      const emoji = this;
+      const emojiType = emoji.dataset.emoji;
+      
+      // Adicionar classe de animação
+      emoji.classList.add('clicked');
+      
+      // Criar efeito de confete
+      createConfetti(emoji, e);
+      
+      // Vibração no mobile (se suportado)
+      if (navigator.vibrate) {
+        navigator.vibrate(50);
+      }
+      
+      // Remover classe após animação
+      setTimeout(() => {
+        emoji.classList.remove('clicked');
+      }, 600);
+      
+      // Log para tracking
+      trackEvent('Emoji', 'click', emojiType);
+      
+      // Opcional: Mostrar mensagem
+      showEmojiMessage(emojiType, emoji);
+    });
+  });
+  
+  // Criar efeito de confete/partículas
+  function createConfetti(element, event) {
+    const colors = ['#d4af37', '#492f70', '#225c18', '#c0ffa5', '#ff6b6b'];
+    const particleCount = 12;
+    
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('confetti');
+      particle.style.left = event.offsetX + 'px';
+      particle.style.top = event.offsetY + 'px';
+      particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.animationDelay = Math.random() * 0.1 + 's';
+      
+      // Direção aleatória
+      const angle = (Math.PI * 2 * i) / particleCount;
+      const velocity = 50 + Math.random() * 50;
+      particle.style.setProperty('--tx', Math.cos(angle) * velocity + 'px');
+      particle.style.setProperty('--ty', Math.sin(angle) * velocity + 'px');
+      
+      element.parentElement.appendChild(particle);
+      
+      // Remover após animação
+      setTimeout(() => {
+        particle.remove();
+      }, 1000);
+    }
+  }
+  
+  // Mostrar mensagem temporária
+  function showEmojiMessage(emojiType, element) {
+    const messages = {
+      'feliz': 'Que ótimo! Vamos preparar algo delicioso! 🎉',
+      'apaixonado': 'Perfeito! Receitas românticas chegando! 💕',
+      'animado': 'Show! Bora cozinhar algo incrível! 🚀'
+    };
+    
+    const message = messages[emojiType] || 'Vamos cozinhar!';
+    const mockupText = element.parentElement.querySelector('.mockup-text');
+    
+    if (mockupText) {
+      const originalText = mockupText.textContent;
+      mockupText.textContent = message;
+      mockupText.style.color = 'var(--roxo)';
+      mockupText.style.fontWeight = '700';
+      
+      setTimeout(() => {
+        mockupText.textContent = originalText;
+        mockupText.style.color = '';
+        mockupText.style.fontWeight = '';
+      }, 2000);
+    }
+  }
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
