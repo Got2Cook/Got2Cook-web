@@ -355,13 +355,25 @@ body {
 .steps {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 48px;
+  gap: 24px;
   max-width: 900px;
   margin: 0 auto;
 }
 
 .step {
   text-align: center;
+  background: white;
+  padding: 32px 24px;
+  border-radius: 20px;
+  border: 2px solid rgba(34, 92, 24, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.step:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  border-color: var(--verde);
 }
 
 .step-icon {
@@ -905,13 +917,25 @@ body {
 .mvv {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 40px;
+  gap: 24px;
   max-width: 1000px;
   margin: 0 auto;
 }
 
 .mvv-item {
   text-align: center;
+  background: white;
+  padding: 32px 24px;
+  border-radius: 20px;
+  border: 2px solid rgba(34, 92, 24, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.mvv-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  border-color: var(--verde);
 }
 
 .mvv-icon {
