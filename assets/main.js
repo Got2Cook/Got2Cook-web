@@ -243,4 +243,32 @@
 
   console.log('Landing page Got2Cook carregada com sucesso! 🍳');
 
+  // Newsletter form
+  const newsletterForm = document.getElementById('newsletterForm');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = this.querySelector('input[type="email"]').value;
+      
+      // TODO: Integrar com serviço de email marketing (Mailchimp, SendGrid, etc)
+      console.log('Email inscrito:', email);
+      
+      // Feedback visual
+      const btn = this.querySelector('button');
+      const originalText = btn.textContent;
+      btn.textContent = '✓ Inscrito!';
+      btn.disabled = true;
+      btn.style.background = '#4CAF50';
+      
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.disabled = false;
+        btn.style.background = '';
+        this.reset();
+      }, 3000);
+      
+      trackEvent('Newsletter', 'subscribe', email);
+    });
+  }
+
 })();
