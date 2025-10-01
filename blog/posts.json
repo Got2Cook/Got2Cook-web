@@ -1,21 +1,47 @@
 [
   {
-    "slug": "receitas-rapidas-para-humores-diferentes",
+    "slug": "geladeira-organizada",
+    "titulo": "Como organizar a geladeira",
+    "resumo": "Dicas práticas para manter tudo visível e evitar desperdício.",
+    "data": "2025-09-30",
+    "tempoLeitura": "5 min",
+    "categorias": ["Dicas", "App"],
+    "capa": "/assets/blog/capas/geladeira.jpg"
+  },
+  {
+    "slug": "receitas-rapidas",
     "titulo": "Receitas rápidas para cada humor",
-    "resumo": "Três ideias certeiras para dias eufóricos, ansiosos ou sem tempo.",
-    "data": "2025-09-28",
+    "resumo": "Três ideias certeiras para quando você está eufórico, ansioso ou sem tempo.",
+    "data": "2025-09-25",
     "tempoLeitura": "4 min",
     "categorias": ["Receitas", "Humor"],
     "capa": "/assets/blog/capas/rapidas.jpg"
   },
   {
-    "slug": "geladeira-organizada",
-    "titulo": "Como organizar a Minha Geladeira",
-    "resumo": "Dicas práticas para manter tudo visível e evitar desperdício.",
-    "data": "2025-09-15",
+    "slug": "economizar-tempo-na-cozinha",
+    "titulo": "Como economizar tempo na cozinha",
+    "resumo": "Pequenas mudanças de rotina que aceleram o preparo das refeições sem perder qualidade.",
+    "data": "2025-09-20",
+    "tempoLeitura": "6 min",
+    "categorias": ["Dicas"],
+    "capa": "/assets/blog/capas/tempo.jpg"
+  },
+  {
+    "slug": "alimentacao-saudavel",
+    "titulo": "Alimentação saudável sem gastar muito",
+    "resumo": "Estratégias simples para montar cardápios equilibrados dentro do seu orçamento.",
+    "data": "2025-09-10",
+    "tempoLeitura": "7 min",
+    "categorias": ["Saúde", "Dicas"],
+    "capa": "/assets/blog/capas/saudavel.jpg"
+  },
+  {
+    "slug": "top-5-doces-humor",
+    "titulo": "Top 5 doces para alegrar seu humor",
+    "resumo": "Descubra sobremesas que combinam com diferentes estados emocionais.",
+    "data": "2025-09-05",
     "tempoLeitura": "5 min",
-    "categorias": ["Dicas", "App"],
-    "capa": "/assets/blog/capas/geladeira.jpg"
+    "categorias": ["Receitas", "Doces"],
+    "capa": "/assets/blog/capas/doces.jpg"
   }
 ]
-
