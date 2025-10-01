@@ -88,27 +88,75 @@ body{margin:0;font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Ari
   .main-grid{grid-template-columns:1fr}
 }
 
-/* LISTA DE POSTS */
-.cards{
-  display:grid; grid-template-columns:1fr 1fr; gap:26px;
+/* ===== CARDS DE ARTIGOS ===== */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 30px;
 }
-@media (max-width:800px){ .cards{grid-template-columns:1fr} }
 
-.card{
-  background:var(--card); border:2px solid var(--roxo); border-radius:18px; overflow:hidden;
-  position:relative;
+.card {
+  position: relative;
+  border: 2px solid #7b7190; /* roxo */
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(0,0,0,.08);
+  transition: transform .2s ease, box-shadow .2s ease;
 }
-.card .thumb{display:block; background:#ddd; aspect-ratio:16/9; position:relative;}
-.card .thumb img{width:100%; height:100%; object-fit:cover; display:block}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0,0,0,.15);
+}
 
-/* FAIXA ROXA NO TÍTULO (SOBREPOSTA NA IMAGEM) */
-.card .ribbon{
-  position:absolute; left:14px; bottom:18px;
-  background:var(--roxo); color:#fff; padding:14px 18px; border-radius:12px;
-  font-size:20px; font-weight:800; box-shadow:0 6px 20px rgba(0,0,0,.18);
+/* imagem do post */
+.card .thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: #eee;
+  overflow: hidden;
 }
-.card .content{padding:0 18px 16px;color:#444}
-.card .excerpt{margin-top:10px}
+.card .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* faixa roxa com título */
+.card .ribbon {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  background: #7b7190;
+  padding: 12px 14px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,.2);
+}
+.card .ribbon a {
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  display: block;
+}
+.card .ribbon a:hover {
+  text-decoration: underline;
+}
+
+/* resumo do post */
+.card .content {
+  padding: 14px 16px 16px;
+}
+.card .excerpt {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.5;
+}
 
 /* SLOT DE ANÚNCIO */
 .ad-slot{width:100%}
