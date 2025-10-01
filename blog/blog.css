@@ -30,7 +30,7 @@ body{margin:0;font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Ari
 .hero{position:relative}
 .hero-bg{
   position:absolute; inset:0;
-  background:url("/assets/blog/hero.jpg") center/cover no-repeat; /* troque sua imagem */
+  background:url("/assets/blog/hero.png") center/cover no-repeat; /* troque sua imagem */
 }
 .hero-overlay{
   position:absolute; inset:0;
