@@ -1,1 +1,21 @@
+[
+  {
+    "slug": "receitas-rapidas-para-humores-diferentes",
+    "titulo": "Receitas rápidas para cada humor",
+    "resumo": "Três ideias certeiras para dias eufóricos, ansiosos ou sem tempo.",
+    "data": "2025-09-28",
+    "tempoLeitura": "4 min",
+    "categorias": ["Receitas", "Humor"],
+    "capa": "/assets/blog/capas/rapidas.jpg"
+  },
+  {
+    "slug": "geladeira-organizada",
+    "titulo": "Como organizar a Minha Geladeira",
+    "resumo": "Dicas práticas para manter tudo visível e evitar desperdício.",
+    "data": "2025-09-15",
+    "tempoLeitura": "5 min",
+    "categorias": ["Dicas", "App"],
+    "capa": "/assets/blog/capas/geladeira.jpg"
+  }
+]
 
