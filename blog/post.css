@@ -1,0 +1,25 @@
+@import url('./blog.css');
+
+/* Layout de leitura */
+.post-wrap{max-width:760px;margin:0 auto;padding:0 20px}
+.post-header{padding:48px 0 16px;border-bottom:1px solid var(--borda);margin-bottom:20px}
+.post-title{font-size:40px;line-height:1.15;margin:0;color:var(--tema)}
+.post-meta{color:#666;margin-top:10px}
+.post-cover{width:100%;height:auto;border-radius:16px;border:1px solid var(--borda);margin:18px 0}
+
+/* Tipografia */
+.post article{font-size:18px;line-height:1.75;color:#222}
+.post h2{font-size:26px;margin:28px 0 10px;color:var(--tema-2)}
+.post p{margin:14px 0}
+.post ul, .post ol{padding-left:22px}
+.post blockquote{
+  margin:18px 0;padding:14px 16px;border-left:4px solid var(--tema);background:var(--soft);border-radius:8px;
+}
+.post hr{border:none;border-top:1px solid var(--borda);margin:28px 0}
+
+/* Navegação do post */
+.post-nav{display:flex;justify-content:space-between;gap:16px;margin:28px 0 60px}
+.post-nav a{text-decoration:none;color:var(--tema)}
+.post-nav a:hover{text-decoration:underline}
+
+/* Footer do site já vem do blog.css */
