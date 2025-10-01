@@ -44,4 +44,13 @@
     "categorias": ["Receitas", "Doces"],
     "capa": "/assets/blog/capas/doces.jpg"
   }
+  {
+  "slug": "cozinhando-pelo-humor",
+  "titulo": "Cozinhando pelo humor: como nossas emoções podem guiar o prato do dia",
+  "resumo": "Entenda como emoções influenciam o paladar e use isso a seu favor na cozinha — com exemplos práticos e ciência por trás.",
+  "data": "2025-10-01",
+  "tempoLeitura": "6 min",
+  "categorias": ["Humor", "Dicas", "Ciência"],
+  "capa": "/assets/blog/capas/humor.jpg"
+}
 ]
