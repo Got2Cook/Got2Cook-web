@@ -39,11 +39,10 @@ function render(arr){
   elLista.innerHTML = arr.map(cardHTML).join('');
 }
 
-// Template de card (com faixa roxa clicável e fallback de imagem)
 function cardHTML(p){
   const titulo = escapeHtml(p.titulo);
-  const resumo = p.resumo ? escapeHtml(p.resumo) : '';
-  const capa   = p.capa ? p.capa : '';
+  const resumo = p.resumo ? escapeHtml(p.resumo) : "";
+  const capa   = p.capa ? p.capa : "";
 
   return `
     <article class="card">
