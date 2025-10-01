@@ -4,14 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Título do Post — Got2Cook</title>
-  <meta name="description" content="Resumo curto do post para SEO e compartilhamento." />
+  <meta name="description" content="Resumo curto do post para SEO." />
   <link rel="stylesheet" href="../post.css" />
 </head>
 <body>
+  <!-- Header do blog -->
   <header class="blog-header">
     <div class="container">
       <a class="brand" href="/">Got2Cook</a>
-      <nav class="nav">
+      <nav class="nav" aria-label="Navegação principal">
         <a href="/">Início</a>
         <a href="/app/">App</a>
         <a class="active" href="/blog/">Blog</a>
@@ -20,11 +21,20 @@
     </div>
   </header>
 
+  <!-- Post -->
   <div class="post post-wrap">
     <header class="post-header">
-      <h1 class="post-title">Título do Post</h1>
-      <div class="post-meta">Publicado em 01 out 2025 • 5 min • Categorias: Receitas, Dicas</div>
-      <img class="post-cover" src="/assets/blog/capas/exemplo.jpg" alt="Imagem de capa do post">
+      <div class="post-cover-wrap">
+        <img class="post-cover" src="/assets/blog/capas/exemplo.jpg" alt="Imagem de capa do post">
+        <h1 class="post-ribbon">Título do Post</h1>
+      </div>
+      <div class="post-meta">
+        <span>01 out 2025</span>
+        <span class="dot"></span>
+        <span>5 min</span>
+        <span class="dot"></span>
+        <span>Categorias: Receitas, Dicas</span>
+      </div>
     </header>
 
     <article>
@@ -33,37 +43,19 @@
       <h2>Subtítulo da seção</h2>
       <p>Conteúdo…</p>
 
+      <blockquote>Um destaque importante do texto.</blockquote>
+
       <h2>Outra seção</h2>
       <p>Mais conteúdo…</p>
-
-      <blockquote>Um destaque importante do texto.</blockquote>
 
       <hr />
       <p>Gostou? Volte para o <a href="/blog/">Blog</a>.</p>
     </article>
 
-    <nav class="post-nav">
+    <nav class="post-nav" aria-label="Navegação entre artigos">
       <a href="/blog/">← Voltar ao Blog</a>
-      <!-- opcional: links para próximo/anterior -->
+      <!-- opcional: próximo/anterior -->
     </nav>
   </div>
-
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div>
-        <strong>Got2Cook</strong><br>
-        Cozinhe pelo seu humor.
-      </div>
-      <div class="links">
-        <a href="/">Início</a>
-        <a href="/blog/">Blog</a>
-        <a href="/app/">App</a>
-        <a href="/#contato">Contato</a>
-      </div>
-    </div>
-    <div class="copy">© <span id="ano"></span> Got2Cook. Todos os direitos reservados.</div>
-  </footer>
-
-  <script>document.getElementById('ano').textContent = new Date().getFullYear();</script>
 </body>
 </html>
