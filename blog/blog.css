@@ -1,187 +1,120 @@
 :root{
-  /* Paleta Got2Cook */
   --roxo:#7b7190;      /* barra e faixas */
   --roxo2:#492f70;     /* botões e detalhes */
   --verde:#c0ffa5;     /* pílulas e overlay */
   --texto:#1d1d1f;
-
-  /* Neutros */
-  --muted:#6b6b6b;
-  --borda:#e8e8ef;
-  --soft:#f6f7fb;
-
-  /* Componentes */
+  --borda:#d7d7e0;
   --card:#ffffff;
-  --radius:22px;
-  --shadow-sm:0 6px 18px rgba(0,0,0,.08);
-  --shadow-md:0 12px 28px rgba(0,0,0,.12);
 }
 
-/* RESET */
+/* util */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;color:var(--texto);background:#fff}
-img{max-width:100%;display:block}
 .container{max-width:1160px;margin:0 auto;padding:0 20px}
 .sr-only{position:absolute !important;width:1px;height:1px;overflow:hidden;clip:rect(1px,1px,1px,1px)}
 
 /* HEADER */
 .topbar{background:var(--roxo)}
 .topbar-inner{height:72px;display:flex;align-items:center;justify-content:center}
-.brand{font-weight:900;text-decoration:none;font-size:28px;letter-spacing:.3px;color:#c9ff72}
+.brand{
+  font-weight:900;text-decoration:none;
+  font-size:28px;letter-spacing:.3px;
+  color:#c9ff72; /* “Got2” verde/amarelo leve */
+}
+.brand::after{
+  content:""; display:block; height:0;
+}
 
-/* HERO — overlay SEM bloquear cliques nem “vazar” para baixo */
-.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--borda)}
+/* HERO */
+.hero{position:relative}
 .hero-bg{
   position:absolute; inset:0;
-  background:url("/assets/blog/hero.png") center/cover no-repeat;
-  z-index:0; pointer-events:none;
+  background:url("/assets/blog/hero.png") center/cover no-repeat; /* troque sua imagem */
 }
 .hero-overlay{
   position:absolute; inset:0;
-  background:linear-gradient(180deg, rgba(192,255,165,.85) 0%, rgba(192,255,165,.40) 40%, rgba(73,47,112,.18) 100%);
-  z-index:0; pointer-events:none;
+  background:rgba(192,255,165,.78); /* overlay verde */
 }
 .hero .hero-content{
-  position:relative; z-index:1;
-  padding:36px 0 28px;
+  position:relative; z-index:2;
+  padding:34px 0 30px;
   display:grid; grid-template-columns:1.2fr .8fr; gap:24px; align-items:center;
 }
 @media (max-width:900px){ .hero .hero-content{grid-template-columns:1fr} }
 
-.hero-left h1{margin:0 0 8px;font-size:48px;line-height:1.05;color:#fff;font-weight:900}
-.hero-left p{margin:0 0 18px;color:#fff;opacity:.9}
+.hero-left h1{
+  margin:0 0 8px; font-size:48px; line-height:1.05; color:#fff; font-weight:900;
+}
+.hero-left p{margin:0 0 18px; font-size:18px; color:#fff}
 
-/* Filtros “pílula” */
 .filters{display:flex;gap:18px;flex-wrap:wrap}
 .filters input{
   flex:1; min-width:260px; padding:14px 18px;
   border:none; border-radius:999px; background:var(--verde); color:#2c2c2c; font-weight:600;
-  box-shadow:inset 0 2px 0 rgba(0,0,0,.06);
+  box-shadow:0 2px 0 rgba(0,0,0,.06) inset;
 }
 .select-wrap{position:relative}
 .select-wrap select{
   appearance:none; -webkit-appearance:none; -moz-appearance:none;
   padding:14px 44px 14px 18px; border:none; border-radius:999px;
-  background:var(--verde); color:#2c2c2c; font-weight:700; cursor:pointer;
+  background:var(--verde); color:#2c2c2c; font-weight:700;
 }
 .select-wrap .chev{
   position:absolute; right:16px; top:50%; transform:translateY(-50%); pointer-events:none;
   color:#3b2c57; font-weight:900;
 }
 
-/* Card lateral do hero */
+/* CARD LATERAL VERDE */
 .hero-card{
-  background:#d2ffad; padding:22px; border-radius:20px;
-  box-shadow:var(--shadow-sm); border:1px solid rgba(0,0,0,.05)
+  background:#d2ffad; padding:22px 22px; border-radius:22px;
+  box-shadow:0 10px 30px rgba(0,0,0,.1); border:1px solid rgba(0,0,0,.05)
 }
-.hero-card h3{margin:0 0 8px;font-size:26px;color:#2c4b2a;font-weight:900}
-.hero-card p{margin:0 0 14px;color:#2f2f2f}
-.btn-cta{display:inline-block;text-decoration:none;background:var(--roxo2);color:#fff;padding:10px 16px;border-radius:10px;font-weight:700}
+.hero-card h3{margin:0 0 8px; font-size:26px; color:#2c4b2a; font-weight:900}
+.hero-card p{margin:0 0 14px; color:#2f2f2f}
+.btn-cta{
+  display:inline-block; text-decoration:none; background:var(--roxo2); color:#fff;
+  padding:10px 16px; border-radius:10px; font-weight:700;
+}
 
-/* MAIN GRID 2 col (lista + anúncio) */
-.main-grid{display:grid;grid-template-columns:2fr 1fr;gap:26px;padding:26px 0 46px}
-@media (max-width:900px){ .main-grid{grid-template-columns:1fr} }
+/* GRID PRINCIPAL 3 COLUNAS */
+.main-grid{
+  display:grid; grid-template-columns:2fr 1fr; gap:26px; padding:26px 0 46px;
+}
+@media (min-width:1024px){
+  .main-grid{grid-template-columns:2fr 1fr}
+}
+@media (max-width:900px){
+  .main-grid{grid-template-columns:1fr}
+}
 
-/* ====== LISTA DE POSTS (APENAS CARDS) ====== */
+/* LISTA DE POSTS */
 .cards{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:26px;
+  display:grid; grid-template-columns:1fr 1fr; gap:26px;
 }
-@media (max-width:800px){
-  .cards{ grid-template-columns:1fr; }
-}
+@media (max-width:800px){ .cards{grid-template-columns:1fr} }
 
-/* Card container */
 .card{
-  background:#fff;
-  border-radius:20px;
-  overflow:hidden;
-  border:1px solid #eceaf3;
-  box-shadow:0 8px 24px rgba(0,0,0,.08);
-  transition:transform .15s ease, box-shadow .15s ease;
-}
-.card:hover{
-  transform:translateY(-2px);
-  box-shadow:0 14px 32px rgba(0,0,0,.12);
-}
-
-/* Área da imagem */
-.card .thumb{
+  background:var(--card); border:2px solid var(--roxo); border-radius:18px; overflow:hidden;
   position:relative;
-  display:block;
-  aspect-ratio:16/10;      /* mantém proporção mesmo carregando */
-  background:#e9e7f2;      /* placeholder */
-  overflow:hidden;
 }
-.card .thumb img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
+.card .thumb{display:block; background:#ddd; aspect-ratio:16/9; position:relative;}
+.card .thumb img{width:100%; height:100%; object-fit:cover; display:block}
 
-/* Gradiente sutil na base para legibilidade */
-.card .thumb::after{
-  content:"";
-  position:absolute; left:0; right:0; bottom:0; height:46%;
-  background:linear-gradient(to top, rgba(55,42,86,.58), rgba(55,42,86,0));
-  pointer-events:none;
-}
-
-/* Faixa roxa do título (totalmente clicável) */
+/* FAIXA ROXA NO TÍTULO (SOBREPOSTA NA IMAGEM) */
 .card .ribbon{
-  position:absolute; left:16px; right:16px; bottom:14px;
-  background:#7b7190;          /* roxo Got2Cook */
-  color:#fff;
-  padding:12px 14px;
-  border-radius:14px;
-  font-size:20px;
-  font-weight:800;
-  line-height:1.25;
-  box-shadow:0 8px 22px rgba(73,47,112,.28);
-  white-space:normal;
-  word-break:break-word;
+  position:absolute; left:14px; bottom:18px;
+  background:var(--roxo); color:#fff; padding:14px 18px; border-radius:12px;
+  font-size:20px; font-weight:800; box-shadow:0 6px 20px rgba(0,0,0,.18);
 }
-.card .ribbon a{
-  color:#fff;
-  text-decoration:none;
-  display:block;               /* faz a faixa inteira ser o link */
-}
+.card .content{padding:0 18px 16px;color:#444}
+.card .excerpt{margin-top:10px}
 
-/* Corpo do card (resumo) */
-.card .content{
-  padding:12px 16px 16px;
-  color:#444;
-}
-.card .excerpt{
-  margin:6px 0 0;
-  font-size:14px;
-  line-height:1.55;
-}
-
-/* Fallback elegante quando a imagem falha */
-.card .thumb.noimg{
-  background:
-    radial-gradient(120px 60px at 30% 70%, #d9d4e7, transparent 60%),
-    radial-gradient(140px 70px at 80% 30%, #c0ffa5, transparent 60%),
-    #efeefe;
-}
-.card .thumb.noimg::before{
-  content:"🖼️";
-  position:absolute; inset:0;
-  display:flex; align-items:center; justify-content:center;
-  font-size:42px; opacity:.45;
-}
-.card .thumb.noimg::after{
-  background:linear-gradient(to top, rgba(55,42,86,.22), transparent);
-}
-
-/* SLOT DE ANÚNCIO (fixo na lateral) */
+/* SLOT DE ANÚNCIO */
 .ad-slot{width:100%}
 .ad-box{
-  position:sticky;top:24px;min-height:380px;
-  background:#c8ffa7;border-radius:14px;border:1px solid #b4e392;
-  display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:900;color:#2b2b2b;
+  position:sticky; top:24px;
+  background:#c8ffa7; border-radius:14px; border:1px solid #b4e392;
+  min-height:380px; display:flex; align-items:center; justify-content:center;
+  font-size:34px; font-weight:900; color:#2b2b2b;
 }
