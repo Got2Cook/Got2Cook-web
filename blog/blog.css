@@ -44,9 +44,9 @@ body{margin:0;font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Ari
 @media (max-width:900px){ .hero .hero-content{grid-template-columns:1fr} }
 
 .hero-left h1{
-  margin:0 0 8px; font-size:48px; line-height:1.05; color:#2b2142; font-weight:900;
+  margin:0 0 8px; font-size:48px; line-height:1.05; color:#fff; font-weight:900;
 }
-.hero-left p{margin:0 0 18px; font-size:18px; color:#362c45}
+.hero-left p{margin:0 0 18px; font-size:18px; color:#fff}
 
 .filters{display:flex;gap:18px;flex-wrap:wrap}
 .filters input{
