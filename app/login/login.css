@@ -1,195 +1,394 @@
-/* ===== Base igual ao seu padrão ===== */
-:root{
-  --bg:#c0ffa5;
-  --roxo:#492f70;
-  --roxo-escuro:#7b7190;
-  --verde:#225c18;
-  --cartao:#dfffbb;
-  --div:#b3e698;
+/* /app/login/login.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+
+:root {
+  --bg: #c0ffa5;
+  --verde: #225c18;
+  --roxo: #492f70;
+  --roxo-escuro: #7b7190;
+  --cartao: #dfffbb;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  background-color: var(--bg);
-  font-family: Arial, sans-serif;
-  height: 100vh;
+* {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  background: linear-gradient(135deg, var(--bg) 0%, #dfffbb 100%);
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  overflow-x: hidden;
-  animation: fadeIn 0.6s ease-in-out;
+  justify-content: center;
+  padding: 20px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== Cartão/Container central ===== */
-.login-container{
-  width: min(92vw, 600px);
-  background: linear-gradient(180deg, #ffffff, var(--cartao));
-  border: 2px solid var(--roxo);
-  border-radius: 18px;
-  padding: 20px 16px;
-  color: var(--verde);
-  box-shadow: 0 10px 24px rgba(0,0,0,.12);
-}
-
-/* topo visual */
-.logo-circulo{
-  width: 88px; height: 88px;
-  border-radius: 50%;
-  border: 2px solid var(--roxo);
-  background: #fff;
-  display: grid; place-items: center;
-  font-size: 42px;
-  color: var(--roxo);
-  margin: 0 auto 10px;
-}
-
-.titulo{
-  margin: 4px 0 4px;
-  font-size: 28px;
-  color: var(--verde);
-  text-align: center;
-}
-.sub{
-  margin: 0 0 12px;
-  text-align: center;
-  color: color-mix(in srgb, var(--verde) 75%, #000 25%);
-  font-size: 14px;
-}
-
-/* ===== Perfis salvos ===== */
-.perfis{
+.container {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 12px;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--verde);
   margin-bottom: 8px;
 }
-.perfil-box{display:grid; gap:6px; justify-items:center}
 
-.perfil{
-  width: 86px; height: 86px;
-  border-radius: 50%;
-  background-color: #fff;
-  border: 2px solid var(--roxo);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  transition: transform .12s ease, box-shadow .12s ease;
+.logo-icon {
+  font-size: 48px;
 }
-.perfil:hover{ transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,.12) }
-.perfil[aria-pressed="true"]{ box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--roxo-escuro) }
 
-.icone-perfil{ font-size: 32px; line-height: 1 }
+/* Card */
+.login-card {
+  background: white;
+  border-radius: 24px;
+  padding: 40px 32px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(34, 92, 24, 0.1);
+}
 
-.nome-perfil{
-  max-width: 100px;
+.login-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--verde);
   text-align: center;
-  font-size: 12px;
-  color: var(--roxo);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  margin-bottom: 8px;
 }
 
-/* botão “+” (galeria) — mantido igual às suas classes */
-.adicionar-conta{
-  width: 86px; height: 86px;
-  border-radius: 50%;
-  background-color: white;
-  border: 2px dashed var(--roxo);
-  font-size: 32px;
-  color: var(--roxo);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  transition: background .12s ease;
-}
-.adicionar-conta:hover{ background: #f8f5ff }
-
-.dica{
-  margin: 4px 0 0;
+.login-subtitle {
+  font-size: 15px;
+  color: #666;
   text-align: center;
-  font-size: 12px;
-  color: color-mix(in srgb, var(--roxo) 70%, #000 30%);
+  margin-bottom: 32px;
 }
 
-/* divisor */
-.divisor{
-  border: none; border-top: 1px solid var(--div);
-  margin: 16px 0;
+/* Perfis Salvos */
+.perfis-section {
+  margin-bottom: 24px;
 }
 
-/* ===== Botões de login ===== */
-.botoes{
-  width: 100%;
-  display: flex; flex-direction: column;
-  align-items: center; gap: 15px;
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--verde);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.perfis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 12px;
   margin-bottom: 16px;
 }
-.login-btn{
-  display: flex; align-items: center; gap: 10px;
-  width: 100%;
-  border-radius: 12px;
-  padding: 12px 14px;
-  border: 2px solid var(--roxo);
-  background: #fff;
-  color: var(--roxo);
+
+.perfil-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: var(--cartao);
+  border: 2px solid var(--verde);
+  border-radius: 16px;
   cursor: pointer;
-  font-size: 15px;
-  transition: transform .1s ease, box-shadow .1s ease, background .1s ease;
+  transition: all 0.2s ease;
 }
-.login-btn:hover{ transform: translateY(-1px); box-shadow: 0 8px 16px rgba(0,0,0,.10) }
-.login-btn .ico{ font-size: 18px; line-height: 1 }
 
-/* CTA criar conta — mantém id existente */
-.cta-criar{
+.perfil-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(34, 92, 24, 0.2);
+}
+
+.perfil-emoji {
+  font-size: 32px;
+}
+
+.perfil-nome {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--verde);
   text-align: center;
-  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.btn-add-perfil {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px dashed var(--verde);
+  background: white;
+  color: var(--verde);
+  font-size: 32px;
+  font-weight: 300;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: all 0.2s ease;
+}
+
+.btn-add-perfil:hover {
+  background: var(--cartao);
+  transform: scale(1.05);
+}
+
+/* Divisor */
+.divisor {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.divisor::before,
+.divisor::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #ddd;
+}
+
+.divisor-text {
   font-size: 13px;
-  color: color-mix(in srgb, var(--roxo) 70%, #000 30%);
-}
-.link-btn{
-  background: none; border: none; padding: 0 2px;
-  color: var(--roxo); cursor: pointer; text-decoration: underline;
-  font-size: inherit;
+  color: #999;
+  font-weight: 600;
 }
 
-/* ===== Pequenas animações ===== */
-.fade-out{ animation: fadeOut .45s ease forwards }
-@keyframes fadeOut{ to{ opacity:0; transform: translateY(6px) } }
+/* Botões Sociais */
+.login-opcoes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
 
-/* ===== Desktop (adaptação) ===== */
-@media (min-width: 960px){
-  body{ align-items: center }
-  .login-container{
-    width: min(92vw, 960px);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    padding: 24px;
-  }
+.btn-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 2px solid #ddd;
+  background: white;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
 
-  /* Coluna esquerda: perfis; direita: botões */
-  #perfilContainer{ grid-column: 1/2 }
-  .botoes, .cta-criar, .divisor, .dica{ grid-column: 2/3 }
+.btn-social:hover {
+  border-color: var(--verde);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
-  .perfis{ grid-template-columns: repeat(4, 1fr) }
-  .perfil, .adicionar-conta{ width: 96px; height: 96px }
+.social-icon {
+  width: 20px;
+  height: 20px;
+}
 
-  .logo-circulo{
-    grid-column: 1/2; grid-row: 1/2;
-    margin: 0 0 6px 0; justify-self: start;
-  }
-  .titulo{
-    grid-column: 2/3; grid-row: 1/2;
-    align-self: center; text-align: left; margin: 0;
-    font-size: 30px;
-  }
-  .sub{
-    grid-column: 2/3; grid-row: 1/2;
-    align-self: end; text-align: left; margin-top: 40px;
-  }
+.btn-email {
+  color: var(--verde);
+}
+
+/* Link Cadastro */
+.signup-link {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+}
+
+.signup-link a {
+  color: var(--roxo);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Botão Voltar */
+.btn-voltar {
+  color: var(--verde);
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  font-size: 14px;
+  padding: 12px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.btn-voltar:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal.ativo {
+  display: flex;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  position: relative;
+  background: white;
+  border-radius: 24px;
+  padding: 32px 24px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--verde);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--verde);
+  background: white;
+  color: var(--verde);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: var(--verde);
+  color: white;
+}
+
+/* Galeria de Perfis */
+.perfis-galeria {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* Form Perfil */
+.form-perfil {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input {
+  padding: 14px 16px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--roxo);
+}
+
+.emoji-selector {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+
+.emoji-btn {
+  font-size: 32px;
+  padding: 8px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.emoji-btn:hover {
+  transform: scale(1.1);
+}
+
+.emoji-btn.selecionado {
+  border-color: var(--roxo);
+  background: var(--cartao);
+}
+
+/* Buttons */
+.btn {
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--roxo);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--roxo-escuro);
+  transform: translateY(-1px);
+}
+
+.btn-criar {
+  background: var(--verde);
+  color: white;
+  width: 100%;
+}
+
+.btn-criar:hover {
+  background: #1a4712;
 }
