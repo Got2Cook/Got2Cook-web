@@ -1,79 +1,113 @@
+<!-- /app/login/index.html -->
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Got2Cook - Login</title>
-
-  <!-- Igual ao seu: CSS principal desta tela -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Got2Cook</title>
   <link rel="stylesheet" href="login.css" />
-
-  <!-- Igual ao seu: PWA -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#7b7190">
-
-  <!-- Igual ao seu: Service Worker -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log("Service Worker registrado!"));
-    }
-  </script>
 </head>
 <body>
-  <!-- CONTAINER CENTRAL -->
-  <div class="login-container" role="main" aria-labelledby="tituloLogin">
-    <!-- LOGO / AVATAR SUPERIOR (igual ao padrão do app) -->
-    <div class="logo-circulo" aria-hidden="true">🍳</div>
-
-    <!-- TÍTULO -->
-    <h1 id="tituloLogin" class="titulo">Entrar</h1>
-    <p class="sub">Escolha um perfil salvo ou continue com uma opção de login.</p>
-
-    <!-- PERFIS SALVOS -->
-    <div id="perfilContainer" class="perfis" aria-label="Perfis salvos">
-      <!-- Preenchido via login.js (mantém IDs/classes) -->
+  <div class="container">
+    <!-- Logo -->
+    <div class="logo">
+      <span class="logo-icon">🍳</span>
+      <span class="logo-text">Got2Cook</span>
     </div>
 
-    <!-- GALERIA (“+”) — o botão é injetado no JS com a classe .adicionar-conta -->
-    <p class="dica">Dica: clique no “+” para abrir a galeria e criar/selecionar perfis.</p>
+    <!-- Card de Login -->
+    <div class="login-card">
+      <h1 class="login-title">Bem-vindo de volta!</h1>
+      <p class="login-subtitle">Entre para descobrir receitas perfeitas para seu humor</p>
 
-    <hr class="divisor" />
+      <!-- Perfis Salvos -->
+      <div class="perfis-section" id="perfisSection">
+        <h3 class="section-title">Perfis Salvos</h3>
+        <div class="perfis-grid" id="perfisGrid">
+          <!-- Perfis serão inseridos via JS -->
+        </div>
+        <button class="btn-add-perfil" id="btnAddPerfil" aria-label="Adicionar novo perfil">
+          <span class="btn-add-icon">+</span>
+        </button>
+      </div>
 
-    <!-- BOTÕES DE LOGIN (mantendo classes que seu JS espera) -->
-    <div class="botoes" aria-label="Opções de login">
-      <button type="button" class="login-btn google" aria-label="Continuar com Google">
-        <span class="ico" aria-hidden="true">🟢</span>
-        <span class="txt">Continuar com Google</span>
-      </button>
+      <!-- Divisor -->
+      <div class="divisor">
+        <span class="divisor-text">ou continue com</span>
+      </div>
 
-      <button type="button" class="login-btn apple" aria-label="Continuar com Apple">
-        <span class="ico" aria-hidden="true">⚪</span>
-        <span class="txt">Continuar com Apple</span>
-      </button>
+      <!-- Opções de Login Social -->
+      <div class="login-opcoes">
+        <button class="btn-social btn-google">
+          <svg class="social-icon" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+          <span>Continuar com Google</span>
+        </button>
 
-      <button type="button" class="login-btn email" aria-label="Entrar com e-mail">
-        <span class="ico" aria-hidden="true">✉️</span>
-        <span class="txt">Entrar com e-mail</span>
-      </button>
+        <button class="btn-social btn-apple">
+          <svg class="social-icon" viewBox="0 0 24 24">
+            <path fill="#000" d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+          </svg>
+          <span>Continuar com Apple</span>
+        </button>
+
+        <button class="btn-social btn-email">
+          <svg class="social-icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          <span>Continuar com E-mail</span>
+        </button>
+      </div>
+
+      <!-- Link para Cadastro -->
+      <div class="signup-link">
+        <p>Não tem conta? <a href="#" id="linkCadastro">Criar conta gratuita</a></p>
+      </div>
     </div>
 
-    <!-- CTA já existente no seu arquivo (mantive o id) -->
-    <p class="cta-criar">Não tem conta?
-      <button id="btnCriarConta" class="link-btn" type="button" aria-label="Criar conta">Criar conta</button>
-    </p>
+    <!-- Link para voltar -->
+    <a href="../../index.html" class="btn-voltar">← Voltar para o site</a>
   </div>
 
-  <!-- SCRIPTS -->
+  <!-- Modal de Perfis -->
+  <div class="modal" id="modalPerfis" aria-hidden="true">
+    <div class="modal-backdrop" data-close="true"></div>
+    <div class="modal-content">
+      <h2 class="modal-title">Selecione seu Perfil</h2>
+      <div class="perfis-galeria" id="perfisGaleria">
+        <!-- Perfis disponíveis -->
+      </div>
+      <button class="btn btn-criar" id="btnCriarPerfil">+ Criar Novo Perfil</button>
+      <button class="modal-close" data-close="true">×</button>
+    </div>
+  </div>
+
+  <!-- Modal Criar Perfil -->
+  <div class="modal" id="modalCriar" aria-hidden="true">
+    <div class="modal-backdrop" data-close="true"></div>
+    <div class="modal-content">
+      <h2 class="modal-title">Criar Novo Perfil</h2>
+      <form class="form-perfil" id="formPerfil">
+        <input type="text" class="input" placeholder="Nome" required />
+        <div class="emoji-selector">
+          <button type="button" class="emoji-btn" data-emoji="😊">😊</button>
+          <button type="button" class="emoji-btn" data-emoji="🥰">🥰</button>
+          <button type="button" class="emoji-btn" data-emoji="😋">😋</button>
+          <button type="button" class="emoji-btn" data-emoji="😎">😎</button>
+          <button type="button" class="emoji-btn" data-emoji="🤗">🤗</button>
+          <button type="button" class="emoji-btn" data-emoji="😇">😇</button>
+        </div>
+        <input type="hidden" id="emojiSelecionado" value="😊" />
+        <button type="submit" class="btn btn-primary">Criar Perfil</button>
+      </form>
+      <button class="modal-close" data-close="true">×</button>
+    </div>
+  </div>
+
   <script src="login.js"></script>
-  <script>
-    // Igual ao seu: redireciona para cadastro
-    const btnCriarConta = document.getElementById("btnCriarConta");
-    if (btnCriarConta) {
-      btnCriarConta.addEventListener("click", () => {
-        window.location.href = "cadastro.html";
-      });
-    }
-  </script>
 </body>
 </html>
