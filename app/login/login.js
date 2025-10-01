@@ -4,110 +4,94 @@
 
   const STORAGE_KEY = 'got2cook_profiles';
   
-  // Elements
-  const perfisGrid = document.getElementById('perfisGrid');
+  const perfisList = document.getElementById('perfisList');
   const btnAddPerfil = document.getElementById('btnAddPerfil');
   const modalPerfis = document.getElementById('modalPerfis');
   const modalCriar = document.getElementById('modalCriar');
-  const perfisGaleria = document.getElementById('perfisGaleria');
-  const btnCriarPerfil = document.getElementById('btnCriarPerfil');
+  const perfisGrid = document.getElementById('perfisGrid');
+  const btnCriarNovo = document.getElementById('btnCriarNovo');
   const formPerfil = document.getElementById('formPerfil');
 
-  // Perfis exemplo
+  let emojiSelecionado = '😊';
+
+  // Perfis disponíveis
   const perfisDisponiveis = [
     { emoji: '😊', nome: 'Feliz' },
     { emoji: '🥰', nome: 'Apaixonado' },
-    { emoji: '😋', nome: 'Com Fome' },
+    { emoji: '😋', nome: 'Faminto' },
     { emoji: '😎', nome: 'Confiante' },
     { emoji: '🤗', nome: 'Carinhoso' },
-    { emoji: '😇', nome: 'Tranquilo' },
-    { emoji: '😴', nome: 'Cansado' },
-    { emoji: '🤩', nome: 'Animado' }
+    { emoji: '😇', nome: 'Tranquilo' }
   ];
 
-  // Carregar perfis salvos
+  // Carregar perfis
   function carregarPerfis() {
     try {
       const perfis = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
       renderizarPerfis(perfis);
     } catch (e) {
-      console.error('Erro ao carregar perfis:', e);
       renderizarPerfis([]);
     }
   }
 
-  // Renderizar perfis na grid
   function renderizarPerfis(perfis) {
     if (perfis.length === 0) {
-      perfisGrid.innerHTML = '<p style="text-align:center;color:#999;grid-column:1/-1;padding:20px 0;">Nenhum perfil salvo ainda</p>';
+      perfisList.innerHTML = '<p style="color:#999;font-size:13px;">Nenhum perfil salvo</p>';
       return;
     }
 
-    perfisGrid.innerHTML = perfis.map((perfil, idx) => `
-      <div class="perfil-item" data-idx="${idx}">
-        <div class="perfil-emoji">${perfil.emoji}</div>
-        <div class="perfil-nome">${perfil.nome}</div>
+    perfisList.innerHTML = perfis.map((perfil, idx) => `
+      <div class="perfil-badge" data-idx="${idx}">
+        <span class="perfil-badge-emoji">${perfil.emoji}</span>
+        <span class="perfil-badge-nome">${perfil.nome}</span>
       </div>
     `).join('');
 
-    // Event listeners
-    document.querySelectorAll('.perfil-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const idx = item.dataset.idx;
-        const perfil = perfis[idx];
-        selecionarPerfil(perfil);
+    document.querySelectorAll('.perfil-badge').forEach(badge => {
+      badge.addEventListener('click', () => {
+        const perfil = perfis[badge.dataset.idx];
+        localStorage.setItem('got2cook_current_profile', JSON.stringify(perfil));
+        window.location.href = '../humor/index.html';
       });
     });
   }
 
-  // Selecionar perfil e continuar
-  function selecionarPerfil(perfil) {
-    localStorage.setItem('got2cook_current_profile', JSON.stringify(perfil));
-    // Redirecionar para tela de humor
-    window.location.href = '../humor/index.html';
-  }
-
-  // Abrir modal de perfis
+  // Abrir modal perfis
   btnAddPerfil.addEventListener('click', () => {
     renderizarGaleria();
     abrirModal(modalPerfis);
   });
 
-  // Renderizar galeria
   function renderizarGaleria() {
-    perfisGaleria.innerHTML = perfisDisponiveis.map(perfil => `
-      <div class="perfil-item" data-emoji="${perfil.emoji}" data-nome="${perfil.nome}">
-        <div class="perfil-emoji">${perfil.emoji}</div>
-        <div class="perfil-nome">${perfil.nome}</div>
+    perfisGrid.innerHTML = perfisDisponiveis.map(perfil => `
+      <div class="perfil-card" data-emoji="${perfil.emoji}" data-nome="${perfil.nome}">
+        <div class="perfil-card-emoji">${perfil.emoji}</div>
+        <div class="perfil-card-nome">${perfil.nome}</div>
       </div>
     `).join('');
 
-    perfisGaleria.querySelectorAll('.perfil-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const perfil = {
-          emoji: item.dataset.emoji,
-          nome: item.dataset.nome,
-          id: Date.now()
-        };
-        salvarPerfil(perfil);
+    perfisGrid.querySelectorAll('.perfil-card').forEach(card => {
+      card.addEventListener('click', () => {
+        salvarPerfil({
+          id: Date.now(),
+          emoji: card.dataset.emoji,
+          nome: card.dataset.nome
+        });
         fecharModal(modalPerfis);
       });
     });
   }
 
-  // Abrir modal criar perfil
-  btnCriarPerfil.addEventListener('click', () => {
+  // Criar perfil customizado
+  btnCriarNovo.addEventListener('click', () => {
     fecharModal(modalPerfis);
     abrirModal(modalCriar);
   });
 
   // Seletor de emoji
-  const emojiBtns = document.querySelectorAll('.emoji-btn');
-  let emojiSelecionado = '😊';
-
-  emojiBtns.forEach(btn => {
+  document.querySelectorAll('.emoji-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      emojiBtns.forEach(b => b.classList.remove('selecionado'));
+      document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selecionado'));
       btn.classList.add('selecionado');
       emojiSelecionado = btn.dataset.emoji;
     });
@@ -116,22 +100,20 @@
   // Submit form
   formPerfil.addEventListener('submit', (e) => {
     e.preventDefault();
-    const nome = e.target.querySelector('input[type="text"]').value.trim();
+    const nome = e.target.querySelector('input').value.trim();
     
     if (!nome) return;
 
-    const perfil = {
+    salvarPerfil({
       id: Date.now(),
       nome,
       emoji: emojiSelecionado
-    };
+    });
 
-    salvarPerfil(perfil);
     fecharModal(modalCriar);
     formPerfil.reset();
   });
 
-  // Salvar perfil
   function salvarPerfil(perfil) {
     try {
       const perfis = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -139,39 +121,36 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(perfis));
       carregarPerfis();
     } catch (e) {
-      console.error('Erro ao salvar perfil:', e);
+      console.error('Erro ao salvar:', e);
     }
   }
 
   // Modal helpers
   function abrirModal(modal) {
     modal.classList.add('ativo');
-    modal.setAttribute('aria-hidden', 'false');
   }
 
   function fecharModal(modal) {
     modal.classList.remove('ativo');
-    modal.setAttribute('aria-hidden', 'true');
   }
 
-  // Fechar modais ao clicar no backdrop ou botão fechar
-  document.querySelectorAll('[data-close="true"]').forEach(el => {
-    el.addEventListener('click', (e) => {
-      const modal = e.target.closest('.modal');
-      if (modal) fecharModal(modal);
+  document.querySelectorAll('[data-close]').forEach(el => {
+    el.addEventListener('click', () => {
+      fecharModal(modalPerfis);
+      fecharModal(modalCriar);
     });
   });
 
-  // Login social (placeholder)
+  document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+    backdrop.addEventListener('click', () => {
+      fecharModal(modalPerfis);
+      fecharModal(modalCriar);
+    });
+  });
+
+  // Login social
   document.querySelectorAll('.btn-social').forEach(btn => {
     btn.addEventListener('click', () => {
-      const tipo = btn.classList.contains('btn-google') ? 'Google' :
-                   btn.classList.contains('btn-apple') ? 'Apple' : 'E-mail';
-      
-      // TODO: Implementar autenticação real
-      console.log('Login com:', tipo);
-      
-      // Por enquanto, redirecionar direto
       window.location.href = '../humor/index.html';
     });
   });
@@ -179,11 +158,9 @@
   // Link cadastro
   document.getElementById('linkCadastro').addEventListener('click', (e) => {
     e.preventDefault();
-    // TODO: Abrir modal/página de cadastro
     alert('Funcionalidade de cadastro em desenvolvimento');
   });
 
-  // Inicializar
   carregarPerfis();
 
 })();
