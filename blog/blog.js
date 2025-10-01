@@ -34,14 +34,20 @@ function render(arr){
 }
 
 function cardHTML(p){
+  const titulo = escapeHtml(p.titulo);
+  const resumo = p.resumo ? escapeHtml(p.resumo) : "";
+  const capa   = p.capa ? p.capa : "";
+
   return `
     <article class="card">
       <a class="thumb" href="/blog/${p.slug}/">
-        ${p.capa ? `<img src="${p.capa}" alt="${escapeHtml(p.titulo)}">` : ``}
+        ${capa ? `<img src="${capa}" alt="${titulo}">` : ``}
       </a>
-      <div class="ribbon">${escapeHtml(p.titulo)}</div>
+      <div class="ribbon">
+        <a href="/blog/${p.slug}/">${titulo}</a>
+      </div>
       <div class="content">
-        <p class="excerpt">${escapeHtml(p.resumo || '')}</p>
+        ${resumo ? `<p class="excerpt">${resumo}</p>` : ``}
       </div>
     </article>
   `;
