@@ -1,247 +1,189 @@
-/* Got2Cook — Login
- * Mantém classes/IDs do seu padrão. Sem libs externas.
- * Perfis salvos, galeria (+) e botões de login (placeholders).
- */
+// /app/login/login.js
+(function() {
+  'use strict';
 
-const LS_PROFILES_KEY = "got2cook_profiles";
-const LS_CURRENT_PROFILE_KEY = "got2cook_current_profile";
+  const STORAGE_KEY = 'got2cook_profiles';
+  
+  // Elements
+  const perfisGrid = document.getElementById('perfisGrid');
+  const btnAddPerfil = document.getElementById('btnAddPerfil');
+  const modalPerfis = document.getElementById('modalPerfis');
+  const modalCriar = document.getElementById('modalCriar');
+  const perfisGaleria = document.getElementById('perfisGaleria');
+  const btnCriarPerfil = document.getElementById('btnCriarPerfil');
+  const formPerfil = document.getElementById('formPerfil');
 
-let profiles = [];
-let selectedProfileId = null;
-
-const $ = (sel, root = document) => root.querySelector(sel);
-const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
-
-function loadProfiles() {
-  try {
-    const raw = localStorage.getItem(LS_PROFILES_KEY);
-    profiles = raw ? JSON.parse(raw) : null;
-  } catch { profiles = null; }
-
-  if (!profiles || !Array.isArray(profiles) || profiles.length === 0) {
-    profiles = [
-      { id: crypto.randomUUID(), name: "Convidado", emoji: "😀", avatar: "", createdAt: Date.now() },
-    ];
-    saveProfiles();
-  }
-
-  try {
-    const rawCurrent = localStorage.getItem(LS_CURRENT_PROFILE_KEY);
-    if (rawCurrent) {
-      const curr = JSON.parse(rawCurrent);
-      if (profiles.some(p => p.id === curr.id)) selectedProfileId = curr.id;
-    }
-  } catch {}
-
-  if (!selectedProfileId && profiles[0]) selectedProfileId = profiles[0].id;
-}
-
-function saveProfiles() {
-  localStorage.setItem(LS_PROFILES_KEY, JSON.stringify(profiles));
-}
-
-function setCurrentProfile(profile) {
-  if (!profile) return;
-  selectedProfileId = profile.id;
-  localStorage.setItem(LS_CURRENT_PROFILE_KEY, JSON.stringify(profile));
-}
-
-function renderProfiles() {
-  const container = document.getElementById("perfilContainer");
-  if (!container) return;
-  container.innerHTML = "";
-
-  profiles.forEach((p) => {
-    const wrap = document.createElement("div");
-    wrap.className = "perfil-box";
-
-    const btn = document.createElement("button");
-    btn.className = "perfil";
-    btn.type = "button";
-    btn.setAttribute("aria-pressed", String(p.id === selectedProfileId));
-    btn.setAttribute("aria-label", `Selecionar perfil ${p.name}`);
-    btn.title = `Selecionar ${p.name}`;
-
-    const span = document.createElement("span");
-    span.className = "icone-perfil";
-    span.textContent = p.emoji || "🙂";
-    btn.appendChild(span);
-
-    btn.addEventListener("click", () => {
-      setCurrentProfile(p);
-      $$(".perfil", container).forEach(el => el.setAttribute("aria-pressed", "false"));
-      btn.setAttribute("aria-pressed", "true");
-      console.log("[Got2Cook] Perfil selecionado:", p);
-    });
-
-    const name = document.createElement("div");
-    name.className = "nome-perfil";
-    name.textContent = p.name;
-
-    wrap.appendChild(btn);
-    wrap.appendChild(name);
-    container.appendChild(wrap);
-  });
-
-  // Botão “+” (galeria)
-  const addWrap = document.createElement("div");
-  addWrap.className = "perfil-box";
-  const addBtn = document.createElement("button");
-  addBtn.className = "adicionar-conta";
-  addBtn.type = "button";
-  addBtn.setAttribute("aria-label", "Abrir galeria de perfis");
-  addBtn.title = "Adicionar/Selecionar perfil";
-  addBtn.textContent = "+";
-  addBtn.addEventListener("click", openGalleryModal);
-  addWrap.appendChild(addBtn);
-  container.appendChild(addWrap);
-}
-
-/* ===== Modal simples e acessível, sem alterar seu HTML ===== */
-let lastFocusedElement = null;
-
-function trapFocus(modal) {
-  const focusables = $$('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])', modal)
-    .filter(el => !el.hasAttribute("disabled"));
-
-  function onKey(e){
-    if (e.key === "Escape"){ e.preventDefault(); closeModal(modal); return; }
-    if (e.key !== "Tab" || focusables.length === 0) return;
-
-    const first = focusables[0], last = focusables[focusables.length - 1];
-    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
-  }
-
-  modal.addEventListener("keydown", onKey);
-  modal._removeTrap = () => modal.removeEventListener("keydown", onKey);
-}
-
-function closeModal(modal){
-  if (!modal) return;
-  if (modal._removeTrap) modal._removeTrap();
-  modal.remove();
-  if (lastFocusedElement){ lastFocusedElement.focus(); lastFocusedElement = null; }
-}
-
-function openGalleryModal(){
-  lastFocusedElement = document.activeElement;
-
-  const overlay = document.createElement("div");
-  overlay.setAttribute("role","dialog");
-  overlay.setAttribute("aria-modal","true");
-  overlay.setAttribute("aria-label","Galeria de perfis");
-  overlay.style.cssText = "position:fixed; inset:0; background:rgba(0,0,0,.35); display:flex; align-items:center; justify-content:center; z-index:9999;";
-
-  const modal = document.createElement("div");
-  modal.style.cssText = "background:#fff; width: min(92vw, 520px); max-height:85vh; overflow:auto; border:2px solid #492f70; border-radius:16px; padding:16px; box-shadow:0 10px 30px rgba(0,0,0,.25); color:#492f70; font-family:Arial, sans-serif;";
-  modal.innerHTML = `
-    <h2 style="margin:0 0 10px; font-size:20px; color:#492f70;">Perfis</h2>
-    <div id="gridPerfis" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; margin-bottom:16px;"></div>
-    <hr style="border:none; border-top:1px solid #eee; margin:12px 0 14px;">
-    <h3 style="margin:0 0 10px; font-size:18px;">Adicionar novo perfil</h3>
-    <form id="formNovoPerfil" style="display:grid; gap:8px;">
-      <label style="display:grid; gap:4px; font-size:14px">
-        Nome
-        <input id="np_nome" type="text" required aria-required="true" style="padding:10px; border:2px solid #492f70; border-radius:10px;" />
-      </label>
-      <label style="display:grid; gap:4px; font-size:14px">
-        Emoji (opcional)
-        <input id="np_emoji" type="text" inputmode="text" maxlength="2" placeholder="😀" style="padding:10px; border:2px solid #492f70; border-radius:10px;" />
-      </label>
-      <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:6px;">
-        <button type="button" id="btnCancelarModal" style="background:#fff; color:#492f70; border:2px solid #492f70; border-radius:10px; padding:8px 14px; cursor:pointer;">Cancelar</button>
-        <button type="submit" style="background:#7b7190; color:#fff; border:none; border-radius:10px; padding:8px 14px; cursor:pointer;">Salvar</button>
-      </div>
-    </form>
-  `;
-  overlay.appendChild(modal);
-  document.body.appendChild(overlay);
-
-  // lista de perfis
-  const grid = $("#gridPerfis", modal);
-  profiles.forEach((p)=>{
-    const card = document.createElement("button");
-    card.type = "button";
-    card.style.cssText = "display:grid; gap:6px; justify-items:center; padding:10px; border:2px solid #492f70; border-radius:14px; background:#fff; cursor:pointer;";
-    card.setAttribute("aria-label", `Selecionar perfil ${p.name}`);
-    card.title = `Selecionar ${p.name}`;
-
-    const avatar = document.createElement("div");
-    avatar.style.cssText = "width:72px; height:72px; border-radius:50%; border:2px solid #492f70; display:flex; align-items:center; justify-content:center; background:#fff;";
-    const span = document.createElement("span");
-    span.className = "icone-perfil";
-    span.style.fontSize = "28px";
-    span.textContent = p.emoji || "🙂";
-    avatar.appendChild(span);
-
-    const nm = document.createElement("div");
-    nm.style.cssText = "font-size:13px; max-width:120px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;";
-    nm.textContent = p.name;
-
-    card.appendChild(avatar);
-    card.appendChild(nm);
-    card.addEventListener("click", ()=>{
-      setCurrentProfile(p);
-      renderProfiles();
-      closeModal(overlay);
-      console.log("[Got2Cook] Perfil selecionado via galeria:", p);
-    });
-    grid.appendChild(card);
-  });
-
-  // novo perfil
-  const form = $("#formNovoPerfil", modal);
-  form.addEventListener("submit", (e)=>{
-    e.preventDefault();
-    const name = $("#np_nome", form).value.trim();
-    const emoji = $("#np_emoji", form).value.trim() || "😀";
-    if (!name) return;
-    const newP = { id: crypto.randomUUID(), name, emoji, avatar:"", createdAt: Date.now() };
-    profiles.push(newP);
-    saveProfiles();
-    setCurrentProfile(newP);
-    renderProfiles();
-    closeModal(overlay);
-    console.log("[Got2Cook] Novo perfil criado:", newP);
-  });
-
-  $("#btnCancelarModal", modal).addEventListener("click", ()=> closeModal(overlay));
-
-  // acessibilidade
-  trapFocus(overlay);
-  $("#np_nome", modal).focus();
-}
-
-function wireLoginButtons(){
-  const map = [
-    { sel: ".login-btn.google", provider: "Google" },
-    { sel: ".login-btn.apple",  provider: "Apple"  },
-    { sel: ".login-btn.email",  provider: "Email"  },
+  // Perfis exemplo
+  const perfisDisponiveis = [
+    { emoji: '😊', nome: 'Feliz' },
+    { emoji: '🥰', nome: 'Apaixonado' },
+    { emoji: '😋', nome: 'Com Fome' },
+    { emoji: '😎', nome: 'Confiante' },
+    { emoji: '🤗', nome: 'Carinhoso' },
+    { emoji: '😇', nome: 'Tranquilo' },
+    { emoji: '😴', nome: 'Cansado' },
+    { emoji: '🤩', nome: 'Animado' }
   ];
-  map.forEach(({sel, provider})=>{
-    const btn = document.querySelector(sel);
-    if (!btn) return;
-    btn.addEventListener("click", ()=>{
-      const curr = profiles.find(p => p.id === selectedProfileId) || null;
-      alert(`Login via ${provider} (demo)\nPerfil: ${curr ? curr.name : "—"}`);
-      console.log("[Got2Cook] Tentativa de login:", { provider, profile: curr });
-      document.body.classList.add("fade-out");
-      // setTimeout(()=>{ window.location.href = "home.html"; }, 450);
+
+  // Carregar perfis salvos
+  function carregarPerfis() {
+    try {
+      const perfis = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      renderizarPerfis(perfis);
+    } catch (e) {
+      console.error('Erro ao carregar perfis:', e);
+      renderizarPerfis([]);
+    }
+  }
+
+  // Renderizar perfis na grid
+  function renderizarPerfis(perfis) {
+    if (perfis.length === 0) {
+      perfisGrid.innerHTML = '<p style="text-align:center;color:#999;grid-column:1/-1;padding:20px 0;">Nenhum perfil salvo ainda</p>';
+      return;
+    }
+
+    perfisGrid.innerHTML = perfis.map((perfil, idx) => `
+      <div class="perfil-item" data-idx="${idx}">
+        <div class="perfil-emoji">${perfil.emoji}</div>
+        <div class="perfil-nome">${perfil.nome}</div>
+      </div>
+    `).join('');
+
+    // Event listeners
+    document.querySelectorAll('.perfil-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const idx = item.dataset.idx;
+        const perfil = perfis[idx];
+        selecionarPerfil(perfil);
+      });
+    });
+  }
+
+  // Selecionar perfil e continuar
+  function selecionarPerfil(perfil) {
+    localStorage.setItem('got2cook_current_profile', JSON.stringify(perfil));
+    // Redirecionar para tela de humor
+    window.location.href = '../humor/index.html';
+  }
+
+  // Abrir modal de perfis
+  btnAddPerfil.addEventListener('click', () => {
+    renderizarGaleria();
+    abrirModal(modalPerfis);
+  });
+
+  // Renderizar galeria
+  function renderizarGaleria() {
+    perfisGaleria.innerHTML = perfisDisponiveis.map(perfil => `
+      <div class="perfil-item" data-emoji="${perfil.emoji}" data-nome="${perfil.nome}">
+        <div class="perfil-emoji">${perfil.emoji}</div>
+        <div class="perfil-nome">${perfil.nome}</div>
+      </div>
+    `).join('');
+
+    perfisGaleria.querySelectorAll('.perfil-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const perfil = {
+          emoji: item.dataset.emoji,
+          nome: item.dataset.nome,
+          id: Date.now()
+        };
+        salvarPerfil(perfil);
+        fecharModal(modalPerfis);
+      });
+    });
+  }
+
+  // Abrir modal criar perfil
+  btnCriarPerfil.addEventListener('click', () => {
+    fecharModal(modalPerfis);
+    abrirModal(modalCriar);
+  });
+
+  // Seletor de emoji
+  const emojiBtns = document.querySelectorAll('.emoji-btn');
+  let emojiSelecionado = '😊';
+
+  emojiBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      emojiBtns.forEach(b => b.classList.remove('selecionado'));
+      btn.classList.add('selecionado');
+      emojiSelecionado = btn.dataset.emoji;
     });
   });
-}
 
-/* ===== INIT ===== */
-document.addEventListener("DOMContentLoaded", ()=>{
-  loadProfiles();
-  renderProfiles();
-  wireLoginButtons();
+  // Submit form
+  formPerfil.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nome = e.target.querySelector('input[type="text"]').value.trim();
+    
+    if (!nome) return;
 
-  // Enter ativa botões focados
-  document.addEventListener("keydown", (e)=>{
-    if (e.key === "Enter" && document.activeElement?.tagName === "BUTTON") {
-      document.activeElement.click();
-    }
+    const perfil = {
+      id: Date.now(),
+      nome,
+      emoji: emojiSelecionado
+    };
+
+    salvarPerfil(perfil);
+    fecharModal(modalCriar);
+    formPerfil.reset();
   });
-});
+
+  // Salvar perfil
+  function salvarPerfil(perfil) {
+    try {
+      const perfis = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      perfis.push(perfil);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(perfis));
+      carregarPerfis();
+    } catch (e) {
+      console.error('Erro ao salvar perfil:', e);
+    }
+  }
+
+  // Modal helpers
+  function abrirModal(modal) {
+    modal.classList.add('ativo');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function fecharModal(modal) {
+    modal.classList.remove('ativo');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  // Fechar modais ao clicar no backdrop ou botão fechar
+  document.querySelectorAll('[data-close="true"]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      const modal = e.target.closest('.modal');
+      if (modal) fecharModal(modal);
+    });
+  });
+
+  // Login social (placeholder)
+  document.querySelectorAll('.btn-social').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tipo = btn.classList.contains('btn-google') ? 'Google' :
+                   btn.classList.contains('btn-apple') ? 'Apple' : 'E-mail';
+      
+      // TODO: Implementar autenticação real
+      console.log('Login com:', tipo);
+      
+      // Por enquanto, redirecionar direto
+      window.location.href = '../humor/index.html';
+    });
+  });
+
+  // Link cadastro
+  document.getElementById('linkCadastro').addEventListener('click', (e) => {
+    e.preventDefault();
+    // TODO: Abrir modal/página de cadastro
+    alert('Funcionalidade de cadastro em desenvolvimento');
+  });
+
+  // Inicializar
+  carregarPerfis();
+
+})();
