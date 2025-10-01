@@ -9,16 +9,27 @@
 </head>
 <body>
   <div class="container">
-    <!-- Lado Esquerdo - Branding -->
+    <!-- Centro - Logo e Perfis -->
     <div class="branding">
       <div class="logo">
         <span class="logo-icon">👑</span>
         <h1 class="logo-text">Got<span class="logo-2">2</span>Cook</h1>
       </div>
-      <p class="tagline">Cozinhe de acordo com seu humor. Receitas personalizadas que combinam com como você se sente hoje.</p>
+      <p class="tagline">Cozinhe de acordo com seu humor</p>
+      
+      <!-- Perfis Salvos -->
+      <div class="perfis-section">
+        <div class="perfis-list" id="perfisList">
+          <!-- Perfis renderizados via JS -->
+        </div>
+        <button class="btn-add-perfil" id="btnAddPerfil">
+          <span class="add-icon">+</span>
+          <span>Adicionar Perfil</span>
+        </button>
+      </div>
     </div>
 
-    <!-- Lado Direito - Login -->
+    <!-- Card de Login -->
     <div class="login-box">
       <div class="login-card">
         <h2 class="card-title">Entrar</h2>
@@ -52,16 +63,12 @@
           <span>ou</span>
         </div>
 
-        <!-- Perfis Salvos -->
-        <div class="perfis-section">
-          <p class="perfis-label">Perfis Salvos:</p>
-          <div class="perfis-list" id="perfisList">
-            <!-- Perfis renderizados via JS -->
-          </div>
-          <button class="btn-add-perfil" id="btnAddPerfil">
-            <span class="add-icon">+</span>
-            <span>Adicionar Perfil</span>
-          </button>
+        <!-- Checkbox Política de Privacidade -->
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="aceitoPolitica" class="checkbox" />
+            <span>Eu aceito a <a href="../politica/index.html" target="_blank">Política de Privacidade</a></span>
+          </label>
         </div>
 
         <div class="signup-link">
