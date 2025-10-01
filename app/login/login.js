@@ -151,6 +151,14 @@
   // Login social
   document.querySelectorAll('.btn-social').forEach(btn => {
     btn.addEventListener('click', () => {
+      const checkbox = document.getElementById('aceitoPolitica');
+      
+      if (!checkbox.checked) {
+        alert('Por favor, aceite a Política de Privacidade para continuar.');
+        checkbox.focus();
+        return;
+      }
+      
       window.location.href = '../humor/index.html';
     });
   });
