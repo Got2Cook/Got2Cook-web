@@ -1,25 +1,28 @@
-@import url('./blog.css');
+@import url('./blog.css'); /* Reaproveita variáveis, header, footer, etc. */
 
-/* Layout de leitura */
-.post-wrap{max-width:760px;margin:0 auto;padding:0 20px}
-.post-header{padding:48px 0 16px;border-bottom:1px solid var(--borda);margin-bottom:20px}
-.post-title{font-size:40px;line-height:1.15;margin:0;color:var(--tema)}
-.post-meta{color:#666;margin-top:10px}
-.post-cover{width:100%;height:auto;border-radius:16px;border:1px solid var(--borda);margin:18px 0}
+/* Layout do post */
+.post-wrap{max-width:780px;margin:0 auto;padding:0 20px}
+.post-header{padding:42px 0 18px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.post-title{font-size:42px;line-height:1.15;margin:0;color:var(--roxo)}
+.post-meta{color:var(--muted);margin-top:10px}
+.post-cover{width:100%;height:auto;border-radius:18px;border:1px solid var(--line);margin:18px 0;box-shadow:var(--shadow)}
 
-/* Tipografia */
-.post article{font-size:18px;line-height:1.75;color:#222}
-.post h2{font-size:26px;margin:28px 0 10px;color:var(--tema-2)}
+/* Corpo do artigo */
+.post article{font-size:18px;line-height:1.8;color:#222}
+.post h2{font-size:28px;margin:34px 0 10px;color:var(--verde)}
 .post p{margin:14px 0}
-.post ul, .post ol{padding-left:22px}
+.post ul, .post ol{padding-left:24px}
+.post li{margin:6px 0}
+.post a{color:var(--roxo);text-decoration:none}
+.post a:hover{text-decoration:underline}
 .post blockquote{
-  margin:18px 0;padding:14px 16px;border-left:4px solid var(--tema);background:var(--soft);border-radius:8px;
+  margin:20px 0;padding:16px 18px;border-left:4px solid var(--roxo);background:var(--soft);border-radius:10px;color:#2a2a2a
 }
-.post hr{border:none;border-top:1px solid var(--borda);margin:28px 0}
+.post figure{margin:22px 0}
+.post figcaption{font-size:13px;color:var(--muted);margin-top:6px}
+.post hr{border:none;border-top:1px solid var(--line);margin:30px 0}
 
-/* Navegação do post */
+/* Navegação pós-artigo */
 .post-nav{display:flex;justify-content:space-between;gap:16px;margin:28px 0 60px}
-.post-nav a{text-decoration:none;color:var(--tema)}
+.post-nav a{text-decoration:none;color:var(--roxo);font-weight:600}
 .post-nav a:hover{text-decoration:underline}
-
-/* Footer do site já vem do blog.css */
