@@ -1,1 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog — Got2Cook</title>
+  <meta name="description" content="Artigos do Got2Cook: receitas, dicas e bastidores do app." />
+  <link rel="stylesheet" href="./blog.css" />
+</head>
+<body>
+  <!-- Header do site (limpo, sem rodapé curvo) -->
+  <header class="blog-header">
+    <div class="container">
+      <a class="brand" href="/">Got2Cook</a>
+      <nav class="nav">
+        <a href="/">Início</a>
+        <a href="/app/">App</a>
+        <a class="active" href="/blog/">Blog</a>
+        <a href="/#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero simples -->
+  <section class="hero">
+    <div class="container">
+      <h1>Blog do Got2Cook</h1>
+      <p>Receitas, humor e dicas para cozinhar melhor com o que você tem em casa.</p>
+      <div class="filters">
+        <input id="busca" type="search" placeholder="Buscar artigos..." aria-label="Buscar artigos" />
+        <select id="categoria" aria-label="Filtrar por categoria">
+          <option value="">Todas as categorias</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lista de posts -->
+  <main class="container">
+    <section id="lista-posts" class="grid"></section>
+  </main>
+
+  <!-- Rodapé do site (simples) -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <strong>Got2Cook</strong><br>
+        Cozinhe pelo seu humor.
+      </div>
+      <div class="links">
+        <a href="/">Início</a>
+        <a href="/blog/">Blog</a>
+        <a href="/app/">App</a>
+        <a href="/#contato">Contato</a>
+      </div>
+    </div>
+    <div class="copy">© <span id="ano"></span> Got2Cook. Todos os direitos reservados.</div>
+  </footer>
+
+  <script src="./blog.js" defer></script>
+  <script>document.getElementById('ano').textContent = new Date().getFullYear();</script>
+</body>
+</html>
 
