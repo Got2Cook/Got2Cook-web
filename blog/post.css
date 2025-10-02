@@ -58,16 +58,23 @@ hr{border:none; border-top:1px solid var(--borda); margin:28px 0}
 
 /* Imagens in-line */
 .figure {
-  text-align: center;
+  margin: 22px 0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
+
 .figure img {
-  width: 60%;              /* reduz para 60% */
-  max-width: 480px;
-  border-radius: 12px;
+  width: 100%;
+  aspect-ratio: 16 / 9;     /* formato horizontal */
+  object-fit: cover;        /* corta o excesso sem distorcer */
+  display: block;
 }
 .figure figcaption {
   font-size: 13px;
-  margin-top: 6px;
+  color: #6b6b6b;
+  padding: 6px 8px;
+  background: #fff;
 }
 
 /* Navegação pós-artigo */
