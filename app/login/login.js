@@ -26,21 +26,19 @@
 
     perfisGrid.innerHTML = perfis.map(perfil => {
       const foto = perfil.foto || perfil.emoji || '😊';
-      const nivel = perfil.nivel || 'BÁSICO';
       
       return `
-        <div class="perfil-card" data-id="${perfil.id}">
+        <div class="perfil-item" data-id="${perfil.id}">
           <div class="perfil-foto">
             ${foto}
             ${perfil.humorAtual ? `<div class="perfil-emoji-badge">${perfil.humorAtual}</div>` : ''}
           </div>
           <div class="perfil-nome">${perfil.nome}</div>
-          <div class="perfil-info">Nível ${nivel}</div>
         </div>
       `;
     }).join('');
 
-    document.querySelectorAll('.perfil-card').forEach(el => {
+    document.querySelectorAll('.perfil-item').forEach(el => {
       el.addEventListener('click', () => {
         const perfilId = el.dataset.id;
         localStorage.setItem(CURRENT_PROFILE_KEY, perfilId);
