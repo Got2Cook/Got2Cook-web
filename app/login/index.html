@@ -9,7 +9,6 @@
 </head>
 <body>
   <div class="container">
-    <!-- Lado Esquerdo - Logo e Perfis -->
     <div class="branding">
       <div class="logo">
         <span class="logo-icon">👑</span>
@@ -18,14 +17,8 @@
       <p class="tagline">Cozinhe de acordo com seu humor</p>
       
       <!-- Perfis Salvos -->
-      <div class="perfis-section">
-        <h3 class="perfis-title">Perfis Salvos</h3>
-        <div class="perfis-grid" id="perfisGrid">
-          <!-- Perfis renderizados via JS -->
-        </div>
-        <button class="btn-add-perfil" id="btnAddPerfil">
-          <span class="add-icon">+</span>
-        </button>
+      <div class="perfis-grid" id="perfisGrid">
+        <!-- Perfis renderizados via JS -->
       </div>
     </div>
 
@@ -78,27 +71,6 @@
       </div>
 
       <a href="../../index.html" class="btn-voltar">← Voltar para o site</a>
-    </div>
-  </div>
-
-  <!-- Modal Adicionar Perfil -->
-  <div class="modal" id="modalPerfis">
-    <div class="modal-backdrop"></div>
-    <div class="modal-content">
-      <button class="modal-close" data-close>×</button>
-      <h2 class="modal-title">Adicionar Perfil</h2>
-      <form class="form-perfil" id="formPerfil">
-        <input type="text" class="input" placeholder="Digite seu nome" maxlength="20" required />
-        <div class="emoji-grid">
-          <button type="button" class="emoji-btn selecionado" data-emoji="😊">😊</button>
-          <button type="button" class="emoji-btn" data-emoji="🥰">🥰</button>
-          <button type="button" class="emoji-btn" data-emoji="😋">😋</button>
-          <button type="button" class="emoji-btn" data-emoji="😎">😎</button>
-          <button type="button" class="emoji-btn" data-emoji="🤗">🤗</button>
-          <button type="button" class="emoji-btn" data-emoji="😇">😇</button>
-        </div>
-        <button type="submit" class="btn-submit">Criar Perfil</button>
-      </form>
     </div>
   </div>
 
