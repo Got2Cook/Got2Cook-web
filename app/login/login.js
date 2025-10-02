@@ -4,25 +4,13 @@
 
   const STORAGE_KEY = 'got2cook_profiles';
   
-  const perfisList = document.getElementById('perfisList');
+  const perfisGrid = document.getElementById('perfisGrid');
   const btnAddPerfil = document.getElementById('btnAddPerfil');
   const modalPerfis = document.getElementById('modalPerfis');
-  const modalCriar = document.getElementById('modalCriar');
-  const perfisGrid = document.getElementById('perfisGrid');
-  const btnCriarNovo = document.getElementById('btnCriarNovo');
   const formPerfil = document.getElementById('formPerfil');
+  const formLogin = document.getElementById('formLogin');
 
   let emojiSelecionado = '😊';
-
-  // Perfis disponíveis
-  const perfisDisponiveis = [
-    { emoji: '😊', nome: 'Feliz' },
-    { emoji: '🥰', nome: 'Apaixonado' },
-    { emoji: '😋', nome: 'Faminto' },
-    { emoji: '😎', nome: 'Confiante' },
-    { emoji: '🤗', nome: 'Carinhoso' },
-    { emoji: '😇', nome: 'Tranquilo' }
-  ];
 
   // Carregar perfis
   function carregarPerfis() {
@@ -36,56 +24,30 @@
 
   function renderizarPerfis(perfis) {
     if (perfis.length === 0) {
-      perfisList.innerHTML = '<p style="color:#999;font-size:13px;">Nenhum perfil salvo</p>';
+      perfisGrid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#999;font-size:14px;">Nenhum perfil salvo</p>';
       return;
     }
 
-    perfisList.innerHTML = perfis.map((perfil, idx) => `
-      <div class="perfil-badge" data-idx="${idx}">
-        <span class="perfil-badge-emoji">${perfil.emoji}</span>
-        <span class="perfil-badge-nome">${perfil.nome}</span>
+    perfisGrid.innerHTML = perfis.map((perfil, idx) => `
+      <div class="perfil-round" data-idx="${idx}">
+        <div class="perfil-emoji">${perfil.emoji}</div>
+        <div class="perfil-nome">${perfil.nome}</div>
       </div>
     `).join('');
 
-    document.querySelectorAll('.perfil-badge').forEach(badge => {
-      badge.addEventListener('click', () => {
-        const perfil = perfis[badge.dataset.idx];
+    document.querySelectorAll('.perfil-round').forEach(el => {
+      el.addEventListener('click', () => {
+        const perfil = perfis[el.dataset.idx];
+        // Salvar perfil atual e redirecionar para perfil/dados pessoais
         localStorage.setItem('got2cook_current_profile', JSON.stringify(perfil));
-        window.location.href = '../humor/index.html';
+        window.location.href = '../perfil/index.html';
       });
     });
   }
 
-  // Abrir modal perfis
+  // Abrir modal adicionar
   btnAddPerfil.addEventListener('click', () => {
-    renderizarGaleria();
     abrirModal(modalPerfis);
-  });
-
-  function renderizarGaleria() {
-    perfisGrid.innerHTML = perfisDisponiveis.map(perfil => `
-      <div class="perfil-card" data-emoji="${perfil.emoji}" data-nome="${perfil.nome}">
-        <div class="perfil-card-emoji">${perfil.emoji}</div>
-        <div class="perfil-card-nome">${perfil.nome}</div>
-      </div>
-    `).join('');
-
-    perfisGrid.querySelectorAll('.perfil-card').forEach(card => {
-      card.addEventListener('click', () => {
-        salvarPerfil({
-          id: Date.now(),
-          emoji: card.dataset.emoji,
-          nome: card.dataset.nome
-        });
-        fecharModal(modalPerfis);
-      });
-    });
-  }
-
-  // Criar perfil customizado
-  btnCriarNovo.addEventListener('click', () => {
-    fecharModal(modalPerfis);
-    abrirModal(modalCriar);
   });
 
   // Seletor de emoji
@@ -97,20 +59,21 @@
     });
   });
 
-  // Submit form
+  // Submit form criar perfil
   formPerfil.addEventListener('submit', (e) => {
     e.preventDefault();
     const nome = e.target.querySelector('input').value.trim();
     
     if (!nome) return;
 
-    salvarPerfil({
+    const perfil = {
       id: Date.now(),
       nome,
       emoji: emojiSelecionado
-    });
+    };
 
-    fecharModal(modalCriar);
+    salvarPerfil(perfil);
+    fecharModal(modalPerfis);
     formPerfil.reset();
   });
 
@@ -125,27 +88,19 @@
     }
   }
 
-  // Modal helpers
-  function abrirModal(modal) {
-    modal.classList.add('ativo');
-  }
+  // Form login com e-mail/senha
+  formLogin.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const checkbox = document.getElementById('aceitoPolitica');
+    
+    if (!checkbox.checked) {
+      alert('Por favor, aceite a Política de Privacidade para continuar.');
+      checkbox.focus();
+      return;
+    }
 
-  function fecharModal(modal) {
-    modal.classList.remove('ativo');
-  }
-
-  document.querySelectorAll('[data-close]').forEach(el => {
-    el.addEventListener('click', () => {
-      fecharModal(modalPerfis);
-      fecharModal(modalCriar);
-    });
-  });
-
-  document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
-    backdrop.addEventListener('click', () => {
-      fecharModal(modalPerfis);
-      fecharModal(modalCriar);
-    });
+    // TODO: Implementar autenticação real
+    window.location.href = '../humor/index.html';
   });
 
   // Login social
@@ -159,6 +114,7 @@
         return;
       }
       
+      // TODO: Implementar OAuth
       window.location.href = '../humor/index.html';
     });
   });
@@ -167,6 +123,23 @@
   document.getElementById('linkCadastro').addEventListener('click', (e) => {
     e.preventDefault();
     alert('Funcionalidade de cadastro em desenvolvimento');
+  });
+
+  // Modal helpers
+  function abrirModal(modal) {
+    modal.classList.add('ativo');
+  }
+
+  function fecharModal(modal) {
+    modal.classList.remove('ativo');
+  }
+
+  document.querySelectorAll('[data-close]').forEach(el => {
+    el.addEventListener('click', () => fecharModal(modalPerfis));
+  });
+
+  document.querySelector('.modal-backdrop')?.addEventListener('click', () => {
+    fecharModal(modalPerfis);
   });
 
   carregarPerfis();
