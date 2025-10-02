@@ -97,3 +97,51 @@ hr{border:none; border-top:1px solid var(--borda); margin:28px 0}
 
 /* Acessibilidade/Focus */
 a:focus-visible{outline:none; box-shadow:0 0 0 4px rgba(34,92,24,.18), 0 0 0 1.5px var(--verde); border-radius:10px}
+
+/* Infográfico de sazonalidade */
+.infographic {
+  margin-top: 32px;
+}
+.infographic > h2 {
+  font-size: 1.4rem;
+  line-height: 1.3;
+  color: #492f70; /* roxo */
+  margin: 0 0 16px;
+}
+.infographic .grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 720px) {
+  .infographic .grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1040px) {
+  .infographic .grid { grid-template-columns: repeat(3, 1fr); }
+}
+.month-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+  border: 1px solid rgba(73,47,112,.08); /* roxo leve */
+}
+.month-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  color: #225c18; /* verde escuro */
+}
+.month-card p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.month-card strong {
+  color: #7b7190; /* roxo-escuro */
+}
+.infographic-note {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #4b4b4b;
+  opacity: .9;
+}
