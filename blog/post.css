@@ -98,50 +98,76 @@ hr{border:none; border-top:1px solid var(--borda); margin:28px 0}
 /* Acessibilidade/Focus */
 a:focus-visible{outline:none; box-shadow:0 0 0 4px rgba(34,92,24,.18), 0 0 0 1.5px var(--verde); border-radius:10px}
 
-/* Infográfico de sazonalidade */
-.infographic {
-  margin-top: 32px;
-}
-.infographic > h2 {
+/* ===== Calendário de Sazonalidade ===== */
+.infographic.calendar { margin-top: 32px; }
+.infographic.calendar > h2 {
   font-size: 1.4rem;
   line-height: 1.3;
-  color: #492f70; /* roxo */
+  color: #492f70;
   margin: 0 0 16px;
 }
-.infographic .grid {
+
+/* Grade anual (12 meses) — 1 / 2 / 3 / 4 colunas */
+.infographic.calendar .grid {
   display: grid;
+  gap: 14px;
   grid-template-columns: 1fr;
-  gap: 12px;
 }
-@media (min-width: 720px) {
-  .infographic .grid { grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 600px){ .infographic.calendar .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px){ .infographic.calendar .grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1200px){ .infographic.calendar .grid { grid-template-columns: repeat(4, 1fr); } }
+
+/* Cartão com “cara” de calendário */
+.infographic.calendar .month-card{
+  position: relative;
+  background:#fff;
+  border:1px solid rgba(73,47,112,.08);
+  border-radius: 16px;
+  box-shadow: 0 8px 22px rgba(0,0,0,.06);
+  overflow:hidden;
 }
-@media (min-width: 1040px) {
-  .infographic .grid { grid-template-columns: repeat(3, 1fr); }
+
+/* Cabeçalho do mês (faixa) */
+.infographic.calendar .cal-header{
+  background: linear-gradient(90deg,#7b7190,#492f70);
+  color:#fff;
+  padding:10px 14px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  min-height:42px;
 }
-.month-card {
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 14px 16px;
-  box-shadow: 0 6px 18px rgba(0,0,0,.06);
-  border: 1px solid rgba(73,47,112,.08); /* roxo leve */
+.infographic.calendar .cal-header .month{ font-size:1rem; }
+
+/* “Furos” do calendário (decorativo) */
+.infographic.calendar .cal-header::before,
+.infographic.calendar .cal-header::after{
+  content:"";
+  width:10px;height:10px;border-radius:50%;
+  background:#fff;opacity:.9;
+  position:absolute;top:10px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.12) inset;
 }
-.month-card h3 {
-  margin: 0 0 8px;
-  font-size: 1.05rem;
-  color: #225c18; /* verde escuro */
+.infographic.calendar .cal-header::before{ left:16px; }
+.infographic.calendar .cal-header::after{ right:16px; }
+
+/* Corpo */
+.infographic.calendar .cal-body{
+  padding:12px 14px 14px;
 }
-.month-card p {
-  margin: 6px 0;
-  font-size: 0.95rem;
-  line-height: 1.5;
+.infographic.calendar .cal-body p{
+  margin:8px 0;
+  font-size:.96rem;
+  line-height:1.55;
 }
-.month-card strong {
-  color: #7b7190; /* roxo-escuro */
+.infographic.calendar .cal-body strong{
+  color:#225c18;
 }
-.infographic-note {
-  margin-top: 10px;
-  font-size: 0.85rem;
-  color: #4b4b4b;
-  opacity: .9;
+
+/* Nota */
+.infographic-note{
+  margin-top:10px;
+  font-size:.85rem;
+  color:#4b4b4b;
+  opacity:.9;
 }
