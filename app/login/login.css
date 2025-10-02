@@ -26,19 +26,17 @@ body {
 
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1000px;
   display: flex;
   flex-direction: column;
   gap: 40px;
   align-items: center;
-  justify-content: center;
 }
 
 /* Branding */
 .branding {
   text-align: center;
   width: 100%;
-  max-width: 500px;
 }
 
 .logo {
@@ -46,19 +44,17 @@ body {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .logo-icon {
-  font-size: 64px;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  font-size: 56px;
 }
 
 .logo-text {
-  font-size: 48px;
+  font-size: 40px;
   font-weight: 800;
   color: var(--roxo);
-  letter-spacing: -1px;
 }
 
 .logo-2 {
@@ -67,32 +63,103 @@ body {
 
 .tagline {
   font-size: 16px;
-  line-height: 1.6;
   color: var(--verde);
   margin-bottom: 32px;
 }
 
-/* Perfis na Branding */
+/* Perfis */
 .perfis-section {
   margin-top: 24px;
 }
 
-.perfis-list {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
+.perfis-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--verde);
+  margin-bottom: 20px;
+}
+
+.perfis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 90px);
+  gap: 16px;
   justify-content: center;
+  margin-bottom: 20px;
+}
+
+.perfil-round {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid var(--verde);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.perfil-round:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(34, 92, 24, 0.2);
+  border-color: var(--roxo);
+}
+
+.perfil-emoji {
+  font-size: 36px;
+  margin-bottom: 4px;
+}
+
+.perfil-nome {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--verde);
+  text-align: center;
+  max-width: 70px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-add-perfil {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px dashed var(--verde);
+  background: white;
+  color: var(--verde);
+  font-size: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-add-perfil:hover {
+  background: var(--bg);
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.add-icon {
+  font-weight: 300;
+  line-height: 1;
 }
 
 /* Login Box */
 .login-box {
+  width: 100%;
+  max-width: 420px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 420px;
-  margin: 0 auto;
-  width: 100%;
 }
 
 .login-card {
@@ -110,37 +177,46 @@ body {
   text-align: center;
 }
 
-/* Botões Sociais */
-.btn-social {
-  width: 100%;
+/* Form Login */
+.form-login {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
   gap: 12px;
-  padding: 14px 20px;
-  border: 1px solid #ddd;
+  margin-bottom: 16px;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #ddd;
   border-radius: 8px;
-  background: white;
+  font-family: inherit;
+  font-size: 15px;
+  transition: all 0.2s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--roxo);
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  background: var(--roxo);
+  color: white;
+  border: none;
+  border-radius: 8px;
   font-family: inherit;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
-  margin-bottom: 12px;
 }
 
-.btn-social:hover {
-  background: #f5f5f5;
-  border-color: #bbb;
-}
-
-.social-icon {
-  width: 20px;
-  height: 20px;
-}
-
-.btn-email {
-  color: var(--verde);
+.btn-submit:hover {
+  background: #3a2458;
+  transform: translateY(-1px);
 }
 
 /* Divisor */
@@ -161,78 +237,58 @@ body {
   background: #ddd;
 }
 
-/* Perfis */
-.perfis-list {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.perfil-badge {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  background: white;
-  border: 2px solid var(--verde);
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.perfil-badge:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(34, 92, 24, 0.2);
-}
-
-.perfil-badge-emoji {
-  font-size: 20px;
-}
-
-.perfil-badge-nome {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--verde);
-}
-
-.btn-add-perfil {
+/* Botões Sociais */
+.btn-social {
   width: 100%;
-  max-width: 280px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 10px;
-  background: white;
-  border: 2px dashed var(--verde);
+  gap: 12px;
+  padding: 12px 20px;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  color: var(--verde);
+  background: white;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
-  margin: 0 auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 10px;
 }
 
-.btn-add-perfil:hover {
-  background: var(--bg);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+.btn-social:hover {
+  background: #f5f5f5;
+  border-color: #bbb;
 }
 
-.add-icon {
-  font-size: 20px;
-  font-weight: 300;
+.social-icon {
+  width: 20px;
+  height: 20px;
 }
 
-/* Checkbox Política */
+/* Link Cadastro */
+.signup-link {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-top: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.signup-link a {
+  color: var(--roxo);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Checkbox */
 .checkbox-group {
-  margin: 16px 0;
+  margin-top: 16px;
 }
 
 .checkbox-label {
@@ -259,24 +315,6 @@ body {
 }
 
 .checkbox-label a:hover {
-  text-decoration: underline;
-}
-
-/* Link Cadastro */
-.signup-link {
-  text-align: center;
-  font-size: 14px;
-  color: #666;
-  margin-top: 20px;
-}
-
-.signup-link a {
-  color: var(--roxo);
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.signup-link a:hover {
   text-decoration: underline;
 }
 
@@ -325,7 +363,7 @@ body {
   background: white;
   border-radius: 16px;
   padding: 32px;
-  max-width: 450px;
+  max-width: 400px;
   width: 100%;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
@@ -358,60 +396,11 @@ body {
   text-align: center;
 }
 
-/* Grid Perfis */
-.perfis-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.perfil-card {
-  padding: 20px 12px;
-  background: var(--bg);
-  border: 2px solid var(--verde);
-  border-radius: 12px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.perfil-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(34, 92, 24, 0.2);
-}
-
-.perfil-card-emoji {
-  font-size: 40px;
-  margin-bottom: 8px;
-}
-
-.perfil-card-nome {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--verde);
-}
-
-/* Form */
+/* Form Perfil */
 .form-perfil {
   display: flex;
   flex-direction: column;
   gap: 20px;
-}
-
-.input {
-  width: 100%;
-  padding: 14px 16px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 16px;
-  transition: all 0.2s;
-}
-
-.input:focus {
-  outline: none;
-  border-color: var(--roxo);
 }
 
 .emoji-grid {
@@ -421,8 +410,8 @@ body {
 }
 
 .emoji-btn {
-  font-size: 32px;
-  padding: 12px 8px;
+  font-size: 28px;
+  padding: 10px 6px;
   border: 2px solid #ddd;
   border-radius: 8px;
   background: white;
@@ -439,30 +428,22 @@ body {
   background: var(--bg);
 }
 
-.btn-submit,
-.btn-criar {
-  width: 100%;
-  padding: 14px;
-  background: var(--roxo);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-submit:hover,
-.btn-criar:hover {
-  background: #3a2458;
-  transform: translateY(-1px);
-}
-
 /* Desktop */
 @media (min-width: 900px) {
-  .branding {
-    max-width: 600px;
+  .container {
+    flex-direction: row;
+    gap: 80px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .branding,
+  .login-box {
+    flex: 1;
+    max-width: 450px;
+  }
+
+  .perfis-grid {
+    grid-template-columns: repeat(3, 90px);
   }
 }
