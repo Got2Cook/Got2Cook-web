@@ -68,89 +68,69 @@ body {
 }
 
 /* Perfis */
-.perfis-section {
-  margin-top: 24px;
-}
-
-.perfis-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--verde);
-  margin-bottom: 20px;
-}
-
 .perfis-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 90px);
-  gap: 16px;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.perfil-round {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: white;
-  border: 3px solid var(--verde);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.perfil-card {
+  width: 180px;
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.perfil-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.perfil-foto {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 3px solid var(--verde);
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
   position: relative;
 }
 
-.perfil-round:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(34, 92, 24, 0.2);
-  border-color: var(--roxo);
-}
-
-.perfil-emoji {
-  font-size: 36px;
-  margin-bottom: 4px;
-}
-
-.perfil-nome {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--verde);
-  text-align: center;
-  max-width: 70px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.btn-add-perfil {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  border: 3px dashed var(--verde);
+.perfil-emoji-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 36px;
+  height: 36px;
   background: white;
-  color: var(--verde);
-  font-size: 40px;
-  cursor: pointer;
+  border: 2px solid var(--verde);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
-  transition: all 0.2s;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-size: 20px;
 }
 
-.btn-add-perfil:hover {
-  background: var(--bg);
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+.perfil-nome {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--verde);
+  margin-bottom: 4px;
 }
 
-.add-icon {
-  font-weight: 300;
-  line-height: 1;
+.perfil-info {
+  font-size: 12px;
+  color: #666;
 }
 
 /* Login Box */
@@ -336,98 +316,6 @@ body {
   background: rgba(255, 255, 255, 0.8);
 }
 
-/* Modal */
-.modal {
-  position: fixed;
-  inset: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 20px;
-}
-
-.modal.ativo {
-  display: flex;
-}
-
-.modal-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-}
-
-.modal-content {
-  position: relative;
-  background: white;
-  border-radius: 16px;
-  padding: 32px;
-  max-width: 400px;
-  width: 100%;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-}
-
-.modal-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: transparent;
-  font-size: 24px;
-  color: #999;
-  cursor: pointer;
-  border-radius: 50%;
-  transition: all 0.2s;
-}
-
-.modal-close:hover {
-  background: #f5f5f5;
-  color: #333;
-}
-
-.modal-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--verde);
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-/* Form Perfil */
-.form-perfil {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.emoji-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 8px;
-}
-
-.emoji-btn {
-  font-size: 28px;
-  padding: 10px 6px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  background: white;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.emoji-btn:hover {
-  transform: scale(1.1);
-}
-
-.emoji-btn.selecionado {
-  border-color: var(--roxo);
-  background: var(--bg);
-}
-
 /* Desktop */
 @media (min-width: 900px) {
   .container {
@@ -441,9 +329,5 @@ body {
   .login-box {
     flex: 1;
     max-width: 450px;
-  }
-
-  .perfis-grid {
-    grid-template-columns: repeat(3, 90px);
   }
 }
