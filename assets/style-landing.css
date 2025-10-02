@@ -58,7 +58,6 @@ body {
   align-items: center;
   gap: 8px;
   font-size: 24px;
-  font-weight: 700;
   color: var(--verde);
   text-decoration: none;
 }
