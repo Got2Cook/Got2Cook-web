@@ -1,74 +1,86 @@
-@import url('./blog.css'); /* reaproveita tipografia e reset */
+@import url('./blog.css'); /* reaproveita variáveis, header e reset */
 
-/* Paleta (fallback caso blog.css não esteja carregado) */
-:root{
-  --roxo:#7b7190;
-  --roxo2:#492f70;
-  --verde:#c0ffa5;
-  --texto:#1d1d1f;
-  --borda:#e8e8ef;
-  --soft:#f6f7fb;
-  --radius:22px;
-  --shadow-sm:0 6px 18px rgba(0,0,0,.08);
-  --shadow-md:0 12px 28px rgba(0,0,0,.12);
+/* ===== HERO/CAPA DO POST (mesma estética do hero do blog) ===== */
+.post-hero{
+  position:relative; overflow:hidden;
+  border-bottom:1px solid var(--borda);
+  min-height:46vh;          /* altura confortável no topo */
+  display:flex; align-items:flex-end;
 }
-
-/* Layout geral do post */
-.post-wrap{max-width:860px;margin:0 auto;padding:0 20px}
-.post-header{padding:28px 0 8px}
-
-/* Capa com “ribbon” como nos cards */
-.post-cover-wrap{
-  position:relative;border-radius:var(--radius);overflow:hidden;
-  border:1px solid #eceaf3; box-shadow:var(--shadow-sm); margin:10px 0 20px;
+.post-hero .bg{
+  position:absolute; inset:0;
+  background: center/cover no-repeat;
+  filter:saturate(1) contrast(1.02);
 }
-.post-cover{display:block;width:100%;height:auto}
-.post-cover-wrap::after{
-  content:""; position:absolute; left:0; right:0; bottom:0; height:46%;
-  background:linear-gradient(to top, rgba(55,42,86,.58), rgba(55,42,86,0));
+.post-hero .overlay{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
+    radial-gradient(1200px 380px at 15% -10%, rgba(192,255,165,.28), transparent 60%);
   pointer-events:none;
 }
-.post-ribbon{
-  position:absolute; left:16px; right:16px; bottom:14px;
-  background:var(--roxo); color:#fff; padding:14px 16px; border-radius:14px;
-  font-size:28px; font-weight:900; line-height:1.25; box-shadow:0 8px 22px rgba(73,47,112,.28);
+.post-hero .inner{
+  position:relative; z-index:1;
+  width:100%; max-width:1160px; margin:0 auto; padding:42px 20px 26px;
 }
-
-/* Meta abaixo da capa */
+.post-title{
+  margin:0 0 10px; color:#fff; font-weight:900; letter-spacing:.2px;
+  font-size:clamp(28px, 5.2vw, 54px); line-height:1.05;
+}
 .post-meta{
-  display:flex; gap:12px; flex-wrap:wrap;
-  color:#5a5a5a; font-size:14px; margin:6px 2px 18px;
+  display:flex; flex-wrap:wrap; gap:10px; align-items:center;
 }
-.post-meta .dot::before{content:"•"; margin:0 6px}
+.meta-chip{
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(255,255,255,.16); color:#fff;
+  border:1px solid rgba(255,255,255,.22);
+  padding:8px 12px; border-radius:999px; font-size:14px; backdrop-filter: blur(4px);
+}
 
-/* Corpo do artigo */
-.post article{font-size:18px; line-height:1.8; color:#222}
-.post h2{font-size:26px; margin:28px 0 10px; color:#2c4b2a}
-.post p{margin:12px 0}
-.post a{color:var(--roxo2); text-decoration:none}
-.post a:hover{text-decoration:underline}
-.post ul, .post ol{padding-left:24px}
-.post li{margin:6px 0}
-.post blockquote{
-  margin:18px 0; padding:16px 18px; border-left:4px solid var(--roxo2);
-  background:var(--soft); border-radius:10px; color:#2a2a2a
+/* ===== Corpo do artigo ===== */
+.post-wrap{max-width:860px; margin:0 auto; padding:26px 20px 64px}
+.post-wrap article{font-size:18px; line-height:1.8; color:#242424}
+.post-wrap p{margin:14px 0}
+.post-wrap h2{font-size:28px; color:var(--roxo2); margin:30px 0 10px}
+.post-wrap h3{font-size:22px; color:#2c4b2a; margin:22px 0 8px}
+.post-wrap a{color:var(--roxo2); text-decoration:none}
+.post-wrap a:hover{text-decoration:underline}
+.post-wrap ul, .post-wrap ol{padding-left:24px}
+.post-wrap li{margin:6px 0}
+
+/* Destaques */
+blockquote{
+  margin:20px 0; padding:16px 18px;
+  background:var(--soft); border:1px solid var(--borda); border-left:4px solid var(--roxo2);
+  border-radius:12px; color:#2a2a2a
 }
-.post hr{border:none; border-top:1px solid var(--borda); margin:28px 0}
+hr{border:none; border-top:1px solid var(--borda); margin:28px 0}
+
+/* Imagens in-line */
+.figure{
+  margin:22px 0; border:1px solid var(--borda); border-radius:16px; overflow:hidden;
+  box-shadow:var(--shadow-sm);
+}
+.figure img{width:100%; display:block; object-fit:cover}
+.figure figcaption{font-size:13px; color:#6b6b6b; padding:8px 12px; background:#fff}
 
 /* Navegação pós-artigo */
 .post-nav{
-  display:flex; justify-content:space-between; gap:16px; margin:28px 0 60px
+  display:flex; justify-content:space-between; gap:16px; margin-top:32px
 }
 .post-nav a{
-  display:inline-block; padding:10px 14px; border-radius:12px; font-weight:700;
-  text-decoration:none; color:#fff; background:var(--roxo2); box-shadow:var(--shadow-sm)
+  display:inline-block; text-decoration:none; font-weight:800; color:#fff;
+  background:linear-gradient(135deg, var(--roxo2), var(--roxo));
+  padding:10px 14px; border-radius:12px; box-shadow:var(--shadow-sm)
 }
-.post-nav a:hover{filter:brightness(1.06)}
+.post-nav a:hover{filter:brightness(1.05)}
 
-/* Header simples (igual ao da listagem) */
-.blog-header{position:sticky; top:0; z-index:10; background:#fff; border-bottom:1px solid var(--borda)}
-.blog-header .container{height:68px; display:flex; align-items:center; justify-content:space-between}
-.brand{font-weight:900; text-decoration:none; color:#c9ff72; font-size:28px; letter-spacing:.3px}
-.nav a{margin-left:18px; text-decoration:none; color:#333; font-weight:600}
-.nav a:hover{color:var(--roxo2)}
-.nav a.active{color:var(--roxo2)}
+/* ===== Barra de progresso de leitura ===== */
+.read-progress{
+  position:fixed; left:0; top:0; height:4px; width:0%;
+  background:linear-gradient(90deg, var(--roxo2), var(--verde)); z-index:50;
+  box-shadow:0 0 10px rgba(73,47,112,.35);
+}
+
+/* Acessibilidade/Focus */
+a:focus-visible{outline:none; box-shadow:0 0 0 4px rgba(34,92,24,.18), 0 0 0 1.5px var(--verde); border-radius:10px}
