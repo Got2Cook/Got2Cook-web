@@ -57,12 +57,18 @@ blockquote{
 hr{border:none; border-top:1px solid var(--borda); margin:28px 0}
 
 /* Imagens in-line */
-.figure{
-  margin:22px 0; border:1px solid var(--borda); border-radius:16px; overflow:hidden;
-  box-shadow:var(--shadow-sm);
+.figure {
+  text-align: center;
 }
-.figure img{width:100%; display:block; object-fit:cover}
-.figure figcaption{font-size:13px; color:#6b6b6b; padding:8px 12px; background:#fff}
+.figure img {
+  width: 60%;              /* reduz para 60% */
+  max-width: 480px;
+  border-radius: 12px;
+}
+.figure figcaption {
+  font-size: 13px;
+  margin-top: 6px;
+}
 
 /* Navegação pós-artigo */
 .post-nav{
