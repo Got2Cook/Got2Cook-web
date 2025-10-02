@@ -1,13 +1,13 @@
 [
   {
-    "slug": "geladeira-organizada",
-    "titulo": "Como organizar a geladeira",
-    "resumo": "Dicas práticas para manter tudo visível e evitar desperdício.",
-    "data": "2025-09-30",
-    "tempoLeitura": "5 min",
-    "categorias": ["Dicas", "App"],
-    "capa": "/assets/blog/capas/geladeira.jpg"
-  },
+  "slug": "alimentos-da-estacao",
+  "titulo": "Alimentos da estação: por que consumir e como isso impacta o planeta",
+  "resumo": "Entenda benefícios de saúde, economia e sustentabilidade ao priorizar alimentos na safra.",
+  "data": "2025-10-02",
+  "tempoLeitura": "6 min",
+  "categorias": ["Sustentabilidade", "Dicas", "Humor"],
+  "capa": "/assets/blog/capas/estacao-feira.jpg"
+},
   {
     "slug": "receitas-rapidas",
     "titulo": "Receitas rápidas para cada humor",
