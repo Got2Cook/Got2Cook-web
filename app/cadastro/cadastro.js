@@ -7,18 +7,42 @@
   
   const form = document.getElementById('formCadastro');
   const btnVoltar = document.getElementById('voltarLogin');
+  
+  // Inputs
+  const nomeInput = document.getElementById('nome');
+  const emailInput = document.getElementById('email');
+  const senhaInput = document.getElementById('senha');
+  const confirmarSenhaInput = document.getElementById('confirmarSenha');
+  const nascimentoInput = document.getElementById('nascimento');
   const cepInput = document.getElementById('cep');
   const cidadeInput = document.getElementById('cidade');
   const estadoInput = document.getElementById('estado');
-  const senhaInput = document.getElementById('senha');
-  const confirmarSenhaInput = document.getElementById('confirmarSenha');
+  const checkboxPolitica = document.getElementById('aceitoPolitica');
+
+  // Erros
+  const erros = {
+    nome: document.getElementById('erroNome'),
+    email: document.getElementById('erroEmail'),
+    senha: document.getElementById('erroSenha'),
+    confirmarSenha: document.getElementById('erroConfirmarSenha'),
+    nascimento: document.getElementById('erroNascimento'),
+    cep: document.getElementById('erroCep'),
+    politica: document.getElementById('erroPolitica')
+  };
+
   const senhaRequisitos = document.getElementById('senhaRequisitos');
-  const senhaMatch = document.getElementById('senhaMatch');
   const btnSubmit = form.querySelector('.btn-submit');
 
   let emojiSelecionado = '😊';
-  let senhaValida = false;
-  let senhasConferem = false;
+  let validacoes = {
+    nome: false,
+    email: false,
+    senha: false,
+    confirmarSenha: false,
+    nascimento: false,
+    cep: false,
+    politica: false
+  };
 
   // Toast helper
   function showToast(msg, type = 'info') {
@@ -37,6 +61,66 @@
     });
   });
 
+  // Validação de nome
+  nomeInput.addEventListener('input', () => {
+    const nome = nomeInput.value.trim();
+    if (!nome) {
+      erros.nome.textContent = 'Nome é obrigatório';
+      nomeInput.classList.add('invalido');
+      nomeInput.classList.remove('valido');
+      validacoes.nome = false;
+    } else if (nome.length < 3) {
+      erros.nome.textContent = 'Nome deve ter pelo menos 3 caracteres';
+      nomeInput.classList.add('invalido');
+      nomeInput.classList.remove('valido');
+      validacoes.nome = false;
+    } else {
+      erros.nome.textContent = '';
+      nomeInput.classList.remove('invalido');
+      nomeInput.classList.add('valido');
+      validacoes.nome = true;
+    }
+    atualizarBotao();
+  });
+
+  nomeInput.addEventListener('blur', () => {
+    if (!nomeInput.value.trim()) {
+      erros.nome.textContent = 'Nome é obrigatório';
+      nomeInput.classList.add('invalido');
+    }
+  });
+
+  // Validação de email
+  emailInput.addEventListener('input', () => {
+    const email = emailInput.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (!email) {
+      erros.email.textContent = 'E-mail é obrigatório';
+      emailInput.classList.add('invalido');
+      emailInput.classList.remove('valido');
+      validacoes.email = false;
+    } else if (!emailRegex.test(email)) {
+      erros.email.textContent = 'Insira um e-mail válido';
+      emailInput.classList.add('invalido');
+      emailInput.classList.remove('valido');
+      validacoes.email = false;
+    } else {
+      erros.email.textContent = '';
+      emailInput.classList.remove('invalido');
+      emailInput.classList.add('valido');
+      validacoes.email = true;
+    }
+    atualizarBotao();
+  });
+
+  emailInput.addEventListener('blur', () => {
+    if (!emailInput.value.trim()) {
+      erros.email.textContent = 'E-mail é obrigatório';
+      emailInput.classList.add('invalido');
+    }
+  });
+
   // Validação de senha
   const requisitos = {
     length: (s) => s.length >= 8,
@@ -52,12 +136,23 @@
   senhaInput.addEventListener('blur', () => {
     if (!senhaInput.value) {
       senhaRequisitos.classList.remove('ativo');
+      erros.senha.textContent = 'Senha é obrigatória';
+      senhaInput.classList.add('invalido');
     }
   });
 
   senhaInput.addEventListener('input', () => {
     const senha = senhaInput.value;
     let todosOk = true;
+
+    if (!senha) {
+      erros.senha.textContent = 'Senha é obrigatória';
+      senhaInput.classList.add('invalido');
+      senhaInput.classList.remove('valido');
+      validacoes.senha = false;
+      atualizarBotao();
+      return;
+    }
 
     Object.keys(requisitos).forEach(req => {
       const el = document.querySelector(`[data-req="${req}"]`);
@@ -66,9 +161,17 @@
       if (!ok) todosOk = false;
     });
 
-    senhaValida = todosOk;
-    senhaInput.classList.toggle('valido', senhaValida);
-    senhaInput.classList.toggle('invalido', senha.length > 0 && !senhaValida);
+    validacoes.senha = todosOk;
+    
+    if (todosOk) {
+      erros.senha.textContent = '';
+      senhaInput.classList.remove('invalido');
+      senhaInput.classList.add('valido');
+    } else {
+      erros.senha.textContent = 'A senha não atende aos requisitos';
+      senhaInput.classList.add('invalido');
+      senhaInput.classList.remove('valido');
+    }
     
     verificarSenhasConferem();
     atualizarBotao();
@@ -76,112 +179,164 @@
 
   // Confirmar senha
   confirmarSenhaInput.addEventListener('input', verificarSenhasConferem);
-  confirmarSenhaInput.addEventListener('blur', verificarSenhasConferem);
+  confirmarSenhaInput.addEventListener('blur', () => {
+    if (!confirmarSenhaInput.value) {
+      erros.confirmarSenha.textContent = 'Confirmação de senha é obrigatória';
+      confirmarSenhaInput.classList.add('invalido');
+    }
+  });
 
   function verificarSenhasConferem() {
     const senha = senhaInput.value;
     const confirmar = confirmarSenhaInput.value;
 
     if (!confirmar) {
-      senhaMatch.textContent = '';
-      senhaMatch.className = 'senha-match';
-      senhasConferem = false;
+      erros.confirmarSenha.textContent = '';
       confirmarSenhaInput.classList.remove('valido', 'invalido');
+      validacoes.confirmarSenha = false;
+      atualizarBotao();
       return;
     }
 
-    if (senha === confirmar && senhaValida) {
-      senhaMatch.textContent = '✓ As senhas conferem';
-      senhaMatch.className = 'senha-match match';
+    if (senha === confirmar && validacoes.senha) {
+      erros.confirmarSenha.textContent = '';
       confirmarSenhaInput.classList.add('valido');
       confirmarSenhaInput.classList.remove('invalido');
-      senhasConferem = true;
+      validacoes.confirmarSenha = true;
     } else {
-      senhaMatch.textContent = '✗ As senhas não conferem';
-      senhaMatch.className = 'senha-match nomatch';
+      erros.confirmarSenha.textContent = 'As senhas não conferem';
       confirmarSenhaInput.classList.add('invalido');
       confirmarSenhaInput.classList.remove('valido');
-      senhasConferem = false;
+      validacoes.confirmarSenha = false;
     }
 
     atualizarBotao();
   }
 
-  function atualizarBotao() {
-    const checkbox = document.getElementById('aceitoPolitica');
-    const todosPreenchidos = form.checkValidity();
-    
-    if (senhaValida && senhasConferem && todosPreenchidos && checkbox.checked) {
-      btnSubmit.disabled = false;
+  // Validação de data de nascimento
+  nascimentoInput.addEventListener('change', () => {
+    const data = new Date(nascimentoInput.value);
+    const hoje = new Date();
+    const idade = hoje.getFullYear() - data.getFullYear();
+    const mesAtual = hoje.getMonth();
+    const mesNasc = data.getMonth();
+    const idadeReal = mesAtual < mesNasc || (mesAtual === mesNasc && hoje.getDate() < data.getDate()) 
+      ? idade - 1 
+      : idade;
+
+    if (!nascimentoInput.value) {
+      erros.nascimento.textContent = 'Data de nascimento é obrigatória';
+      nascimentoInput.classList.add('invalido');
+      nascimentoInput.classList.remove('valido');
+      validacoes.nascimento = false;
+    } else if (data > hoje) {
+      erros.nascimento.textContent = 'Data não pode ser futura';
+      nascimentoInput.classList.add('invalido');
+      nascimentoInput.classList.remove('valido');
+      validacoes.nascimento = false;
+    } else if (idadeReal < 13) {
+      erros.nascimento.textContent = 'Você deve ter pelo menos 13 anos';
+      nascimentoInput.classList.add('invalido');
+      nascimentoInput.classList.remove('valido');
+      validacoes.nascimento = false;
+    } else if (idadeReal > 120) {
+      erros.nascimento.textContent = 'Data inválida';
+      nascimentoInput.classList.add('invalido');
+      nascimentoInput.classList.remove('valido');
+      validacoes.nascimento = false;
     } else {
-      btnSubmit.disabled = true;
+      erros.nascimento.textContent = '';
+      nascimentoInput.classList.remove('invalido');
+      nascimentoInput.classList.add('valido');
+      validacoes.nascimento = true;
     }
-  }
-
-  // Monitorar checkbox
-  document.getElementById('aceitoPolitica').addEventListener('change', atualizarBotao);
-
-  // Monitorar todos os inputs
-  form.querySelectorAll('input').forEach(input => {
-    input.addEventListener('input', atualizarBotao);
+    atualizarBotao();
   });
 
-  // Auto-preenche cidade e estado pelo CEP
+  // Validação de CEP e busca
+  cepInput.addEventListener('input', (e) => {
+    let valor = e.target.value.replace(/\D/g, '');
+    if (valor.length > 5) {
+      valor = valor.substring(0, 5) + '-' + valor.substring(5, 8);
+    }
+    e.target.value = valor;
+  });
+
   cepInput.addEventListener('blur', async () => {
     const cep = cepInput.value.replace(/\D/g, '');
-    if (cep.length === 8) {
-      try {
-        const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-        const data = await res.json();
-        if (!data.erro) {
-          cidadeInput.value = data.localidade;
-          estadoInput.value = data.uf;
-          showToast('CEP encontrado!', 'success');
-          atualizarBotao();
-        } else {
-          showToast('CEP inválido!', 'error');
-        }
-      } catch {
-        showToast('Erro ao buscar o CEP. Tente novamente.', 'error');
-      }
+    
+    if (!cep) {
+      erros.cep.textContent = 'CEP é obrigatório';
+      cepInput.classList.add('invalido');
+      validacoes.cep = false;
+      atualizarBotao();
+      return;
     }
+
+    if (cep.length !== 8) {
+      erros.cep.textContent = 'CEP deve ter 8 dígitos';
+      cepInput.classList.add('invalido');
+      cepInput.classList.remove('valido');
+      validacoes.cep = false;
+      atualizarBotao();
+      return;
+    }
+
+    try {
+      const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const data = await res.json();
+      
+      if (!data.erro) {
+        cidadeInput.value = data.localidade;
+        estadoInput.value = data.uf;
+        erros.cep.textContent = '';
+        cepInput.classList.remove('invalido');
+        cepInput.classList.add('valido');
+        validacoes.cep = true;
+        showToast('CEP encontrado!', 'success');
+      } else {
+        erros.cep.textContent = 'CEP não encontrado';
+        cepInput.classList.add('invalido');
+        cepInput.classList.remove('valido');
+        validacoes.cep = false;
+      }
+    } catch {
+      erros.cep.textContent = 'Erro ao buscar CEP';
+      cepInput.classList.add('invalido');
+      cepInput.classList.remove('valido');
+      validacoes.cep = false;
+    }
+    atualizarBotao();
   });
+
+  // Validação de política
+  checkboxPolitica.addEventListener('change', () => {
+    if (checkboxPolitica.checked) {
+      erros.politica.textContent = '';
+      validacoes.politica = true;
+    } else {
+      erros.politica.textContent = 'Você deve aceitar a Política de Privacidade';
+      validacoes.politica = false;
+    }
+    atualizarBotao();
+  });
+
+  function atualizarBotao() {
+    const todasValidas = Object.values(validacoes).every(v => v === true);
+    btnSubmit.disabled = !todasValidas;
+  }
 
   // Submit cadastro
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const nome = document.getElementById('nome').value.trim();
-    const email = document.getElementById('email').value.trim();
+    const nome = nomeInput.value.trim();
+    const email = emailInput.value.trim();
     const senha = senhaInput.value;
-    const nascimento = document.getElementById('nascimento').value;
+    const nascimento = nascimentoInput.value;
     const cep = cepInput.value;
     const cidade = cidadeInput.value;
     const estado = estadoInput.value;
-    const checkbox = document.getElementById('aceitoPolitica');
-
-    if (!checkbox.checked) {
-      showToast('Por favor, aceite a Política de Privacidade!', 'warning');
-      checkbox.focus();
-      return;
-    }
-
-    if (!senhaValida) {
-      showToast('A senha não atende aos requisitos!', 'error');
-      senhaInput.focus();
-      return;
-    }
-
-    if (!senhasConferem) {
-      showToast('As senhas não conferem!', 'error');
-      confirmarSenhaInput.focus();
-      return;
-    }
-
-    if (!nome || !email || !senha || !nascimento || !cep || !cidade || !estado) {
-      showToast('Preencha todos os campos!', 'warning');
-      return;
-    }
 
     // Verificar se email já existe
     const perfis = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -189,6 +344,8 @@
     
     if (emailExiste) {
       showToast('Este e-mail já está cadastrado!', 'error');
+      emailInput.classList.add('invalido');
+      erros.email.textContent = 'Este e-mail já está cadastrado';
       return;
     }
 
@@ -215,8 +372,6 @@
     };
 
     salvarPerfil(novoPerfil);
-
-    // Define este perfil como atual
     localStorage.setItem(CURRENT_PROFILE_KEY, novoPerfil.id);
 
     showToast(`Conta criada com sucesso! Bem-vindo(a), ${nome}!`, 'success');
@@ -237,12 +392,10 @@
     }
   }
 
-  // Voltar para login
   btnVoltar.addEventListener('click', () => {
     window.location.href = '../login/index.html';
   });
 
-  // Inicializar estado do botão
   atualizarBotao();
 
 })();
