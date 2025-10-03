@@ -12,11 +12,18 @@
     <h1 class="page-title">Crie sua conta</h1>
 
     <div class="form-box">
-      <form class="form-cadastro" id="formCadastro">
-        <input type="text" class="input" placeholder="Nome completo" id="nome" required />
-        <input type="email" class="input" placeholder="E-mail" id="email" required />
+      <form class="form-cadastro" id="formCadastro" novalidate>
+        <div class="input-wrapper">
+          <input type="text" class="input" placeholder="Nome completo" id="nome" required />
+          <span class="input-erro" id="erroNome"></span>
+        </div>
+
+        <div class="input-wrapper">
+          <input type="email" class="input" placeholder="E-mail" id="email" required />
+          <span class="input-erro" id="erroEmail"></span>
+        </div>
         
-        <div class="senha-group">
+        <div class="input-wrapper">
           <input type="password" class="input" placeholder="Senha" id="senha" required />
           <div class="senha-requisitos" id="senhaRequisitos">
             <p class="requisito" data-req="length">
@@ -32,15 +39,31 @@
               <span class="check">✓</span> Um número
             </p>
           </div>
+          <span class="input-erro" id="erroSenha"></span>
         </div>
 
-        <input type="password" class="input" placeholder="Confirmar senha" id="confirmarSenha" required />
-        <div class="senha-match" id="senhaMatch"></div>
+        <div class="input-wrapper">
+          <input type="password" class="input" placeholder="Confirmar senha" id="confirmarSenha" required />
+          <span class="input-erro" id="erroConfirmarSenha"></span>
+        </div>
 
-        <input type="date" class="input" id="nascimento" required />
-        <input type="text" class="input" placeholder="CEP" id="cep" maxlength="9" required />
-        <input type="text" class="input" placeholder="Cidade" id="cidade" readonly />
-        <input type="text" class="input" placeholder="Estado" id="estado" readonly />
+        <div class="input-wrapper">
+          <input type="date" class="input" id="nascimento" required />
+          <span class="input-erro" id="erroNascimento"></span>
+        </div>
+
+        <div class="input-wrapper">
+          <input type="text" class="input" placeholder="CEP (ex: 12345-678)" id="cep" maxlength="9" required />
+          <span class="input-erro" id="erroCep"></span>
+        </div>
+
+        <div class="input-wrapper">
+          <input type="text" class="input" placeholder="Cidade" id="cidade" readonly />
+        </div>
+
+        <div class="input-wrapper">
+          <input type="text" class="input" placeholder="Estado" id="estado" readonly />
+        </div>
 
         <div class="emoji-section">
           <label class="emoji-label">Escolha seu emoji:</label>
@@ -60,6 +83,7 @@
             <input type="checkbox" id="aceitoPolitica" class="checkbox" required />
             <span>Li e aceito a <a href="../politica/index.html" target="_blank">Política de Privacidade</a></span>
           </label>
+          <span class="input-erro" id="erroPolitica"></span>
         </div>
 
         <button type="submit" class="btn-submit">Criar Conta</button>
