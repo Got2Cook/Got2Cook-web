@@ -78,12 +78,6 @@
     });
   });
 
-  // Link cadastro
-  document.getElementById('linkCadastro').addEventListener('click', (e) => {
-    e.preventDefault();
-    alert('Funcionalidade de cadastro em desenvolvimento');
-  });
-
   carregarPerfis();
 
 })();
