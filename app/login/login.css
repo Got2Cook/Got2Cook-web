@@ -72,12 +72,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.perfil-item:hover {
-  transform: translateY(-4px);
+  position: relative;
 }
 
 .perfil-foto {
@@ -92,6 +87,7 @@ body {
   font-size: 48px;
   position: relative;
   transition: all 0.2s;
+  cursor: pointer;
 }
 
 .perfil-item:hover .perfil-foto {
@@ -119,6 +115,28 @@ body {
   font-weight: 600;
   color: var(--verde);
   text-align: center;
+}
+
+.btn-remover-perfil {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #ff4444;
+  color: white;
+  border: 2px solid white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-remover-perfil:hover {
+  background: #cc0000;
+  transform: scale(1.1);
 }
 
 /* Login Box */
@@ -185,6 +203,33 @@ body {
 .btn-submit:hover {
   background: #3a2458;
   transform: translateY(-1px);
+}
+
+.btn-danger {
+  background: #ff4444;
+}
+
+.btn-danger:hover {
+  background: #cc0000;
+}
+
+.btn-cancelar {
+  width: 100%;
+  padding: 12px;
+  background: white;
+  color: #666;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+
+.btn-cancelar:hover {
+  background: #f5f5f5;
 }
 
 /* Divisor */
@@ -302,6 +347,80 @@ body {
 
 .btn-voltar:hover {
   background: rgba(255, 255, 255, 0.8);
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal.ativo {
+  display: flex;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.modal-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--verde);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.modal-texto {
+  font-size: 15px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.form-excluir {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 /* Desktop */
