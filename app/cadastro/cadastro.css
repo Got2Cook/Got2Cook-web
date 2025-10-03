@@ -19,7 +19,7 @@ body {
   background: var(--bg);
   min-height: 100vh;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   padding: 40px 20px;
 }
@@ -29,33 +29,15 @@ body {
   max-width: 500px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
   align-items: center;
-}
-
-/* Branding */
-.branding {
-  text-align: center;
-  width: 100%;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 24px;
-}
-
-.logo-img {
-  height: 120px;
-  width: auto;
 }
 
 .page-title {
   font-size: 32px;
   font-weight: 700;
   color: var(--roxo);
-  margin-bottom: 0;
+  text-align: center;
 }
 
 /* Form Box */
@@ -181,14 +163,6 @@ body {
 
 /* Responsivo */
 @media (min-width: 600px) {
-  .container {
-    padding-top: 60px;
-  }
-
-  .logo-img {
-    height: 140px;
-  }
-
   .page-title {
     font-size: 36px;
   }
