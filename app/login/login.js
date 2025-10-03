@@ -41,10 +41,14 @@
     document.querySelectorAll('.perfil-item').forEach(el => {
       el.addEventListener('click', () => {
         const perfilId = el.dataset.id;
-        localStorage.setItem(CURRENT_PROFILE_KEY, perfilId);
-        window.location.href = '../humor/index.html';
+        selecionarPerfil(perfilId);
       });
     });
+  }
+
+  function selecionarPerfil(perfilId) {
+    localStorage.setItem(CURRENT_PROFILE_KEY, perfilId);
+    window.location.href = '../humor/index.html';
   }
 
   // Form login com e-mail/senha
@@ -58,8 +62,18 @@
       return;
     }
 
-    // TODO: Implementar autenticação real
-    window.location.href = '../humor/index.html';
+    const email = e.target.querySelector('input[type="email"]').value;
+    const senha = e.target.querySelector('input[type="password"]').value;
+
+    // Buscar perfil por email e senha
+    const perfis = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    const perfil = perfis.find(p => p.email === email && p.senha === senha);
+
+    if (perfil) {
+      selecionarPerfil(perfil.id);
+    } else {
+      alert('❌ E-mail ou senha incorretos!');
+    }
   });
 
   // Login social
@@ -74,7 +88,7 @@
       }
       
       // TODO: Implementar OAuth
-      window.location.href = '../humor/index.html';
+      alert('Funcionalidade de login social em desenvolvimento');
     });
   });
 
