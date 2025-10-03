@@ -50,20 +50,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 0;
+  padding: 12px 0;
 }
 
-.logo-img{
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 24px;
-  color: var(--verde);
-  text-decoration: none;
+.logo-img {
+  display: block;
+  height: 50px;
+  width: auto;
+  transition: transform 0.3s ease;
 }
 
-.logo-icon {
-  font-size: 32px;
+.logo-img:hover {
+  transform: scale(1.05);
 }
 
 .nav-links {
@@ -135,6 +133,27 @@ body {
 @keyframes pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.03); }
+}
+
+/* Responsivo Desktop */
+@media (min-width: 768px) {
+  .nav {
+    padding: 16px 0;
+  }
+  
+  .logo-img {
+    height: 60px;
+  }
+  
+  .nav-links {
+    display: flex;
+  }
+}
+
+@media (min-width: 1024px) {
+  .logo-img {
+    height: 65px;
+  }
 }
 
 /* Hero */
