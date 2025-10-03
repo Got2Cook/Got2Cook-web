@@ -6,6 +6,8 @@
   --verde: #225c18;
   --roxo: #492f70;
   --roxo-escuro: #7b7190;
+  --erro: #ff4444;
+  --sucesso: #4caf50;
 }
 
 * {
@@ -56,6 +58,10 @@ body {
   margin-bottom: 20px;
 }
 
+.input-wrapper {
+  position: relative;
+}
+
 .input {
   width: 100%;
   padding: 14px 16px;
@@ -76,6 +82,7 @@ body {
 .input[readonly] {
   background: #f5f5f5;
   cursor: not-allowed;
+  text-align: left;
 }
 
 .input[type="date"] {
@@ -83,18 +90,26 @@ body {
 }
 
 .input.valido {
-  border-color: #4caf50;
+  border-color: var(--sucesso);
+  background: #f0fff0;
 }
 
 .input.invalido {
-  border-color: #ff4444;
+  border-color: var(--erro);
+  background: #fff5f5;
+}
+
+.input-erro {
+  display: block;
+  color: var(--erro);
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 4px;
+  min-height: 18px;
+  padding-left: 4px;
 }
 
 /* Senha */
-.senha-group {
-  position: relative;
-}
-
 .senha-requisitos {
   background: #f9f9f9;
   border: 1px solid #eee;
@@ -125,25 +140,11 @@ body {
 }
 
 .requisito.ok {
-  color: #4caf50;
+  color: var(--sucesso);
 }
 
 .requisito.ok .check {
   opacity: 1;
-}
-
-.senha-match {
-  font-size: 13px;
-  margin-top: -6px;
-  min-height: 20px;
-}
-
-.senha-match.match {
-  color: #4caf50;
-}
-
-.senha-match.nomatch {
-  color: #ff4444;
 }
 
 /* Emoji Section */
@@ -242,6 +243,7 @@ body {
 .btn-submit:disabled {
   background: #ccc;
   cursor: not-allowed;
+  transform: none;
 }
 
 .btn-voltar {
@@ -288,12 +290,12 @@ body {
 }
 
 .toast.success {
-  background: #4caf50;
+  background: var(--sucesso);
   color: white;
 }
 
 .toast.error {
-  background: #ff4444;
+  background: var(--erro);
   color: white;
 }
 
