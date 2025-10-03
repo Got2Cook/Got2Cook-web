@@ -82,6 +82,70 @@ body {
   text-align: left;
 }
 
+.input.valido {
+  border-color: #4caf50;
+}
+
+.input.invalido {
+  border-color: #ff4444;
+}
+
+/* Senha */
+.senha-group {
+  position: relative;
+}
+
+.senha-requisitos {
+  background: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 8px;
+  display: none;
+}
+
+.senha-requisitos.ativo {
+  display: block;
+}
+
+.requisito {
+  font-size: 13px;
+  color: #999;
+  margin: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+}
+
+.requisito .check {
+  font-size: 14px;
+  opacity: 0.3;
+  transition: opacity 0.2s;
+}
+
+.requisito.ok {
+  color: #4caf50;
+}
+
+.requisito.ok .check {
+  opacity: 1;
+}
+
+.senha-match {
+  font-size: 13px;
+  margin-top: -6px;
+  min-height: 20px;
+}
+
+.senha-match.match {
+  color: #4caf50;
+}
+
+.senha-match.nomatch {
+  color: #ff4444;
+}
+
 /* Emoji Section */
 .emoji-section {
   margin-top: 8px;
@@ -122,6 +186,38 @@ body {
   background: var(--bg);
 }
 
+/* Checkbox */
+.checkbox-group {
+  margin-top: 8px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: #666;
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.checkbox-label a {
+  color: var(--roxo);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.checkbox-label a:hover {
+  text-decoration: underline;
+}
+
 /* Botões */
 .btn-submit {
   width: 100%;
@@ -138,9 +234,14 @@ body {
   margin-top: 8px;
 }
 
-.btn-submit:hover {
+.btn-submit:hover:not(:disabled) {
   background: #675d82;
   transform: translateY(-1px);
+}
+
+.btn-submit:disabled {
+  background: #ccc;
+  cursor: not-allowed;
 }
 
 .btn-voltar {
@@ -159,6 +260,46 @@ body {
 
 .btn-voltar:hover {
   background: #f5f5f5;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: white;
+  color: #333;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  font-size: 15px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 2000;
+  max-width: 90%;
+  text-align: center;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast.success {
+  background: #4caf50;
+  color: white;
+}
+
+.toast.error {
+  background: #ff4444;
+  color: white;
+}
+
+.toast.warning {
+  background: #ff9800;
+  color: white;
 }
 
 /* Responsivo */
