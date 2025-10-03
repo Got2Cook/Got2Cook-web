@@ -12,6 +12,20 @@
   const senhaExcluir = document.getElementById('senhaExcluir');
   const nomePerfilExcluir = document.getElementById('nomePerfilExcluir');
 
+  // Adicionar ao /app/login/login.js no início do arquivo, após as constantes
+
+  // Toast helper
+  function showToast(msg, type = 'info') {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.className = `toast show ${type}`;
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  // Substituir todos os alert() por showToast()
+  // Exemplo:
+  // alert('❌ CEP inválido!'); → showToast('CEP inválido!', 'error');
+  // alert('✅ Conta criada...'); → showToast('Conta criada...', 'success');
   let perfilParaExcluir = null;
 
   // Carregar perfis
