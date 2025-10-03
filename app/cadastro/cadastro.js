@@ -3,6 +3,7 @@
   'use strict';
 
   const STORAGE_KEY = 'got2cook_profiles';
+  const CURRENT_PROFILE_KEY = 'got2cook_current_profile_id';
   
   const form = document.getElementById('formCadastro');
   const btnVoltar = document.getElementById('voltarLogin');
@@ -57,8 +58,17 @@
       return;
     }
 
+    // Verificar se email já existe
+    const perfis = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    const emailExiste = perfis.some(p => p.email === email);
+    
+    if (emailExiste) {
+      alert('❌ Este e-mail já está cadastrado!');
+      return;
+    }
+
     const novoPerfil = {
-      id: Date.now(),
+      id: Date.now().toString(),
       nome,
       email,
       senha,
@@ -70,10 +80,17 @@
       foto: emojiSelecionado,
       plano: 'Gratuito',
       nivel: 'BÁSICO',
-      humorAtual: null
+      humorAtual: null,
+      preferencias: [],
+      preferidos: [],
+      restritos: [],
+      criadoEm: new Date().toISOString()
     };
 
     salvarPerfil(novoPerfil);
+
+    // Define este perfil como atual
+    localStorage.setItem(CURRENT_PROFILE_KEY, novoPerfil.id);
 
     alert(`✅ Conta criada com sucesso!\nBem-vindo(a), ${nome}!`);
     window.location.href = '../login/index.html';
