@@ -15,7 +15,28 @@
       <form class="form-cadastro" id="formCadastro">
         <input type="text" class="input" placeholder="Nome completo" id="nome" required />
         <input type="email" class="input" placeholder="E-mail" id="email" required />
-        <input type="password" class="input" placeholder="Senha" id="senha" required />
+        
+        <div class="senha-group">
+          <input type="password" class="input" placeholder="Senha" id="senha" required />
+          <div class="senha-requisitos" id="senhaRequisitos">
+            <p class="requisito" data-req="length">
+              <span class="check">✓</span> Mínimo 8 caracteres
+            </p>
+            <p class="requisito" data-req="upper">
+              <span class="check">✓</span> Uma letra maiúscula
+            </p>
+            <p class="requisito" data-req="lower">
+              <span class="check">✓</span> Uma letra minúscula
+            </p>
+            <p class="requisito" data-req="number">
+              <span class="check">✓</span> Um número
+            </p>
+          </div>
+        </div>
+
+        <input type="password" class="input" placeholder="Confirmar senha" id="confirmarSenha" required />
+        <div class="senha-match" id="senhaMatch"></div>
+
         <input type="date" class="input" id="nascimento" required />
         <input type="text" class="input" placeholder="CEP" id="cep" maxlength="9" required />
         <input type="text" class="input" placeholder="Cidade" id="cidade" readonly />
@@ -33,12 +54,23 @@
           </div>
         </div>
 
+        <!-- Checkbox Política de Privacidade -->
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="aceitoPolitica" class="checkbox" required />
+            <span>Li e aceito a <a href="../politica/index.html" target="_blank">Política de Privacidade</a></span>
+          </label>
+        </div>
+
         <button type="submit" class="btn-submit">Criar Conta</button>
       </form>
 
       <button class="btn-voltar" id="voltarLogin">← Voltar ao Login</button>
     </div>
   </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
 
   <script src="cadastro.js"></script>
 </body>
