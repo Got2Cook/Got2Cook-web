@@ -1,0 +1,50 @@
+<!-- /app/cadastro/index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Criar Conta - Got2Cook</title>
+  <link rel="stylesheet" href="cadastro.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="branding">
+      <div class="logo">
+        <img src="../../public/assets/img/logo.png" alt="Got2Cook" class="logo-img" />
+      </div>
+      <h1 class="page-title">Crie sua conta</h1>
+    </div>
+
+    <div class="form-box">
+      <form class="form-cadastro" id="formCadastro">
+        <input type="text" class="input" placeholder="Nome completo" id="nome" required />
+        <input type="email" class="input" placeholder="E-mail" id="email" required />
+        <input type="password" class="input" placeholder="Senha" id="senha" required />
+        <input type="date" class="input" id="nascimento" required />
+        <input type="text" class="input" placeholder="CEP" id="cep" maxlength="9" required />
+        <input type="text" class="input" placeholder="Cidade" id="cidade" readonly />
+        <input type="text" class="input" placeholder="Estado" id="estado" readonly />
+
+        <div class="emoji-section">
+          <label class="emoji-label">Escolha seu emoji:</label>
+          <div class="emoji-grid">
+            <button type="button" class="emoji-btn selecionado" data-emoji="😊">😊</button>
+            <button type="button" class="emoji-btn" data-emoji="🥰">🥰</button>
+            <button type="button" class="emoji-btn" data-emoji="😋">😋</button>
+            <button type="button" class="emoji-btn" data-emoji="😎">😎</button>
+            <button type="button" class="emoji-btn" data-emoji="🤗">🤗</button>
+            <button type="button" class="emoji-btn" data-emoji="😇">😇</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Criar Conta</button>
+      </form>
+
+      <button class="btn-voltar" id="voltarLogin">← Voltar ao Login</button>
+    </div>
+  </div>
+
+  <script src="cadastro.js"></script>
+</body>
+</html>
