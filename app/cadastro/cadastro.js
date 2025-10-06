@@ -8,7 +8,6 @@
   const form = document.getElementById('formCadastro');
   const btnVoltar = document.getElementById('voltarLogin');
   
-  // Inputs
   const nomeInput = document.getElementById('nome');
   const emailInput = document.getElementById('email');
   const senhaInput = document.getElementById('senha');
@@ -19,7 +18,6 @@
   const estadoInput = document.getElementById('estado');
   const checkboxPolitica = document.getElementById('aceitoPolitica');
 
-  // Erros
   const erros = {
     nome: document.getElementById('erroNome'),
     email: document.getElementById('erroEmail'),
@@ -44,7 +42,6 @@
     politica: false
   };
 
-  // Toast helper
   function showToast(msg, type = 'info') {
     const toast = document.getElementById('toast');
     toast.textContent = msg;
@@ -52,7 +49,30 @@
     setTimeout(() => toast.classList.remove('show'), 3000);
   }
 
-  // Seletor de emoji
+  function atualizarLabels() {
+    document.querySelectorAll('.input').forEach(input => {
+      if (input.value) {
+        input.classList.add('has-value');
+      }
+      
+      input.addEventListener('input', () => {
+        if (input.value) {
+          input.classList.add('has-value');
+        } else {
+          input.classList.remove('has-value');
+        }
+      });
+
+      input.addEventListener('change', () => {
+        if (input.value) {
+          input.classList.add('has-value');
+        } else {
+          input.classList.remove('has-value');
+        }
+      });
+    });
+  }
+
   document.querySelectorAll('.emoji-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selecionado'));
@@ -61,7 +81,6 @@
     });
   });
 
-  // Validação de nome
   nomeInput.addEventListener('input', () => {
     const nome = nomeInput.value.trim();
     if (!nome) {
@@ -90,7 +109,6 @@
     }
   });
 
-  // Validação de email
   emailInput.addEventListener('input', () => {
     const email = emailInput.value.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -121,7 +139,6 @@
     }
   });
 
-  // Validação de senha
   const requisitos = {
     length: (s) => s.length >= 8,
     upper: (s) => /[A-Z]/.test(s),
@@ -177,7 +194,6 @@
     atualizarBotao();
   });
 
-  // Confirmar senha
   confirmarSenhaInput.addEventListener('input', verificarSenhasConferem);
   confirmarSenhaInput.addEventListener('blur', () => {
     if (!confirmarSenhaInput.value) {
@@ -213,7 +229,6 @@
     atualizarBotao();
   }
 
-  // Validação de data de nascimento
   nascimentoInput.addEventListener('change', () => {
     const data = new Date(nascimentoInput.value);
     const hoje = new Date();
@@ -253,7 +268,6 @@
     atualizarBotao();
   });
 
-  // Validação de CEP e busca
   cepInput.addEventListener('input', (e) => {
     let valor = e.target.value.replace(/\D/g, '');
     if (valor.length > 5) {
@@ -289,6 +303,8 @@
       if (!data.erro) {
         cidadeInput.value = data.localidade;
         estadoInput.value = data.uf;
+        cidadeInput.classList.add('has-value');
+        estadoInput.classList.add('has-value');
         erros.cep.textContent = '';
         cepInput.classList.remove('invalido');
         cepInput.classList.add('valido');
@@ -309,7 +325,6 @@
     atualizarBotao();
   });
 
-  // Validação de política
   checkboxPolitica.addEventListener('change', () => {
     if (checkboxPolitica.checked) {
       erros.politica.textContent = '';
@@ -326,7 +341,6 @@
     btnSubmit.disabled = !todasValidas;
   }
 
-  // Submit cadastro
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -338,7 +352,6 @@
     const cidade = cidadeInput.value;
     const estado = estadoInput.value;
 
-    // Verificar se email já existe
     const perfis = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
     const emailExiste = perfis.some(p => p.email === email);
     
@@ -397,5 +410,6 @@
   });
 
   atualizarBotao();
+  atualizarLabels();
 
 })();
