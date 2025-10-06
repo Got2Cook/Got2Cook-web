@@ -14,17 +14,20 @@
     <div class="form-box">
       <form class="form-cadastro" id="formCadastro" novalidate>
         <div class="input-wrapper">
-         <input type="text" class="input" placeholder="Nome completo" id="nome" required />
+          <input type="text" class="input" id="nome" required />
+          <label for="nome" class="input-label">Nome completo</label>
           <span class="input-erro" id="erroNome"></span>
         </div>
 
         <div class="input-wrapper">
-          <input type="email" class="input" placeholder="E-mail" id="email" required />
+          <input type="email" class="input" id="email" required />
+          <label for="email" class="input-label">E-mail</label>
           <span class="input-erro" id="erroEmail"></span>
         </div>
         
         <div class="input-wrapper">
-          <input type="password" class="input" placeholder="Senha" id="senha" required />
+          <input type="password" class="input" id="senha" required />
+          <label for="senha" class="input-label">Senha</label>
           <div class="senha-requisitos" id="senhaRequisitos">
             <p class="requisito" data-req="length">
               <span class="check">✓</span> Mínimo 8 caracteres
@@ -43,26 +46,31 @@
         </div>
 
         <div class="input-wrapper">
-          <input type="password" class="input" placeholder="Confirmar senha" id="confirmarSenha" required />
+          <input type="password" class="input" id="confirmarSenha" required />
+          <label for="confirmarSenha" class="input-label">Confirmar senha</label>
           <span class="input-erro" id="erroConfirmarSenha"></span>
         </div>
 
         <div class="input-wrapper">
           <input type="date" class="input" id="nascimento" required />
+          <label for="nascimento" class="input-label">Data de nascimento</label>
           <span class="input-erro" id="erroNascimento"></span>
         </div>
 
         <div class="input-wrapper">
-          <input type="text" class="input" placeholder="CEP (ex: 12345-678)" id="cep" maxlength="9" required />
+          <input type="text" class="input" id="cep" maxlength="9" required />
+          <label for="cep" class="input-label">CEP</label>
           <span class="input-erro" id="erroCep"></span>
         </div>
 
         <div class="input-wrapper">
-          <input type="text" class="input" placeholder="Cidade" id="cidade" readonly />
+          <input type="text" class="input" id="cidade" readonly />
+          <label for="cidade" class="input-label">Cidade</label>
         </div>
 
         <div class="input-wrapper">
-          <input type="text" class="input" placeholder="Estado" id="estado" readonly />
+          <input type="text" class="input" id="estado" readonly />
+          <label for="estado" class="input-label">Estado</label>
         </div>
 
         <div class="emoji-section">
@@ -77,7 +85,6 @@
           </div>
         </div>
 
-        <!-- Checkbox Política de Privacidade -->
         <div class="checkbox-group">
           <label class="checkbox-label">
             <input type="checkbox" id="aceitoPolitica" class="checkbox" required />
@@ -93,7 +100,6 @@
     </div>
   </div>
 
-  <!-- Toast -->
   <div class="toast" id="toast"></div>
 
   <script src="cadastro.js"></script>
