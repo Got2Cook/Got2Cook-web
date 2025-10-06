@@ -58,9 +58,7 @@ body {
   margin-bottom: 20px;
 }
 
-.input-wrapper {
-  position: relative;
-}
+/* Substituir os estilos do .input no cadastro.css */
 
 .input {
   width: 100%;
@@ -70,43 +68,24 @@ body {
   font-family: inherit;
   font-size: 15px;
   transition: all 0.2s;
-  text-align: center;
+  text-align: left;
+}
+
+.input::placeholder {
+  color: #999;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .input:focus {
   outline: none;
   border-color: var(--roxo);
-  text-align: left;
 }
 
-.input[readonly] {
-  background: #f5f5f5;
-  cursor: not-allowed;
-  text-align: left;
-}
-
-.input[type="date"] {
-  text-align: left;
-}
-
-.input.valido {
-  border-color: var(--sucesso);
-  background: #f0fff0;
-}
-
-.input.invalido {
-  border-color: var(--erro);
-  background: #fff5f5;
-}
-
-.input-erro {
-  display: block;
-  color: var(--erro);
-  font-size: 12px;
-  font-weight: 600;
-  margin-top: 4px;
-  min-height: 18px;
-  padding-left: 4px;
+.input:focus::placeholder {
+  opacity: 0.5;
 }
 
 /* Senha */
