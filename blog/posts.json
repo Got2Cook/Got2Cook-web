@@ -9,14 +9,14 @@
   "capa": "/assets/blog/capas/estacoes.png"
 },
   {
-    "slug": "receitas-rapidas",
-    "titulo": "Receitas rápidas para cada humor",
-    "resumo": "Três ideias certeiras para quando você está eufórico, ansioso ou sem tempo.",
-    "data": "2025-09-25",
-    "tempoLeitura": "4 min",
-    "categorias": ["Receitas", "Humor"],
-    "capa": "/assets/blog/capas/rapidas.jpg"
-  },
+  "slug": "mindful-eating",
+  "titulo": "Mindful eating: o que é e como começar a praticar",
+  "resumo": "Alimentação consciente na prática: passos simples para comer com presença e prazer.",
+  "data": "2025-10-03",
+  "tempoLeitura": "6 min",
+  "categorias": ["Bem-estar", "Mindfulness", "Dicas"],
+  "capa": "/assets/blog/capas/mindful-eating.png"
+},
   {
     "slug": "economizar-tempo-na-cozinha",
     "titulo": "Como economizar tempo na cozinha",
