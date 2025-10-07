@@ -1,63 +1,337 @@
+<!-- /blog/index.html -->
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Blog Got2Cook</title>
-  <meta name="description" content="Receitas, dicas e bastidores — descubra novas formas de cozinhar e economizar tempo na cozinha!">
-  <link rel="stylesheet" href="./blog.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog Got2Cook - Receitas, Dicas e Inspiração Culinária</title>
+  <meta name="description" content="Descubra receitas incríveis, dicas de cozinha e aprenda a cozinhar de acordo com seu humor. O blog do Got2Cook traz conteúdo exclusivo para transformar sua experiência na cozinha.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./blog.css">
 </head>
 <body>
-  <!-- HEADER ROXO COM MARCA CENTRAL -->
+  
+  <!-- HEADER PREMIUM COM NAVEGAÇÃO -->
   <header class="topbar">
-    <div class="topbar-inner">
-      <a href="/" class="brand" aria-label="Got2Cook">Got2Cook</a>
+    <div class="topbar-inner container">
+      <a href="/" class="brand" aria-label="Got2Cook">
+        <span class="brand-got">Got2</span><span class="brand-cook">Cook</span>
+      </a>
+      <nav class="main-nav">
+        <a href="/">Início</a>
+        <a href="/app/">App</a>
+        <a href="/blog/" class="active">Blog</a>
+        <a href="/sobre/">Sobre</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
 
-  <!-- HERO COM IMAGEM DE FUNDO, OVERLAY VERDE, TÍTULO, SUB E FILTROS PÍLULA + CARD LATERAL -->
+  <!-- HERO PREMIUM -->
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
-
+    <div class="hero-particles"></div>
     <div class="hero-content container">
-      <div class="hero-left">
-        <h1>Blog Got2Cook</h1>
-        <p>Receitas, dicas e bastidores — descubra novas formas de cozinhar e economizar tempo na cozinha!</p>
-
-        <div class="filters">
-          <label for="busca" class="sr-only">Buscar artigos</label>
-          <input id="busca" type="search" placeholder="Buscar artigos..." autocomplete="off" />
-
-          <label for="categoria" class="sr-only">Todas as categorias</label>
-          <div class="select-wrap">
-            <select id="categoria">
-              <option value="">Todas as categorias</option>
-            </select>
-            <span class="chev">▾</span>
+      <div class="hero-main">
+        <div class="hero-badge">
+          <span class="badge-icon">✨</span>
+          <span>Conteúdo Exclusivo</span>
+        </div>
+        <h1>Cozinhe com <span class="highlight">emoção</span></h1>
+        <p>Descubra receitas que combinam com seu humor, aprenda técnicas incríveis e transforme sua relação com a cozinha</p>
+        
+        <!-- FILTROS PREMIUM -->
+        <div class="search-box">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <input id="busca" type="search" placeholder="Buscar artigos, receitas, dicas..." autocomplete="off">
+          </div>
+          <div class="filter-group">
+            <button class="filter-btn active" data-filter="all">
+              <span>📚</span> Todos
+            </button>
+            <button class="filter-btn" data-filter="Receitas">
+              <span>🍳</span> Receitas
+            </button>
+            <button class="filter-btn" data-filter="Dicas">
+              <span>💡</span> Dicas
+            </button>
+            <button class="filter-btn" data-filter="Humor">
+              <span>😊</span> Humor
+            </button>
+            <button class="filter-btn" data-filter="Ciência">
+              <span>🔬</span> Ciência
+            </button>
           </div>
         </div>
       </div>
 
-      <aside class="hero-card">
-        <h3>Cozinhe com seu humor!</h3>
-        <p>Veja como o app combina seu humor com ingredientes da geladeira</p>
-        <a class="btn-cta" href="/app/">Conhecer</a>
+      <!-- CARD CTA PREMIUM -->
+      <aside class="hero-cta-card">
+        <div class="cta-icon">🎯</div>
+        <h3>Experimente o App</h3>
+        <p>Receba sugestões personalizadas baseadas no seu humor e ingredientes disponíveis</p>
+        <div class="cta-features">
+          <div class="feature-item">
+            <span class="feature-check">✓</span>
+            <span>IA personalizada</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-check">✓</span>
+            <span>Sem desperdício</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-check">✓</span>
+            <span>Economia de tempo</span>
+          </div>
+        </div>
+        <a class="btn-cta" href="/app/">
+          <span>Conhecer o App</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
       </aside>
     </div>
   </section>
 
-  <!-- LISTA + SLOT DE ANÚNCIO EM 3 COLUNAS -->
-  <main class="container main-grid">
-    <section id="lista-posts" class="cards"></section>
-
-    <aside class="ad-slot">
-      <div class="ad-box">
-        <span>(espaço para anuncio)</span>
+  <!-- STATS BAR -->
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number" data-count="150">0</div>
+          <div class="stat-label">Artigos Publicados</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-count="50000">0</div>
+          <div class="stat-label">Leitores/Mês</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-count="500">0</div>
+          <div class="stat-label">Receitas Testadas</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-count="98">0</div>
+          <div class="stat-label">% Aprovação</div>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content container">
+    
+    <!-- ARTIGOS EM DESTAQUE -->
+    <section class="featured-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="title-icon">⭐</span>
+          Artigos em Destaque
+        </h2>
+        <p class="section-subtitle">Os conteúdos mais populares e relevantes</p>
+      </div>
+      <div id="featured-posts" class="featured-grid">
+        <!-- Será preenchido via JS -->
+      </div>
+    </section>
+
+    <!-- ARTIGOS RECENTES -->
+    <section class="posts-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="title-icon">📝</span>
+          Todos os Artigos
+        </h2>
+        <div class="view-controls">
+          <button class="view-btn active" data-view="grid" aria-label="Visualização em grade">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <rect x="2" y="2" width="7" height="7" rx="1"/>
+              <rect x="11" y="2" width="7" height="7" rx="1"/>
+              <rect x="2" y="11" width="7" height="7" rx="1"/>
+              <rect x="11" y="11" width="7" height="7" rx="1"/>
+            </svg>
+          </button>
+          <button class="view-btn" data-view="list" aria-label="Visualização em lista">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <rect x="2" y="3" width="16" height="3" rx="1"/>
+              <rect x="2" y="8.5" width="16" height="3" rx="1"/>
+              <rect x="2" y="14" width="16" height="3" rx="1"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div id="lista-posts" class="posts-grid view-grid">
+        <!-- Será preenchido via JS -->
+      </div>
+      
+      <!-- LOAD MORE -->
+      <div class="load-more-wrapper">
+        <button id="loadMore" class="btn-load-more" style="display: none;">
+          <span>Carregar Mais Artigos</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 3v10M3 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      
+      <!-- NEWSLETTER -->
+      <div class="widget newsletter-widget">
+        <div class="newsletter-icon">💌</div>
+        <h3>Newsletter</h3>
+        <p>Receba receitas e dicas exclusivas toda semana</p>
+        <form class="newsletter-form" id="newsletterForm">
+          <input type="email" placeholder="Seu melhor e-mail" required>
+          <button type="submit">
+            <span>Inscrever</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+        <div class="newsletter-privacy">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+            <path d="M6 1l4 2v3c0 2.5-1.79 4.84-4 5.5-2.21-.66-4-3-4-5.5V3l4-2z"/>
+          </svg>
+          <span>Seus dados estão seguros</span>
+        </div>
+      </div>
+
+      <!-- CATEGORIAS POPULARES -->
+      <div class="widget categories-widget">
+        <h3>Categorias Populares</h3>
+        <div id="popular-categories" class="category-list">
+          <!-- Será preenchido via JS -->
+        </div>
+      </div>
+
+      <!-- AD SLOT -->
+      <div class="widget ad-widget">
+        <div class="ad-label">Publicidade</div>
+        <div class="ad-box">
+          <span>Espaço Publicitário</span>
+        </div>
+      </div>
+
+      <!-- REDES SOCIAIS -->
+      <div class="widget social-widget">
+        <h3>Siga-nos</h3>
+        <div class="social-links">
+          <a href="#" class="social-link instagram" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="2" y="2" width="20" height="20" rx="5"/>
+              <circle cx="12" cy="12" r="4" fill="none" stroke="#fff" stroke-width="2"/>
+              <circle cx="18" cy="6" r="1.5" fill="#fff"/>
+            </svg>
+          </a>
+          <a href="#" class="social-link facebook" aria-label="Facebook">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+            </svg>
+          </a>
+          <a href="#" class="social-link youtube" aria-label="YouTube">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.33z"/>
+              <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#fff"/>
+            </svg>
+          </a>
+          <a href="#" class="social-link tiktok" aria-label="TikTok">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
     </aside>
+
   </main>
 
-  <script src="./blog.js" defer></script>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <div class="footer-col footer-brand">
+          <div class="footer-logo">
+            <span class="brand-got">Got2</span><span class="brand-cook">Cook</span>
+          </div>
+          <p class="footer-description">Transformando emoções em receitas deliciosas. Cozinhe de acordo com seu humor e aproveite cada momento na cozinha.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4" fill="none" stroke="#fff" stroke-width="2"/><circle cx="18" cy="6" r="1.5" fill="#fff"/></svg></a>
+            <a href="#" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+            <a href="#" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#fff"/></svg></a>
+            <a href="#" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/></svg></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Início</a></li>
+            <li><a href="/app/">Download App</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/receitas/">Receitas</a></li>
+            <li><a href="/sobre/">Sobre Nós</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Recursos</h4>
+          <ul>
+            <li><a href="/como-funciona/">Como Funciona</a></li>
+            <li><a href="/premium/">Planos Premium</a></li>
+            <li><a href="/faq/">Perguntas Frequentes</a></li>
+            <li><a href="/suporte/">Suporte</a></li>
+            <li><a href="/api/">API para Desenvolvedores</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/termos/">Termos de Uso</a></li>
+            <li><a href="/privacidade/">Política de Privacidade</a></li>
+            <li><a href="/cookies/">Política de Cookies</a></li>
+            <li><a href="/contato/">Fale Conosco</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Got2Cook. Todos os direitos reservados.</p>
+        <div class="footer-links">
+          <a href="/termos/">Termos</a>
+          <span>•</span>
+          <a href="/privacidade/">Privacidade</a>
+          <span>•</span>
+          <a href="/cookies/">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BACK TO TOP -->
+  <button class="back-to-top" id="backToTop" aria-label="Voltar ao topo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M10 17V3M3 10l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <script src="./blog.js"></script>
 </body>
 </html>
