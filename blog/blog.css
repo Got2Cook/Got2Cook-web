@@ -315,8 +315,7 @@ a {
   outline: none;
   background: #fff;
   box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
-  transform: translateY
-  (-2px);
+  transform: translateY(-2px);
 }
 
 #busca::placeholder {
