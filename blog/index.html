@@ -13,7 +13,6 @@
 </head>
 <body>
   
-  <!-- HEADER PREMIUM COM NAVEGAÇÃO -->
   <header class="topbar">
     <div class="topbar-inner container">
       <a href="/" class="brand" aria-label="Got2Cook">
@@ -33,7 +32,6 @@
     </div>
   </header>
 
-  <!-- HERO PREMIUM -->
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
@@ -47,7 +45,6 @@
         <h1>Cozinhe com <span class="highlight">emoção</span></h1>
         <p>Descubra receitas que combinam com seu humor, aprenda técnicas incríveis e transforme sua relação com a cozinha</p>
         
-        <!-- FILTROS PREMIUM -->
         <div class="search-box">
           <div class="search-input-wrapper">
             <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -75,7 +72,6 @@
         </div>
       </div>
 
-      <!-- CARD CTA PREMIUM -->
       <aside class="hero-cta-card">
         <div class="cta-icon">🎯</div>
         <h3>Experimente o App</h3>
@@ -104,21 +100,16 @@
     </div>
   </section>
 
-  <!-- STATS BAR -->
   <section class="stats-bar">
     <div class="container">
       <div class="stats-grid">
         <div class="stat-item">
-          <div class="stat-number" data-count="150">0</div>
+          <div class="stat-number" id="statsArticles">0</div>
           <div class="stat-label">Artigos Publicados</div>
         </div>
         <div class="stat-item">
           <div class="stat-number" data-count="50000">0</div>
           <div class="stat-label">Leitores/Mês</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number" data-count="500">0</div>
-          <div class="stat-label">Receitas Testadas</div>
         </div>
         <div class="stat-item">
           <div class="stat-number" data-count="98">0</div>
@@ -128,24 +119,8 @@
     </div>
   </section>
 
-  <!-- MAIN CONTENT -->
   <main class="main-content container">
     
-    <!-- ARTIGOS EM DESTAQUE -->
-    <section class="featured-section">
-      <div class="section-header">
-        <h2 class="section-title">
-          <span class="title-icon">⭐</span>
-          Artigos em Destaque
-        </h2>
-        <p class="section-subtitle">Os conteúdos mais populares e relevantes</p>
-      </div>
-      <div id="featured-posts" class="featured-grid">
-        <!-- Será preenchido via JS -->
-      </div>
-    </section>
-
-    <!-- ARTIGOS RECENTES -->
     <section class="posts-section">
       <div class="section-header">
         <h2 class="section-title">
@@ -170,11 +145,16 @@
           </button>
         </div>
       </div>
-      <div id="lista-posts" class="posts-grid view-grid">
-        <!-- Será preenchido via JS -->
+
+      <div class="ad-banner">
+        <div class="ad-label">Publicidade</div>
+        <div class="ad-content">
+          <span>Espaço Publicitário</span>
+        </div>
       </div>
+
+      <div id="lista-posts" class="posts-grid view-grid"></div>
       
-      <!-- LOAD MORE -->
       <div class="load-more-wrapper">
         <button id="loadMore" class="btn-load-more" style="display: none;">
           <span>Carregar Mais Artigos</span>
@@ -185,10 +165,8 @@
       </div>
     </section>
 
-    <!-- SIDEBAR -->
     <aside class="sidebar">
       
-      <!-- NEWSLETTER -->
       <div class="widget newsletter-widget">
         <div class="newsletter-icon">💌</div>
         <h3>Newsletter</h3>
@@ -210,15 +188,11 @@
         </div>
       </div>
 
-      <!-- CATEGORIAS POPULARES -->
       <div class="widget categories-widget">
         <h3>Categorias Populares</h3>
-        <div id="popular-categories" class="category-list">
-          <!-- Será preenchido via JS -->
-        </div>
+        <div id="popular-categories" class="category-list"></div>
       </div>
 
-      <!-- AD SLOT -->
       <div class="widget ad-widget">
         <div class="ad-label">Publicidade</div>
         <div class="ad-box">
@@ -226,7 +200,6 @@
         </div>
       </div>
 
-      <!-- REDES SOCIAIS -->
       <div class="widget social-widget">
         <h3>Siga-nos</h3>
         <div class="social-links">
@@ -260,7 +233,6 @@
 
   </main>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
@@ -325,7 +297,6 @@
     </div>
   </footer>
 
-  <!-- BACK TO TOP -->
   <button class="back-to-top" id="backToTop" aria-label="Voltar ao topo">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
       <path d="M10 17V3M3 10l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
