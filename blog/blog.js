@@ -24,30 +24,29 @@
 
   // === INIT ===
   async function init() {
-    showLoading();
+  showLoading();
+  
+  try {
+    const res = await fetch('./posts.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('Falha ao carregar posts');
     
-    try {
-      const res = await fetch('./posts.json', { cache: 'no-store' });
-      if (!res.ok) throw new Error('Falha ao carregar posts');
-      
-      posts = await res.json();
-      
-      if (!Array.isArray(posts) || posts.length === 0) {
-        showEmptyState('📝 Nenhum artigo disponível no momento.');
-        return;
-      }
-
-      filteredPosts = posts.slice();
-      renderFeatured();
-      renderPosts();
-      renderCategories();
-      animateStats();
-      hideLoading();
-    } catch (e) {
-      showEmptyState('❌ Erro ao carregar artigos. Tente novamente mais tarde.');
-      console.error('Erro ao inicializar blog:', e);
+    posts = await res.json();
+    
+    if (!Array.isArray(posts) || posts.length === 0) {
+      showEmptyState('📝 Nenhum artigo disponível no momento.');
+      return;
     }
+
+    filteredPosts = posts.slice();
+    renderPosts();
+    renderCategories();
+    animateStats();
+    hideLoading();
+  } catch (e) {
+    showEmptyState('❌ Erro ao carregar artigos. Tente novamente mais tarde.');
+    console.error('Erro ao inicializar blog:', e);
   }
+}
 
   // === RENDER FEATURED ===
   function renderFeatured() {
@@ -244,18 +243,25 @@
 
   // === ANIMATE STATS ===
   function animateStats() {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const target = parseInt(entry.target.dataset.count);
-          animateValue(entry.target, 0, target, 2000);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    statNumbers.forEach(stat => observer.observe(stat));
+  // Atualiza contagem de artigos automaticamente
+  const statsArticles = document.getElementById('statsArticles');
+  if (statsArticles) {
+    statsArticles.dataset.count = posts.length;
   }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const target = parseInt(entry.target.dataset.count);
+        animateValue(entry.target, 0, target, 2000);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  statNumbers.forEach(stat => observer.observe(stat));
+  if (statsArticles) observer.observe(statsArticles);
+}
 
   function animateValue(element, start, end, duration) {
     const increment = end > start ? 1 : -1;
