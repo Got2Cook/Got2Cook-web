@@ -18,32 +18,14 @@
   "capa": "/assets/blog/capas/mindful-eating.png"
 },
   {
-    "slug": "economizar-tempo-na-cozinha",
-    "titulo": "Como economizar tempo na cozinha",
-    "resumo": "Pequenas mudanças que aceleram o preparo das refeições sem perder qualidade.",
-    "data": "2025-09-20",
-    "tempoLeitura": "6 min",
-    "categorias": ["Dicas"],
-    "capa": "/assets/blog/capas/tempo.jpg"
-  },
-  {
-    "slug": "alimentacao-saudavel",
-    "titulo": "Alimentação saudável sem gastar muito",
-    "resumo": "Estratégias simples para montar cardápios equilibrados dentro do seu orçamento.",
-    "data": "2025-09-10",
-    "tempoLeitura": "7 min",
-    "categorias": ["Saúde", "Dicas"],
-    "capa": "/assets/blog/capas/saudavel.jpg"
-  },
-  {
-    "slug": "top-5-doces-humor",
-    "titulo": "Top 5 doces para alegrar seu humor",
-    "resumo": "Descubra sobremesas que combinam com diferentes estados emocionais.",
-    "data": "2025-09-05",
-    "tempoLeitura": "5 min",
-    "categorias": ["Receitas", "Doces"],
-    "capa": "/assets/blog/capas/doces.jpg"
-  },
+  "slug": "comer-devagar-emagrecimento",
+  "titulo": "Como comer devagar ajuda no processo de emagrecimento",
+  "resumo": "Desacelerar à mesa favorece a saciedade, reduz calorias e melhora a relação com a comida. Veja como aplicar.",
+  "data": "2025-10-03",
+  "tempoLeitura": "6 min",
+  "categorias": ["Bem-estar", "Nutrição", "Dicas"],
+  "capa": "/assets/blog/capas/comer-devagar.jpg"
+},
   {
   "slug": "cozinhando-pelo-humor",
   "titulo": "Cozinhando pelo humor: como nossas emoções podem guiar o prato do dia",
