@@ -1,133 +1,308 @@
+<!-- /blog/index.html -->
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Como comer devagar ajuda no processo de emagrecimento — Got2Cook</title>
-  <meta name="description" content="Por que desacelerar à mesa favorece a saciedade, reduz calorias e melhora a relação com a comida. Passos práticos para começar hoje." />
-  <link rel="stylesheet" href="../post.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog Got2Cook - Receitas, Dicas e Inspiração Culinária</title>
+  <meta name="description" content="Descubra receitas incríveis, dicas de cozinha e aprenda a cozinhar de acordo com seu humor. O blog do Got2Cook traz conteúdo exclusivo para transformar sua experiência na cozinha.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./blog.css">
 </head>
 <body>
-  <div class="read-progress" id="progress"></div>
-
-  <!-- Header do blog -->
-  <header class="blog-header">
-    <div class="container">
-      <a class="brand" href="/">Got2Cook</a>
-      <nav class="nav" aria-label="Navegação principal">
+  
+  <header class="topbar">
+    <div class="topbar-inner container">
+      <a href="/" class="brand" aria-label="Got2Cook">
+        <span class="brand-got">Got2</span><span class="brand-cook">Cook</span>
+      </a>
+      <nav class="main-nav">
         <a href="/">Início</a>
         <a href="/app/">App</a>
-        <a class="active" href="/blog/">Blog</a>
-        <a href="/#contato">Contato</a>
+        <a href="/blog/" class="active">Blog</a>
+        <a href="/sobre/">Sobre</a>
       </nav>
+      <button class="menu-toggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
 
-  <!-- Capa -->
-  <section class="post-hero">
-    <div class="bg" style="background-image:url('/assets/blog/capas/comer-devagar.jpg')"></div>
-    <div class="overlay"></div>
-    <div class="inner">
-      <h1 class="post-title">Como comer devagar ajuda no processo de emagrecimento</h1>
-      <div class="post-meta">
-        <span class="meta-chip">03 out 2025</span>
-        <span class="meta-chip">6 min</span>
-        <span class="meta-chip">Bem-estar</span>
-        <span class="meta-chip">Nutrição</span>
-        <span class="meta-chip">Dicas</span>
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-particles"></div>
+    <div class="hero-content container">
+      <div class="hero-main">
+        <div class="hero-badge">
+          <span class="badge-icon">✨</span>
+          <span>Conteúdo Exclusivo</span>
+        </div>
+        <h1>Cozinhe com <span class="highlight">emoção</span></h1>
+        <p>Descubra receitas que combinam com seu humor, aprenda técnicas incríveis e transforme sua relação com a cozinha</p>
+        
+        <div class="search-box">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <input id="busca" type="search" placeholder="Buscar artigos, receitas, dicas..." autocomplete="off">
+          </div>
+          <div class="filter-group">
+            <button class="filter-btn active" data-filter="all">
+              <span>📚</span> Todos
+            </button>
+            <button class="filter-btn" data-filter="Receitas">
+              <span>🍳</span> Receitas
+            </button>
+            <button class="filter-btn" data-filter="Dicas">
+              <span>💡</span> Dicas
+            </button>
+            <button class="filter-btn" data-filter="Humor">
+              <span>😊</span> Humor
+            </button>
+            <button class="filter-btn" data-filter="Ciência">
+              <span>🔬</span> Ciência
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-cta-card">
+        <div class="cta-icon">🎯</div>
+        <h3>Experimente o App</h3>
+        <p>Receba sugestões personalizadas baseadas no seu humor e ingredientes disponíveis</p>
+        <div class="cta-features">
+          <div class="feature-item">
+            <span class="feature-check">✓</span>
+            <span>IA personalizada</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-check">✓</span>
+            <span>Sem desperdício</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-check">✓</span>
+            <span>Economia de tempo</span>
+          </div>
+        </div>
+        <a class="btn-cta" href="/app/">
+          <span>Conhecer o App</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number" id="statsArticles">0</div>
+          <div class="stat-label">Artigos Publicados</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-count="50000">0</div>
+          <div class="stat-label">Leitores/Mês</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-count="98">0</div>
+          <div class="stat-label">% Aprovação</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <div class="post-wrap">
-    <article>
+  <main class="main-content container">
+    
+    <section class="posts-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="title-icon">📝</span>
+          Todos os Artigos
+        </h2>
+        <div class="view-controls">
+          <button class="view-btn active" data-view="grid" aria-label="Visualização em grade">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <rect x="2" y="2" width="7" height="7" rx="1"/>
+              <rect x="11" y="2" width="7" height="7" rx="1"/>
+              <rect x="2" y="11" width="7" height="7" rx="1"/>
+              <rect x="11" y="11" width="7" height="7" rx="1"/>
+            </svg>
+          </button>
+          <button class="view-btn" data-view="list" aria-label="Visualização em lista">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <rect x="2" y="3" width="16" height="3" rx="1"/>
+              <rect x="2" y="8.5" width="16" height="3" rx="1"/>
+              <rect x="2" y="14" width="16" height="3" rx="1"/>
+            </svg>
+          </button>
+        </div>
+      </div>
 
-      <h2>Introdução</h2>
-      <p>Vivemos em um mundo apressado — e levamos essa pressa para o prato. Almoçamos olhando o celular, jantamos entre reuniões, comemos em minutos o que o corpo levaria meia hora para entender. Mas a velocidade das refeições tem um preço silencioso: dificulta o emagrecimento e nos afasta da percepção real de saciedade.</p>
-      <p>Comer devagar é mais do que um gesto de etiqueta: é uma ferramenta poderosa de autoconhecimento e controle natural do apetite.</p>
+      <div class="ad-banner">
+        <div class="ad-label">Publicidade</div>
+        <div class="ad-content">
+          <span>Espaço Publicitário</span>
+        </div>
+      </div>
 
-      <figure class="figure">
-        <img src="/assets/blog/inline/devagar-contraste-rapido-lento.webp" alt="Duas cenas: uma pessoa comendo rápido e distraída; outra saboreando lentamente uma garfada">
-      </figure>
+      <div id="lista-posts" class="posts-grid view-grid"></div>
+      
+      <div class="load-more-wrapper">
+        <button id="loadMore" class="btn-load-more" style="display: none;">
+          <span>Carregar Mais Artigos</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 3v10M3 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </section>
 
-      <h2>O que acontece no corpo quando comemos depressa</h2>
-      <p>Ao ingerir comida rapidamente, o corpo não tem tempo de enviar ao cérebro o sinal de saciedade — um processo que leva, em média, de 15 a 20 minutos. Isso significa que, mesmo após o estômago estar cheio, a mente ainda sente “fome”, levando ao consumo exagerado.</p>
-      <p>Além disso, a digestão se torna menos eficiente. A mastigação apressada reduz a produção de enzimas salivares e sobrecarrega o sistema digestivo, o que pode causar desconforto, inchaço e sensação de lentidão metabólica.</p>
+    <aside class="sidebar">
+      
+      <div class="widget newsletter-widget">
+        <div class="newsletter-icon">💌</div>
+        <h3>Newsletter</h3>
+        <p>Receba receitas e dicas exclusivas toda semana</p>
+        <form class="newsletter-form" id="newsletterForm">
+          <input type="email" placeholder="Seu melhor e-mail" required>
+          <button type="submit">
+            <span>Inscrever</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+        <div class="newsletter-privacy">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+            <path d="M6 1l4 2v3c0 2.5-1.79 4.84-4 5.5-2.21-.66-4-3-4-5.5V3l4-2z"/>
+          </svg>
+          <span>Seus dados estão seguros</span>
+        </div>
+      </div>
 
-      <figure class="figure">
-        <img src="/assets/blog/inline/devagar-caminho-saciedade.webp" alt="Infográfico mostrando o caminho do alimento: mastigação, estômago, hormônios da saciedade e cérebro com indicação de tempo">
-      </figure>
+      <div class="widget categories-widget">
+        <h3>Categorias Populares</h3>
+        <div id="popular-categories" class="category-list"></div>
+      </div>
 
-      <h2>Comer devagar emagrece?</h2>
-      <p>Estudos publicados no <em>Journal of the American Dietetic Association</em> demonstram que pessoas que praticam a alimentação lenta consomem menos calorias por refeição — em alguns casos até 10% a 20% a menos — pois esse ritmo permite ao corpo reconhecer a saciedade natural, evitando excessos e lanches desnecessários posteriormente.</p>
-      <p>Além disso, comer devagar estimula a leptina, responsável por indicar ao cérebro que já comemos o suficiente, e reduz o impacto da grelina, que desperta a fome.</p>
+      <div class="widget ad-widget">
+        <div class="ad-label">Publicidade</div>
+        <div class="ad-box">
+          <span>Espaço Publicitário</span>
+        </div>
+      </div>
 
-      <figure class="figure">
-        <img src="/assets/blog/inline/devagar-grafico-calorias.webp" alt="Gráfico comparando consumo calórico de quem come rápido versus devagar">
-      </figure>
+      <div class="widget social-widget">
+        <h3>Siga-nos</h3>
+        <div class="social-links">
+          <a href="#" class="social-link instagram" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="2" y="2" width="20" height="20" rx="5"/>
+              <circle cx="12" cy="12" r="4" fill="none" stroke="#fff" stroke-width="2"/>
+              <circle cx="18" cy="6" r="1.5" fill="#fff"/>
+            </svg>
+          </a>
+          <a href="#" class="social-link facebook" aria-label="Facebook">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+            </svg>
+          </a>
+          <a href="#" class="social-link youtube" aria-label="YouTube">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.33z"/>
+              <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#fff"/>
+            </svg>
+          </a>
+          <a href="#" class="social-link tiktok" aria-label="TikTok">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
 
-      <h2>Outros benefícios de comer com calma</h2>
-      <ul>
-        <li><strong>Melhora a digestão:</strong> a mastigação adequada quebra melhor os alimentos e facilita a absorção de nutrientes.</li>
-        <li><strong>Diminui a ansiedade:</strong> o ato de comer devagar acalma o sistema nervoso e reduz o comer emocional.</li>
-        <li><strong>Favorece o prazer real:</strong> você percebe texturas, aromas e sabores que passam despercebidos na correria.</li>
-        <li><strong>Fortalece o autocontrole:</strong> quanto mais consciência do que se come, menor o impulso de repetir o prato.</li>
-      </ul>
+    </aside>
 
-      <figure class="figure">
-        <img src="/assets/blog/inline/devagar-texturas-cores.webp" alt="Colagem de alimentos coloridos destacando texturas e cores">
-      </figure>
+  </main>
 
-      <h2>Estratégias práticas para desacelerar à mesa</h2>
-      <ul>
-        <li><strong>Respire antes de começar.</strong> Faça duas respirações lentas antes da primeira garfada.</li>
-        <li><strong>Apoie os talheres entre as mordidas.</strong> Isso força pequenas pausas naturais.</li>
-        <li><strong>Mastigue mais vezes.</strong> Idealmente de 20 a 30 mastigações por garfada.</li>
-        <li><strong>Aprecie cada sentido.</strong> Observe cor, cheiro, sabor, temperatura.</li>
-        <li><strong>Evite telas e distrações.</strong> Dê atenção ao alimento e às sensações do corpo.</li>
-        <li><strong>Sirva porções menores.</strong> Assim o cérebro se acostuma com quantidades equilibradas.</li>
-      </ul>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <div class="footer-col footer-brand">
+          <div class="footer-logo">
+            <span class="brand-got">Got2</span><span class="brand-cook">Cook</span>
+          </div>
+          <p class="footer-description">Transformando emoções em receitas deliciosas. Cozinhe de acordo com seu humor e aproveite cada momento na cozinha.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4" fill="none" stroke="#fff" stroke-width="2"/><circle cx="18" cy="6" r="1.5" fill="#fff"/></svg></a>
+            <a href="#" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+            <a href="#" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#fff"/></svg></a>
+            <a href="#" aria-label="TikTok"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/></svg></a>
+          </div>
+        </div>
 
-      <figure class="figure">
-        <img src="/assets/blog/inline/devagar-6passos.webp" alt="Seis ícones minimalistas formando um checklist para comer devagar">
-      </figure>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="/">Início</a></li>
+            <li><a href="/app/">Download App</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/receitas/">Receitas</a></li>
+            <li><a href="/sobre/">Sobre Nós</a></li>
+          </ul>
+        </div>
 
-      <h2>Comer devagar é uma forma de respeito</h2>
-      <p>Quando desaceleramos, entendemos que emagrecer não é punir o corpo, mas ouvi-lo. O ato de comer com calma muda a relação com a comida — transforma cada refeição em uma conversa entre o físico e o emocional.</p>
-      <p>É o mesmo princípio que guia o Got2Cook: comer de forma mais consciente, respeitando o tempo do corpo e do humor. Porque o emagrecimento verdadeiro acontece quando há equilíbrio — não pressa.</p>
+        <div class="footer-col">
+          <h4>Recursos</h4>
+          <ul>
+            <li><a href="/como-funciona/">Como Funciona</a></li>
+            <li><a href="/premium/">Planos Premium</a></li>
+            <li><a href="/faq/">Perguntas Frequentes</a></li>
+            <li><a href="/suporte/">Suporte</a></li>
+            <li><a href="/api/">API para Desenvolvedores</a></li>
+          </ul>
+        </div>
 
-      <figure class="figure">
-        <img src="/assets/blog/inline/devagar-satisfeito.webp" alt="Pessoa sorrindo, finalizando a refeição satisfeita, prato limpo e semblante leve">
-      </figure>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/termos/">Termos de Uso</a></li>
+            <li><a href="/privacidade/">Política de Privacidade</a></li>
+            <li><a href="/cookies/">Política de Cookies</a></li>
+            <li><a href="/contato/">Fale Conosco</a></li>
+          </ul>
+        </div>
 
-      <h2>Conclusão</h2>
-      <p>Comer devagar é uma prática simples, mas transformadora. Não requer dietas rígidas nem aplicativos de contagem calórica — apenas presença. Quando damos tempo ao corpo para reconhecer a saciedade, comemos menos, digerimos melhor e nos sentimos mais satisfeitos.</p>
-      <p><em>A pressa faz a comida acabar rápido. A calma faz o prazer durar.</em></p>
+      </div>
 
-      <figure class="figure">
-        <img src="/assets/blog/inline/devagar-minimalista.webp" alt="Prato vazio com garfo apoiado ao lado sobre mesa iluminada por luz natural">
-      </figure>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Got2Cook. Todos os direitos reservados.</p>
+        <div class="footer-links">
+          <a href="/termos/">Termos</a>
+          <span>•</span>
+          <a href="/privacidade/">Privacidade</a>
+          <span>•</span>
+          <a href="/cookies/">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
-      <hr />
+  <button class="back-to-top" id="backToTop" aria-label="Voltar ao topo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M10 17V3M3 10l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
 
-      <p>🍽️ Dê tempo ao seu corpo</p>
-      <p>Na próxima refeição, experimente mastigar com calma e perceber o momento em que o corpo diz “basta”. E, se quiser transformar esse novo ritmo em um estilo de vida, o Got2Cook pode te inspirar com receitas equilibradas e pensadas para cada humor — porque comer devagar também é um ato de amor-próprio.</p>
-    </article>
-
-    <nav class="post-nav" aria-label="Navegação entre artigos">
-      <a href="/blog/">← Voltar ao Blog</a>
-    </nav>
-  </div>
-
-  <script>
-    const bar = document.getElementById('progress');
-    const onScroll = () => {
-      const h = document.documentElement;
-      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
-      bar.style.width = (scrolled * 100).toFixed(2) + '%';
-    };
-    document.addEventListener('scroll', onScroll, {passive:true});
-    onScroll();
-  </script>
+  <script src="./blog.js"></script>
 </body>
 </html>
