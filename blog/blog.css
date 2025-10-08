@@ -1400,6 +1400,7 @@ a {
     grid-template-columns: 1fr;
     gap: 24px;
   }
+}
 
   .section-title {
     font-size: 28px;
