@@ -4,12 +4,11 @@
 
   // === ELEMENTS ===
   const elBusca = document.getElementById('busca');
-  const elFeatured = document.getElementById('featured-posts');
   const elLista = document.getElementById('lista-posts');
-  const elLoadMore = document.getElementById('loadMore');
   const elCategories = document.getElementById('popular-categories');
   const elBackToTop = document.getElementById('backToTop');
   const elNewsletterForm = document.getElementById('newsletterForm');
+  const elPagination = document.getElementById('pagination');
   const filterBtns = document.querySelectorAll('.filter-btn');
   const viewBtns = document.querySelectorAll('.view-btn');
   const statNumbers = document.querySelectorAll('.stat-number');
@@ -19,85 +18,40 @@
   let filteredPosts = [];
   let currentFilter = 'all';
   let currentView = 'grid';
-  let displayedCount = 9;
-  const postsPerLoad = 9;
+  let currentPage = 1;
+  const postsPerPage = 8;
 
   // === INIT ===
   async function init() {
-  showLoading();
-  
-  try {
-    const res = await fetch('./posts.json', { cache: 'no-store' });
-    if (!res.ok) throw new Error('Falha ao carregar posts');
+    showLoading();
     
-    posts = await res.json();
-    
-    if (!Array.isArray(posts) || posts.length === 0) {
-      showEmptyState('📝 Nenhum artigo disponível no momento.');
-      return;
+    try {
+      const res = await fetch('./posts.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('Falha ao carregar posts');
+      
+      posts = await res.json();
+      
+      if (!Array.isArray(posts) || posts.length === 0) {
+        showEmptyState('📝 Nenhum artigo disponível no momento.');
+        return;
+      }
+
+      filteredPosts = posts.slice();
+      renderPosts();
+      renderCategories();
+      animateStats();
+      hideLoading();
+    } catch (e) {
+      showEmptyState('❌ Erro ao carregar artigos. Tente novamente mais tarde.');
+      console.error('Erro ao inicializar blog:', e);
     }
-
-    filteredPosts = posts.slice();
-    renderPosts();
-    renderCategories();
-    animateStats();
-    hideLoading();
-  } catch (e) {
-    showEmptyState('❌ Erro ao carregar artigos. Tente novamente mais tarde.');
-    console.error('Erro ao inicializar blog:', e);
-  }
-}
-
-  // === RENDER FEATURED ===
-  function renderFeatured() {
-    const featured = posts.filter(p => p.destaque).slice(0, 3);
-    if (featured.length === 0) return;
-
-    elFeatured.innerHTML = featured.map((p, idx) => {
-      const titulo = escapeHtml(p.titulo || 'Sem título');
-      const resumo = escapeHtml(p.resumo || '');
-      const capa = p.capa || '';
-      const slug = p.slug || '';
-      const data = formatDate(p.data);
-      const tempo = p.tempoLeitura || '5 min';
-      const cats = (p.categorias || []).slice(0, 2);
-
-      return `
-        <article class="featured-card" style="animation-delay: ${idx * 0.1}s">
-          <a href="/blog/${slug}/" class="card-image">
-            ${capa 
-              ? `<img src="${capa}" alt="${titulo}" loading="lazy">` 
-              : `<div style="background: linear-gradient(135deg, #e8e8e8 0%, #d5d5d5 100%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 64px; opacity: 0.3;">📄</div>`
-            }
-            ${idx === 0 ? '<div class="featured-badge"><span>⭐</span> Destaque</div>' : ''}
-          </a>
-          <div class="card-content">
-            <div class="card-meta">
-              <span class="meta-item">📅 ${data}</span>
-              <span class="meta-item">⏱️ ${tempo}</span>
-            </div>
-            ${cats.length > 0 ? `
-              <div class="card-categories">
-                ${cats.map(c => `<span class="category-badge">${escapeHtml(c)}</span>`).join('')}
-              </div>
-            ` : ''}
-            <h3 class="card-title">${titulo}</h3>
-            ${resumo ? `<p class="card-excerpt">${resumo}</p>` : ''}
-            <a href="/blog/${slug}/" class="card-link">
-              Ler artigo completo
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-          </div>
-        </article>
-      `;
-    }).join('');
   }
 
   // === RENDER POSTS ===
   function renderPosts() {
-    const postsToShow = filteredPosts.slice(0, displayedCount);
+    const startIndex = (currentPage - 1) * postsPerPage;
+    const endIndex = startIndex + postsPerPage;
+    const postsToShow = filteredPosts.slice(startIndex, endIndex);
     
     if (postsToShow.length === 0) {
       elLista.innerHTML = `
@@ -107,7 +61,7 @@
           <p>Tente ajustar os filtros ou fazer uma nova busca</p>
         </div>
       `;
-      elLoadMore.style.display = 'none';
+      renderPagination();
       return;
     }
 
@@ -151,9 +105,92 @@
       `;
     }).join('');
 
-    // Show/hide load more button
-    elLoadMore.style.display = filteredPosts.length > displayedCount ? 'inline-flex' : 'none';
+    renderPagination();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  // === RENDER PAGINATION ===
+  function renderPagination() {
+    const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+    
+    if (totalPages <= 1) {
+      elPagination.innerHTML = '';
+      return;
+    }
+
+    let paginationHTML = '';
+
+    // Botão anterior
+    paginationHTML += `
+      <button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+        ‹
+      </button>
+    `;
+
+    // Páginas
+    if (totalPages <= 7) {
+      // Mostra todas as páginas
+      for (let i = 1; i <= totalPages; i++) {
+        paginationHTML += `
+          <button class="${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">
+            ${i}
+          </button>
+        `;
+      }
+    } else {
+      // Lógica com reticências
+      if (currentPage <= 3) {
+        for (let i = 1; i <= 4; i++) {
+          paginationHTML += `
+            <button class="${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">
+              ${i}
+            </button>
+          `;
+        }
+        paginationHTML += `<span class="dots">...</span>`;
+        paginationHTML += `<button onclick="changePage(${totalPages})">${totalPages}</button>`;
+      } else if (currentPage >= totalPages - 2) {
+        paginationHTML += `<button onclick="changePage(1)">1</button>`;
+        paginationHTML += `<span class="dots">...</span>`;
+        for (let i = totalPages - 3; i <= totalPages; i++) {
+          paginationHTML += `
+            <button class="${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">
+              ${i}
+            </button>
+          `;
+        }
+      } else {
+        paginationHTML += `<button onclick="changePage(1)">1</button>`;
+        paginationHTML += `<span class="dots">...</span>`;
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          paginationHTML += `
+            <button class="${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">
+              ${i}
+            </button>
+          `;
+        }
+        paginationHTML += `<span class="dots">...</span>`;
+        paginationHTML += `<button onclick="changePage(${totalPages})">${totalPages}</button>`;
+      }
+    }
+
+    // Botão próximo
+    paginationHTML += `
+      <button onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+        ›
+      </button>
+    `;
+
+    elPagination.innerHTML = paginationHTML;
+  }
+
+  // === CHANGE PAGE ===
+  window.changePage = function(page) {
+    const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+    if (page < 1 || page > totalPages) return;
+    currentPage = page;
+    renderPosts();
+  };
 
   // === RENDER CATEGORIES ===
   function renderCategories() {
@@ -205,7 +242,7 @@
       return matchesSearch && matchesCategory;
     });
 
-    displayedCount = postsPerLoad;
+    currentPage = 1;
     renderPosts();
   }
 
@@ -224,12 +261,6 @@
     searchTimeout = setTimeout(filterPosts, 300);
   }
 
-  // === LOAD MORE ===
-  function loadMore() {
-    displayedCount += postsPerLoad;
-    renderPosts();
-  }
-
   // === VIEW TOGGLE ===
   function toggleView(view) {
     currentView = view;
@@ -243,25 +274,25 @@
 
   // === ANIMATE STATS ===
   function animateStats() {
-  // Atualiza contagem de artigos automaticamente
-  const statsArticles = document.getElementById('statsArticles');
-  if (statsArticles) {
-    statsArticles.dataset.count = posts.length;
+    // Atualiza contagem de artigos automaticamente
+    const statsArticles = document.getElementById('statsArticles');
+    if (statsArticles) {
+      statsArticles.dataset.count = posts.length;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = parseInt(entry.target.dataset.count);
+          animateValue(entry.target, 0, target, 2000);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    statNumbers.forEach(stat => observer.observe(stat));
+    if (statsArticles) observer.observe(statsArticles);
   }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const target = parseInt(entry.target.dataset.count);
-        animateValue(entry.target, 0, target, 2000);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  statNumbers.forEach(stat => observer.observe(stat));
-  if (statsArticles) observer.observe(statsArticles);
-}
 
   function animateValue(element, start, end, duration) {
     const increment = end > start ? 1 : -1;
@@ -354,10 +385,6 @@
       toggleView(btn.dataset.view);
     });
   });
-
-  if (elLoadMore) {
-    elLoadMore.addEventListener('click', loadMore);
-  }
 
   if (elBackToTop) {
     elBackToTop.addEventListener('click', scrollToTop);
