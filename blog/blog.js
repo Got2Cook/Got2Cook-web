@@ -75,34 +75,28 @@
       const cats = (p.categorias || []).slice(0, 2);
 
       return `
-        <article class="post-card" style="animation-delay: ${idx * 0.05}s">
-          <a href="/blog/${slug}/" class="card-image">
-            ${capa 
-              ? `<img src="${capa}" alt="${titulo}" loading="lazy">` 
-              : `<div style="background: linear-gradient(135deg, #e8e8e8 0%, #d5d5d5 100%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 48px; opacity: 0.3;">📄</div>`
-            }
-          </a>
-          <div class="card-content">
-            <div class="card-meta">
-              <span class="meta-item">📅 ${data}</span>
-              <span class="meta-item">⏱️ ${tempo}</span>
-            </div>
-            ${cats.length > 0 ? `
-              <div class="card-categories">
-                ${cats.map(c => `<span class="category-badge">${escapeHtml(c)}</span>`).join('')}
-              </div>
-            ` : ''}
-            <h3 class="card-title">${titulo}</h3>
-            ${resumo ? `<p class="card-excerpt">${resumo}</p>` : ''}
-            <a href="/blog/${slug}/" class="card-link">
-              Ler mais
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-          </div>
-        </article>
-      `;
+  <article class="post-card" onclick="window.location.href='/blog/${slug}/'">
+    <div class="card-image">
+      ${capa 
+        ? `<img src="${capa}" alt="${titulo}" loading="lazy">` 
+        : `<div style="background: linear-gradient(135deg, #e8e8e8 0%, #d5d5d5 100%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 48px; opacity: 0.3;">📄</div>`
+      }
+    </div>
+    <div class="card-content">
+      <div class="card-meta">
+        <span class="meta-item">📅 ${data}</span>
+        <span class="meta-item">⏱️ ${tempo}</span>
+      </div>
+      ${cats.length > 0 ? `
+        <div class="card-categories">
+          ${cats.map(c => `<span class="category-badge">${escapeHtml(c)}</span>`).join('')}
+        </div>
+      ` : ''}
+      <h3 class="card-title">${titulo}</h3>
+      ${resumo ? `<p class="card-excerpt">${resumo}</p>` : ''}
+    </div>
+  </article>
+`;Tentar novamenteClaude ainda não tem a capacidade de executar o código que gera.
     }).join('');
 
     renderPagination();
