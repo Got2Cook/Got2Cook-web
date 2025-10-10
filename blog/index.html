@@ -121,49 +121,46 @@
 
   <main class="main-content container">
     
-    <section class="posts-section">
-      <div class="section-header">
-        <h2 class="section-title">
-          <span class="title-icon">📝</span>
-          Todos os Artigos
-        </h2>
-        <div class="view-controls">
-          <button class="view-btn active" data-view="grid" aria-label="Visualização em grade">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-              <rect x="2" y="2" width="7" height="7" rx="1"/>
-              <rect x="11" y="2" width="7" height="7" rx="1"/>
-              <rect x="2" y="11" width="7" height="7" rx="1"/>
-              <rect x="11" y="11" width="7" height="7" rx="1"/>
-            </svg>
-          </button>
-          <button class="view-btn" data-view="list" aria-label="Visualização em lista">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-              <rect x="2" y="3" width="16" height="3" rx="1"/>
-              <rect x="2" y="8.5" width="16" height="3" rx="1"/>
-              <rect x="2" y="14" width="16" height="3" rx="1"/>
-            </svg>
-          </button>
-        </div>
-      </div>
+    <!-- /blog/index.html - SUBSTITUIR apenas a section .posts-section -->
 
-      <div class="ad-banner">
-        <div class="ad-label">Publicidade</div>
-        <div class="ad-content">
-          <span>Espaço Publicitário</span>
-        </div>
-      </div>
-
-      <div id="lista-posts" class="posts-grid view-grid"></div>
-      
-      <div class="load-more-wrapper">
-        <button id="loadMore" class="btn-load-more" style="display: none;">
-          <span>Carregar Mais Artigos</span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M8 3v10M3 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <section class="posts-section">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span class="title-icon">📝</span>
+        Todos os Artigos
+      </h2>
+      <div class="view-controls">
+        <button class="view-btn active" data-view="grid" aria-label="Visualização em grade">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <rect x="2" y="2" width="7" height="7" rx="1"/>
+            <rect x="11" y="2" width="7" height="7" rx="1"/>
+            <rect x="2" y="11" width="7" height="7" rx="1"/>
+            <rect x="11" y="11" width="7" height="7" rx="1"/>
+          </svg>
+        </button>
+        <button class="view-btn" data-view="list" aria-label="Visualização em lista">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <rect x="2" y="3" width="16" height="3" rx="1"/>
+            <rect x="2" y="8.5" width="16" height="3" rx="1"/>
+            <rect x="2" y="14" width="16" height="3" rx="1"/>
           </svg>
         </button>
       </div>
-    </section>
+    </div>
+
+    <div class="ad-banner">
+      <div class="ad-label">Publicidade</div>
+      <div class="ad-content">
+        <span>Espaço Publicitário</span>
+      </div>
+    </div>
+
+    <div id="lista-posts" class="posts-grid view-grid"></div>
+  
+    <div class="pagination-wrapper">
+      <div id="pagination" class="pagination"></div>
+    </div>
+  </section>
 
     <aside class="sidebar">
       
