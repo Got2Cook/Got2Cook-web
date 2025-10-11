@@ -75,32 +75,31 @@
       const cats = (p.categorias || []).slice(0, 2);
 
       return `
-  <article class="post-card" onclick="window.location.href='/blog/${slug}/'">
-    <div class="card-image">
-      ${capa 
-        ? `<img src="${capa}" alt="${titulo}" loading="lazy">` 
-        : `<div style="background: linear-gradient(135deg, #e8e8e8 0%, #d5d5d5 100%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 48px; opacity: 0.3;">📄</div>`
-      }
-    </div>
-    <div class="card-content">
-      <div class="card-meta">
-        <span class="meta-item">📅 ${data}</span>
-        <span class="meta-item">⏱️ ${tempo}</span>
-      </div>
-      ${cats.length > 0 ? `
-        <div class="card-categories">
-          ${cats.map(c => `<span class="category-badge">${escapeHtml(c)}</span>`).join('')}
-        </div>
-      ` : ''}
-      <h3 class="card-title">${titulo}</h3>
-      ${resumo ? `<p class="card-excerpt">${resumo}</p>` : ''}
-    </div>
-  </article>
-`;Tentar novamenteClaude ainda não tem a capacidade de executar o código que gera.
+        <article class="post-card" onclick="window.location.href='/blog/${slug}/'" style="animation-delay: ${idx * 0.05}s">
+          <div class="card-image">
+            ${capa 
+              ? `<img src="${capa}" alt="${titulo}" loading="lazy">` 
+              : `<div style="background: linear-gradient(135deg, #e8e8e8 0%, #d5d5d5 100%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 48px; opacity: 0.3;">📄</div>`
+            }
+          </div>
+          <div class="card-content">
+            <div class="card-meta">
+              <span class="meta-item">📅 ${data}</span>
+              <span class="meta-item">⏱️ ${tempo}</span>
+            </div>
+            ${cats.length > 0 ? `
+              <div class="card-categories">
+                ${cats.map(c => `<span class="category-badge">${escapeHtml(c)}</span>`).join('')}
+              </div>
+            ` : ''}
+            <h3 class="card-title">${titulo}</h3>
+            ${resumo ? `<p class="card-excerpt">${resumo}</p>` : ''}
+          </div>
+        </article>
+      `;
     }).join('');
 
     renderPagination();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // === RENDER PAGINATION ===
@@ -184,6 +183,7 @@
     if (page < 1 || page > totalPages) return;
     currentPage = page;
     renderPosts();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // === RENDER CATEGORIES ===
