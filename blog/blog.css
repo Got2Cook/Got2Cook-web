@@ -82,11 +82,8 @@ a {
 }
 
 .brand {
-  font-size: 32px;
-  font-weight: 900;
-  letter-spacing: -0.5px;
   display: flex;
-  gap: 2px;
+  align-items: center;
   transition: transform 0.3s ease;
 }
 
@@ -94,15 +91,10 @@ a {
   transform: translateY(-2px);
 }
 
-.brand-got {
-  background: linear-gradient(135deg, #c9ff72 0%, var(--verde) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.brand-cook {
-  color: #fff;
+.brand-logo {
+  height: 50px;
+  width: auto;
+  display: block;
 }
 
 .main-nav {
@@ -1080,11 +1072,15 @@ a {
 }
 
 .footer-logo {
-  font-size: 28px;
-  font-weight: 900;
   margin-bottom: 12px;
   display: flex;
-  gap: 2px;
+  align-items: center;
+}
+
+.footer-logo-img {
+  height: 45px;
+  width: auto;
+  display: block;
 }
 
 .footer-description {
