@@ -144,22 +144,21 @@ body {
 .galeria{
   flex: 1;
   overflow-y: auto;
-  overflow-x: hidden;                 /* impede rolagem lateral */
+  overflow-x: hidden;
   overscroll-behavior: contain;
   padding: 12px;
   padding-bottom: 110px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); /* adapta e evita overflow */
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
   gap: 10px;
   background:#fff;
 }
-
 .galeria .item{
   display:flex; flex-direction:column; align-items:center; gap:6px;
   padding:10px; border:2px solid transparent; border-radius:12px;
   background:#fff; transition: transform .12s ease, box-shadow .12s ease;
   cursor: pointer; user-select: none;
-  min-width: 0;                        /* evita estourar coluna e criar scroll lateral */
+  min-width: 0;
 }
 .galeria .item:hover{ background:#f6fbf3; transform: translateY(-1px); }
 .galeria .item.selecionado{ border-color:#7b7190; box-shadow:0 0 0 2px #7b7190 inset, 0 2px 8px rgba(0,0,0,.06); }
