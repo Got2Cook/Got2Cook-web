@@ -3,7 +3,7 @@ const wrap  = document.getElementById('geladeiraWrap');
 const porta = document.getElementById('portaImagem');
 porta.addEventListener('click', () => wrap.classList.toggle('is-open'));
 
-// ===== Storage (compatibilidade) =====
+// ===== Storage =====
 const LS_ITENS = 'geladeira';
 let ingredientes = JSON.parse(localStorage.getItem(LS_ITENS) || '[]');
 ingredientes = ingredientes.map(it => typeof it === 'string'
@@ -11,7 +11,6 @@ ingredientes = ingredientes.map(it => typeof it === 'string'
   : it
 );
 salvar();
-
 function salvar(){ localStorage.setItem(LS_ITENS, JSON.stringify(ingredientes)); }
 function normalizar(t){ return (t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); }
 
@@ -26,11 +25,10 @@ const addManualBtn = document.getElementById('adicionarManual');
 const galeriaEl    = document.getElementById('galeriaIngredientes');
 const tabsEl       = document.getElementById('tabsCategorias');
 const buscaModalEl = document.getElementById('buscaModal');
+const fabAdd       = document.getElementById('fabAdicionar');
 
-// ===== Catálogo por categorias =====
-// Estrutura de arquivos sugerida:
-// /assets/ingredientes/<categoria>/<id>.png
-// Ex.: ../../assets/ingredientes/legumes/tomate.png
+// ===== Catálogo com categorias =====
+// PNGs em: ../../assets/ingredientes/<slug-categoria>/<id>.png
 const CATEGORIAS = {
   'Legumes e Verduras': [
     ['tomate','Tomate'],['cebola','Cebola'],['alho','Alho'],['batata','Batata'],
@@ -130,8 +128,7 @@ const CATEGORIAS = {
     ['legumes-congelados','Legumes congelados'],['polpa-fruta','Polpa de fruta'],
     ['sorvete','Sorvete'],['hamburguer','Hambúrguer congelado'],['frango-empanado','Frango empanado'],
     ['peixe-empanado','Peixe empanado'],['batata-frita','Batata frita congelada'],
-    ['lasanha-pronta','Lasanha pronta'],['massa-pastel','Massa de pastel'],
-    ['pao-queijo','Pão de queijo']
+    ['lasanha-pronta','Lasanha pronta'],['massa-pastel','Massa de pastel'],['pao-queijo','Pão de queijo']
   ],
   'Veg & Plant-based': [
     ['tofu','Tofu'],['proteina-texturizada','Proteína vegetal texturizada'],
@@ -142,15 +139,14 @@ const CATEGORIAS = {
   ]
 };
 
-// monta um mapa de ID -> {nome,img,cat}
 const BASE = '../../assets/ingredientes';
 const catalogIndex = {};
+function slugCat(cat){
+  return normalizar(cat).replace(/\s|&|\/|,/g,'-');
+}
 Object.entries(CATEGORIAS).forEach(([cat, lista]) => {
   lista.forEach(([id, nome]) => {
-    catalogIndex[id] = {
-      id, nome, cat,
-      img: `${BASE}/${normalizar(cat).replace(/\s|&|\/|,/g,'-')}/${id}.png`
-    };
+    catalogIndex[id] = { id, nome, cat, img: `${BASE}/${slugCat(cat)}/${id}.png` };
   });
 });
 
@@ -186,7 +182,6 @@ function renderIngredientes(filtro=''){
     conteudo.appendChild(cell);
   });
 }
-
 campoBusca.addEventListener('input', () => renderIngredientes(campoBusca.value));
 
 // ===== Modal: abrir/fechar =====
@@ -269,7 +264,6 @@ function renderGaleria(){
 
   marcarSelecionadosGaleria();
 }
-
 buscaModalEl.addEventListener('input', renderGaleria);
 
 function marcarSelecionadosGaleria(){
@@ -301,6 +295,13 @@ addManualBtn.addEventListener('click', () => {
     renderIngredientes(campoBusca.value);
     marcarSelecionadosGaleria();
   }
+});
+
+// FAB fixo — confirma e fecha
+fabAdd.addEventListener('click', () => {
+  salvar();
+  renderIngredientes(campoBusca.value);
+  closeModal();
 });
 
 // ===== Init =====
