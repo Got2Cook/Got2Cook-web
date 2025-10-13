@@ -26,13 +26,14 @@
 
         <div class="geladeira-aberta" id="geladeiraAberta" aria-hidden="true">
           <div class="conteudo-geladeira" id="conteudoGeladeira"></div>
+
           <div style="display:flex; gap:10px; justify-content:center; margin-top:12px;">
             <button class="manual" onclick="abrirPopup()">+ Adicionar Ingrediente</button>
           </div>
         </div>
       </div>
 
-      <!-- Modal: Galeria de ingredientes -->
+      <!-- Modal: Galeria de ingredientes (POPUP) -->
       <div id="modalBackdrop" class="modal-backdrop" hidden></div>
       <dialog id="modalGaleria" class="popup" aria-labelledby="modalTitulo">
         <div class="popup__header">
@@ -48,6 +49,17 @@
             <input type="text" id="buscaModal" placeholder="Filtrar nesta categoria..." aria-label="Filtrar ingrediente por nome" />
           </div>
         </div>
+
+        <!-- Selecionados (chips) -->
+        <section class="selecionados" id="selecionadosWrap" aria-live="polite" hidden>
+          <div class="selecionados__topo">
+            <strong id="selecionadosCount">0 selecionados</strong>
+            <button class="btn-link" id="limparSelecionados" aria-label="Limpar todos os selecionados">Limpar</button>
+          </div>
+          <div class="chips" id="chipsSelecionados">
+            <!-- chips via JS -->
+          </div>
+        </section>
 
         <!-- Lista com scroll -->
         <div class="galeria" id="galeriaIngredientes" aria-label="Galeria de ingredientes disponíveis"></div>
