@@ -15,14 +15,14 @@
       <!-- Pesquisa -->
       <section class="pesquisa-container" aria-label="Buscar ingredientes na geladeira">
         <div class="barra-pesquisa">
-          <img src="../../assets/lupa.png" alt="" class="lupa" aria-hidden="true">
+          <img src="/assets/lupa.png" alt="" class="lupa" aria-hidden="true">
           <input type="text" id="campoBusca" placeholder="Buscar ingrediente..." aria-label="Buscar ingrediente" />
         </div>
       </section>
 
       <!-- Geladeira visual -->
       <div class="geladeira-container" id="geladeiraWrap">
-        <img src="../../assets/geladeira-fechada.png" alt="Geladeira Fechada" class="porta-imagem" id="portaImagem" />
+        <img src="/assets/geladeira-fechada.png" alt="Geladeira Fechada" class="porta-imagem" id="portaImagem" />
 
         <div class="geladeira-aberta" id="geladeiraAberta" aria-hidden="true">
           <div class="conteudo-geladeira" id="conteudoGeladeira"></div>
@@ -45,7 +45,7 @@
         <div class="popup__filters" role="tablist" aria-label="Categorias de ingredientes">
           <div class="tabs" id="tabsCategorias"></div>
           <div class="barra-pesquisa barra-pesquisa--modal">
-            <img src="../../assets/lupa.png" alt="" class="lupa" aria-hidden="true">
+            <img src="/assets/lupa.png" alt="" class="lupa" aria-hidden="true">
             <input type="text" id="buscaModal" placeholder="Filtrar nesta categoria..." aria-label="Filtrar ingrediente por nome" />
           </div>
         </div>
@@ -56,7 +56,7 @@
             <strong id="selecionadosCount">0 selecionados</strong>
             <button class="btn-link" id="limparSelecionados" aria-label="Limpar todos os selecionados">Limpar</button>
           </div>
-        <div class="chips" id="chipsSelecionados"></div>
+          <div class="chips" id="chipsSelecionados"></div>
         </section>
 
         <!-- Lista com scroll vertical apenas -->
@@ -73,25 +73,25 @@
       <!-- Rodapé curvo -->
       <footer class="curva">
         <button class="btn-footer voltar" id="btnVoltar" aria-label="Selecionar humor novamente">
-          <img src="../../assets/humor.png" alt="" />
+          <img src="/assets/humor.png" alt="" />
         </button>
         <button class="btn-footer logo" id="btnLogo" aria-label="Abrir atalhos rápidos">
-          <img src="../../assets/logocentral.png" alt="" />
+          <img src="/assets/logocentral.png" alt="" />
         </button>
         <button class="btn-footer geladeira" id="btnGeladeira" aria-label="Abrir Minha Geladeira">
-          <img src="../../assets/geladeira.png" alt="" />
+          <img src="/assets/geladeira.png" alt="" />
         </button>
       </footer>
 
       <script>
         document.getElementById("btnVoltar").addEventListener("click", () => {
-          window.location.href = "../humor/index.html";
+          window.location.href = "/app/humor/index.html";
         });
         document.getElementById("btnLogo").addEventListener("click", () => {
-          window.location.href = "../home/index.html";
+          window.location.href = "/app/home/index.html";
         });
         document.getElementById("btnGeladeira").addEventListener("click", () => {
-          window.location.href = "../geladeira/index.html";
+          window.location.href = "/app/geladeira/index.html";
         });
       </script>
     </main>
