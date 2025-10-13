@@ -17,20 +17,25 @@ function normalizar(t){ return (t||'').normalize('NFD').replace(/[\u0300-\u036f]
 // ===== DOM =====
 const campoBusca   = document.getElementById('campoBusca');
 const conteudo     = document.getElementById('conteudoGeladeira');
+
+// POPUP refs
 const modal        = document.getElementById('modalGaleria');
 const backdrop     = document.getElementById('modalBackdrop');
-const fecharModal  = document.getElementById('fecharModal');
-const concluir     = document.getElementById('concluirSelecao');
-const addManualBtn = document.getElementById('adicionarManual');
+const abrirBtn     = document.getElementById('abrirIngrediente');
+const fecharBtn    = document.getElementById('fecharModal');
+const concluirBtn  = document.getElementById('concluirSelecao');
+
+// Galeria refs
 const galeriaEl    = document.getElementById('galeriaIngredientes');
 const tabsEl       = document.getElementById('tabsCategorias');
 const buscaModalEl = document.getElementById('buscaModal');
 const fabAdd       = document.getElementById('fabAdicionar');
-// selecionados (chips)
-const selecionadosWrap = document.getElementById('selecionadosWrap');
-const chipsEl          = document.getElementById('chipsSelecionados');
-const selecionadosCount= document.getElementById('selecionadosCount');
-const limparSelBtn     = document.getElementById('limparSelecionados');
+
+// Selecionados (chips)
+const selecionadosWrap  = document.getElementById('selecionadosWrap');
+const chipsEl           = document.getElementById('chipsSelecionados');
+const selecionadosCount = document.getElementById('selecionadosCount');
+const limparSelBtn      = document.getElementById('limparSelecionados');
 
 // ===== Catálogo com categorias =====
 // PNGs em: ../../assets/ingredientes/<slug-categoria>/<id>.png
@@ -188,28 +193,29 @@ function renderIngredientes(filtro=''){
 }
 campoBusca.addEventListener('input', () => renderIngredientes(campoBusca.value));
 
-// ===== Modal: abrir/fechar =====
-function abrirPopup(){
-  backdrop.hidden = false;
-  if (typeof modal.showModal === 'function') modal.showModal();
-  else modal.setAttribute('open','');
-  setTimeout(() => {
-    const f = modal.querySelector('.tab-btn[aria-selected="true"]') || modal.querySelector('.tab-btn');
-    f && f.focus();
-  },0);
+// ===== POPUP: abrir/fechar apenas no clique =====
+function abrirPopup() {
+  // preparar UI
   renderSelecionados();
-}
-function closeModal(){
-  backdrop.hidden = true;
-  if (typeof modal.close === 'function') modal.close();
-  else modal.removeAttribute('open');
-}
-window.abrirPopup = abrirPopup;
-window.fecharPopup = closeModal;
+  renderGaleria();
 
-fecharModal.addEventListener('click', closeModal);
-backdrop.addEventListener('click', closeModal);
-concluir.addEventListener('click', closeModal);
+  backdrop.hidden = false;
+  modal.hidden = false;
+  // animação: adiciona classe após pequeno delay para permitir transição
+  requestAnimationFrame(() => modal.classList.add('ativo'));
+}
+function fecharPopup() {
+  modal.classList.remove('ativo');
+  setTimeout(() => {
+    modal.hidden = true;
+    backdrop.hidden = true;
+  }, 200); // bate com o transition do CSS
+}
+
+abrirBtn.addEventListener('click', abrirPopup);
+fecharBtn.addEventListener('click', fecharPopup);
+backdrop.addEventListener('click', fecharPopup);
+concluirBtn.addEventListener('click', fecharPopup);
 
 // ===== Tabs de categorias =====
 let currentCategory = Object.keys(CATEGORIAS)[0];
@@ -235,7 +241,7 @@ function renderTabs(){
 
 // ===== Galeria por categoria + filtro =====
 function renderGaleria(){
-  const filtro = normalizar(buscaModalEl.value);
+  const filtro = normalizar(buscaModalEl.value || '');
   const lista = CATEGORIAS[currentCategory];
 
   galeriaEl.innerHTML = '';
@@ -347,7 +353,7 @@ limparSelBtn.addEventListener('click', () => {
 });
 
 // “Outro ingrediente?”
-addManualBtn.addEventListener('click', () => {
+document.getElementById('adicionarManual').addEventListener('click', () => {
   const nome = prompt('Digite o nome do ingrediente:');
   const url  = prompt('Cole o caminho/arquivo da imagem (PNG/SVG):');
   if (nome && url) {
@@ -364,7 +370,7 @@ addManualBtn.addEventListener('click', () => {
 fabAdd.addEventListener('click', () => {
   salvar();
   renderIngredientes(campoBusca.value);
-  closeModal();
+  fecharPopup();
 });
 
 // ===== Init =====
