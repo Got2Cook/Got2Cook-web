@@ -140,30 +140,31 @@ body {
   background:#ff5b5b; color:#fff; border:none; width:18px; height:18px; border-radius:999px; cursor:pointer; line-height: 1;
 }
 
-/* Lista com scroll (galeria) */
+/* Lista com scroll só vertical (sem rolagem lateral) */
 .galeria{
-  flex: 1; overflow-y: auto; overscroll-behavior: contain;
-  padding: 12px; padding-bottom: 110px;
-  display:grid; grid-template-columns:repeat(4,1fr); gap:10px; background:#fff;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;                 /* impede rolagem lateral */
+  overscroll-behavior: contain;
+  padding: 12px;
+  padding-bottom: 110px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); /* adapta e evita overflow */
+  gap: 10px;
+  background:#fff;
 }
+
 .galeria .item{
   display:flex; flex-direction:column; align-items:center; gap:6px;
   padding:10px; border:2px solid transparent; border-radius:12px;
   background:#fff; transition: transform .12s ease, box-shadow .12s ease;
   cursor: pointer; user-select: none;
+  min-width: 0;                        /* evita estourar coluna e criar scroll lateral */
 }
 .galeria .item:hover{ background:#f6fbf3; transform: translateY(-1px); }
 .galeria .item.selecionado{ border-color:#7b7190; box-shadow:0 0 0 2px #7b7190 inset, 0 2px 8px rgba(0,0,0,.06); }
 .galeria .item img{ width:70px; height:70px; object-fit:contain; }
 .galeria .nome{ font-size:12px; text-align:center; color:#492f70; }
-
-/* FAB fixo dentro do popup */
-.fab-add{
-  position: absolute; right: 16px; bottom: 86px;
-  padding: 12px 18px; border-radius: 999px; border: 0; font-weight: 700;
-  background: #225c18; color: #fff; box-shadow: 0 10px 24px rgba(0,0,0,.18); cursor: pointer;
-}
-.fab-add:focus-visible{ outline: 3px solid #7b7190; outline-offset: 2px; }
 
 /* Footer fixo do popup */
 .popup__footer{
@@ -189,5 +190,5 @@ body {
 /* Desktop */
 @media (min-width:1024px){
   .conteudo{ padding:24px; }
-  .galeria{ grid-template-columns:repeat(8,1fr); gap:12px; }
+  .galeria{ grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
 }
