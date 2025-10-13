@@ -36,8 +36,10 @@ const chipsEl           = document.getElementById('chipsSelecionados');
 const selecionadosCount = document.getElementById('selecionadosCount');
 const limparSelBtn      = document.getElementById('limparSelecionados');
 
-// ===== Catálogo com categorias =====
-// PNGs em: ../../assets/ingredientes/<slug-categoria>/<id>.png
+// ===== Caminho base das imagens (Vercel/GitHub: pasta 'assets' na raiz) =====
+const BASE = '/assets/ingredientes';
+
+// ===== Catálogo com categorias e IDs (apenas crie os PNGs com estes nomes) =====
 const CATEGORIAS = {
   'Legumes e Verduras': [
     ['tomate','Tomate'],['cebola','Cebola'],['alho','Alho'],['batata','Batata'],
@@ -119,7 +121,7 @@ const CATEGORIAS = {
   'Doces & Confeitaria': [
     ['acucar','Açúcar'],['acucar-mascavo','Açúcar mascavo'],['mel','Mel'],['melado','Melado'],
     ['chocolate-po','Chocolate em pó'],['cacau-po','Cacau em pó'],['achocolatado','Achocolatado'],
-    ['chocolate','Chocola te'],['granulado','Granulado'],['doce-leite','Doce de leite'],
+    ['chocolate','Chocolate'],['granulado','Granulado'],['doce-leite','Doce de leite'],
     ['geleia','Geleia'],['goiabada','Goiabada'],['paçoca','Paçoca'],
     ['fermento-quimico','Fermento químico'],['fermento-biologico','Fermento biológico'],
     ['amido-milho','Amido de milho'],['baunilha','Essência de baunilha'],
@@ -148,7 +150,7 @@ const CATEGORIAS = {
   ]
 };
 
-const BASE = '../../assets/ingredientes';
+// ===== Index do catálogo com caminho completo das imagens =====
 const catalogIndex = {};
 const slugCat = cat => normalizar(cat).replace(/\s|&|\/|,/g,'-');
 Object.entries(CATEGORIAS).forEach(([cat, lista]) => {
@@ -171,6 +173,7 @@ function renderIngredientes(filtro=''){
     const img = document.createElement('img');
     img.src = item.url;
     img.alt = item.nome;
+    // se a imagem não existir ainda no repositório, só oculta a miniatura
     img.onerror = () => { img.style.display = 'none'; };
 
     const btn = document.createElement('button');
@@ -307,6 +310,7 @@ function renderSelecionados(){
     const img = document.createElement('img');
     img.src = item.url;
     img.alt = '';
+    img.onerror = () => { img.style.display = 'none'; };
 
     const name = document.createElement('span');
     name.textContent = item.nome;
@@ -368,11 +372,11 @@ renderGaleria();
 
 // ===== Navegação rodapé =====
 document.getElementById("btnVoltar").addEventListener("click", () => {
-  window.location.href = "../humor/index.html";
+  window.location.href = "/app/humor/index.html";
 });
 document.getElementById("btnLogo").addEventListener("click", () => {
-  window.location.href = "../home/index.html";
+  window.location.href = "/app/home/index.html";
 });
 document.getElementById("btnGeladeira").addEventListener("click", () => {
-  window.location.href = "../geladeira/index.html";
+  window.location.href = "/app/geladeira/index.html";
 });
