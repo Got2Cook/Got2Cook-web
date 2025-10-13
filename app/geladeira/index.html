@@ -28,14 +28,14 @@
           <div class="conteudo-geladeira" id="conteudoGeladeira"></div>
 
           <div style="display:flex; gap:10px; justify-content:center; margin-top:12px;">
-            <button class="manual" onclick="abrirPopup()">+ Adicionar Ingrediente</button>
+            <button class="manual" id="abrirIngrediente">+ Adicionar Ingrediente</button>
           </div>
         </div>
       </div>
 
-      <!-- Modal: Galeria de ingredientes (POPUP) -->
+      <!-- POP-UP: Galeria de ingredientes (invisível até clicar) -->
       <div id="modalBackdrop" class="modal-backdrop" hidden></div>
-      <dialog id="modalGaleria" class="popup" aria-labelledby="modalTitulo">
+      <dialog id="modalGaleria" class="popup" aria-labelledby="modalTitulo" hidden>
         <div class="popup__header">
           <h2 id="modalTitulo">Escolha um ingrediente</h2>
           <button class="fechar" id="fecharModal" aria-label="Fechar">×</button>
@@ -56,15 +56,13 @@
             <strong id="selecionadosCount">0 selecionados</strong>
             <button class="btn-link" id="limparSelecionados" aria-label="Limpar todos os selecionados">Limpar</button>
           </div>
-          <div class="chips" id="chipsSelecionados">
-            <!-- chips via JS -->
-          </div>
+          <div class="chips" id="chipsSelecionados"></div>
         </section>
 
         <!-- Lista com scroll -->
         <div class="galeria" id="galeriaIngredientes" aria-label="Galeria de ingredientes disponíveis"></div>
 
-        <!-- Botão fixo -->
+        <!-- Botão fixo (FAB) -->
         <button class="fab-add" id="fabAdicionar" aria-label="Adicionar selecionados à geladeira">
           ✓ Adicionar
         </button>
