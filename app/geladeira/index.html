@@ -21,64 +21,78 @@
         </div>
       </section>
 
-      <!-- Geladeira visual (substitua este bloco) -->
-<div class="geladeira-container" id="geladeiraWrap">
-  <!-- Porta (fechada) - fica exatamente no mesmo lugar da aberta -->
-  <img src="../../assets/geladeira-fechada.png" alt="Geladeira Fechada" class="porta-imagem" id="portaImagem" />
+      <!-- Geladeira visual -->
+      <div class="geladeira-container" id="geladeiraWrap">
+        <!-- Porta (fechada) -->
+        <img src="../../assets/geladeira-fechada.png" alt="Geladeira Fechada" class="porta-imagem" id="portaImagem" />
 
-  <!-- Interior (aberta) - mesmo retângulo da porta, inicia invisível -->
-  <div class="geladeira-aberta" id="geladeiraAberta" aria-hidden="true">
-    <div class="conteudo-geladeira" id="conteudoGeladeira"></div>
+        <!-- Interior (aberta) -->
+        <div class="geladeira-aberta" id="geladeiraAberta" aria-hidden="true">
+          <div class="conteudo-geladeira" id="conteudoGeladeira"></div>
 
-    <div style="display:flex; gap:10px; justify-content:center; margin-top:12px;">
-      <button class="manual" onclick="abrirPopup()">+ Adicionar Ingrediente</button>
-    </div>
-  </div>
-</div>
-
-    <!-- Modal: Galeria de ingredientes -->
-    <div id="modalBackdrop" class="modal-backdrop" hidden></div>
-    <dialog id="modalGaleria" class="popup" aria-labelledby="modalTitulo">
-      <div class="popup__header">
-        <h2 id="modalTitulo">Escolha um ingrediente</h2>
-        <button class="fechar" id="fecharModal" aria-label="Fechar">×</button>
+          <div style="display:flex; gap:10px; justify-content:center; margin-top:12px;">
+            <button class="manual" onclick="abrirPopup()">+ Adicionar Ingrediente</button>
+          </div>
+        </div>
       </div>
-      <div class="galeria" id="galeriaIngredientes" aria-label="Galeria de ingredientes disponíveis">
-        <!-- itens via JS -->
-      </div>
-      <div class="popup__footer">
-        <button class="manual" id="adicionarManual">Outro ingrediente?</button>
-        <button class="manual secundario" id="concluirSelecao">Concluir</button>
-      </div>
-    </dialog>
 
-    <!-- Região para mensagens de acessibilidade -->
-    <div class="sr-only" aria-live="polite" id="ariaAnnouncer"></div>
+      <!-- Modal: Galeria de ingredientes -->
+      <div id="modalBackdrop" class="modal-backdrop" hidden></div>
+      <dialog id="modalGaleria" class="popup" aria-labelledby="modalTitulo">
+        <div class="popup__header">
+          <h2 id="modalTitulo">Escolha um ingrediente</h2>
+          <button class="fechar" id="fecharModal" aria-label="Fechar">×</button>
+        </div>
 
-    <!-- Rodapé curvo com 3 botões (igual ao do seu app) -->
-    <footer class="curva">
-      <button class="btn-footer voltar" id="btnVoltar" aria-label="Selecionar humor novamente">
-        <img src="../../assets/humor.png" alt="" />
-      </button>
-      <button class="btn-footer logo" id="btnLogo" aria-label="Abrir atalhos rápidos">
-        <img src="../../assets/logocentral.png" alt="" />
-      </button>
-      <button class="btn-footer geladeira" id="btnGeladeira" aria-label="Abrir Minha Geladeira">
-        <img src="../../assets/geladeira.png" alt="" />
-      </button>
-    </footer>
+        <!-- Filtros do modal -->
+        <div class="popup__filters" role="tablist" aria-label="Categorias de ingredientes">
+          <div class="tabs" id="tabsCategorias">
+            <!-- botões de categoria via JS -->
+          </div>
+          <div class="barra-pesquisa barra-pesquisa--modal">
+            <img src="../../assets/lupa.png" alt="" class="lupa" aria-hidden="true">
+            <input type="text" id="buscaModal" placeholder="Filtrar nesta categoria..." aria-label="Filtrar ingrediente por nome" />
+          </div>
+        </div>
 
-<script>
-  document.getElementById("btnVoltar").addEventListener("click", () => {
-    window.location.href = "humor.html";
-  });
-  document.getElementById("btnLogo").addEventListener("click", () => {
-    window.location.href = "home.html";
-  });
-  document.getElementById("btnGeladeira").addEventListener("click", () => {
-    window.location.href = "minhageladeira.html";
-  });
-</script>
+        <div class="galeria" id="galeriaIngredientes" aria-label="Galeria de ingredientes disponíveis">
+          <!-- itens via JS -->
+        </div>
+
+        <div class="popup__footer">
+          <button class="manual" id="adicionarManual">Outro ingrediente?</button>
+          <button class="manual secundario" id="concluirSelecao">Concluir</button>
+        </div>
+      </dialog>
+
+      <!-- Região para mensagens de acessibilidade -->
+      <div class="sr-only" aria-live="polite" id="ariaAnnouncer"></div>
+
+      <!-- Rodapé curvo -->
+      <footer class="curva">
+        <button class="btn-footer voltar" id="btnVoltar" aria-label="Selecionar humor novamente">
+          <img src="../../assets/humor.png" alt="" />
+        </button>
+        <button class="btn-footer logo" id="btnLogo" aria-label="Abrir atalhos rápidos">
+          <img src="../../assets/logocentral.png" alt="" />
+        </button>
+        <button class="btn-footer geladeira" id="btnGeladeira" aria-label="Abrir Minha Geladeira">
+          <img src="../../assets/geladeira.png" alt="" />
+        </button>
+      </footer>
+
+      <script>
+        document.getElementById("btnVoltar").addEventListener("click", () => {
+          window.location.href = "../humor/index.html";
+        });
+        document.getElementById("btnLogo").addEventListener("click", () => {
+          window.location.href = "../home/index.html";
+        });
+        document.getElementById("btnGeladeira").addEventListener("click", () => {
+          window.location.href = "../geladeira/index.html";
+        });
+      </script>
+    </main>
   </div>
 
   <script src="./geladeira.js" defer></script>
