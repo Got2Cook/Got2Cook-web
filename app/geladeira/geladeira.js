@@ -23,13 +23,12 @@ const modal        = document.getElementById('modalGaleria');
 const backdrop     = document.getElementById('modalBackdrop');
 const abrirBtn     = document.getElementById('abrirIngrediente');
 const fecharBtn    = document.getElementById('fecharModal');
-const concluirBtn  = document.getElementById('concluirSelecao');
+const adicionarBtn = document.getElementById('adicionarSelecao');
 
 // Galeria refs
 const galeriaEl    = document.getElementById('galeriaIngredientes');
 const tabsEl       = document.getElementById('tabsCategorias');
 const buscaModalEl = document.getElementById('buscaModal');
-const fabAdd       = document.getElementById('fabAdicionar');
 
 // Selecionados (chips)
 const selecionadosWrap  = document.getElementById('selecionadosWrap');
@@ -120,7 +119,7 @@ const CATEGORIAS = {
   'Doces & Confeitaria': [
     ['acucar','Açúcar'],['acucar-mascavo','Açúcar mascavo'],['mel','Mel'],['melado','Melado'],
     ['chocolate-po','Chocolate em pó'],['cacau-po','Cacau em pó'],['achocolatado','Achocolatado'],
-    ['chocolate','Chocolate'],['granulado','Granulado'],['doce-leite','Doce de leite'],
+    ['chocolate','Chocola te'],['granulado','Granulado'],['doce-leite','Doce de leite'],
     ['geleia','Geleia'],['goiabada','Goiabada'],['paçoca','Paçoca'],
     ['fermento-quimico','Fermento químico'],['fermento-biologico','Fermento biológico'],
     ['amido-milho','Amido de milho'],['baunilha','Essência de baunilha'],
@@ -193,15 +192,12 @@ function renderIngredientes(filtro=''){
 }
 campoBusca.addEventListener('input', () => renderIngredientes(campoBusca.value));
 
-// ===== POPUP: abrir/fechar apenas no clique =====
+// ===== POPUP: abrir/fechar =====
 function abrirPopup() {
-  // preparar UI
   renderSelecionados();
   renderGaleria();
-
   backdrop.hidden = false;
   modal.hidden = false;
-  // animação: adiciona classe após pequeno delay para permitir transição
   requestAnimationFrame(() => modal.classList.add('ativo'));
 }
 function fecharPopup() {
@@ -209,13 +205,12 @@ function fecharPopup() {
   setTimeout(() => {
     modal.hidden = true;
     backdrop.hidden = true;
-  }, 200); // bate com o transition do CSS
+  }, 200);
 }
-
 abrirBtn.addEventListener('click', abrirPopup);
 fecharBtn.addEventListener('click', fecharPopup);
 backdrop.addEventListener('click', fecharPopup);
-concluirBtn.addEventListener('click', fecharPopup);
+adicionarBtn.addEventListener('click', () => { salvar(); renderIngredientes(campoBusca.value); fecharPopup(); });
 
 // ===== Tabs de categorias =====
 let currentCategory = Object.keys(CATEGORIAS)[0];
@@ -364,13 +359,6 @@ document.getElementById('adicionarManual').addEventListener('click', () => {
     renderSelecionados();
     marcarSelecionadosGaleria();
   }
-});
-
-// FAB fixo — confirma e fecha
-fabAdd.addEventListener('click', () => {
-  salvar();
-  renderIngredientes(campoBusca.value);
-  fecharPopup();
 });
 
 // ===== Init =====
