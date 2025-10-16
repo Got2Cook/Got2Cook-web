@@ -92,10 +92,10 @@
 .post-content hr{border:none;height:1px;background:var(--borda);margin:56px 0}
 
 /* Imagens */
-.post-content .figure{margin:48px -40px;border-radius:0;overflow:hidden;box-shadow:none;transition:all .4s}
+.post-content .figure{margin:40px 0;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.08);transition:all .4s;max-width:95%}
 .post-content .figure:hover img{transform:scale(1.02)}
 .post-content .figure img{width:100%;height:auto;display:block;transition:transform .5s}
-.post-content .figure figcaption{font-size:15px;color:#6b6b6b;padding:16px 40px;background:#f8f9fa;font-style:italic;text-align:center}
+.post-content .figure figcaption{font-size:15px;color:#6b6b6b;padding:16px 20px;background:#f8f9fa;font-style:italic;text-align:center}
 
 /* Info box */
 .info-box{margin:40px 0;padding:28px 32px;background:linear-gradient(135deg,rgba(192,255,165,.1),rgba(227,255,204,.05));border-left:4px solid var(--verde);border-radius:0 12px 12px 0;display:flex;gap:18px;align-items:flex-start}
@@ -104,16 +104,16 @@
 .info-box-content strong{color:var(--verde);font-weight:700}
 
 /* CTA box */
-.cta-box{margin:56px 0;padding:40px;background:linear-gradient(135deg,var(--roxo2),var(--roxo));border-radius:16px;text-align:center;color:#fff;box-shadow:0 12px 36px rgba(73,47,112,.25)}
-.cta-box h3{margin:0 0 14px;color:#fff;font-size:28px;font-weight:900}
-.cta-box p{margin:0 0 24px;font-size:17px;opacity:.95}
-.cta-button{display:inline-block;padding:14px 36px;background:var(--verde);color:var(--roxo-dark);font-weight:800;font-size:17px;border-radius:10px;text-decoration:none;transition:all .3s;box-shadow:0 6px 20px rgba(192,255,165,.4)}
-.cta-button:hover{background:var(--verde-dark);transform:translateY(-3px);box-shadow:0 10px 28px rgba(192,255,165,.5)}
+.cta-box{margin:56px 0;padding:44px;background:linear-gradient(135deg,var(--roxo2),var(--roxo));border-radius:16px;text-align:center;color:#fff;box-shadow:0 12px 36px rgba(73,47,112,.25)}
+.cta-box h3{margin:0 0 16px;color:#fff;font-size:28px;font-weight:900;position:relative;z-index:1}
+.cta-box p{margin:0 0 26px;font-size:17px;opacity:.98;position:relative;z-index:1;line-height:1.6}
+.cta-button{display:inline-block;padding:16px 40px;background:var(--verde);color:var(--roxo-dark);font-weight:800;font-size:18px;border-radius:12px;text-decoration:none;transition:all .35s;box-shadow:0 8px 24px rgba(192,255,165,.4);position:relative;z-index:1}
+.cta-button:hover{background:var(--verde-light);transform:translateY(-3px);box-shadow:0 12px 36px rgba(192,255,165,.5)}
 
 /* Tags */
 .post-tags{display:flex;flex-wrap:wrap;gap:10px;margin:56px 0 40px;padding-top:40px;border-top:2px solid var(--borda)}
-.post-tag{padding:8px 16px;background:var(--soft);color:var(--roxo2);border:1px solid var(--borda);border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;transition:all .3s}
-.post-tag:hover{background:var(--verde-light);border-color:var(--verde);transform:translateY(-2px)}
+.post-tag{padding:9px 18px;background:var(--soft);color:var(--roxo2);border:1px solid var(--borda);border-radius:6px;font-size:14px;font-weight:600;transition:all .3s;text-decoration:none}
+.post-tag:hover{background:var(--roxo2);color:#fff;border-color:var(--roxo2);transform:translateY(-2px)}
 
 /* Author box */
 .author-box{margin:56px 0;padding:32px;background:#f8f9fa;border-radius:16px;display:flex;gap:24px;align-items:center;border:2px solid var(--borda)}
@@ -142,14 +142,15 @@
 .related-meta{margin:0;font-size:13px;color:#999;display:flex;align-items:center;gap:12px}
 
 /* Newsletter footer */
-.footer-newsletter{background:linear-gradient(135deg,var(--verde),var(--verde-dark));border-radius:20px;padding:48px;text-align:center;margin-top:64px;color:#fff}
-.footer-newsletter h3{margin:0 0 12px;font-size:28px;font-weight:900;color:#fff}
-.footer-newsletter p{margin:0 0 28px;font-size:17px;opacity:.95}
-.footer-newsletter form{display:flex;gap:12px;max-width:500px;margin:0 auto}
-.footer-newsletter input{flex:1;padding:14px 20px;border:2px solid rgba(255,255,255,.4);border-radius:10px;background:rgba(255,255,255,.25);color:#fff;font-size:15px;backdrop-filter:blur(8px)}
-.footer-newsletter input::placeholder{color:rgba(255,255,255,.85)}
-.footer-newsletter button{padding:14px 32px;background:#fff;color:var(--verde);border:none;border-radius:10px;font-weight:800;cursor:pointer;transition:all .3s}
-.footer-newsletter button:hover{background:var(--roxo2);color:#fff;transform:translateY(-2px)}
+.footer-newsletter{background:linear-gradient(135deg,var(--verde),var(--verde-dark));border-radius:24px;padding:56px 48px;text-align:center;margin-top:72px;color:#fff;box-shadow:0 12px 40px rgba(192,255,165,.3)}
+.footer-newsletter h3{margin:0 0 14px;font-size:32px;font-weight:900;color:#fff}
+.footer-newsletter p{margin:0 0 32px;font-size:18px;opacity:1;line-height:1.6}
+.footer-newsletter form{display:flex;gap:12px;max-width:550px;margin:0 auto}
+.footer-newsletter input{flex:1;padding:16px 22px;border:2px solid rgba(255,255,255,.5);border-radius:12px;background:rgba(255,255,255,.3);color:#fff;font-size:16px;backdrop-filter:blur(10px);font-weight:500}
+.footer-newsletter input::placeholder{color:rgba(255,255,255,.9)}
+.footer-newsletter input:focus{outline:none;border-color:#fff;background:rgba(255,255,255,.4)}
+.footer-newsletter button{padding:16px 40px;background:#fff;color:var(--verde);border:none;border-radius:12px;font-weight:800;font-size:16px;cursor:pointer;transition:all .3s;box-shadow:0 6px 20px rgba(0,0,0,.15)}
+.footer-newsletter button:hover{background:var(--roxo2);color:#fff;transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.2)}
 
 /* Copyright */
 .post-footer-bottom{text-align:center;margin-top:56px;padding-top:32px;border-top:2px solid var(--borda)}
@@ -174,11 +175,11 @@
   .post-content .lead{font-size:20px}
   .post-content h2{font-size:28px;margin:44px 0 20px}
   .post-content h3{font-size:24px}
-  .post-content .figure{margin:36px -24px}
-  .post-content .figure figcaption{padding:12px 24px}
+  .post-content .figure{max-width:100%;margin:36px 0}
   .related-grid{grid-template-columns:1fr;gap:20px}
-  .footer-newsletter{padding:36px 24px}
+  .footer-newsletter{padding:40px 24px}
   .footer-newsletter form{flex-direction:column}
+  .footer-newsletter h3{font-size:26px}
   .author-box{flex-direction:column;text-align:center}
   .post-footer{padding:56px 24px}
 }
