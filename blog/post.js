@@ -2,7 +2,7 @@
 (function(){
 'use strict';
 
-/* ===== BARRA DE PROGRESSO ===== */
+/* ===== BARRA DE PROGRESSO (CORRIGIDA) ===== */
 function initReadProgress(){
   const progressBar=document.querySelector('.read-progress');
   const percentage=document.querySelector('.progress-percentage');
@@ -11,21 +11,23 @@ function initReadProgress(){
   if(!progressBar) return;
   
   function updateProgress(){
-    const scrollHeight=document.documentElement.scrollHeight-window.innerHeight;
-    const scrolled=window.scrollY;
-    const progress=(scrolled/scrollHeight)*100;
+    const doc=document.documentElement;
+    const scrollTop=window.scrollY;
+    const docHeight=doc.scrollHeight-window.innerHeight;
+    const scrolled=docHeight>0?(scrollTop/docHeight)*100:0;
     
-    progressBar.style.width=Math.min(progress,100)+'%';
+    progressBar.style.width=Math.min(Math.max(scrolled,0),100)+'%';
     
     if(fill){
-      fill.style.height=Math.min(progress,100)+'%';
+      fill.style.height=Math.min(Math.max(scrolled,0),100)+'%';
     }
     if(percentage){
-      percentage.textContent=Math.round(progress)+'%';
+      percentage.textContent=Math.round(Math.min(Math.max(scrolled,0),100))+'%';
     }
   }
   
   window.addEventListener('scroll',updateProgress,{passive:true});
+  window.addEventListener('resize',updateProgress,{passive:true});
   updateProgress();
 }
 
@@ -60,6 +62,13 @@ function initMobileMenu(){
       toggle.classList.remove('active');
       nav.classList.remove('active');
     });
+  });
+  
+  document.addEventListener('click',(e)=>{
+    if(!nav.contains(e.target)&&!toggle.contains(e.target)){
+      nav.classList.remove('active');
+      toggle.classList.remove('active');
+    }
   });
 }
 
@@ -115,17 +124,23 @@ function initSmoothScroll(){
         top:targetPos,
         behavior:'smooth'
       });
+      
+      if(history.pushState){
+        history.pushState(null,null,href);
+      }
     });
   });
 }
 
-/* ===== TOAST ===== */
+/* ===== TOAST NOTIFICATIONS ===== */
 function showToast(message){
   const existing=document.querySelector('.toast');
   if(existing) existing.remove();
   
   const toast=document.createElement('div');
   toast.className='toast';
+  toast.setAttribute('role','alert');
+  toast.setAttribute('aria-live','polite');
   toast.textContent=message;
   toast.style.cssText=`
     position:fixed;
@@ -140,6 +155,8 @@ function showToast(message){
     font-size:15px;
     z-index:9999;
     animation:toastIn .3s ease;
+    max-width:300px;
+    word-wrap:break-word;
   `;
   
   document.body.appendChild(toast);
@@ -157,10 +174,15 @@ function initNewsletter(){
   
   form.addEventListener('submit',e=>{
     e.preventDefault();
-    const email=form.querySelector('input[type="email"]').value;
+    const email=form.querySelector('input[type="email"]').value.trim();
     
-    if(!email||!email.includes('@')){
-      showToast('Por favor, insira um email válido');
+    if(!email){
+      showToast('Por favor, insira um email');
+      return;
+    }
+    
+    if(!email.includes('@')||!email.includes('.')){
+      showToast('Email inválido');
       return;
     }
     
@@ -169,12 +191,12 @@ function initNewsletter(){
   });
 }
 
-/* ===== LAZY LOADING ===== */
+/* ===== LAZY LOADING DE IMAGENS ===== */
 function initLazyLoad(){
   const images=document.querySelectorAll('img[loading="lazy"]');
   
   if('IntersectionObserver' in window){
-    const observer=new IntersectionObserver(entries=>{
+    const imageObserver=new IntersectionObserver((entries,observer)=>{
       entries.forEach(entry=>{
         if(entry.isIntersecting){
           const img=entry.target;
@@ -185,9 +207,132 @@ function initLazyLoad(){
           observer.unobserve(img);
         }
       });
-    });
+    },{rootMargin:'50px'});
     
-    images.forEach(img=>observer.observe(img));
+    images.forEach(img=>imageObserver.observe(img));
+  }
+}
+
+/* ===== TABLE OF CONTENTS HIGHLIGHT ===== */
+function initTocHighlight(){
+  const headings=Array.from(document.querySelectorAll('.post-content h2[id], .post-content h3[id]'));
+  
+  if(headings.length===0) return;
+  
+  function updateActiveHeading(){
+    const scrollPos=window.scrollY+100;
+    
+    let currentHeading=null;
+    for(let heading of headings){
+      if(heading.offsetTop<=scrollPos){
+        currentHeading=heading;
+      }else{
+        break;
+      }
+    }
+    
+    headings.forEach(h=>{
+      h.style.color=h===currentHeading?'var(--roxo2)':'var(--roxo2)';
+    });
+  }
+  
+  window.addEventListener('scroll',updateActiveHeading,{passive:true});
+}
+
+/* ===== SCROLL TO TOP BUTTON ===== */
+function initScrollToTop(){
+  const scrollBtn=document.createElement('button');
+  scrollBtn.className='scroll-to-top';
+  scrollBtn.innerHTML='↑';
+  scrollBtn.setAttribute('aria-label','Voltar ao topo');
+  scrollBtn.style.cssText=`
+    position:fixed;
+    bottom:32px;
+    right:32px;
+    width:50px;
+    height:50px;
+    background:linear-gradient(135deg,var(--verde),var(--verde-dark));
+    color:#fff;
+    border:none;
+    border-radius:50%;
+    font-size:24px;
+    font-weight:700;
+    cursor:pointer;
+    opacity:0;
+    visibility:hidden;
+    transition:all .3s;
+    z-index:49;
+    box-shadow:0 4px 16px rgba(0,0,0,.15);
+  `;
+  
+  document.body.appendChild(scrollBtn);
+  
+  window.addEventListener('scroll',()=>{
+    if(window.scrollY>300){
+      scrollBtn.style.opacity='1';
+      scrollBtn.style.visibility='visible';
+    }else{
+      scrollBtn.style.opacity='0';
+      scrollBtn.style.visibility='hidden';
+    }
+  },{passive:true});
+  
+  scrollBtn.addEventListener('click',()=>{
+    window.scrollTo({
+      top:0,
+      behavior:'smooth'
+    });
+  });
+}
+
+/* ===== IMAGE ZOOM ===== */
+function initImageZoom(){
+  const figures=document.querySelectorAll('.post-content .figure');
+  
+  figures.forEach(figure=>{
+    figure.addEventListener('click',function(){
+      const img=this.querySelector('img');
+      if(!img) return;
+      
+      const modal=document.createElement('div');
+      modal.className='image-modal';
+      modal.style.cssText=`
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.9);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        z-index:10000;
+        animation:fadeIn .3s;
+      `;
+      
+      const imgClone=img.cloneNode();
+      imgClone.style.cssText=`
+        max-width:90vw;
+        max-height:90vh;
+        object-fit:contain;
+        border-radius:8px;
+        cursor:pointer;
+      `;
+      
+      modal.appendChild(imgClone);
+      
+      modal.addEventListener('click',()=>{
+        modal.style.animation='fadeOut .3s';
+        setTimeout(()=>modal.remove(),300);
+      });
+      
+      document.body.appendChild(modal);
+    });
+    figure.style.cursor='pointer';
+  });
+}
+
+/* ===== ANALYTICS TRACKING (STUB) ===== */
+function trackEvent(event,data={}){
+  if(window.gtag){
+    window.gtag('event',event,data);
   }
 }
 
@@ -205,13 +350,42 @@ function init(){
   initSmoothScroll();
   initNewsletter();
   initLazyLoad();
+  initTocHighlight();
+  initScrollToTop();
+  initImageZoom();
   
-  if(!document.getElementById('toast-styles')){
+  addAnimationStyles();
+  
+  trackEvent('page_view',{
+    page_title:document.title,
+    page_path:window.location.pathname
+  });
+  
+  console.log('✓ Got2Cook Blog Post - Scripts inicializados com sucesso');
+}
+
+/* ===== ADICIONAR ESTILOS DE ANIMAÇÃO ===== */
+function addAnimationStyles(){
+  if(!document.getElementById('post-animations')){
     const style=document.createElement('style');
-    style.id='toast-styles';
+    style.id='post-animations';
     style.textContent=`
-      @keyframes toastIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-      @keyframes toastOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(20px)}}
+      @keyframes toastIn{
+        from{opacity:0;transform:translateY(20px)}
+        to{opacity:1;transform:translateY(0)}
+      }
+      @keyframes toastOut{
+        from{opacity:1;transform:translateY(0)}
+        to{opacity:0;transform:translateY(20px)}
+      }
+      @keyframes fadeIn{
+        from{opacity:0}
+        to{opacity:1}
+      }
+      @keyframes fadeOut{
+        from{opacity:1}
+        to{opacity:0}
+      }
     `;
     document.head.appendChild(style);
   }
@@ -220,4 +394,3 @@ function init(){
 init();
 
 })();
-```
