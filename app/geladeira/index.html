@@ -1,102 +1,64 @@
+<!-- /app/geladeira/index.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Minha Geladeira — Got2Cook</title>
-  <meta name="description" content="Gerencie os ingredientes da sua geladeira no Got2Cook. Adicione itens, marque como acabou e organize o que você tem em casa." />
-  <link rel="stylesheet" href="./geladeira.css" />
+  <link rel="stylesheet" href="geladeira.css"/>
 </head>
 <body>
   <div class="page">
-    <main id="conteudo" class="conteudo" tabindex="-1">
-      <h1 class="titulo-geladeira">MINHA GELADEIRA</h1>
+    <main class="conteudo" tabindex="-1">
+      <h1>MINHA GELADEIRA</h1>
+      <div class="search-bar">
+        <input type="text" id="search" placeholder="Buscar..." aria-label="Buscar ingrediente"/>
+      </div>
 
-      <!-- Pesquisa -->
-      <section class="pesquisa-container" aria-label="Buscar ingredientes na geladeira">
-        <div class="barra-pesquisa">
-          <img src="/assets/lupa.png" alt="" class="lupa" aria-hidden="true">
-          <input type="text" id="campoBusca" placeholder="Buscar ingrediente..." aria-label="Buscar ingrediente" />
-        </div>
-      </section>
-
-      <!-- Geladeira visual -->
-      <div class="geladeira-container" id="geladeiraWrap">
-        <img src="/assets/geladeira-fechada.png" alt="Geladeira Fechada" class="porta-imagem" id="portaImagem" />
-
-        <div class="geladeira-aberta" id="geladeiraAberta" aria-hidden="true">
-          <div class="conteudo-geladeira" id="conteudoGeladeira"></div>
-
-          <div style="display:flex; gap:10px; justify-content:center; margin-top:12px;">
-            <button class="manual" id="abrirIngrediente">+ Adicionar Ingrediente</button>
-          </div>
+      <div class="fridge-wrap" id="fridgeWrap">
+        <img src="/assets/geladeira-fechada.png" alt="Fechar" class="fridge-closed" id="fridgeClosed"/>
+        <div class="fridge-open" id="fridgeOpen" hidden>
+          <div class="items-grid" id="itemsGrid"></div>
+          <button class="add-btn" id="addBtn">+ Adicionar</button>
         </div>
       </div>
 
-      <!-- POP-UP: Galeria de ingredientes (invisível até clicar) -->
-      <div id="modalBackdrop" class="modal-backdrop" hidden></div>
-      <dialog id="modalGaleria" class="popup" aria-labelledby="modalTitulo" hidden>
-        <div class="popup__header">
-          <h2 id="modalTitulo">Escolha um ingrediente</h2>
-          <button class="fechar" id="fecharModal" aria-label="Fechar">×</button>
+      <div class="backdrop" id="backdrop" hidden></div>
+      <dialog class="modal" id="modal" hidden>
+        <div class="modal-header">
+          <h2>Ingredientes</h2>
+          <button class="close-btn" id="closeBtn">×</button>
         </div>
-
-        <!-- Filtros do modal -->
-        <div class="popup__filters" role="tablist" aria-label="Categorias de ingredientes">
-          <div class="tabs" id="tabsCategorias"></div>
-          <div class="barra-pesquisa barra-pesquisa--modal">
-            <img src="/assets/lupa.png" alt="" class="lupa" aria-hidden="true">
-            <input type="text" id="buscaModal" placeholder="Filtrar nesta categoria..." aria-label="Filtrar ingrediente por nome" />
+        <div class="tabs" id="tabs"></div>
+        <input type="text" id="modalSearch" placeholder="Filtrar..." class="modal-search"/>
+        <div class="selected-chips" id="selectedChips" hidden>
+          <div class="chips-top">
+            <span id="selectedCount">0</span>
+            <button id="clearBtn" class="clear-link">Limpar</button>
           </div>
+          <div class="chips" id="chips"></div>
         </div>
-
-        <!-- Selecionados (chips) -->
-        <section class="selecionados" id="selecionadosWrap" aria-live="polite" hidden>
-          <div class="selecionados__topo">
-            <strong id="selecionadosCount">0 selecionados</strong>
-            <button class="btn-link" id="limparSelecionados" aria-label="Limpar todos os selecionados">Limpar</button>
-          </div>
-          <div class="chips" id="chipsSelecionados"></div>
-        </section>
-
-        <!-- Lista com scroll vertical apenas -->
-        <div class="galeria" id="galeriaIngredientes" aria-label="Galeria de ingredientes disponíveis"></div>
-
-        <div class="popup__footer">
-          <button class="manual" id="adicionarManual">Outro ingrediente?</button>
-          <button class="manual secundario" id="adicionarSelecao">Adicionar</button>
+        <div class="gallery" id="gallery"></div>
+        <div class="modal-footer">
+          <button class="btn-secondary" id="customBtn">Manual</button>
+          <button class="btn-primary" id="confirmBtn">Adicionar</button>
         </div>
       </dialog>
 
-      <div class="sr-only" aria-live="polite" id="ariaAnnouncer"></div>
-
-      <!-- Rodapé curvo -->
       <footer class="curva">
-        <button class="btn-footer voltar" id="btnVoltar" aria-label="Selecionar humor novamente">
-          <img src="/assets/humor.png" alt="" />
+        <button class="btn-footer" id="btnBack" aria-label="Voltar">
+          <img src="/assets/humor.png" alt=""/>
         </button>
-        <button class="btn-footer logo" id="btnLogo" aria-label="Abrir atalhos rápidos">
-          <img src="/assets/logocentral.png" alt="" />
+        <button class="btn-footer logo" id="btnHome" aria-label="Home">
+          <img src="/assets/logocentral.png" alt=""/>
         </button>
-        <button class="btn-footer geladeira" id="btnGeladeira" aria-label="Abrir Minha Geladeira">
-          <img src="/assets/geladeira.png" alt="" />
+        <button class="btn-footer" id="btnFridge" aria-label="Geladeira">
+          <img src="/assets/geladeira.png" alt=""/>
         </button>
       </footer>
-
-      <script>
-        document.getElementById("btnVoltar").addEventListener("click", () => {
-          window.location.href = "/app/humor/index.html";
-        });
-        document.getElementById("btnLogo").addEventListener("click", () => {
-          window.location.href = "/app/home/index.html";
-        });
-        document.getElementById("btnGeladeira").addEventListener("click", () => {
-          window.location.href = "/app/geladeira/index.html";
-        });
-      </script>
     </main>
   </div>
-
-  <script src="./geladeira.js" defer></script>
+  <script src="/public/assets/data/ingredientes.js" defer></script>
+  <script src="geladeira.js" defer></script>
 </body>
 </html>
