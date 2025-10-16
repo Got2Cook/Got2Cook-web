@@ -1,0 +1,293 @@
+<!-- /blog/template-post/index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Título do Artigo | Got2Cook Blog</title>
+<meta name="description" content="Descrição do artigo para SEO">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../post.css">
+<link rel="icon" type="image/png" href="../../assets/img/logo.png">
+</head>
+<body>
+
+<!-- BARRA DE PROGRESSO -->
+<div class="read-progress"></div>
+
+<!-- CABEÇALHO STICKY -->
+<header class="post-header">
+<div class="post-header-inner">
+<a href="../" class="post-header-logo">
+<img src="../../assets/img/logo.png" alt="Got2Cook">
+<span>Blog</span>
+</a>
+<nav class="post-header-nav">
+<a href="../" class="post-nav-btn">
+<svg fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/></svg>
+Voltar ao Blog
+</a>
+<a href="../../app/" class="post-nav-btn post-nav-btn--primary">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="m6.305 4.475 6 2.468a.5.5 0 0 1 0 .919l-6 2.468A.5.5 0 0 1 6 9.5V6.5a.5.5 0 0 1 .305-.475z"/></svg>
+Abrir App
+</a>
+</nav>
+<button class="post-header-toggle" aria-label="Menu">
+<span></span>
+<span></span>
+<span></span>
+</button>
+</header>
+
+<!-- HERO COM IMAGEM -->
+<section class="post-hero">
+<div class="bg" style="background-image:url('../../assets/blog/capas/mindful-eating.jpg')"></div>
+<div class="overlay"></div>
+<div class="inner">
+<nav class="breadcrumb">
+<a href="../">Blog</a>
+<span>/</span>
+<a href="../">Lifestyle</a>
+<span>/</span>
+<span>Mindful Eating</span>
+</nav>
+<h1 class="post-title">Mindful Eating: Como Comer com Atenção e Intenção</h1>
+<div class="post-meta">
+<span class="meta-chip">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/></svg>
+10 min de leitura
+</span>
+<span class="meta-chip">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/></svg>
+20 de Outubro, 2025
+</span>
+<span class="meta-chip meta-chip--author">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/></svg>
+Por Vitória
+</span>
+<span class="meta-chip meta-chip--category">
+🥗 Bem-estar
+</span>
+</div>
+</div>
+</section>
+
+<!-- BARRA LATERAL ESQUERDA (Progresso) -->
+<div class="post-progress-sidebar">
+<div class="progress-bar-vertical">
+<div class="progress-bar-fill"></div>
+</div>
+<div class="progress-percentage">0%</div>
+</div>
+
+<!-- BARRA LATERAL DIREITA (Share) -->
+<div class="post-share-sidebar">
+<button class="share-sidebar-btn share-sidebar-btn--facebook" aria-label="Compartilhar no Facebook" data-platform="facebook">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg>
+</button>
+<button class="share-sidebar-btn share-sidebar-btn--twitter" aria-label="Compartilhar no Twitter" data-platform="twitter">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/></svg>
+</button>
+<button class="share-sidebar-btn share-sidebar-btn--whatsapp" aria-label="Compartilhar no WhatsApp" data-platform="whatsapp">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+</button>
+<button class="share-sidebar-btn share-sidebar-btn--copy" aria-label="Copiar link" data-platform="copy">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/><path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/></svg>
+</button>
+</div>
+
+<!-- WRAPPER PRINCIPAL -->
+<div class="post-wrapper">
+<article class="post-content">
+
+<!-- LEAD -->
+<p class="lead">Mindful Eating não é apenas uma tendência alimentar, mas uma transformação profunda na relação que estabelecemos com a comida. Quando comemos com atenção e intenção, honramos nosso corpo, potencializamos a digestão e encontramos maior satisfação em cada refeição.</p>
+
+<!-- SEÇÃO 1 -->
+<h2>O que é Mindful Eating?</h2>
+
+<p>Mindful Eating, ou alimentação consciente, é a prática de aplicar princípios de mindfulness (atenção plena) ao ato de comer. Significa estar presente, sem julgamentos, durante as refeições, observando sinais do corpo e desfrutando de cada boca com intenção.</p>
+
+<p>Essa filosofia nos convida a desacelerar em um mundo acelerado. Em vez de engolir comida diante da tela, pedimos que você sienta a textura, aprecie o aroma e reconheça quando está realmente satisfeito.</p>
+
+<blockquote>
+<p>Quando você come com atenção, a comida se torna uma oração. Cada refeição é uma oportunidade de voltar ao presente e honrar seu corpo.</p>
+<cite>Thich Nhat Hanh</cite>
+</blockquote>
+
+<!-- IMAGEM -->
+<figure class="figure">
+<img src="../../assets/blog/inline/mindful-eating-1.jpg" alt="Pessoa comendo com atenção" loading="lazy">
+<figcaption>Comer com atenção transforma a experiência alimentar</figcaption>
+</figure>
+
+<h3>Benefícios Comprovados</h3>
+
+<ul class="custom-list">
+<li><strong>Digestão melhorada:</strong> comer devagar facilita o processo digestivo</li>
+<li><strong>Controle de peso:</strong> reconhecer sinais de saciedade previne excesso</li>
+<li><strong>Redução da ansiedade:</strong> presença diminui comer emocional</li>
+<li><strong>Maior satisfação:</strong> aproveita mais com menos quantidade</li>
+<li><strong>Conexão com o corpo:</strong> identifica de verdade o que seu corpo precisa</li>
+</ul>
+
+<!-- SEÇÃO 2 -->
+<h2>Os 5 Pilares do Mindful Eating</h2>
+
+<p>Para integrar essa prática em sua vida, concentre-se nesses cinco elementos-chave:</p>
+
+<h3>1. Presença</h3>
+<p>Elimine distrações. Desligue o telefone, desligue a TV. Concentre-se apenas na comida e no ato de comer. A presença é o alicerce de tudo.</p>
+
+<h3>2. Gratidão</h3>
+<p>Antes de comer, pause um momento para reconhecer a jornada do alimento até seu prato. Considere os agricultores, o solo, a água. A gratidão transforma a refeição.</p>
+
+<h3>3. Sensorialidade</h3>
+<p>Explore cores, aromas, texturas e sabores. Mastigue lentamente. Deixe a comida revelar suas camadas de sabor. Os sentidos são portais para a presença.</p>
+
+<h3>4. Sintonização Corporal</h3>
+<p>Reconheça seu nível de fome antes de comer e de saciedade durante. Seu corpo envia sinais; aprenda a ouvi-los. Isso não é restrição; é respeito.</p>
+
+<h3>5. Intencionalidade</h3>
+<p>Coma porque você quer nutrir seu corpo, não para preencher vácuos emocionais. Escolha alimentos que o alimentem, não apenas preencham o prato.</p>
+
+<!-- INFO BOX -->
+<div class="info-box">
+<div class="info-box-icon">💡</div>
+<div class="info-box-content">
+<p><strong>Dica Pro:</strong> Comece pequeno. Reserve apenas uma refeição por semana para ser mindful. Conforme a prática se aprofunda, outras refeições naturalmente se transformarão.</p>
+</div>
+</div>
+
+<!-- IMAGEM 2 -->
+<figure class="figure">
+<img src="../../assets/blog/inline/mindful-eating-2.jpg" alt="Mesa posta com alimentos frescos" loading="lazy">
+<figcaption>Escolha alimentos que nutrem tanto o corpo quanto a alma</figcaption>
+</figure>
+
+<h2>Como Começar: Exercício Prático</h2>
+
+<p>Aqui está um exercício simples para começar:</p>
+
+<ol class="custom-list">
+<li>Escolha uma fruta ou alimento pequeno (uma uva, uma noz, uma colher de mel)</li>
+<li>Observe a cor, o formato, o reflexo da luz</li>
+<li>Leve à boca, mas não mastigue ainda. Sinta a textura</li>
+<li>Mastigue lentamente, notando todos os sabores</li>
+<li>Observe como seu corpo responde à comida</li>
+<li>Continue por 5-10 segundos antes de engolir</li>
+</ol>
+
+<p>Este simples exercício abre as portas para uma relação transformada com a comida. Tente hoje. Você pode se surpreender com o que descobre.</p>
+
+<h2>Mindful Eating com Got2Cook</h2>
+
+<!-- CTA BOX -->
+<div class="cta-box">
+<h3>Transforme Sua Relação com a Comida</h3>
+<p>O Got2Cook combina mindfulness com inteligência culinária. Receba receitas baseadas no seu estado emocional e nos ingredientes que você tem, transformando cada refeição em um ato de autocuidado.</p>
+<a href="../../app/" class="cta-button">Baixar Got2Cook Grátis</a>
+</div>
+
+<!-- TAGS -->
+<div class="post-tags">
+<a href="#" class="post-tag">#MindfulEating</a>
+<a href="#" class="post-tag">#ConsciênciaCorporal</a>
+<a href="#" class="post-tag">#AlimentaçãoIntuitivida</a>
+<a href="#" class="post-tag">#BemEstar</a>
+<a href="#" class="post-tag">#SaúdeMental</a>
+</div>
+
+<!-- AUTOR -->
+<div class="author-box">
+<div class="author-avatar">
+<img src="https://i.pravatar.cc/150?img=1" alt="Foto de Vitória">
+</div>
+<div class="author-info">
+<h4>Escrito por Vitória</h4>
+<p>Nutricionista e especialista em mindfulness. Acredita que comer bem é um ato de amor e presença. Compartilha receitas e reflexões em Got2Cook.</p>
+</div>
+</div>
+
+</article>
+</div>
+
+<!-- RODAPÉ DO POST -->
+<footer class="post-footer">
+<div class="post-footer-inner">
+
+<!-- Relacionados -->
+<div class="post-footer-title">
+<h2>Leia Também</h2>
+<p>Artigos relacionados que você pode gostar</p>
+</div>
+
+<div class="related-grid">
+
+<a href="../dieta-intuitiva/" class="related-card">
+<div class="related-thumb">
+<img src="../../assets/blog/capas/dieta-intuitiva.jpg" alt="Mulher comendo salada">
+<span class="related-category">Nutrição</span>
+</div>
+<div class="related-body">
+<h3 class="related-title">Dieta Intuitiva vs Restrição: O Que a Ciência Diz</h3>
+<p class="related-meta">
+<span>📖 9 min</span>
+<span>Por Vitória</span>
+</p>
+</div>
+</a>
+
+<a href="../receitas-sazonais/" class="related-card">
+<div class="related-thumb">
+<img src="../../assets/blog/capas/receitas-sazonais.jpg" alt="Ingredientes de época">
+<span class="related-category">Receitas</span>
+</div>
+<div class="related-body">
+<h3 class="related-title">Como Aproveitar Ingredientes de Época para Criar Receitas Incríveis</h3>
+<p class="related-meta">
+<span>📖 8 min</span>
+<span>Por Vitória</span>
+</p>
+</div>
+</a>
+
+<a href="../desculpa-chocolate/" class="related-card">
+<div class="related-thumb">
+<img src="../../assets/blog/capas/chocolate.jpg" alt="Chocolate escuro">
+<span class="related-category">Bem-estar</span>
+</div>
+<div class="related-body">
+<h3 class="related-title">Chocolate: O Alimento do Bem-Estar (Sem Culpa)</h3>
+<p class="related-meta">
+<span>📖 7 min</span>
+<span>Por Vitória</span>
+</p>
+</div>
+</a>
+
+</div>
+
+<!-- Newsletter -->
+<div class="footer-newsletter">
+<h3>Receba Receitas Toda Semana</h3>
+<p>Inscreva-se no nosso newsletter e ganhe receitas exclusivas baseadas no seu humor</p>
+<form novalidate>
+<input type="email" placeholder="Seu melhor email" required>
+<button type="submit">Inscrever</button>
+</form>
+</div>
+
+<!-- Copyright -->
+<div class="post-footer-bottom">
+<p>&copy; 2025 Got2Cook Blog. Todos os direitos reservados. | <a href="../../politica/">Política de Privacidade</a> | <a href="../../termos/">Termos de Uso</a></p>
+</div>
+
+</div>
+</footer>
+
+<script src="../post.js"></script>
+</body>
+</html>
