@@ -1,138 +1,302 @@
+<!-- /blog/mindful-eating/index.html -->
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mindful eating: o que é e como começar a praticar — Got2Cook</title>
-  <meta name="description" content="Entenda a alimentação consciente e veja passos simples para começar hoje — conectando corpo, mente e sabor." />
-  <link rel="stylesheet" href="../post.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mindful Eating: Como Comer com Atenção e Intenção | Got2Cook Blog</title>
+<meta name="description" content="Descubra o mindful eating e transforme sua relação com a comida. Aprenda técnicas de alimentação consciente para maior bem-estar e equilíbrio emocional.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../post.css">
+<link rel="icon" type="image/png" href="../../assets/img/logo.png">
 </head>
 <body>
-  <div class="read-progress" id="progress"></div>
 
-  <!-- Header do blog -->
-  <header class="blog-header">
-    <div class="container">
-      <a class="brand" href="/">Got2Cook</a>
-      <nav class="nav" aria-label="Navegação principal">
-        <a href="/">Início</a>
-        <a href="/app/">App</a>
-        <a class="active" href="/blog/">Blog</a>
-        <a href="/#contato">Contato</a>
-      </nav>
-    </div>
-  </header>
+<!-- BARRA DE PROGRESSO -->
+<div class="read-progress"></div>
 
-  <!-- Capa no estilo do hero -->
-  <section class="post-hero">
-    <!-- troque a imagem abaixo quando tiver a definitiva -->
-    <div class="bg" style="background-image:url('/assets/blog/capas/mindful-eating.png')"></div>
-    <div class="overlay"></div>
-    <div class="inner">
-      <h1 class="post-title">Mindful eating: o que é e como começar a praticar</h1>
-      <div class="post-meta">
-        <span class="meta-chip">03 out 2025</span>
-        <span class="meta-chip">6 min</span>
-        <span class="meta-chip">Bem-estar</span>
-        <span class="meta-chip">Mindfulness</span>
-        <span class="meta-chip">Dicas</span>
-      </div>
-    </div>
-  </section>
+<!-- CABEÇALHO STICKY -->
+<header class="post-header">
+<div class="post-header-inner">
+<a href="../" class="post-header-logo">
+<img src="../../assets/img/logo.png" alt="Got2Cook">
+<span>Blog</span>
+</a>
+<nav class="post-header-nav">
+<a href="../" class="post-nav-btn">
+<svg fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/></svg>
+Voltar ao Blog
+</a>
+<a href="../../app/" class="post-nav-btn post-nav-btn--primary">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="m6.305 4.475 6 2.468a.5.5 0 0 1 0 .919l-6 2.468A.5.5 0 0 1 6 9.5V6.5a.5.5 0 0 1 .305-.475z"/></svg>
+Abrir App
+</a>
+</nav>
+<button class="post-header-toggle" aria-label="Menu">
+<span></span>
+<span></span>
+<span></span>
+</button>
+</header>
 
-  <!-- Corpo do artigo -->
-  <div class="post-wrap">
-    <article>
+<!-- HERO COM IMAGEM -->
+<section class="post-hero">
+<div class="bg" style="background-image:url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1600&q=80')"></div>
+<div class="overlay"></div>
+<div class="inner">
+<nav class="breadcrumb">
+<a href="../">Blog</a>
+<span>/</span>
+<a href="../">Bem-estar</a>
+<span>/</span>
+<span>Mindful Eating</span>
+</nav>
+<h1 class="post-title">Mindful Eating: Como Comer com Atenção e Intenção</h1>
+<div class="post-meta">
+<span class="meta-chip">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/></svg>
+10 min de leitura
+</span>
+<span class="meta-chip">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/></svg>
+25 de Outubro, 2025
+</span>
+<span class="meta-chip meta-chip--author">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/></svg>
+Por Vitória
+</span>
+<span class="meta-chip meta-chip--category">
+🥗 Bem-estar
+</span>
+</div>
+</div>
+</section>
 
-      <h2>Introdução</h2>
-      <p>Vivemos em um ritmo acelerado: comemos olhando o celular, respondendo mensagens, assistindo a séries, quase sem perceber o sabor da comida. Nesse cenário, o <strong>mindful eating</strong> — ou “alimentação consciente” — surge como uma prática que convida à pausa. É sobre comer com presença, reconhecer os sinais do corpo e transformar o ato de se alimentar em um momento de conexão genuína.</p>
+<!-- BARRA LATERAL ESQUERDA (Progresso) -->
+<div class="post-progress-sidebar">
+<div class="progress-bar-vertical">
+<div class="progress-bar-fill"></div>
+</div>
+<div class="progress-percentage">0%</div>
+</div>
 
-      <!-- Imagem: foco no prato -->
-      <figure class="figure">
-        <img src="/assets/blog/inline/garfo-na-comida-mind.png" alt="Mão segurando um garfo sobre um prato simples; foco na comida com fundo desfocado">
-      </figure>
+<!-- BARRA LATERAL DIREITA (Share) -->
+<div class="post-share-sidebar">
+<button class="share-sidebar-btn share-sidebar-btn--facebook" aria-label="Compartilhar no Facebook" data-platform="facebook">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg>
+</button>
+<button class="share-sidebar-btn share-sidebar-btn--twitter" aria-label="Compartilhar no Twitter" data-platform="twitter">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/></svg>
+</button>
+<button class="share-sidebar-btn share-sidebar-btn--whatsapp" aria-label="Compartilhar no WhatsApp" data-platform="whatsapp">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+</button>
+<button class="share-sidebar-btn share-sidebar-btn--copy" aria-label="Copiar link" data-platform="copy">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/><path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/></svg>
+</button>
+</div>
 
-      <h2>O que é mindful eating?</h2>
-      <p>Originado dos princípios da <em>mindfulness</em> (atenção plena), o mindful eating não é uma dieta, nem um método de restrição alimentar. É uma forma de reconectar mente, corpo e alimento.</p>
-      <p>Em vez de contar calorias, a prática propõe ouvir o corpo: sentir a fome real, saborear cada textura, identificar emoções ligadas à comida e parar quando houver saciedade.</p>
-      <p>Pesquisas publicadas no <em>Journal of Behavioral Medicine</em> apontam que praticar a alimentação consciente <strong>reduz episódios de compulsão</strong> e <strong>melhora a relação emocional</strong> com o alimento, promovendo escolhas mais equilibradas e menos automáticas.</p>
+<!-- WRAPPER PRINCIPAL -->
+<div class="post-wrapper">
+<article class="post-content">
 
-      <h2>Por que comer no piloto automático é um problema</h2>
-      <p>Quando comemos distraídos, o cérebro demora mais para registrar a saciedade, levando ao consumo excessivo. Além disso, deixamos de perceber aspectos sutis da refeição — o aroma, a textura, a temperatura —, perdendo parte do prazer que o ato de comer naturalmente oferece.</p>
-      <p>Comer no automático também mascara o que realmente sentimos: às vezes não é fome, mas tédio, ansiedade ou necessidade de conforto emocional.</p>
+<!-- LEAD -->
+<p class="lead">Vivemos em um ritmo acelerado: comemos olhando o celular, respondendo mensagens, assistindo a séries, quase sem perceber o sabor da comida. Nesse cenário, o mindful eating — ou "alimentação consciente" — surge como uma prática que convida à pausa. É sobre comer com presença, reconhecer os sinais do corpo e transformar o ato de se alimentar em um momento de conexão genuína.</p>
 
-      <!-- Imagem: cenas contrastantes -->
-      <figure class="figure">
-        <img src="/assets/blog/inline/homem-celular-comendo.png" alt="Comparação: pessoa comendo rapidamente no celular versus alguém saboreando calmamente a refeição">
-      </figure>
+<!-- IMAGEM 1 -->
+<figure class="figure">
+<img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1200&q=80" alt="Mão segurando um garfo sobre um prato colorido" loading="lazy">
+<figcaption>O mindful eating nos reconecta com o prazer genuíno de comer</figcaption>
+</figure>
 
-      <h2>Benefícios do mindful eating</h2>
-      <ul>
-        <li><strong>Melhor digestão</strong>, pois o corpo relaxa e assimila melhor os nutrientes.</li>
-        <li><strong>Menos compulsão e ansiedade alimentar</strong>, com decisões mais conscientes.</li>
-        <li><strong>Apreciação real do sabor</strong>, fortalecendo o prazer genuíno de comer.</li>
-        <li><strong>Relação saudável com o corpo</strong>, livre de culpa e rigidez.</li>
-      </ul>
+<!-- SEÇÃO 1 -->
+<h2>O que é mindful eating?</h2>
 
-      <!-- Imagem: ciclo mente–corpo–alimento -->
-      <figure class="figure">
-        <img src="/assets/blog/inline/ciclo-mente-corpo-alimento.png" alt="Ilustração minimalista do ciclo equilibrado entre mente, corpo e alimentação">
-      </figure>
+<p>Originado dos princípios da mindfulness (atenção plena), o mindful eating não é uma dieta, nem um método de restrição alimentar. É uma forma de reconectar mente, corpo e alimento.</p>
 
-      <h2>Como começar a praticar</h2>
-      <p>Começar é simples — exige mais intenção do que técnica. Experimente estes passos:</p>
-      <ul>
-        <li><strong>Desligue as distrações.</strong> Guarde o celular e desligue a TV.</li>
-        <li><strong>Observe a comida.</strong> Note as cores, aromas e texturas.</li>
-        <li><strong>Respire antes da primeira garfada.</strong> Um pequeno ritual para ancorar o momento.</li>
-        <li><strong>Coma devagar.</strong> Mastigue bem e perceba as sensações que surgem.</li>
-        <li><strong>Pergunte-se:</strong> “Estou com fome física ou emocional?”</li>
-        <li><strong>Agradeça.</strong> Reconheça o alimento, o esforço envolvido e o efeito no seu corpo.</li>
-      </ul>
+<p>Em vez de contar calorias, a prática propõe ouvir o corpo: sentir a fome real, saborear cada textura, identificar emoções ligadas à comida e parar quando houver saciedade.</p>
 
-      <!-- Imagem: 6 passos -->
-      <figure class="figure">
-        <img src="/assets/blog/inline/mindful-passos.png" alt="Sequência visual de seis ícones representando os passos do mindful eating">
-      </figure>
+<p>Pesquisas publicadas no Journal of Behavioral Medicine apontam que praticar a alimentação consciente reduz episódios de compulsão e melhora a relação emocional com o alimento, promovendo escolhas mais equilibradas e menos automáticas.</p>
 
-      <h2>Mindful eating e o humor</h2>
-      <p>Comer com atenção plena também ajuda a regular as emoções. Ao identificar o que sentimos antes de comer, conseguimos distinguir quando a fome é real ou emocional. Essa consciência reduz episódios de comer por ansiedade e melhora o equilíbrio do humor.</p>
-      <p>É o mesmo princípio que inspira o <strong>Got2Cook</strong> — transformar o ato de cozinhar e comer em uma experiência emocional e consciente, conectando o que sentimos ao que escolhemos saborear.</p>
+<blockquote>
+<p>Mindful eating não é sobre controlar o que você come. É sobre estar presente com o que você escolhe comer e encontrar verdadeira satisfação em cada refeição.</p>
+<cite>Dr. Jan Chozen Bays</cite>
+</blockquote>
 
-      <!-- Imagem: cozinhando calmamente -->
-      <figure class="figure">
-        <img src="/assets/blog/inline/homem-fone-mind.png" alt="Pessoa sorrindo, cozinhando calmamente enquanto ouve música leve">
-      </figure>
+<!-- SEÇÃO 2 -->
+<h2>Por que comer no piloto automático é um problema</h2>
 
-      <h2>Conclusão</h2>
-      <p>O mindful eating é um convite à presença. É sobre comer menos com os olhos e mais com o coração — perceber o sabor, o corpo, o instante. Quando desaceleramos diante do prato, nos alimentamos de algo que vai além dos nutrientes: nos alimentamos de consciência.</p>
+<p>Quando comemos distraídos, o cérebro demora mais para registrar a saciedade, levando ao consumo excessivo. Além disso, deixamos de perceber aspectos sutis da refeição — o aroma, a textura, a temperatura —, perdendo parte do prazer que o ato de comer naturalmente oferece.</p>
 
-      <!-- Imagem final minimalista -->
-      <figure class="figure">
-        <img src="/assets/blog/inline/mesa-minimalista-mind.png" alt="Mesa minimalista com prato vazio, talheres alinhados e um pequeno vaso com flor">
-      </figure>
+<p>Comer no automático também mascara o que realmente sentimos: às vezes não é fome, mas tédio, ansiedade ou necessidade de conforto emocional. Essa desconexão com nossos sinais corporais pode criar ciclos prejudiciais de alimentação compulsiva.</p>
 
-      <hr />
+<!-- IMAGEM 2 -->
+<figure class="figure">
+<img src="https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=1200&q=80" alt="Pessoa comendo enquanto assiste TV" loading="lazy">
+<figcaption>Comer distraído reduz a saciedade e o prazer da refeição</figcaption>
+</figure>
 
-      <p><strong>🍽️ Que tal começar hoje?</strong></p>
-      <p>Experimente fazer da próxima refeição um momento de pausa. E, se quiser transformar essa prática em hábito, o Got2Cook pode te inspirar com receitas que unem sabor, emoção e consciência — porque comer bem também é um ato de presença.</p>
-    </article>
+<!-- SEÇÃO 3 -->
+<h2>Benefícios do mindful eating</h2>
 
-    <nav class="post-nav" aria-label="Navegação entre artigos">
-      <a href="/blog/">← Voltar ao Blog</a>
-    </nav>
-  </div>
+<p>Praticar o mindful eating pode trazer resultados surpreendentes, tanto físicos quanto mentais:</p>
 
-  <script>
-    // Barra de progresso de leitura (mesmo padrão)
-    const bar = document.getElementById('progress');
-    const onScroll = () => {
-      const h = document.documentElement;
-      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
-      bar.style.width = (scrolled * 100).toFixed(2) + '%';
-    };
-    document.addEventListener('scroll', onScroll, {passive:true});
-    onScroll();
-  </script>
+<ul class="custom-list">
+<li><strong>Melhor digestão:</strong> pois o corpo relaxa e assimila melhor os nutrientes</li>
+<li><strong>Menos compulsão:</strong> redução de ansiedade alimentar com decisões mais conscientes</li>
+<li><strong>Apreciação real do sabor:</strong> fortalecendo o prazer genuíno de comer</li>
+<li><strong>Relação saudável com o corpo:</strong> livre de culpa e rigidez alimentar</li>
+<li><strong>Maior satisfação com menos quantidade:</strong> porque você realmente sente o que come</li>
+</ul>
+
+<div class="info-box">
+<div class="info-box-icon">💡</div>
+<div class="info-box-content">
+<p><strong>Dica importante:</strong> Estudos mostram que mastigar devagar aumenta a sensação de saciedade em até 30 minutos após a refeição, permitindo que o corpo registre melhor quando você está satisfeito.</p>
+</div>
+</div>
+
+<!-- SEÇÃO 4 -->
+<h2>Como começar a praticar</h2>
+
+<p>Começar é simples — exige mais intenção do que técnica. Aqui está um guia prático para iniciar sua jornada com o mindful eating:</p>
+
+<ol class="custom-list">
+<li><strong>Desligue as distrações.</strong> Guarde o celular, desligue a TV e escolha um espaço tranquilo para sua refeição</li>
+<li><strong>Observe a comida.</strong> Note as cores, aromas e texturas. Aprecie a apresentação do prato</li>
+<li><strong>Respire antes da primeira garfada.</strong> Um pequeno ritual para ancorar o momento e acalmar o sistema nervoso</li>
+<li><strong>Coma devagar.</strong> Mastigue bem (idealmente 20-30 vezes por bocado) e perceba as sensações que surgem</li>
+<li><strong>Pergunte-se.</strong> "Estou com fome física ou emocional?" Identifique seus sinais reais de fome</li>
+<li><strong>Agradeça.</strong> Reconheça o alimento, o esforço envolvido e o efeito no seu corpo</li>
+</ol>
+
+<!-- IMAGEM 3 -->
+<figure class="figure">
+<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1200&q=80" alt="Pessoa em repouso antes de comer, com plato à frente" loading="lazy">
+<figcaption>Pausar e respirar são passos essenciais do mindful eating</figcaption>
+</figure>
+
+<!-- SEÇÃO 5 -->
+<h2>Mindful eating e o humor</h2>
+
+<p>Comer com atenção plena também ajuda a regular as emoções. Ao identificar o que sentimos antes de comer, conseguimos distinguir quando a fome é real ou emocional. Essa consciência reduz episódios de comer por ansiedade e melhora o equilíbrio do humor.</p>
+
+<p>É o mesmo princípio que inspira o Got2Cook — transformar o ato de cozinhar e comer em uma experiência emocional e consciente, conectando o que sentimos ao que escolhemos saborear. Quando você entende sua fome emocional, consegue fazer escolhas mais alinhadas com o que seu corpo realmente precisa.</p>
+
+<!-- CTA BOX -->
+<div class="cta-box">
+<h3>Transforme Sua Relação com a Comida</h3>
+<p>O Got2Cook combina mindfulness com inteligência culinária. Receba receitas personalizadas baseadas no seu estado emocional e nos ingredientes que você tem, transformando cada refeição em um ato de autocuidado consciente.</p>
+<a href="../../app/" class="cta-button">Baixar Got2Cook Grátis</a>
+</div>
+
+<!-- SEÇÃO 6 -->
+<h2>Conclusão: Um Convite à Presença</h2>
+
+<p>O mindful eating é um convite à presença. É sobre comer menos com os olhos e mais com o coração — perceber o sabor, o corpo, o instante. Quando desaceleramos diante do prato, nos alimentamos de algo que vai além dos nutrientes: nos alimentamos de consciência.</p>
+
+<p>Não é sobre perfeição. É sobre criar momentos de pausa em um mundo acelerado, onde você escolhe conectar-se verdadeiramente com o que come e com o que sente.</p>
+
+<!-- TAGS -->
+<div class="post-tags">
+<a href="#" class="post-tag">#MindfulEating</a>
+<a href="#" class="post-tag">#AlimentaçãoConsciente</a>
+<a href="#" class="post-tag">#ConsciênciaCorporal</a>
+<a href="#" class="post-tag">#BemEstar</a>
+<a href="#" class="post-tag">#SaúdeMental</a>
+<a href="#" class="post-tag">#Mindfulness</a>
+</div>
+
+<!-- AUTOR -->
+<div class="author-box">
+<div class="author-avatar">
+<img src="https://i.pravatar.cc/150?img=47" alt="Foto de Vitória">
+</div>
+<div class="author-info">
+<h4>Escrito por Vitória</h4>
+<p>Nutricionista especializada em mindfulness e bem-estar. Acredita que comer bem é um ato de amor e presença. Compartilha receitas conscientes no Got2Cook.</p>
+</div>
+</div>
+
+</article>
+</div>
+
+<!-- RODAPÉ DO POST -->
+<footer class="post-footer">
+<div class="post-footer-inner">
+
+<!-- Relacionados -->
+<div class="post-footer-title">
+<h2>Leia Também</h2>
+<p>Artigos relacionados que você pode gostar</p>
+</div>
+
+<div class="related-grid">
+
+<a href="../dieta-intuitiva/" class="related-card">
+<div class="related-thumb">
+<img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&q=80" alt="Mulher comendo salada">
+<span class="related-category">Nutrição</span>
+</div>
+<div class="related-body">
+<h3 class="related-title">Dieta Intuitiva vs Restrição: O Que a Ciência Diz</h3>
+<p class="related-meta">
+<span>📖 9 min</span>
+<span>Por Vitória</span>
+</p>
+</div>
+</a>
+
+<a href="../receitas-sazonais/" class="related-card">
+<div class="related-thumb">
+<img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=600&q=80" alt="Ingredientes de época">
+<span class="related-category">Receitas</span>
+</div>
+<div class="related-body">
+<h3 class="related-title">Como Aproveitar Ingredientes de Época para Criar Receitas Incríveis</h3>
+<p class="related-meta">
+<span>📖 8 min</span>
+<span>Por Vitória</span>
+</p>
+</div>
+</a>
+
+<a href="../chocolate-bemestar/" class="related-card">
+<div class="related-thumb">
+<img src="https://images.unsplash.com/photo-1599599810694-b5ac4dd5e1fb?w=600&q=80" alt="Chocolate escuro">
+<span class="related-category">Bem-estar</span>
+</div>
+<div class="related-body">
+<h3 class="related-title">Chocolate: O Alimento do Bem-Estar (Sem Culpa)</h3>
+<p class="related-meta">
+<span>📖 7 min</span>
+<span>Por Vitória</span>
+</p>
+</div>
+</a>
+
+</div>
+
+<!-- Newsletter -->
+<div class="footer-newsletter">
+<h3>Receba Receitas Toda Semana</h3>
+<p>Inscreva-se no nosso newsletter e ganhe receitas exclusivas baseadas no seu humor</p>
+<form novalidate>
+<input type="email" placeholder="Seu melhor email" required>
+<button type="submit">Inscrever</button>
+</form>
+</div>
+
+<!-- Copyright -->
+<div class="post-footer-bottom">
+<p>&copy; 2025 Got2Cook Blog. Todos os direitos reservados. | <a href="../../politica/">Política de Privacidade</a> | <a href="../../termos/">Termos de Uso</a></p>
+</div>
+
+</div>
+</footer>
+
+<script src="../post.js"></script>
 </body>
 </html>
