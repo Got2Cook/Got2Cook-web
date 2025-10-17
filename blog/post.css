@@ -107,10 +107,10 @@
 .cta-button{display:inline-block;padding:16px 40px;background:var(--roxo-dark);color:#fff;font-weight:800;font-size:18px;border-radius:12px;text-decoration:none;transition:all .35s;box-shadow:0 8px 24px rgba(0,0,0,.2);position:relative;z-index:1}
 .cta-button:hover{background:#2a1840;transform:translateY(-3px);box-shadow:0 12px 36px rgba(0,0,0,.3)}
 
-/* Tags - CORES VERDE CLARO */
+/* Tags - CORES ROXO */
 .post-tags{display:flex;flex-wrap:wrap;gap:10px;margin:56px 0 40px;padding-top:40px;border-top:2px solid var(--borda)}
-.post-tag{padding:9px 18px;background:var(--verde-light);color:var(--verde);border:2px solid var(--verde);border-radius:6px;font-size:14px;font-weight:600;transition:all .3s;text-decoration:none}
-.post-tag:hover{background:var(--verde);color:#fff;transform:translateY(-2px)}
+.post-tag{padding:9px 18px;background:var(--roxo2);color:#fff;border:2px solid var(--roxo2);border-radius:6px;font-size:14px;font-weight:600;transition:all .3s;text-decoration:none}
+.post-tag:hover{background:var(--roxo);color:#fff;transform:translateY(-2px);box-shadow:0 4px 12px rgba(73,47,112,.3)}
 
 /* REMOVER AUTOR BOX */
 .author-box{display:none}
@@ -135,15 +135,15 @@
 .related-meta{margin:0;font-size:13px;color:#999;display:flex;align-items:center;gap:12px}
 
 /* Newsletter footer */
-.footer-newsletter{background:linear-gradient(135deg,var(--verde),var(--verde-dark));border-radius:24px;padding:56px 48px;text-align:center;margin-top:72px;color:#fff;box-shadow:0 12px 40px rgba(192,255,165,.3)}
+.footer-newsletter{background:linear-gradient(135deg,var(--roxo2),var(--roxo));border-radius:24px;padding:56px 48px;text-align:center;margin-top:72px;color:#fff;box-shadow:0 12px 40px rgba(73,47,112,.3)}
 .footer-newsletter h3{margin:0 0 14px;font-size:32px;font-weight:900;color:#fff}
 .footer-newsletter p{margin:0 0 32px;font-size:18px;opacity:1;line-height:1.6}
 .footer-newsletter form{display:flex;gap:12px;max-width:550px;margin:0 auto}
 .footer-newsletter input{flex:1;padding:16px 22px;border:2px solid rgba(255,255,255,.5);border-radius:12px;background:rgba(255,255,255,.3);color:#fff;font-size:16px;backdrop-filter:blur(10px);font-weight:500}
 .footer-newsletter input::placeholder{color:rgba(255,255,255,.9)}
 .footer-newsletter input:focus{outline:none;border-color:#fff;background:rgba(255,255,255,.4)}
-.footer-newsletter button{padding:16px 40px;background:#fff;color:var(--verde);border:none;border-radius:12px;font-weight:800;font-size:16px;cursor:pointer;transition:all .3s;box-shadow:0 6px 20px rgba(0,0,0,.15)}
-.footer-newsletter button:hover{background:var(--roxo2);color:#fff;transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.2)}
+.footer-newsletter button{padding:16px 40px;background:var(--verde);color:var(--roxo2);border:none;border-radius:12px;font-weight:800;font-size:16px;cursor:pointer;transition:all .3s;box-shadow:0 6px 20px rgba(192,255,165,.3)}
+.footer-newsletter button:hover{background:var(--verde-dark);color:var(--roxo2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(192,255,165,.4)}
 
 /* Copyright */
 .post-footer-bottom{text-align:center;margin-top:56px;padding-top:32px;border-top:2px solid var(--borda)}
