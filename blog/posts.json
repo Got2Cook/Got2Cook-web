@@ -34,5 +34,14 @@
   "tempoLeitura": "6 min",
   "categorias": ["Humor", "Dicas", "Ciência"],
   "capa": "/assets/blog/capas/humor.png"
+},
+  {
+  "slug": "fome-emocional",
+  "titulo": "Comer por Emoção: Como Identificar Quando a Fome é Emocional",
+  "resumo": "Aprenda a distinguir fome física de fome emocional e transforme sua relação com a comida através da consciência e autocuidado.",
+  "data": "2025-10-21",
+  "tempoLeitura": "9 min",
+  "categorias": ["Bem-estar"],
+  "capa": "/assets/blog/capas/fome-emocional.png"
 }
 ]
