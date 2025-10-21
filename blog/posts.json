@@ -43,5 +43,14 @@
   "tempoLeitura": "9 min",
   "categorias": ["Bem-estar"],
   "capa": "/assets/blog/capas/fome-emocional.png"
+},
+  {
+  "slug": "aproveitamento-integral",
+  "titulo": "Da Raiz à Casca: O Poder de Aproveitar Integralmente Frutas e Vegetais",
+  "resumo": "Descubra como aproveitar cascas, talos e sementes para reduzir desperdício, economizar e criar receitas nutritivas e sustentáveis.",
+  "data": "2025-10-21",
+  "tempoLeitura": "12 min",
+  "categorias": ["Sustentabilidade"],
+  "capa": "/assets/blog/capas/aproveitamento-integral.png"
 }
 ]
