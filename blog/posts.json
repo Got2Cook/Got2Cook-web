@@ -52,5 +52,15 @@
   "tempoLeitura": "12 min",
   "categorias": ["Sustentabilidade"],
   "capa": "https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=1200&q=80&fit=crop"
+},
+  {
+  "slug": "alimentos-ultraprocessados",
+  "titulo": "Alimentos Ultraprocessados: O Que Eles Fazem com o Seu Cérebro (E Por Que É Tão Difícil Parar de Comê-los)",
+  "resumo": "Descubra como os ultraprocessados afetam o cérebro, criam dependência e o que fazer para reeducar seu paladar com consciência.",
+  "data": "2025-10-21",
+  "tempoLeitura": "14 min",
+  "autor": "Vitória",
+  "categorias": ["Nutrição", "Saúde Mental"],
+  "capa": "https://images.unsplash.com/photo-1534723328310-e82dad3ee43f?w=1200&q=80&fit=crop"
 }
 ]
