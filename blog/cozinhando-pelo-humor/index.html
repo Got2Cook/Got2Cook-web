@@ -1,116 +1,307 @@
+<!-- /blog/cozinhando-pelo-humor/index.html -->
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cozinhando pelo humor — Got2Cook</title>
-  <meta name="description" content="Como nossas emoções podem guiar o prato do dia: ciência, exemplos práticos e autocuidado na cozinha." />
-  <link rel="stylesheet" href="../post.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cozinhando pelo Humor: Como Nossas Emoções Podem Guiar o Prato do Dia | Got2Cook Blog</title>
+<meta name="description" content="Descubra como suas emoções influenciam suas escolhas alimentares e aprenda a usar o humor como guia para refeições mais conscientes e prazerosas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../post.css">
+<link rel="icon" type="image/png" href="/assets/logo.png">
 </head>
 <body>
-  <div class="read-progress" id="progress"></div>
 
-  <!-- Header do blog -->
-  <header class="blog-header">
-    <div class="container">
-      <a class="brand" href="/">Got2Cook</a>
-      <nav class="nav" aria-label="Navegação principal">
-        <a href="/">Início</a>
-        <a href="/app/">App</a>
-        <a class="active" href="/blog/">Blog</a>
-        <a href="/#contato">Contato</a>
-      </nav>
-    </div>
-  </header>
+<!-- BARRA DE PROGRESSO -->
+<div class="read-progress"></div>
 
-  <!-- Capa no estilo do hero -->
-  <section class="post-hero">
-    <!-- troque a imagem abaixo quando tiver a definitiva -->
-    <div class="bg" style="background-image:url('/assets/blog/capas/humor.png')"></div>
-    <div class="overlay"></div>
-    <div class="inner">
-      <h1 class="post-title">Cozinhando pelo humor: como nossas emoções podem guiar o prato do dia</h1>
-      <div class="post-meta">
-        <span class="meta-chip">01 out 2025</span>
-        <span class="meta-chip">6 min</span>
-        <span class="meta-chip">Humor</span>
-        <span class="meta-chip">Dicas</span>
-        <span class="meta-chip">Ciência</span>
-      </div>
-    </div>
-  </section>
+<!-- CABEÇALHO STICKY -->
+<header class="post-header">
+<div class="post-header-inner">
+<a href="../" class="post-header-logo">
+<img src="/assets/logo.png" alt="Got2Cook">
+<span>Blog</span>
+</a>
+<nav class="post-header-nav">
+<a href="../" class="post-nav-btn">
+<svg fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/></svg>
+Voltar ao Blog
+</a>
+<a href="../../app/" class="post-nav-btn post-nav-btn--primary">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="m6.305 4.475 6 2.468a.5.5 0 0 1 0 .919l-6 2.468A.5.5 0 0 1 6 9.5V6.5a.5.5 0 0 1 .305-.475z"/></svg>
+Abrir App
+</a>
+</nav>
+<button class="post-header-toggle" aria-label="Menu">
+<span></span>
+<span></span>
+<span></span>
+</button>
+</header>
 
-  <!-- Corpo do artigo -->
-  <div class="post-wrap">
-    <article>
+<!-- HERO COM IMAGEM -->
+<section class="post-hero">
+<div class="bg" style="background-image:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920&q=80&fit=crop')"></div>
+<div class="overlay"></div>
+<div class="inner">
+<nav class="breadcrumb">
+<a href="../">Blog</a>
+<span>/</span>
+<a href="../">Bem-estar</a>
+<span>/</span>
+<span>Humor e Alimentação</span>
+</nav>
+<h1 class="post-title">Cozinhando pelo Humor: Como Nossas Emoções Podem Guiar o Prato do Dia</h1>
+<div class="post-meta">
+<span class="meta-chip">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/></svg>
+10 min de leitura
+</span>
+<span class="meta-chip">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/></svg>
+22 de Outubro, 2025
+</span>
+<span class="meta-chip meta-chip--author">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/></svg>
+Por Vitória
+</span>
+<span class="meta-chip meta-chip--category">
+💚 Bem-estar
+</span>
+</div>
+</div>
+</section>
 
-      <h2>Introdução</h2>
-      <p>Não é exagero dizer que o humor tempera nossas escolhas à mesa. Em dias de melancolia, buscamos comidas que abraçam; em momentos de euforia, preferimos pratos leves e vibrantes. A ciência confirma: nossas emoções influenciam o paladar, e aquilo que comemos pode, por sua vez, mudar a forma como nos sentimos.</p>
-      <p>Estudos científicos indicam que alimentos ricos em triptofano — como ovos, castanhas e queijos — favorecem a produção de serotonina, um neurotransmissor associado ao bem-estar e à regulação do humor. Por outro lado, o consumo de alimentos ultraprocessados, ricos em gordura e açúcar, está relacionado a oscilações de humor e quedas bruscas de energia, além de estar associado a comportamentos adictivos e impacto negativo na saúde mental.</p>
+<!-- BARRA LATERAL ESQUERDA (Progresso) -->
+<div class="post-progress-sidebar">
+<div class="progress-bar-vertical">
+<div class="progress-bar-fill"></div>
+</div>
+<div class="progress-percentage">0%</div>
+</div>
 
-      <h2>Como o humor guia o prato</h2>
-      <p>Pesquisadores de psicologia do paladar explicam que cada emoção ativa diferentes desejos alimentares. De forma simplificada:</p>
-      <ul>
-        <li><strong>Tristeza → aconchego:</strong> massas, sopas, chocolates (sensação de acolhimento)</li>
-        <li><strong>Alegria → frescor e cores:</strong> saladas criativas, frutas, smoothies (leveza e energia)</li>
-        <li><strong>Ansiedade → crocância:</strong> castanhas, pipoca, torradas (sensação de descarga de tensão)</li>
-        <li><strong>Romance → doçura e intensidade:</strong> vinhos, fondues, sobremesas marcantes (prazer compartilhado)</li>
-      </ul>
+<!-- BARRA LATERAL DIREITA (Share) -->
+<div class="post-share-sidebar">
+<button class="share-sidebar-btn share-sidebar-btn--facebook" aria-label="Compartilhar no Facebook" data-platform="facebook">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg>
+</button>
+<button class="share-sidebar-btn share-sidebar-btn--twitter" aria-label="Compartilhar no Twitter" data-platform="twitter">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/></svg>
+</button>
+<button class="share-sidebar-btn share-sidebar-btn--whatsapp" aria-label="Compartilhar no WhatsApp" data-platform="whatsapp">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+</button>
+<button class="share-sidebar-btn share-sidebar-btn--copy" aria-label="Copiar link" data-platform="copy">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/><path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/></svg>
+</button>
+</div>
 
-      <!-- Espaço para imagem da matriz Emoções x Pratos -->
-      <figure class="figure">
-        <img src="/assets/blog/inline/mulher-feliz-smothie.png" alt="Quadro visual mostrando emoções e pratos correspondentes">
-      </figure>
+<!-- WRAPPER PRINCIPAL -->
+<div class="post-wrapper">
+<article class="post-content">
 
-      <p>Esse padrão, claro, varia de pessoa para pessoa — é resultado de cultura, memória afetiva e até de experiências de infância.</p>
+<!-- LEAD -->
+<p class="lead">Não é exagero dizer que o humor tempera nossas escolhas à mesa. Em dias de melancolia, buscamos comidas que abraçam; em momentos de euforia, preferimos pratos leves e vibrantes. A ciência confirma: nossas emoções influenciam o paladar, e aquilo que comemos pode, por sua vez, mudar a forma como nos sentimos.</p>
 
-      <h2>Por que isso acontece?</h2>
-      <p>A resposta está na interação entre cérebro e paladar. Emoções alteram a percepção sensorial: um mesmo café pode parecer mais amargo em um dia de raiva e suave em um encontro romântico. Além disso, o ambiente em que comemos — iluminação, música, companhia — também modula a experiência.</p>
+<p>Estudos científicos indicam que alimentos ricos em <strong>triptofano</strong> — como ovos, castanhas e queijos — favorecem a produção de serotonina, um neurotransmissor associado ao bem-estar e à regulação do humor. Por outro lado, o consumo de alimentos ultraprocessados, ricos em gordura e açúcar, está relacionado a oscilações de humor e quedas bruscas de energia, além de estar associado a comportamentos adictivos e impacto negativo na saúde mental.</p>
 
-      <!-- Espaço para imagem de ambientes contrastantes -->
-      <figure class="figure">
-        <img src="/assets/blog/inline/ambientes-contrastantes.png" alt="Mesa posta em dois ambientes contrastantes: luz suave com flores e luz fria sem decoração">
-      </figure>
+<!-- SEÇÃO 1 -->
+<h2>Como o Humor Guia o Prato</h2>
 
-      <h2>Tornando a cozinha um espaço de autocuidado</h2>
-      <p>Reconhecer essa conexão é abrir caminho para uma alimentação mais consciente. Em vez de comer no “automático”, podemos perguntar: “O que sinto hoje e como quero me sentir depois de comer?”. Essa simples reflexão ajuda a transformar refeições em rituais de autocuidado.</p>
-      <p>Aqui entram também ferramentas modernas que unem tecnologia e bem-estar. Aplicativos como o Got2Cook exploram essa lógica, sugerindo receitas baseadas no humor e nos ingredientes disponíveis em casa. Não substituem a intuição, mas funcionam como parceiros para quem quer tornar a cozinha mais criativa e emocionalmente inteligente.</p>
+<p>Pesquisadores de psicologia do paladar explicam que cada emoção ativa diferentes desejos alimentares. De forma simplificada:</p>
 
-      <!-- Espaço para imagem do app na cozinha -->
-      <figure class="figure">
-        <img src="/assets/blog/inline/got2cook-app.png" alt="Celular apoiado na cozinha mostrando sugestões de receitas coloridas ao lado de uma pessoa sorridente cozinhando">
-      </figure>
+<ul class="custom-list">
+<li><strong>Tristeza → aconchego:</strong> massas, sopas, chocolates (sensação de acolhimento)</li>
+<li><strong>Alegria → frescor e cores:</strong> saladas criativas, frutas, smoothies (leveza e energia)</li>
+<li><strong>Ansiedade → crocância:</strong> castanhas, pipoca, torradas (sensação de descarga de tensão)</li>
+<li><strong>Romance → doçura e intensidade:</strong> vinhos, fondues, sobremesas marcantes (prazer compartilhado)</li>
+</ul>
 
-      <h2>Conclusão</h2>
-      <p>Comer é mais do que nutrir: é dialogar com nossas emoções. Ao compreender essa ponte entre sentimentos e sabores, ganhamos autonomia para cuidar de nós mesmos de forma simples, prazerosa e, muitas vezes, transformadora.</p>
-      <p>E da próxima vez que abrir a geladeira, em vez de pensar apenas “o que vou comer?”, experimente perguntar: “como estou me sentindo hoje?”. Talvez a resposta esteja em um prato que já conhece — ou em uma receita nova pronta para mudar o seu dia.</p>
+<figure class="figure">
+<img src="https://images.unsplash.com/photo-1495195134817-aeb325a55b65?w=1200&q=80&fit=crop" alt="Quadro visual mostrando emoções e pratos correspondentes" loading="lazy">
+</figure>
 
-      <!-- Espaço para imagem final em círculo com emojis -->
-      <figure class="figure">
-        <img src="/assets/blog/inline/emoji-circulo-pratos.png" alt="Pratos diferentes em círculo com emojis no centro, simbolizando a escolha pelo humor">
-      </figure>
+<p>Esse padrão, claro, varia de pessoa para pessoa — é resultado de cultura, memória afetiva e até de experiências de infância.</p>
 
-      <hr />
+<!-- INFO BOX -->
+<div class="info-box">
+<div class="info-box-icon">🧠</div>
+<div class="info-box-content">
+<p><strong>Memória Afetiva:</strong> Aquele macarrão da avó não é só comida — é conforto emocional. O cérebro associa sabores a memórias, por isso certos pratos têm o poder de nos transportar no tempo e nos fazer sentir acolhidos.</p>
+</div>
+</div>
 
-      <p><strong>🍳 Quer transformar seu humor em inspiração culinária?</strong></p>
-      <p>Experimente o Got2Cook: o app que conecta seus sentimentos aos ingredientes da sua geladeira, sugerindo receitas que combinam com o momento. Porque cozinhar também é uma forma de se cuidar.</p>
-    </article>
+<!-- SEÇÃO 2 -->
+<h2>Por Que Isso Acontece?</h2>
 
-    <nav class="post-nav" aria-label="Navegação entre artigos">
-      <a href="/blog/">← Voltar ao Blog</a>
-    </nav>
-  </div>
+<p>A resposta está na interação entre cérebro e paladar. Emoções alteram a percepção sensorial: um mesmo café pode parecer mais amargo em um dia de raiva e suave em um encontro romântico. Além disso, o ambiente em que comemos — iluminação, música, companhia — também modula a experiência.</p>
 
-  <script>
-    // Barra de progresso de leitura
-    const bar = document.getElementById('progress');
-    const onScroll = () => {
-      const h = document.documentElement;
-      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
-      bar.style.width = (scrolled * 100).toFixed(2) + '%';
-    };
-    document.addEventListener('scroll', onScroll, {passive:true});
-    onScroll();
-  </script>
+<figure class="figure">
+<img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=80&fit=crop" alt="Mesa posta em dois ambientes contrastantes" loading="lazy">
+</figure>
+
+<blockquote>
+<p>O ambiente em que comemos pode ser tão importante quanto o que está no prato. Uma mesa bem posta, música suave e boa companhia transformam uma refeição simples em um momento memorável.</p>
+</blockquote>
+
+<!-- SEÇÃO 3 -->
+<h2>Tornando a Cozinha um Espaço de Autocuidado</h2>
+
+<p>Reconhecer essa conexão é abrir caminho para uma alimentação mais consciente. Em vez de comer no "automático", podemos perguntar: <strong>"O que sinto hoje e como quero me sentir depois de comer?"</strong> Essa simples reflexão ajuda a transformar refeições em rituais de autocuidado.</p>
+
+<p>Aqui entram também ferramentas modernas que unem tecnologia e bem-estar. Aplicativos como o <strong>Got2Cook</strong> exploram essa lógica, sugerindo receitas baseadas no humor e nos ingredientes disponíveis em casa. Não substituem a intuição, mas funcionam como parceiros para quem quer tornar a cozinha mais criativa e emocionalmente inteligente.</p>
+
+<figure class="figure">
+<img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=1200&q=80&fit=crop" alt="Pessoa sorridente cozinhando com celular apoiado na cozinha" loading="lazy">
+</figure>
+
+<!-- INFO BOX -->
+<div class="info-box">
+<div class="info-box-icon">💡</div>
+<div class="info-box-content">
+<p><strong>Dica Pro:</strong> Antes de abrir a geladeira, pause por 30 segundos e pergunte: "Como estou me sentindo agora?". Essa pequena pausa pode transformar um impulso automático em uma escolha consciente.</p>
+</div>
+</div>
+
+<!-- SEÇÃO 4 -->
+<h2>A Ciência por Trás da Conexão Humor-Comida</h2>
+
+<p>Estudos em neurociência mostram que o sistema límbico — a região cerebral responsável pelas emoções — está intimamente conectado ao hipotálamo, que regula a fome e a saciedade. Por isso, emoções intensas podem desregular sinais de fome real, levando à alimentação emocional.</p>
+
+<p>Alguns alimentos, no entanto, podem ajudar a equilibrar o humor:</p>
+
+<ul class="custom-list">
+<li><strong>Banana e aveia:</strong> ricos em triptofano, precursor da serotonina</li>
+<li><strong>Salmão e castanhas:</strong> fontes de ômega-3, que reduzem inflamação e ansiedade</li>
+<li><strong>Chocolate amargo:</strong> contém flavonoides que melhoram o humor (com moderação)</li>
+<li><strong>Chá verde:</strong> rico em L-teanina, que promove relaxamento sem sonolência</li>
+</ul>
+
+<figure class="figure">
+<img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=80&fit=crop" alt="Mesa com alimentos naturais e coloridos" loading="lazy">
+</figure>
+
+<!-- CTA BOX -->
+<div class="cta-box">
+<h3>Transforme Seu Humor em Inspiração Culinária</h3>
+<p>Experimente o Got2Cook: o app que conecta seus sentimentos aos ingredientes da sua geladeira, sugerindo receitas que combinam com o momento. Porque cozinhar também é uma forma de se cuidar.</p>
+<a href="../../app/" class="cta-button">Baixar Got2Cook Grátis</a>
+</div>
+
+<!-- SEÇÃO FINAL -->
+<h2>Conclusão</h2>
+
+<p>Comer é mais do que nutrir: é dialogar com nossas emoções. Ao compreender essa ponte entre sentimentos e sabores, ganhamos autonomia para cuidar de nós mesmos de forma simples, prazerosa e, muitas vezes, transformadora.</p>
+
+<p>E da próxima vez que abrir a geladeira, em vez de pensar apenas "o que vou comer?", experimente perguntar: <strong>"como estou me sentindo hoje?"</strong> Talvez a resposta esteja em um prato que já conhece — ou em uma receita nova pronta para mudar o seu dia.</p>
+
+<figure class="figure">
+<img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80&fit=crop" alt="Pratos diferentes dispostos em círculo simbolizando escolha pelo humor" loading="lazy">
+</figure>
+
+<blockquote>
+<p>🍳 Quer transformar seu humor em inspiração culinária? Experimente o Got2Cook: o app que conecta seus sentimentos aos ingredientes da sua geladeira, sugerindo receitas que combinam com o momento. Porque cozinhar também é uma forma de se cuidar.</p>
+</blockquote>
+
+<!-- TAGS -->
+<div class="post-tags">
+<a href="#" class="post-tag">#HumorEAlimentação</a>
+<a href="#" class="post-tag">#AlimentaçãoConsciente</a>
+<a href="#" class="post-tag">#Autocuidado</a>
+<a href="#" class="post-tag">#BemEstar</a>
+<a href="#" class="post-tag">#Serotonina</a>
+</div>
+
+<!-- AUTOR -->
+<div class="author-box">
+<div class="author-avatar">
+<img src="https://i.pravatar.cc/150?img=1" alt="Foto de Vitória">
+</div>
+<div class="author-info">
+<h4>Escrito por Vitória</h4>
+<p>Nutricionista e entusiasta da psicologia alimentar. Acredita que entender a conexão entre emoções e comida é o primeiro passo para uma relação mais saudável e consciente com a alimentação.</p>
+</div>
+</div>
+
+</article>
+</div>
+
+<!-- RODAPÉ DO POST -->
+<footer class="post-footer">
+<div class="post-footer-inner">
+
+<!-- Relacionados -->
+<div class="post-footer-title">
+<h2>Leia Também</h2>
+<p>Artigos relacionados que você pode gostar</p>
+</div>
+
+<div class="related-grid">
+
+<a href="../mindful-eating/" class="related-card">
+<div class="related-thumb">
+<img src="https://images.unsplash.com/photo-1543362906-acfc16c67564?w=600&q=80&fit=crop" alt="Pessoa comendo com atenção">
+<span class="related-category">Bem-estar</span>
+</div>
+<div class="related-body">
+<h3 class="related-title">Mindful Eating: Como Comer com Atenção e Intenção</h3>
+<p class="related-meta">
+<span>📖 10 min</span>
+<span>Por Vitória</span>
+</p>
+</div>
+</a>
+
+<a href="../alimentos-ultraprocessados/" class="related-card">
+<div class="related-thumb">
+<img src="https://images.unsplash.com/photo-1534723328310-e82dad3ee43f?w=600&q=80&fit=crop" alt="Produtos ultraprocessados">
+<span class="related-category">Nutrição</span>
+</div>
+<div class="related-body">
+<h3 class="related-title">Alimentos Ultraprocessados: O Que Eles Fazem com o Seu Cérebro</h3>
+<p class="related-meta">
+<span>📖 14 min</span>
+<span>Por Vitória</span>
+</p>
+</div>
+</a>
+
+<a href="../receitas-conforto/" class="related-card">
+<div class="related-thumb">
+<img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&q=80&fit=crop" alt="Comida reconfortante">
+<span class="related-category">Receitas</span>
+</div>
+<div class="related-body">
+<h3 class="related-title">Receitas de Conforto: Quando a Comida Abraça a Alma</h3>
+<p class="related-meta">
+<span>📖 9 min</span>
+<span>Por Vitória</span>
+</p>
+</div>
+</a>
+
+</div>
+
+<!-- Newsletter -->
+<div class="footer-newsletter">
+<h3>Receba Receitas Toda Semana</h3>
+<p>Inscreva-se no nosso newsletter e ganhe receitas exclusivas baseadas no seu humor</p>
+<form novalidate>
+<input type="email" placeholder="Seu melhor email" required>
+<button type="submit">Inscrever</button>
+</form>
+</div>
+
+<!-- Copyright -->
+<div class="post-footer-bottom">
+<p>&copy; 2025 Got2Cook Blog. Todos os direitos reservados. | <a href="../../politica/">Política de Privacidade</a> | <a href="../../termos/">Termos de Uso</a></p>
+</div>
+
+</div>
+</footer>
+
+<script src="../post.js"></script>
 </body>
 </html>
