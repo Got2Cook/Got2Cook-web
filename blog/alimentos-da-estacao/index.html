@@ -1,235 +1,499 @@
+<!-- /blog/alimentos-da-estacao/index.html -->
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Alimentos da estação — Got2Cook</title>
-  <meta name="description" content="Por que consumir alimentos da estação, como isso impacta o planeta e dicas práticas para o dia a dia." />
-  <link rel="stylesheet" href="../post.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Alimentos da Estação: Por Que Consumir e Como Isso Impacta o Planeta | Got2Cook Blog</title>
+<meta name="description" content="Descubra por que consumir alimentos da estação é melhor para o planeta, sua saúde e seu bolso. Inclui guia completo de safras no Brasil">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../post.css">
+<link rel="icon" type="image/png" href="/assets/logo.png">
+<style>
+/* Estilos específicos para a tabela de estações */
+.seasonal-table {
+  width: 100%;
+  margin: 2.5rem 0;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.seasonal-table thead {
+  background: linear-gradient(135deg, #225c18 0%, #2d7a1f 100%);
+  color: #fff;
+}
+
+.seasonal-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+}
+
+.seasonal-table tbody tr {
+  border-bottom: 1px solid #e5e5e5;
+  transition: background 0.2s ease;
+}
+
+.seasonal-table tbody tr:hover {
+  background: #f8fff5;
+}
+
+.seasonal-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.seasonal-table td {
+  padding: 1.2rem 1rem;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.seasonal-table td:first-child {
+  font-weight: 600;
+  color: #225c18;
+  white-space: nowrap;
+}
+
+.seasonal-table td:not(:first-child) {
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .seasonal-table {
+    font-size: 0.85rem;
+  }
+  
+  .seasonal-table th,
+  .seasonal-table td {
+    padding: 0.8rem 0.6rem;
+  }
+  
+  .seasonal-table td:first-child {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .seasonal-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .seasonal-table thead {
+    display: none;
+  }
+  
+  .seasonal-table tbody tr {
+    display: block;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .seasonal-table td {
+    display: block;
+    text-align: left;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .seasonal-table td:last-child {
+    border-bottom: none;
+  }
+  
+  .seasonal-table td:first-child {
+    background: #f8fff5;
+    font-size: 1rem;
+    text-align: center;
+    border-bottom: 2px solid #225c18;
+  }
+  
+  .seasonal-table td:not(:first-child):before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #225c18;
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.85rem;
+  }
+}
+</style>
 </head>
 <body>
-  <div class="read-progress" id="progress"></div>
 
-  <!-- Header do blog -->
-  <header class="blog-header">
-    <div class="container">
-      <a class="brand" href="/">Got2Cook</a>
-      <nav class="nav" aria-label="Navegação principal">
-        <a href="/">Início</a>
-        <a href="/app/">App</a>
-        <a class="active" href="/blog/">Blog</a>
-        <a href="/#contato">Contato</a>
-      </nav>
-    </div>
-  </header>
+<!-- BARRA DE PROGRESSO -->
+<div class="read-progress"></div>
 
-  <!-- Capa no estilo do hero -->
-  <section class="post-hero">
-    <div class="bg" style="background-image:url('/assets/blog/capas/estacoes.png')"></div>
-    <div class="overlay"></div>
-    <div class="inner">
-      <h1 class="post-title">Alimentos da estação: por que consumir e como isso impacta o planeta</h1>
-      <div class="post-meta">
-        <span class="meta-chip">02 out 2025</span>
-        <span class="meta-chip">6 min</span>
-        <span class="meta-chip">Sustentabilidade</span>
-        <span class="meta-chip">Dicas</span>
-        <span class="meta-chip">Humor</span>
-      </div>
-    </div>
-  </section>
+<!-- CABEÇALHO STICKY -->
+<header class="post-header">
+<div class="post-header-inner">
+<a href="../" class="post-header-logo">
+<img src="/assets/logo.png" alt="Got2Cook">
+<span>Blog</span>
+</a>
+<nav class="post-header-nav">
+<a href="../" class="post-nav-btn">
+<svg fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/></svg>
+Voltar ao Blog
+</a>
+<a href="../../app/" class="post-nav-btn post-nav-btn--primary">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="m6.305 4.475 6 2.468a.5.5 0 0 1 0 .919l-6 2.468A.5.5 0 0 1 6 9.5V6.5a.5.5 0 0 1 .305-.475z"/></svg>
+Abrir App
+</a>
+</nav>
+<button class="post-header-toggle" aria-label="Menu">
+<span></span>
+<span></span>
+<span></span>
+</button>
+</header>
 
-  <!-- Corpo do artigo -->
-  <div class="post-wrap">
-    <article>
-
-      <h2>Introdução</h2>
-      <p>Você já reparou como as frutas, legumes e verduras parecem ter mais sabor em determinadas épocas do ano? Isso não é coincidência: trata-se dos alimentos da estação — aqueles que crescem em harmonia com o clima, a temperatura e o ciclo natural da terra.</p>
-      <p>Consumir o que está no auge da safra não é apenas uma escolha gastronômica; é também uma decisão sustentável. Significa menos impacto ambiental, mais nutrientes no prato e até economia no bolso.</p>
-
-      <!-- Imagem: mão escolhendo tomates -->
-      <figure class="figure">
-        <img src="/assets/blog/inline/mao-pegando-maca.png" alt="Mão escolhendo tomates maduros em uma feira ao ar livre">
-      </figure>
-
-      <h2>O que são alimentos da estação?</h2>
-      <p>Alimentos da estação são aqueles que atingem seu pico de colheita em um período específico do ano, de acordo com o clima e as condições naturais da região. Isso garante:</p>
-      <ul>
-        <li><strong>Mais sabor:</strong> colhidos no tempo certo, amadurecem de forma natural, sem pressa.</li>
-        <li><strong>Mais nutrientes:</strong> quanto menos tempo entre a colheita e o consumo, maior a concentração de vitaminas.</li>
-        <li><strong>Mais economia:</strong> produtos em safra são abundantes, o que reduz os preços.</li>
-        <li><strong>Mais sustentabilidade:</strong> menos necessidade de estufas artificiais, agrotóxicos e transporte de longas distâncias.</li>
-      </ul>
-
-      <!-- Infográfico 4 estações -->
-      <figure class="figure">
-        <img src="/assets/blog/inline/maciera-sol.png" alt="Infográfico simples com quatro estações e frutas/legumes típicos de cada uma">
-      </figure>
-
-      <h2>Por que isso impacta o planeta?</h2>
-      <p>O consumo de alimentos fora de época costuma exigir processos artificiais: transporte de longas distâncias, uso intensivo de refrigeração e cultivo em estufas com gasto energético elevado. Tudo isso aumenta a pegada de carbono dos alimentos.</p>
-      <p>Um estudo da Food and Agriculture Organization (FAO) indica que o transporte aéreo de frutas pode emitir até 10 vezes mais CO₂ do que o cultivo local da mesma espécie na estação correta, o que reforça a importância de optar por alimentos da safra para minimizar o impacto ambiental.</p>
-
-      <!-- Comparação: caminhão vs horta -->
-      <figure class="figure">
-        <img src="/assets/blog/inline/horta.png" alt="Comparação visual: caminhão frigorífico poluindo e horta comunitária verdejante">
-      </figure>
-
-      <h2>Benefícios no prato (e no humor)</h2>
-      <p>Além da questão ambiental, há um lado emocional: alimentos frescos da estação são naturalmente mais vibrantes em cor, aroma e textura, estimulando a experiência sensorial e, consequentemente, influenciando positivamente o humor.</p>
-
-      <p><strong>🍊 Exemplo prático:</strong></p>
-      <ul>
-        <li><strong>No verão:</strong> frutas cítricas como laranja e limão trazem frescor e leveza.</li>
-        <li><strong>No inverno:</strong> raízes como batata-doce e abóbora proporcionam calor e aconchego.</li>
-      </ul>
-
-      <!-- Mesas verão x inverno -->
-      <figure class="figure">
-        <img src="/assets/blog/inline/batata-doce-prato.png" alt="Duas mesas comparativas: pratos coloridos de verão e sopas/assados típicos do inverno">
-      </figure>
-
-      <h2>Como adotar essa prática no dia a dia</h2>
-      <ul>
-        <li>Visite feiras livres e produtores locais.</li>
-        <li>Monte cardápios semanais a partir da lista de safras do mês.</li>
-        <li>Experimente receitas novas com ingredientes que talvez não consumisse fora de época.</li>
-      </ul>
-
-      <!-- Sacola de pano -->
-      <figure class="figure">
-        <img src="/assets/blog/inline/sacola-legumes.png" alt="Pessoa carregando sacola de pano com legumes frescos">
-      </figure>
-
-      <h2>Conclusão</h2>
-      <p>Escolher alimentos da estação é mais do que uma tendência saudável: é um ato de respeito à natureza, ao planeta e a si mesmo. É permitir que o tempo da terra guie o que vai para a mesa, garantindo frescor, nutrição e consciência ambiental.</p>
-
-      <!-- Imagem final -->
-      <figure class="figure">
-        <img src="/assets/blog/inline/cesta-vime.png" alt="Cesta de vime transbordando de frutas e legumes coloridos ao sol da manhã">
-      </figure>
-
-      <hr />
-
-<p><strong>🌍 Quer cozinhar de forma saudável e sustentável?</strong></p>
-<p>No Got2Cook, você pode descobrir receitas que combinam seus ingredientes disponíveis — incluindo os da estação — com o seu humor. Uma forma prática e divertida de cuidar do planeta enquanto cuida de você.</p>
-
-<h2>Guia rápido: frutas, legumes e verduras da estação no Brasil</h2>
-
-<section class="infographic calendar" aria-label="Guia rápido: frutas, legumes e verduras da estação no Brasil">
-  <div class="grid">
-    <article class="month-card">
-      <header class="cal-header"><span class="month">Janeiro</span></header>
-      <div class="cal-body">
-        <p><strong>Frutas</strong>: abacaxi, manga, maracujá, melancia, uva, pêssego</p>
-        <p><strong>Legumes</strong>: abobrinha, pepino, pimentão</p>
-        <p><strong>Verduras</strong>: alface, rúcula, couve</p>
-      </div>
-    </article>
-
-    <article class="month-card">
-      <header class="cal-header"><span class="month">Fevereiro</span></header>
-      <div class="cal-body">
-        <p><strong>Frutas</strong>: banana, figo, goiaba, mamão, melancia, uva</p>
-        <p><strong>Legumes</strong>: berinjela, tomate, pepino</p>
-        <p><strong>Verduras</strong>: alface, espinafre, agrião</p>
-      </div>
-    </article>
-
-    <article class="month-card">
-      <header class="cal-header"><span class="month">Março</span></header>
-      <div class="cal-body">
-        <p><strong>Frutas</strong>: caqui, caju, goiaba, maçã, pera</p>
-        <p><strong>Legumes</strong>: abobrinha, chuchu, abóbora</p>
-        <p><strong>Verduras</strong>: escarola, almeirão, repolho</p>
-      </div>
-    </article>
-
-    <article class="month-card">
-      <header class="cal-header"><span class="month">Abril</span></header>
-      <div class="cal-body">
-        <p><strong>Frutas</strong>: banana, caqui, laranja, maçã, tangerina</p>
-        <p><strong>Legumes</strong>: batata-doce, inhame, mandioca</p>
-        <p><strong>Verduras</strong>: escarola, couve, rúcula</p>
-      </div>
-    </article>
-
-    <article class="month-card">
-      <header class="cal-header"><span class="month">Maio</span></header>
-      <div class="cal-body">
-        <p><strong>Frutas</strong>: abacate, caqui, carambola, laranja, tangerina</p>
-        <p><strong>Legumes</strong>: batata, mandioquinha, beterraba</p>
-        <p><strong>Verduras</strong>: acelga, espinafre, couve</p>
-      </div>
-    </article>
-
-    <article class="month-card">
-      <header class="cal-header"><span class="month">Junho</span></header>
-      <div class="cal-body">
-        <p><strong>Frutas</strong>: abacate, caqui, kiwi, laranja, mexerica</p>
-        <p><strong>Legumes</strong>: cenoura, batata-doce, abóbora</p>
-        <p><strong>Verduras</strong>: acelga, couve, escarola</p>
-      </div>
-    </article>
-
-    <article class="month-card">
-      <header class="cal-header"><span class="month">Julho</span></header>
-      <div class="cal-body">
-        <p><strong>Frutas</strong>: banana, goiaba, laranja, maçã, morango</p>
-        <p><strong>Legumes</strong>: batata, cenoura, mandioquinha</p>
-        <p><strong>Verduras</strong>: couve, espinafre, rúcula</p>
-      </div>
-    </article>
-
-    <article class="month-card">
-      <header class="cal-header"><span class="month">Agosto</span></header>
-      <div class="cal-body">
-        <p><strong>Frutas</strong>: banana, carambola, goiaba, kiwi, morango</p>
-        <p><strong>Legumes</strong>: batata-doce, chuchu, batata inglesa</p>
-        <p><strong>Verduras</strong>: acelga, almeirão, repolho</p>
-      </div>
-    </article>
-
-    <article class="month-card">
-      <header class="cal-header"><span class="month">Setembro</span></header>
-      <div class="cal-body">
-        <p><strong>Frutas</strong>: abacaxi, banana, caju, morango, tangerina</p>
-        <p><strong>Legumes</strong>: abobrinha, cenoura, pepino</p>
-        <p><strong>Verduras</strong>: alface, rúcula, couve</p>
-      </div>
-    </article>
-
-    <article class="month-card">
-      <header class="cal-header"><span class="month">Outubro</span></header>
-      <div class="cal-body">
-        <p><strong>Frutas</strong>: abacaxi, banana, caju, mamão, manga</p>
-        <p><strong>Legumes</strong>: abóbora, beterraba, pepino</p>
-        <p><strong>Verduras</strong>: alface, couve, escarola</p>
-      </div>
-    </article>
-
-    <article class="month-card">
-      <header class="cal-header"><span class="month">Novembro</span></header>
-      <div class="cal-body">
-        <p><strong>Frutas</strong>: abacaxi, ameixa, cereja, manga, melancia, pêssego</p>
-        <p><strong>Legumes</strong>: abóbora, chuchu, pimentão</p>
-        <p><strong>Verduras</strong>: alface, rúcula, espinafre</p>
-      </div>
-    </article>
-
-    <article class="month-card">
-      <header class="cal-header"><span class="month">Dezembro</span></header>
-      <div class="cal-body">
-        <p><strong>Frutas</strong>: ameixa, cereja, figo, laranja, manga, melancia, uva</p>
-        <p><strong>Legumes</strong>: abobrinha, beterraba, tomate</p>
-        <p><strong>Verduras</strong>: alface, agrião, rúcula</p>
-      </div>
-    </article>
-  </div>
-
-  <p class="infographic-note">* Sazonalidade geral no Brasil — pode variar por região.</p>
+<!-- HERO COM IMAGEM -->
+<section class="post-hero">
+<div class="bg" style="background-image:url('https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=1920&q=80&fit=crop')"></div>
+<div class="overlay"></div>
+<div class="inner">
+<nav class="breadcrumb">
+<a href="../">Blog</a>
+<span>/</span>
+<a href="../">Sustentabilidade</a>
+<span>/</span>
+<span>Alimentos da Estação</span>
+</nav>
+<h1 class="post-title">Alimentos da Estação: Por Que Consumir e Como Isso Impacta o Planeta</h1>
+<div class="post-meta">
+<span class="meta-chip">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/></svg>
+11 min de leitura
+</span>
+<span class="meta-chip">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/></svg>
+22 de Outubro, 2025
+</span>
+<span class="meta-chip meta-chip--author">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/></svg>
+Por Vitória
+</span>
+<span class="meta-chip meta-chip--category">
+🌱 Sustentabilidade
+</span>
+</div>
+</div>
 </section>
 
-<nav class="post-nav" aria-label="Navegação entre artigos">
-  <a href="/blog/">← Voltar ao Blog</a>
-</nav>
+<!-- BARRA LATERAL ESQUERDA (Progresso) -->
+<div class="post-progress-sidebar">
+<div class="progress-bar-vertical">
+<div class="progress-bar-fill"></div>
+</div>
+<div class="progress-percentage">0%</div>
+</div>
+
+<!-- BARRA LATERAL DIREITA (Share) -->
+<div class="post-share-sidebar">
+<button class="share-sidebar-btn share-sidebar-btn--facebook" aria-label="Compartilhar no Facebook" data-platform="facebook">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/></svg>
+</button>
+<button class="share-sidebar-btn share-sidebar-btn--twitter" aria-label="Compartilhar no Twitter" data-platform="twitter">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/></svg>
+</button>
+<button class="share-sidebar-btn share-sidebar-btn--whatsapp" aria-label="Compartilhar no WhatsApp" data-platform="whatsapp">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+</button>
+<button class="share-sidebar-btn share-sidebar-btn--copy" aria-label="Copiar link" data-platform="copy">
+<svg fill="currentColor" viewBox="0 0 16 16"><path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/><path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/></svg>
+</button>
+</div>
+
+<!-- WRAPPER PRINCIPAL -->
+<div class="post-wrapper">
+<article class="post-content">
+
+<!-- LEAD -->
+<p class="lead">Você já reparou como as frutas, legumes e verduras parecem ter mais sabor em determinadas épocas do ano? Isso não é coincidência: trata-se dos alimentos da estação — aqueles que crescem em harmonia com o clima, a temperatura e o ciclo natural da terra.</p>
+
+<p>Consumir o que está no auge da safra não é apenas uma escolha gastronômica; é também uma decisão sustentável. Significa menos impacto ambiental, mais nutrientes no prato e até economia no bolso.</p>
+
+<!-- IMAGEM -->
+<figure class="figure">
+<img src="https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=1200&q=80&fit=crop" alt="Close de mão escolhendo tomates maduros em feira" loading="lazy">
+</figure>
+
+<!-- SEÇÃO 1 -->
+<h2>O Que São Alimentos da Estação?</h2>
+
+<p>Alimentos da estação são aqueles que atingem seu pico de colheita em um período específico do ano, de acordo com o clima e as condições naturais da região. Isso garante:</p>
+
+<ul class="custom-list">
+<li><strong>Mais sabor:</strong> colhidos no tempo certo, amadurecem de forma natural, sem pressa</li>
+<li><strong>Mais nutrientes:</strong> quanto menos tempo entre a colheita e o consumo, maior a concentração de vitaminas</li>
+<li><strong>Mais economia:</strong> produtos em safra são abundantes, o que reduz os preços</li>
+<li><strong>Mais sustentabilidade:</strong> menos necessidade de estufas artificiais, agrotóxicos e transporte de longas distâncias</li>
+</ul>
+
+<figure class="figure">
+<img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1200&q=80&fit=crop" alt="Infográfico com quatro estações e frutas típicas de cada uma" loading="lazy">
+</figure>
+
+<!-- SEÇÃO 2 -->
+<h2>Por Que Isso Impacta o Planeta?</h2>
+
+<p>O consumo de alimentos fora de época costuma exigir processos artificiais: transporte de longas distâncias, uso intensivo de refrigeração e cultivo em estufas com gasto energético elevado. Tudo isso aumenta a <strong>pegada de carbono</strong> dos alimentos.</p>
+
+<p>Um estudo da <em>Food and Agriculture Organization (FAO)</em> indica que o transporte aéreo de frutas pode emitir até <strong>10 vezes mais CO₂</strong> do que o cultivo local da mesma espécie na estação correta, o que reforça a importância de optar por alimentos da safra para minimizar o impacto ambiental.</p>
+
+<figure class="figure">
+<img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=1200&q=80&fit=crop" alt="Comparação visual entre caminhão frigorífico e horta comunitária" loading="lazy">
+</figure>
+
+<!-- INFO BOX -->
+<div class="info-box">
+<div class="info-box-icon">🌍</div>
+<div class="info-box-content">
+<p><strong>Pegada de Carbono:</strong> Frutas importadas fora de época podem viajar milhares de quilômetros, consumindo combustível fóssil e refrigeração constante. Optar por alimentos locais e da estação pode reduzir em até 80% as emissões associadas à sua alimentação.</p>
+</div>
+</div>
+
+<!-- SEÇÃO 3 -->
+<h2>Benefícios no Prato (e no Humor)</h2>
+
+<p>Além da questão ambiental, há um lado emocional: alimentos frescos da estação são naturalmente mais vibrantes em cor, aroma e textura, estimulando a experiência sensorial e, consequentemente, influenciando positivamente o humor.</p>
+
+<h3>🍊 Exemplo Prático:</h3>
+
+<ul class="custom-list">
+<li><strong>No verão:</strong> frutas cítricas como laranja e limão trazem frescor e leveza</li>
+<li><strong>No inverno:</strong> raízes como batata-doce e abóbora proporcionam calor e aconchego</li>
+</ul>
+
+<figure class="figure">
+<img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=80&fit=crop" alt="Duas mesas comparativas com pratos de verão e inverno" loading="lazy">
+</figure>
+
+<blockquote>
+<p>Comer alimentos da estação é como dançar com o ritmo da natureza. Cada época traz o que o corpo precisa: frescor no calor, aconchego no frio.</p>
+</blockquote>
+
+<!-- SEÇÃO 4 -->
+<h2>Como Adotar Essa Prática no Dia a Dia</h2>
+
+<ol class="custom-list">
+<li><strong>Visite feiras livres e produtores locais</strong> — conheça quem cultiva seu alimento</li>
+<li><strong>Monte cardápios semanais</strong> a partir da lista de safras do mês</li>
+<li><strong>Experimente receitas novas</strong> com ingredientes que talvez não consumisse fora de época</li>
+<li><strong>Congele o excesso</strong> para aproveitar em outras épocas sem desperdício</li>
+</ol>
+
+<figure class="figure">
+<img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&q=80&fit=crop" alt="Pessoa carregando sacola de pano com legumes frescos" loading="lazy">
+</figure>
+
+<!-- INFO BOX -->
+<div class="info-box">
+<div class="info-box-icon">💡</div>
+<div class="info-box-content">
+<p><strong>Dica Pro:</strong> Crie uma lista mensal de alimentos da estação na geladeira. Assim, sempre que for cozinhar, você terá um lembrete visual do que está em safra e pode aproveitar melhor.</p>
+</div>
+</div>
+
+<!-- SEÇÃO 5 - TABELA DE ESTAÇÕES -->
+<h2>📅 Guia Rápido: Frutas, Legumes e Verduras da Estação no Brasil</h2>
+
+<p>Use este guia para planejar suas compras e receitas ao longo do ano, aproveitando o melhor de cada safra:</p>
+
+<table class="seasonal-table">
+<thead>
+<tr>
+<th>Mês</th>
+<th>Frutas</th>
+<th>Legumes</th>
+<th>Verduras</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Janeiro</td>
+<td data-label="Frutas">abacaxi, manga, maracujá, melancia, uva, pêssego</td>
+<td data-label="Legumes">abobrinha, pepino, pimentão</td>
+<td data-label="Verduras">alface, rúcula, couve</td>
+</tr>
+<tr>
+<td>Fevereiro</td>
+<td data-label="Frutas">banana, figo, goiaba, mamão, melancia, uva</td>
+<td data-label="Legumes">berinjela, tomate, pepino</td>
+<td data-label="Verduras">alface, espinafre, agrião</td>
+</tr>
+<tr>
+<td>Março</td>
+<td data-label="Frutas">caqui, caju, goiaba, maçã, pera</td>
+<td data-label="Legumes">abobrinha, chuchu, abóbora</td>
+<td data-label="Verduras">escarola, almeirão, repolho</td>
+</tr>
+<tr>
+<td>Abril</td>
+<td data-label="Frutas">banana, caqui, laranja, maçã, tangerina</td>
+<td data-label="Legumes">batata-doce, inhame, mandioca</td>
+<td data-label="Verduras">escarola, couve, rúcula</td>
+</tr>
+<tr>
+<td>Maio</td>
+<td data-label="Frutas">abacate, caqui, carambola, laranja, tangerina</td>
+<td data-label="Legumes">batata, mandioquinha, beterraba</td>
+<td data-label="Verduras">acelga, espinafre, couve</td>
+</tr>
+<tr>
+<td>Junho</td>
+<td data-label="Frutas">abacate, caqui, kiwi, laranja, mexerica</td>
+<td data-label="Legumes">cenoura, batata-doce, abóbora</td>
+<td data-label="Verduras">acelga, couve, escarola</td>
+</tr>
+<tr>
+<td>Julho</td>
+<td data-label="Frutas">banana, goiaba, laranja, maçã, morango</td>
+<td data-label="Legumes">batata, cenoura, mandioquinha</td>
+<td data-label="Verduras">couve, espinafre, rúcula</td>
+</tr>
+<tr>
+<td>Agosto</td>
+<td data-label="Frutas">banana, carambola, goiaba, kiwi, morango</td>
+<td data-label="Legumes">batata-doce, chuchu, batata inglesa</td>
+<td data-label="Verduras">acelga, almeirão, repolho</td>
+</tr>
+<tr>
+<td>Setembro</td>
+<td data-label="Frutas">abacaxi, banana, caju, morango, tangerina</td>
+<td data-label="Legumes">abobrinha, cenoura, pepino</td>
+<td data-label="Verduras">alface, rúcula, couve</td>
+</tr>
+<tr>
+<td>Outubro</td>
+<td data-label="Frutas">abacaxi, banana, caju, mamão, manga</td>
+<td data-label="Legumes">abóbora, beterraba, pepino</td>
+<td data-label="Verduras">alface, couve, escarola</td>
+</tr>
+<tr>
+<td>Novembro</td>
+<td data-label="Frutas">abacaxi, ameixa, cereja, manga, melancia, pêssego</td>
+<td data-label="Legumes">abóbora, chuchu, pimentão</td>
+<td data-label="Verduras">alface, rúcula, espinafre</td>
+</tr>
+<tr>
+<td>Dezembro</td>
+<td data-label="Frutas">ameixa, cereja, figo, laranja, manga, melancia, uva</td>
+<td data-label="Legumes">abobrinha, beterraba, tomate</td>
+<td data-label="Verduras">alface, agrião, rúcula</td>
+</tr>
+</tbody>
+</table>
+
+<!-- CTA BOX -->
+<div class="cta-box">
+<h3>Quer Cozinhar de Forma Saudável e Sustentável?</h3>
+<p>No Got2Cook, você pode descobrir receitas que combinam seus ingredientes disponíveis — incluindo os da estação — com o seu humor. Uma forma prática e divertida de cuidar do planeta enquanto cuida de você.</p>
+<a href="../../app/" class="cta-button">Baixar Got2Cook Grátis</a>
+</div>
+
+<!-- SEÇÃO FINAL -->
+<h2>Conclusão</h2>
+
+<p>Escolher alimentos da estação é mais do que uma tendência saudável: é um ato de respeito à natureza, ao planeta e a si mesmo. É permitir que o tempo da terra guie o que vai para a mesa, garantindo frescor, nutrição e consciência ambiental.</p>
+
+<figure class="figure">
+<img src="https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=1200&q=80&fit=crop" alt="Cesta de vime transbordando de frutas e legumes coloridos com sol ao fundo" loading="lazy">
+</figure>
+
+<blockquote>
+<p>🌍 Quer cozinhar de forma saudável e sustentável? No Got2Cook, você pode descobrir receitas que combinam seus ingredientes disponíveis — incluindo os da estação — com o seu humor. Uma forma prática e divertida de cuidar do planeta enquanto cuida de você.</p>
+</blockquote>
+<!-- TAGS -->
+<div class="post-tags">
+<a href="#" class="post-tag">#AlimentosDaEstação</a>
+<a href="#" class="post-tag">#Sustentabilidade</a>
+<a href="#" class="post-tag">#ConsumoConsciente</a>
+<a href="#" class="post-tag">#FeirasLivres</a>
+<a href="#" class="post-tag">#AlimentaçãoSaudável</a>
+</div>
+<!-- AUTOR -->
+<div class="author-box">
+<div class="author-avatar">
+<img src="https://i.pravatar.cc/150?img=1" alt="Foto de Vitória">
+</div>
+<div class="author-info">
+<h4>Escrito por Vitória</h4>
+<p>Nutricionista e defensora da alimentação sustentável. Acredita que respeitar os ciclos da natureza é a forma mais simples e eficaz de cuidar do planeta e da nossa saúde ao mesmo tempo.</p>
+</div>
+</div>
+</article>
+</div>
+<!-- RODAPÉ DO POST -->
+<footer class="post-footer">
+<div class="post-footer-inner">
+<!-- Relacionados -->
+<div class="post-footer-title">
+<h2>Leia Também</h2>
+<p>Artigos relacionados que você pode gostar</p>
+</div>
+<div class="related-grid">
+<a href="../aproveitamento-integral/" class="related-card">
+<div class="related-thumb">
+<img src="https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=600&q=80&fit=crop" alt="Ingredientes sendo reaproveitados">
+<span class="related-category">Sustentabilidade</span>
+</div>
+<div class="related-body">
+<h3 class="related-title">Da Raiz à Casca: O Poder de Aproveitar Integralmente Frutas e Vegetais</h3>
+<p class="related-meta">
+<span>📖 12 min</span>
+<span>Por Vitória</span>
+</p>
+</div>
+</a>
+<a href="../feiras-locais/" class="related-card">
+<div class="related-thumb">
+<img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=600&q=80&fit=crop" alt="Feira livre com produtos frescos">
+<span class="related-category">Lifestyle</span>
+</div>
+<div class="related-body">
+<h3 class="related-title">O Guia Completo Para Comprar em Feiras Livres</h3>
+<p class="related-meta">
+<span>📖 9 min</span>
+<span>Por Vitória</span>
+</p>
+</div>
+</a>
+<a href="../cozinhando-pelo-humor/" class="related-card">
+<div class="related-thumb">
+<img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80&fit=crop" alt="Mesa colorida com diferentes pratos">
+<span class="related-category">Bem-estar</span>
+</div>
+<div class="related-body">
+<h3 class="related-title">Cozinhando pelo Humor: Como Nossas Emoções Podem Guiar o Prato do Dia</h3>
+<p class="related-meta">
+<span>📖 10 min</span>
+<span>Por Vitória</span>
+</p>
+</div>
+</a>
+</div>
+<!-- Newsletter -->
+<div class="footer-newsletter">
+<h3>Receba Receitas Toda Semana</h3>
+<p>Inscreva-se no nosso newsletter e ganhe receitas exclusivas baseadas no seu humor</p>
+<form novalidate>
+<input type="email" placeholder="Seu melhor email" required>
+<button type="submit">Inscrever</button>
+</form>
+</div>
+<!-- Copyright -->
+<div class="post-footer-bottom">
+<p>&copy; 2025 Got2Cook Blog. Todos os direitos reservados. | <a href="../../politica/">Política de Privacidade</a> | <a href="../../termos/">Termos de Uso</a></p>
+</div>
+</div>
