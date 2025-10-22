@@ -62,5 +62,15 @@
   "autor": "Vitória",
   "categorias": ["Nutrição", "Saúde Mental"],
   "capa": "https://images.unsplash.com/photo-1534723328310-e82dad3ee43f?w=1200&q=80&fit=crop"
+},
+  {
+  "slug": "etiqueta-a-mesa",
+  "titulo": "Comer Bem é uma Arte: 20 Regras de Etiqueta à Mesa",
+  "resumo": "Descubra 20 regras essenciais de etiqueta à mesa que vão transformar suas refeições em momentos de elegância, respeito e harmonia social",
+  "data": "2025-10-22",
+  "tempoLeitura": "15 min",
+  "autor": "Vitória",
+  "categorias": ["Lifestyle", "Saúde Mental"],
+  "capa": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80&fit=crop"
 }
 ]
