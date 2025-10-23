@@ -1,0 +1,164 @@
+<!-- /app/explorar-mundo/index.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explorar Mundo - Got2Cook</title>
+  <link rel="stylesheet" href="/public/assets/css/base.css">
+  <link rel="stylesheet" href="explorar.css">
+</head>
+<body>
+  <!-- Cabeçalho padrão -->
+  <header class="header-padrao">
+    <button class="btn-header btn-perfil" aria-label="Perfil">
+      <img src="/public/assets/img/icons/perfil.png" alt="Perfil">
+    </button>
+    <h1 class="header-title">Explorar Mundo</h1>
+    <button class="btn-header btn-menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <main class="main-explorar">
+    <!-- Balão de boas-vindas -->
+    <div class="balao-chef">
+      <img src="/public/assets/img/icons/chef.png" alt="Chef" class="icone-chef">
+      <p>Descubra sabores de todo o mundo! Toque nos países para explorar receitas típicas.</p>
+    </div>
+
+    <!-- Container do mapa -->
+    <div class="mapa-container" id="mapaContainer">
+      <div class="mapa-wrapper" id="mapaWrapper">
+        <img src="/public/assets/img/mapas/mapa-mundi.svg" alt="Mapa Múndi" class="mapa-base" id="mapaBase">
+        
+        <!-- Pontos de marcação com bandeiras -->
+        <button class="ponto-pais" data-pais="brasil" style="top: 68%; left: 32%;" aria-label="Brasil">
+          <div class="bandeira-oval">
+            <img src="/public/assets/img/bandeiras/brasil.png" alt="Bandeira Brasil">
+          </div>
+          <span class="pais-nome">Brasil</span>
+        </button>
+
+        <button class="ponto-pais" data-pais="italia" style="top: 38%; left: 52%;" aria-label="Itália">
+          <div class="bandeira-oval">
+            <img src="/public/assets/img/bandeiras/italia.png" alt="Bandeira Itália">
+          </div>
+          <span class="pais-nome">Itália</span>
+        </button>
+
+        <button class="ponto-pais" data-pais="japao" style="top: 36%; left: 82%;" aria-label="Japão">
+          <div class="bandeira-oval">
+            <img src="/public/assets/img/bandeiras/japao.png" alt="Bandeira Japão">
+          </div>
+          <span class="pais-nome">Japão</span>
+        </button>
+
+        <button class="ponto-pais" data-pais="mexico" style="top: 42%; left: 18%;" aria-label="México">
+          <div class="bandeira-oval">
+            <img src="/public/assets/img/bandeiras/mexico.png" alt="Bandeira México">
+          </div>
+          <span class="pais-nome">México</span>
+        </button>
+
+        <button class="ponto-pais" data-pais="franca" style="top: 36%; left: 50%;" aria-label="França">
+          <div class="bandeira-oval">
+            <img src="/public/assets/img/bandeiras/franca.png" alt="Bandeira França">
+          </div>
+          <span class="pais-nome">França</span>
+        </button>
+
+        <button class="ponto-pais" data-pais="tailandia" style="top: 50%; left: 74%;" aria-label="Tailândia">
+          <div class="bandeira-oval">
+            <img src="/public/assets/img/bandeiras/tailandia.png" alt="Bandeira Tailândia">
+          </div>
+          <span class="pais-nome">Tailândia</span>
+        </button>
+
+        <button class="ponto-pais" data-pais="india" style="top: 46%; left: 70%;" aria-label="Índia">
+          <div class="bandeira-oval">
+            <img src="/public/assets/img/bandeiras/india.png" alt="Bandeira Índia">
+          </div>
+          <span class="pais-nome">Índia</span>
+        </button>
+
+        <button class="ponto-pais" data-pais="espanha" style="top: 38%; left: 49%;" aria-label="Espanha">
+          <div class="bandeira-oval">
+            <img src="/public/assets/img/bandeiras/espanha.png" alt="Bandeira Espanha">
+          </div>
+          <span class="pais-nome">Espanha</span>
+        </button>
+
+        <button class="ponto-pais" data-pais="argentina" style="top: 78%; left: 30%;" aria-label="Argentina">
+          <div class="bandeira-oval">
+            <img src="/public/assets/img/bandeiras/argentina.png" alt="Bandeira Argentina">
+          </div>
+          <span class="pais-nome">Argentina</span>
+        </button>
+
+        <button class="ponto-pais" data-pais="grecia" style="top: 39%; left: 54%;" aria-label="Grécia">
+          <div class="bandeira-oval">
+            <img src="/public/assets/img/bandeiras/grecia.png" alt="Bandeira Grécia">
+          </div>
+          <span class="pais-nome">Grécia</span>
+        </button>
+
+        <button class="ponto-pais" data-pais="portugal" style="top: 38%; left: 47%;" aria-label="Portugal">
+          <div class="bandeira-oval">
+            <img src="/public/assets/img/bandeiras/portugal.png" alt="Bandeira Portugal">
+          </div>
+          <span class="pais-nome">Portugal</span>
+        </button>
+
+        <button class="ponto-pais" data-pais="china" style="top: 38%; left: 76%;" aria-label="China">
+          <div class="bandeira-oval">
+            <img src="/public/assets/img/bandeiras/china.png" alt="Bandeira China">
+          </div>
+          <span class="pais-nome">China</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Controles de zoom -->
+    <div class="controles-zoom">
+      <button class="btn-zoom" id="btnZoomIn" aria-label="Aumentar zoom">
+        <span>+</span>
+      </button>
+      <button class="btn-zoom" id="btnZoomOut" aria-label="Diminuir zoom">
+        <span>−</span>
+      </button>
+      <button class="btn-zoom" id="btnResetZoom" aria-label="Resetar zoom">
+        <span>⟲</span>
+      </button>
+    </div>
+
+    <!-- Legenda de países visitados -->
+    <div class="legenda-visitados">
+      <span class="legenda-item">
+        <span class="circulo visitado"></span> Visitados
+      </span>
+      <span class="legenda-item">
+        <span class="circulo nao-visitado"></span> Não visitados
+      </span>
+    </div>
+  </main>
+
+  <!-- Rodapé curvo padrão -->
+  <footer class="curva">
+    <button class="btn-footer" id="btnVoltar" aria-label="Voltar">
+      <img src="/public/assets/img/icons/seta-esquerda.png" alt="Voltar">
+    </button>
+    <button class="btn-footer btn-central" id="btnLogo" aria-label="Início">
+      <img src="/public/assets/img/logo.png" alt="Logo Got2Cook">
+    </button>
+    <button class="btn-footer" id="btnGeladeira" aria-label="Minha Geladeira">
+      <img src="/public/assets/img/icons/geladeira.png" alt="Geladeira">
+    </button>
+  </footer>
+
+  <script src="/public/js/common.js"></script>
+  <script src="explorar.js"></script>
+</body>
+</html>
