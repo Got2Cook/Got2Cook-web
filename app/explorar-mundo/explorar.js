@@ -5,13 +5,10 @@
 
   // === Configuração ===
   const CONFIG = {
-    minZoom: 1,
-    maxZoom: 4,
-    zoomStep: 0.4,
-    minScale: 0.8,
+    minScale: 1,
     maxScale: 3,
-    friction: 0.92,
-    velocityThreshold: 0.5
+    friction: 0.88,
+    velocityThreshold: 0.3
   };
 
   // === Estado ===
@@ -36,11 +33,8 @@
     mapaWrapper: document.getElementById('mapaWrapper'),
     mapaContainer: document.getElementById('mapaContainer'),
     mapaSvg: document.getElementById('mapaSvg'),
-    pontosPais: document.querySelectorAll('.ponto-pais'),
-    btnZoomIn: document.getElementById('btnZoomIn'),
-    btnZoomOut: document.getElementById('btnZoomOut'),
-    btnResetZoom: document.getElementById('btnResetZoom'),
-    btnVoltar: document.getElementById('btnVoltar'),
+    pinsPais: document.querySelectorAll('.pin-pais'),
+    btnHumor: document.getElementById('btnHumor'),
     btnLogo: document.getElementById('btnLogo'),
     btnGeladeira: document.getElementById('btnGeladeira')
   };
@@ -80,10 +74,10 @@
   }
 
   function updateVisitedStatus() {
-    elements.pontosPais.forEach(ponto => {
-      const pais = ponto.dataset.pais;
+    elements.pinsPais.forEach(pin => {
+      const pais = pin.dataset.pais;
       if (state.visitedCountries.includes(pais)) {
-        ponto.classList.add('visitado');
+        pin.classList.add('visitado');
       }
     });
   }
@@ -129,27 +123,9 @@
     applyTransform();
   }
 
-  function handleZoomIn() {
-    setZoom(CONFIG.zoomStep);
-  }
-
-  function handleZoomOut() {
-    setZoom(-CONFIG.zoomStep);
-  }
-
-  function resetView() {
-    state.scale = 1;
-    state.posX = 0;
-    state.posY = 0;
-    state.velocityX = 0;
-    state.velocityY = 0;
-    applyTransform();
-  }
-
   // === Drag (Mouse) ===
   function handleMouseDown(e) {
-    // Ignorar se clicou em um país
-    if (e.target.closest('.ponto-pais')) return;
+    if (e.target.closest('.pin-pais')) return;
     
     state.isDragging = true;
     elements.mapaWrapper.classList.add('grabbing');
@@ -196,7 +172,6 @@
     state.isDragging = false;
     elements.mapaWrapper.classList.remove('grabbing');
     
-    // Inércia
     if (Math.abs(state.velocityX) > CONFIG.velocityThreshold || 
         Math.abs(state.velocityY) > CONFIG.velocityThreshold) {
       applyInertia();
@@ -205,11 +180,9 @@
 
   // === Touch ===
   function handleTouchStart(e) {
-    // Ignorar se tocou em um país
-    if (e.target.closest('.ponto-pais')) return;
+    if (e.target.closest('.pin-pais')) return;
     
     if (e.touches.length === 1) {
-      // Drag
       state.isDragging = true;
       elements.mapaWrapper.classList.add('grabbing');
       
@@ -226,7 +199,6 @@
         state.animationId = null;
       }
     } else if (e.touches.length === 2) {
-      // Pinch zoom
       state.isDragging = false;
       elements.mapaWrapper.classList.remove('grabbing');
       
@@ -243,7 +215,6 @@
 
   function handleTouchMove(e) {
     if (e.touches.length === 1 && state.isDragging) {
-      // Drag
       const touch = e.touches[0];
       const deltaX = touch.clientX - state.lastX;
       const deltaY = touch.clientY - state.lastY;
@@ -260,7 +231,6 @@
       state.lastX = touch.clientX;
       state.lastY = touch.clientY;
     } else if (e.touches.length === 2) {
-      // Pinch zoom
       const touch1 = e.touches[0];
       const touch2 = e.touches[1];
       const distance = Math.hypot(
@@ -269,7 +239,7 @@
       );
       
       if (state.lastTouchDistance > 0) {
-        const delta = (distance - state.lastTouchDistance) * 0.01;
+        const delta = (distance - state.lastTouchDistance) * 0.008;
         const centerX = (touch1.clientX + touch2.clientX) / 2;
         const centerY = (touch1.clientY + touch2.clientY) / 2;
         setZoom(delta, centerX, centerY);
@@ -287,7 +257,6 @@
         state.isDragging = false;
         elements.mapaWrapper.classList.remove('grabbing');
         
-        // Inércia
         if (Math.abs(state.velocityX) > CONFIG.velocityThreshold || 
             Math.abs(state.velocityY) > CONFIG.velocityThreshold) {
           applyInertia();
@@ -324,7 +293,7 @@
   function handleWheel(e) {
     e.preventDefault();
     
-    const delta = e.deltaY > 0 ? -CONFIG.zoomStep : CONFIG.zoomStep;
+    const delta = e.deltaY > 0 ? -0.15 : 0.15;
     const rect = elements.mapaContainer.getBoundingClientRect();
     const centerX = e.clientX - rect.left;
     const centerY = e.clientY - rect.top;
@@ -345,11 +314,6 @@
 
   // === Event Bindings ===
   function bindEvents() {
-    // Zoom controls
-    elements.btnZoomIn.addEventListener('click', handleZoomIn);
-    elements.btnZoomOut.addEventListener('click', handleZoomOut);
-    elements.btnResetZoom.addEventListener('click', resetView);
-
     // Mouse
     elements.mapaContainer.addEventListener('mousedown', handleMouseDown);
     document.addEventListener('mousemove', handleMouseMove);
@@ -364,13 +328,13 @@
     elements.mapaContainer.addEventListener('wheel', handleWheel, { passive: false });
 
     // Países
-    elements.pontosPais.forEach(ponto => {
-      ponto.addEventListener('click', handleCountryClick);
+    elements.pinsPais.forEach(pin => {
+      pin.addEventListener('click', handleCountryClick);
     });
 
     // Navegação
-    elements.btnVoltar.addEventListener('click', () => {
-      window.history.back();
+    elements.btnHumor.addEventListener('click', () => {
+      window.location.href = '/app/humor/index.html';
     });
 
     elements.btnLogo.addEventListener('click', () => {
@@ -379,13 +343,6 @@
 
     elements.btnGeladeira.addEventListener('click', () => {
       window.location.href = '/app/minha-geladeira/index.html';
-    });
-
-    // Teclas
-    document.addEventListener('keydown', (e) => {
-      if (e.key === '+' || e.key === '=') handleZoomIn();
-      if (e.key === '-' || e.key === '_') handleZoomOut();
-      if (e.key === '0') resetView();
     });
 
     // Prevenir scroll do body
