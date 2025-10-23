@@ -1,9 +1,9 @@
-// /app/explorar-mundo/explorar.js
+// /app/explorar-mundo/explorar-mundo.js
 
 (function() {
   'use strict';
 
-  // === Configuração ===
+  /* ===== Configuração ===== */
   const CONFIG = {
     minScale: 1,
     maxScale: 3,
@@ -11,7 +11,7 @@
     velocityThreshold: 0.3
   };
 
-  // === Estado ===
+  /* ===== Estado ===== */
   let state = {
     scale: 1,
     posX: 0,
@@ -28,18 +28,18 @@
     visitedCountries: []
   };
 
-  // === Elementos DOM ===
+  /* ===== Elementos DOM ===== */
+  const $ = (sel) => document.querySelector(sel);
+  const $$ = (sel) => document.querySelectorAll(sel);
+
   const elements = {
-    mapaWrapper: document.getElementById('mapaWrapper'),
-    mapaContainer: document.getElementById('mapaContainer'),
-    mapaSvg: document.getElementById('mapaSvg'),
-    pinsPais: document.querySelectorAll('.pin-pais'),
-    btnHumor: document.getElementById('btnHumor'),
-    btnLogo: document.getElementById('btnLogo'),
-    btnGeladeira: document.getElementById('btnGeladeira')
+    mapaWrapper: $('#mapaWrapper'),
+    mapaContainer: $('#mapaContainer'),
+    mapaSvg: $('#mapaSvg'),
+    pinsPais: $$('.pin-pais')
   };
 
-  // === Inicialização ===
+  /* ===== Inicialização ===== */
   function init() {
     loadVisitedCountries();
     updateVisitedStatus();
@@ -47,7 +47,7 @@
     applyTransform();
   }
 
-  // === LocalStorage ===
+  /* ===== LocalStorage ===== */
   function loadVisitedCountries() {
     try {
       const saved = localStorage.getItem('got2cook_visited_countries');
@@ -82,7 +82,7 @@
     });
   }
 
-  // === Transformação ===
+  /* ===== Transformação ===== */
   function applyTransform() {
     const transform = `translate(${state.posX}px, ${state.posY}px) scale(${state.scale})`;
     elements.mapaWrapper.style.transform = transform;
@@ -104,7 +104,7 @@
     state.posY = Math.max(-bounds.maxY, Math.min(bounds.maxY, state.posY));
   }
 
-  // === Zoom ===
+  /* ===== Zoom ===== */
   function setZoom(delta, centerX, centerY) {
     const oldScale = state.scale;
     state.scale = Math.max(CONFIG.minScale, Math.min(CONFIG.maxScale, state.scale + delta));
@@ -123,7 +123,7 @@
     applyTransform();
   }
 
-  // === Drag (Mouse) ===
+  /* ===== Drag (Mouse) ===== */
   function handleMouseDown(e) {
     if (e.target.closest('.pin-pais')) return;
     
@@ -178,7 +178,7 @@
     }
   }
 
-  // === Touch ===
+  /* ===== Touch ===== */
   function handleTouchStart(e) {
     if (e.target.closest('.pin-pais')) return;
     
@@ -267,7 +267,7 @@
     }
   }
 
-  // === Inércia ===
+  /* ===== Inércia ===== */
   function applyInertia() {
     function animate() {
       state.velocityX *= CONFIG.friction;
@@ -289,7 +289,7 @@
     animate();
   }
 
-  // === Wheel Zoom ===
+  /* ===== Wheel Zoom ===== */
   function handleWheel(e) {
     e.preventDefault();
     
@@ -301,7 +301,7 @@
     setZoom(delta, centerX, centerY);
   }
 
-  // === Países ===
+  /* ===== Países ===== */
   function handleCountryClick(e) {
     e.stopPropagation();
     const pais = this.dataset.pais;
@@ -309,10 +309,10 @@
     markCountryAsVisited(pais);
     this.classList.add('visitado');
     
-    window.location.href = `/app/culinaria-pais/index.html?pais=${pais}`;
+    window.location.href = `../culinaria-pais/index.html?pais=${pais}`;
   }
 
-  // === Event Bindings ===
+  /* ===== Event Bindings ===== */
   function bindEvents() {
     // Mouse
     elements.mapaContainer.addEventListener('mousedown', handleMouseDown);
@@ -332,26 +332,13 @@
       pin.addEventListener('click', handleCountryClick);
     });
 
-    // Navegação
-    elements.btnHumor.addEventListener('click', () => {
-      window.location.href = '/app/humor/index.html';
-    });
-
-    elements.btnLogo.addEventListener('click', () => {
-      window.location.href = '/app/principal/index.html';
-    });
-
-    elements.btnGeladeira.addEventListener('click', () => {
-      window.location.href = '/app/minha-geladeira/index.html';
-    });
-
     // Prevenir scroll do body
     document.body.addEventListener('touchmove', (e) => {
       e.preventDefault();
     }, { passive: false });
   }
 
-  // === Execução ===
-  init();
+  /* ===== Boot ===== */
+  document.addEventListener('DOMContentLoaded', init);
 
 })();
