@@ -1,0 +1,431 @@
+/* /app/explorar-mundo/explorar.css */
+
+/* === Cabeçalho === */
+.header-padrao {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--roxo);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.btn-header {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.btn-header:hover,
+.btn-header:focus-visible {
+  background: rgba(255,255,255,0.1);
+  outline: 2px solid rgba(255,255,255,0.3);
+  outline-offset: 2px;
+}
+
+.btn-header img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.btn-menu span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: white;
+  margin: 4px 0;
+  border-radius: 2px;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+}
+
+/* === Main === */
+.main-explorar {
+  padding-top: 60px;
+  padding-bottom: 90px;
+  background: var(--bg);
+  min-height: 100vh;
+  position: relative;
+}
+
+/* === Balão do Chef === */
+.balao-chef {
+  position: relative;
+  margin: 16px auto 20px;
+  max-width: 90%;
+  background: var(--roxo);
+  color: white;
+  padding: 16px 20px 16px 60px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.balao-chef::before {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 30px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 12px solid var(--roxo);
+}
+
+.icone-chef {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.balao-chef p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* === Container do Mapa === */
+.mapa-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  height: calc(100vh - 260px);
+  overflow: hidden;
+  border-radius: 12px;
+  background: #a8d5ff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  touch-action: none;
+  user-select: none;
+}
+
+.mapa-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: grab;
+}
+
+.mapa-wrapper.grabbing {
+  cursor: grabbing;
+}
+
+.mapa-base {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* === Pontos dos Países === */
+.ponto-pais {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.2s, opacity 0.2s;
+  z-index: 10;
+}
+
+.ponto-pais:hover {
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.ponto-pais:active {
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
+.ponto-pais:focus-visible {
+  outline: 3px solid var(--roxo);
+  outline-offset: 4px;
+  border-radius: 50%;
+}
+
+.bandeira-oval {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid white;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.bandeira-oval::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  pointer-events: none;
+}
+
+.bandeira-oval img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pais-nome {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--verde);
+  background: white;
+  padding: 3px 8px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.ponto-pais:hover .pais-nome,
+.ponto-pais:focus-visible .pais-nome {
+  opacity: 1;
+}
+
+/* Estado visitado */
+.ponto-pais.visitado .bandeira-oval {
+  border-color: var(--verde);
+  box-shadow: 0 3px 8px rgba(34, 92, 24, 0.4);
+}
+
+.ponto-pais.visitado .bandeira-oval::before {
+  content: '✓';
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 18px;
+  height: 18px;
+  background: var(--verde);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  z-index: 1;
+}
+
+/* === Controles de Zoom === */
+.controles-zoom {
+  position: absolute;
+  bottom: 20px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 20;
+}
+
+.btn-zoom {
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--roxo);
+  transition: all 0.2s;
+}
+
+.btn-zoom:hover {
+  background: var(--roxo);
+  color: white;
+  transform: scale(1.1);
+}
+
+.btn-zoom:active {
+  transform: scale(0.95);
+}
+
+.btn-zoom:focus-visible {
+  outline: 3px solid var(--verde);
+  outline-offset: 2px;
+}
+
+/* === Legenda === */
+.legenda-visitados {
+  position: absolute;
+  bottom: 20px;
+  left: 16px;
+  background: white;
+  padding: 12px 16px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 20;
+}
+
+.legenda-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--verde);
+  font-weight: 500;
+}
+
+.circulo {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid;
+}
+
+.circulo.visitado {
+  background: var(--verde);
+  border-color: var(--verde);
+}
+
+.circulo.nao-visitado {
+  background: white;
+  border-color: #ccc;
+}
+
+/* === Rodapé Curvo === */
+.curva {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: var(--roxo-escuro);
+  border-radius: 100% 50% 0 0 / 50% 50% 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  z-index: 50;
+}
+
+.btn-footer {
+  width: 55px;
+  height: 55px;
+  border: none;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+
+.btn-footer:hover,
+.btn-footer:focus-visible {
+  transform: scale(1.1);
+  outline: 3px solid rgba(255,255,255,0.5);
+  outline-offset: 2px;
+}
+
+.btn-footer:active {
+  transform: scale(0.95);
+}
+
+.btn-footer img {
+  width: 250%;
+  height: 250%;
+  object-fit: contain;
+}
+
+.btn-footer.btn-central {
+  width: 150px;
+  height: 150px;
+  margin-top: -40px;
+}
+
+.btn-footer.btn-central img {
+  width: 150%;
+  height: 150%;
+}
+
+/* === Responsividade === */
+@media (min-width: 600px) {
+  .mapa-container {
+    max-width: 800px;
+    height: calc(100vh - 280px);
+  }
+
+  .balao-chef {
+    max-width: 600px;
+  }
+
+  .ponto-pais {
+    gap: 6px;
+  }
+
+  .bandeira-oval {
+    width: 60px;
+    height: 60px;
+    border-width: 4px;
+  }
+
+  .pais-nome {
+    font-size: 13px;
+    padding: 4px 10px;
+  }
+
+  .controles-zoom {
+    bottom: 30px;
+    right: 30px;
+  }
+
+  .btn-zoom {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mapa-wrapper,
+  .ponto-pais,
+  .btn-zoom {
+    transition: none;
+  }
+}
