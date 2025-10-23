@@ -1,123 +1,58 @@
 /* /app/explorar-mundo/explorar.css */
 
-/* === Cabeçalho === */
-.header-padrao {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  overflow: hidden;
+  touch-action: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+/* === Título Topo === */
+.titulo-topo {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 60px;
-  background: var(--roxo);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
+  background: white;
+  padding: 16px 20px 12px;
   z-index: 100;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
 }
 
-.btn-header {
-  width: 40px;
-  height: 40px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: background 0.2s;
+.titulo-topo h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--verde);
+  margin: 0 0 4px;
+  letter-spacing: -0.5px;
 }
 
-.btn-header:hover,
-.btn-header:focus-visible {
-  background: rgba(255,255,255,0.1);
-  outline: 2px solid rgba(255,255,255,0.3);
-  outline-offset: 2px;
-}
-
-.btn-header img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-}
-
-.btn-menu span {
-  display: block;
-  width: 20px;
-  height: 2px;
-  background: white;
-  margin: 4px 0;
-  border-radius: 2px;
-}
-
-.header-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: white;
+.titulo-topo p {
+  font-size: 13px;
+  color: #666;
   margin: 0;
-}
-
-/* === Main === */
-.main-explorar {
-  padding-top: 60px;
-  padding-bottom: 90px;
-  background: var(--bg);
-  min-height: 100vh;
-  position: relative;
-}
-
-/* === Balão do Chef === */
-.balao-chef {
-  position: relative;
-  margin: 16px auto 20px;
-  max-width: 90%;
-  background: var(--roxo);
-  color: white;
-  padding: 16px 20px 16px 60px;
-  border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-
-.balao-chef::before {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 30px;
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 12px solid var(--roxo);
-}
-
-.icone-chef {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-}
-
-.balao-chef p {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.4;
+  font-weight: 400;
 }
 
 /* === Container do Mapa === */
 .mapa-container {
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  height: calc(100vh - 260px);
+  position: fixed;
+  top: 84px;
+  left: 0;
+  right: 0;
+  bottom: 70px;
   overflow: hidden;
-  border-radius: 12px;
   background: #a8d5ff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   touch-action: none;
   user-select: none;
 }
@@ -127,18 +62,23 @@
   width: 100%;
   height: 100%;
   transform-origin: center center;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.1s ease-out;
   cursor: grab;
+  will-change: transform;
 }
 
 .mapa-wrapper.grabbing {
   cursor: grabbing;
+  transition: none;
 }
 
-.mapa-base {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+#mapaSvg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200%;
+  height: auto;
   pointer-events: none;
 }
 
@@ -152,13 +92,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  transition: transform 0.2s, opacity 0.2s;
+  gap: 6px;
+  transition: transform 0.2s ease;
   z-index: 10;
+  padding: 0;
 }
 
 .ponto-pais:hover {
   transform: translate(-50%, -50%) scale(1.15);
+  z-index: 20;
 }
 
 .ponto-pais:active {
@@ -167,22 +109,28 @@
 
 .ponto-pais:focus-visible {
   outline: 3px solid var(--roxo);
-  outline-offset: 4px;
+  outline-offset: 6px;
   border-radius: 50%;
 }
 
 .bandeira-oval {
-  width: 50px;
-  height: 50px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   overflow: hidden;
   border: 3px solid white;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   background: white;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  transition: all 0.2s ease;
+}
+
+.ponto-pais:hover .bandeira-oval {
+  border-width: 4px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
 }
 
 .bandeira-oval::after {
@@ -190,7 +138,7 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.15);
   pointer-events: none;
 }
 
@@ -201,16 +149,17 @@
 }
 
 .pais-nome {
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   color: var(--verde);
   background: white;
-  padding: 3px 8px;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  padding: 4px 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   white-space: nowrap;
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
 }
 
 .ponto-pais:hover .pais-nome,
@@ -221,26 +170,27 @@
 /* Estado visitado */
 .ponto-pais.visitado .bandeira-oval {
   border-color: var(--verde);
-  box-shadow: 0 3px 8px rgba(34, 92, 24, 0.4);
+  box-shadow: 0 4px 12px rgba(34, 92, 24, 0.5);
 }
 
 .ponto-pais.visitado .bandeira-oval::before {
   content: '✓';
   position: absolute;
-  bottom: -2px;
-  right: -2px;
-  width: 18px;
-  height: 18px;
+  bottom: -3px;
+  right: -3px;
+  width: 20px;
+  height: 20px;
   background: var(--verde);
   color: white;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid white;
-  z-index: 1;
+  border: 3px solid white;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 /* === Controles de Zoom === */
@@ -250,25 +200,26 @@
   right: 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  z-index: 20;
+  gap: 10px;
+  z-index: 50;
 }
 
 .btn-zoom {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border: none;
   background: white;
   border-radius: 50%;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 26px;
+  font-weight: 700;
   color: var(--roxo);
-  transition: all 0.2s;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
 }
 
 .btn-zoom:hover {
@@ -286,35 +237,44 @@
   outline-offset: 2px;
 }
 
+.btn-zoom span {
+  user-select: none;
+  pointer-events: none;
+}
+
 /* === Legenda === */
 .legenda-visitados {
   position: absolute;
   bottom: 20px;
   left: 16px;
   background: white;
-  padding: 12px 16px;
-  border-radius: 12px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  padding: 12px 14px;
+  border-radius: 16px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  z-index: 20;
+  gap: 10px;
+  z-index: 50;
 }
 
 .legenda-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+}
+
+.legenda-texto {
+  font-size: 13px;
   color: var(--verde);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .circulo {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  border: 2px solid;
+  border: 3px solid;
+  flex-shrink: 0;
 }
 
 .circulo.visitado {
@@ -324,7 +284,7 @@
 
 .circulo.nao-visitado {
   background: white;
-  border-color: #ccc;
+  border-color: #999;
 }
 
 /* === Rodapé Curvo === */
@@ -340,7 +300,8 @@
   align-items: center;
   justify-content: center;
   gap: 40px;
-  z-index: 50;
+  z-index: 100;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
 }
 
 .btn-footer {
@@ -354,7 +315,8 @@
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  transition: transform 0.2s;
+  transition: transform 0.2s ease;
+  touch-action: manipulation;
 }
 
 .btn-footer:hover,
@@ -372,6 +334,7 @@
   width: 250%;
   height: 250%;
   object-fit: contain;
+  pointer-events: none;
 }
 
 .btn-footer.btn-central {
@@ -387,45 +350,82 @@
 
 /* === Responsividade === */
 @media (min-width: 600px) {
-  .mapa-container {
-    max-width: 800px;
-    height: calc(100vh - 280px);
+  .titulo-topo {
+    padding: 20px 24px 16px;
   }
 
-  .balao-chef {
-    max-width: 600px;
+  .titulo-topo h1 {
+    font-size: 28px;
+  }
+
+  .titulo-topo p {
+    font-size: 14px;
+  }
+
+  .mapa-container {
+    top: 96px;
   }
 
   .ponto-pais {
-    gap: 6px;
+    gap: 8px;
   }
 
   .bandeira-oval {
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 64px;
     border-width: 4px;
   }
 
   .pais-nome {
-    font-size: 13px;
-    padding: 4px 10px;
+    font-size: 14px;
+    padding: 5px 12px;
   }
 
   .controles-zoom {
     bottom: 30px;
     right: 30px;
+    gap: 12px;
   }
 
   .btn-zoom {
-    width: 50px;
-    height: 50px;
+    width: 54px;
+    height: 54px;
+    font-size: 28px;
+  }
+
+  .legenda-visitados {
+    bottom: 30px;
+    left: 30px;
+    padding: 14px 18px;
+    gap: 12px;
+  }
+
+  .legenda-texto {
+    font-size: 14px;
+  }
+
+  .circulo {
+    width: 20px;
+    height: 20px;
+  }
+
+  #mapaSvg {
+    width: 180%;
   }
 }
 
+@media (min-width: 1024px) {
+  #mapaSvg {
+    width: 160%;
+  }
+}
+
+/* === Performance === */
 @media (prefers-reduced-motion: reduce) {
   .mapa-wrapper,
   .ponto-pais,
-  .btn-zoom {
+  .btn-zoom,
+  .btn-footer {
     transition: none;
   }
 }
