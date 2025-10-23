@@ -3,122 +3,129 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Explorar Mundo - Got2Cook</title>
   <link rel="stylesheet" href="/public/assets/css/base.css">
   <link rel="stylesheet" href="explorar.css">
 </head>
 <body>
-  <!-- Cabeçalho padrão -->
-  <header class="header-padrao">
-    <button class="btn-header btn-perfil" aria-label="Perfil">
-      <img src="/public/assets/img/icons/perfil.png" alt="Perfil">
-    </button>
-    <h1 class="header-title">Explorar Mundo</h1>
-    <button class="btn-header btn-menu" aria-label="Menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </header>
+  <!-- Título fixo no topo -->
+  <div class="titulo-topo">
+    <h1>Explorar Mundo</h1>
+    <p>Toque nos países para descobrir receitas típicas</p>
+  </div>
 
-  <main class="main-explorar">
-    <!-- Balão de boas-vindas -->
-    <div class="balao-chef">
-      <img src="/public/assets/img/icons/chef.png" alt="Chef" class="icone-chef">
-      <p>Descubra sabores de todo o mundo! Toque nos países para explorar receitas típicas.</p>
-    </div>
-
-    <!-- Container do mapa -->
-    <div class="mapa-container" id="mapaContainer">
-      <div class="mapa-wrapper" id="mapaWrapper">
-        <img src="/public/assets/img/mapas/mapa-mundi.svg" alt="Mapa Múndi" class="mapa-base" id="mapaBase">
+  <!-- Container do mapa -->
+  <main class="mapa-container" id="mapaContainer">
+    <div class="mapa-wrapper" id="mapaWrapper">
+      <!-- Mapa SVG será gerado pelo JS -->
+      <svg id="mapaSvg" viewBox="0 0 2000 1000" preserveAspectRatio="xMidYMid meet">
+        <!-- Oceano -->
+        <rect x="0" y="0" width="2000" height="1000" fill="#a8d5ff"/>
         
-        <!-- Pontos de marcação com bandeiras -->
-        <button class="ponto-pais" data-pais="brasil" style="top: 68%; left: 32%;" aria-label="Brasil">
-          <div class="bandeira-oval">
-            <img src="/public/assets/img/bandeiras/brasil.png" alt="Bandeira Brasil">
-          </div>
-          <span class="pais-nome">Brasil</span>
-        </button>
+        <!-- América do Sul -->
+        <path id="continent-south-america" d="M 480 420 L 520 380 L 560 360 L 580 340 L 600 340 L 620 360 L 640 380 L 650 420 L 660 460 L 660 500 L 650 540 L 640 580 L 620 620 L 600 660 L 580 700 L 560 720 L 540 740 L 520 750 L 500 760 L 480 760 L 460 750 L 440 730 L 420 700 L 400 660 L 390 620 L 380 580 L 380 540 L 390 500 L 400 460 L 420 440 L 440 430 L 460 425 Z" fill="#86C67C" stroke="#6ba863" stroke-width="2"/>
+        
+        <!-- América do Norte -->
+        <path id="continent-north-america" d="M 200 180 L 280 150 L 360 140 L 420 150 L 460 170 L 500 200 L 520 240 L 530 280 L 520 320 L 500 340 L 460 350 L 420 340 L 380 320 L 340 300 L 300 280 L 260 260 L 220 240 L 180 220 L 160 200 Z" fill="#86C67C" stroke="#6ba863" stroke-width="2"/>
+        
+        <!-- Europa -->
+        <path id="continent-europe" d="M 920 180 L 980 160 L 1040 160 L 1080 180 L 1100 200 L 1110 230 L 1100 260 L 1080 280 L 1040 290 L 1000 290 L 960 280 L 920 260 L 900 230 L 900 200 Z" fill="#86C67C" stroke="#6ba863" stroke-width="2"/>
+        
+        <!-- África -->
+        <path id="continent-africa" d="M 960 300 L 1020 290 L 1080 300 L 1120 330 L 1140 380 L 1150 440 L 1150 500 L 1140 560 L 1120 600 L 1080 630 L 1020 650 L 960 650 L 920 630 L 900 600 L 890 560 L 890 500 L 900 440 L 920 380 L 940 340 Z" fill="#86C67C" stroke="#6ba863" stroke-width="2"/>
+        
+        <!-- Ásia -->
+        <path id="continent-asia" d="M 1100 140 L 1200 130 L 1300 140 L 1400 150 L 1500 160 L 1580 180 L 1640 220 L 1680 270 L 1700 320 L 1700 370 L 1680 410 L 1640 440 L 1580 460 L 1500 470 L 1420 470 L 1340 460 L 1260 440 L 1200 410 L 1160 370 L 1140 330 L 1130 280 L 1120 230 L 1110 180 Z" fill="#86C67C" stroke="#6ba863" stroke-width="2"/>
+        
+        <!-- Oceania -->
+        <path id="continent-oceania" d="M 1520 600 L 1580 590 L 1640 600 L 1680 630 L 1700 670 L 1700 710 L 1680 740 L 1640 760 L 1580 770 L 1520 770 L 1480 750 L 1460 720 L 1460 680 L 1480 640 Z" fill="#86C67C" stroke="#6ba863" stroke-width="2"/>
+      </svg>
 
-        <button class="ponto-pais" data-pais="italia" style="top: 38%; left: 52%;" aria-label="Itália">
-          <div class="bandeira-oval">
-            <img src="/public/assets/img/bandeiras/italia.png" alt="Bandeira Itália">
-          </div>
-          <span class="pais-nome">Itália</span>
-        </button>
+      <!-- Pontos de marcação com bandeiras -->
+      <button class="ponto-pais" data-pais="brasil" style="top: 53%; left: 29.5%;" aria-label="Brasil">
+        <div class="bandeira-oval">
+          <img src="/public/assets/img/bandeiras/brasil.png" alt="Brasil">
+        </div>
+        <span class="pais-nome">Brasil</span>
+      </button>
 
-        <button class="ponto-pais" data-pais="japao" style="top: 36%; left: 82%;" aria-label="Japão">
-          <div class="bandeira-oval">
-            <img src="/public/assets/img/bandeiras/japao.png" alt="Bandeira Japão">
-          </div>
-          <span class="pais-nome">Japão</span>
-        </button>
+      <button class="ponto-pais" data-pais="argentina" style="top: 68%; left: 28%;" aria-label="Argentina">
+        <div class="bandeira-oval">
+          <img src="/public/assets/img/bandeiras/argentina.png" alt="Argentina">
+        </div>
+        <span class="pais-nome">Argentina</span>
+      </button>
 
-        <button class="ponto-pais" data-pais="mexico" style="top: 42%; left: 18%;" aria-label="México">
-          <div class="bandeira-oval">
-            <img src="/public/assets/img/bandeiras/mexico.png" alt="Bandeira México">
-          </div>
-          <span class="pais-nome">México</span>
-        </button>
+      <button class="ponto-pais" data-pais="mexico" style="top: 26%; left: 20%;" aria-label="México">
+        <div class="bandeira-oval">
+          <img src="/public/assets/img/bandeiras/mexico.png" alt="México">
+        </div>
+        <span class="pais-nome">México</span>
+      </button>
 
-        <button class="ponto-pais" data-pais="franca" style="top: 36%; left: 50%;" aria-label="França">
-          <div class="bandeira-oval">
-            <img src="/public/assets/img/bandeiras/franca.png" alt="Bandeira França">
-          </div>
-          <span class="pais-nome">França</span>
-        </button>
+      <button class="ponto-pais" data-pais="portugal" style="top: 22%; left: 45%;" aria-label="Portugal">
+        <div class="bandeira-oval">
+          <img src="/public/assets/img/bandeiras/portugal.png" alt="Portugal">
+        </div>
+        <span class="pais-nome">Portugal</span>
+      </button>
 
-        <button class="ponto-pais" data-pais="tailandia" style="top: 50%; left: 74%;" aria-label="Tailândia">
-          <div class="bandeira-oval">
-            <img src="/public/assets/img/bandeiras/tailandia.png" alt="Bandeira Tailândia">
-          </div>
-          <span class="pais-nome">Tailândia</span>
-        </button>
+      <button class="ponto-pais" data-pais="espanha" style="top: 21%; left: 46.5%;" aria-label="Espanha">
+        <div class="bandeira-oval">
+          <img src="/public/assets/img/bandeiras/espanha.png" alt="Espanha">
+        </div>
+        <span class="pais-nome">Espanha</span>
+      </button>
 
-        <button class="ponto-pais" data-pais="india" style="top: 46%; left: 70%;" aria-label="Índia">
-          <div class="bandeira-oval">
-            <img src="/public/assets/img/bandeiras/india.png" alt="Bandeira Índia">
-          </div>
-          <span class="pais-nome">Índia</span>
-        </button>
+      <button class="ponto-pais" data-pais="franca" style="top: 19%; left: 48%;" aria-label="França">
+        <div class="bandeira-oval">
+          <img src="/public/assets/img/bandeiras/franca.png" alt="França">
+        </div>
+        <span class="pais-nome">França</span>
+      </button>
 
-        <button class="ponto-pais" data-pais="espanha" style="top: 38%; left: 49%;" aria-label="Espanha">
-          <div class="bandeira-oval">
-            <img src="/public/assets/img/bandeiras/espanha.png" alt="Bandeira Espanha">
-          </div>
-          <span class="pais-nome">Espanha</span>
-        </button>
+      <button class="ponto-pais" data-pais="italia" style="top: 21%; left: 50%;" aria-label="Itália">
+        <div class="bandeira-oval">
+          <img src="/public/assets/img/bandeiras/italia.png" alt="Itália">
+        </div>
+        <span class="pais-nome">Itália</span>
+      </button>
 
-        <button class="ponto-pais" data-pais="argentina" style="top: 78%; left: 30%;" aria-label="Argentina">
-          <div class="bandeira-oval">
-            <img src="/public/assets/img/bandeiras/argentina.png" alt="Bandeira Argentina">
-          </div>
-          <span class="pais-nome">Argentina</span>
-        </button>
+      <button class="ponto-pais" data-pais="grecia" style="top: 23%; left: 52.5%;" aria-label="Grécia">
+        <div class="bandeira-oval">
+          <img src="/public/assets/img/bandeiras/grecia.png" alt="Grécia">
+        </div>
+        <span class="pais-nome">Grécia</span>
+      </button>
 
-        <button class="ponto-pais" data-pais="grecia" style="top: 39%; left: 54%;" aria-label="Grécia">
-          <div class="bandeira-oval">
-            <img src="/public/assets/img/bandeiras/grecia.png" alt="Bandeira Grécia">
-          </div>
-          <span class="pais-nome">Grécia</span>
-        </button>
+      <button class="ponto-pais" data-pais="india" style="top: 28%; left: 68%;" aria-label="Índia">
+        <div class="bandeira-oval">
+          <img src="/public/assets/img/bandeiras/india.png" alt="Índia">
+        </div>
+        <span class="pais-nome">Índia</span>
+      </button>
 
-        <button class="ponto-pais" data-pais="portugal" style="top: 38%; left: 47%;" aria-label="Portugal">
-          <div class="bandeira-oval">
-            <img src="/public/assets/img/bandeiras/portugal.png" alt="Bandeira Portugal">
-          </div>
-          <span class="pais-nome">Portugal</span>
-        </button>
+      <button class="ponto-pais" data-pais="tailandia" style="top: 31%; left: 73%;" aria-label="Tailândia">
+        <div class="bandeira-oval">
+          <img src="/public/assets/img/bandeiras/tailandia.png" alt="Tailândia">
+        </div>
+        <span class="pais-nome">Tailândia</span>
+      </button>
 
-        <button class="ponto-pais" data-pais="china" style="top: 38%; left: 76%;" aria-label="China">
-          <div class="bandeira-oval">
-            <img src="/public/assets/img/bandeiras/china.png" alt="Bandeira China">
-          </div>
-          <span class="pais-nome">China</span>
-        </button>
-      </div>
+      <button class="ponto-pais" data-pais="china" style="top: 25%; left: 76%;" aria-label="China">
+        <div class="bandeira-oval">
+          <img src="/public/assets/img/bandeiras/china.png" alt="China">
+        </div>
+        <span class="pais-nome">China</span>
+      </button>
+
+      <button class="ponto-pais" data-pais="japao" style="top: 23%; left: 82%;" aria-label="Japão">
+        <div class="bandeira-oval">
+          <img src="/public/assets/img/bandeiras/japao.png" alt="Japão">
+        </div>
+        <span class="pais-nome">Japão</span>
+      </button>
     </div>
 
     <!-- Controles de zoom -->
@@ -134,18 +141,20 @@
       </button>
     </div>
 
-    <!-- Legenda de países visitados -->
+    <!-- Legenda -->
     <div class="legenda-visitados">
       <span class="legenda-item">
-        <span class="circulo visitado"></span> Visitados
+        <span class="circulo visitado"></span>
+        <span class="legenda-texto">Visitados</span>
       </span>
       <span class="legenda-item">
-        <span class="circulo nao-visitado"></span> Não visitados
+        <span class="circulo nao-visitado"></span>
+        <span class="legenda-texto">Explorar</span>
       </span>
     </div>
   </main>
 
-  <!-- Rodapé curvo padrão -->
+  <!-- Rodapé curvo -->
   <footer class="curva">
     <button class="btn-footer" id="btnVoltar" aria-label="Voltar">
       <img src="/public/assets/img/icons/seta-esquerda.png" alt="Voltar">
