@@ -1,0 +1,383 @@
+/* /app/culinaria-pais/pais.css */
+
+body {
+  background: var(--bg);
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* === Cabeçalho === */
+.header-pais {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: var(--roxo);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.btn-voltar {
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.btn-voltar:hover,
+.btn-voltar:focus-visible {
+  background: rgba(255,255,255,0.25);
+  outline: 2px solid rgba(255,255,255,0.5);
+  outline-offset: 2px;
+}
+
+.btn-voltar img {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+}
+
+.header-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  justify-content: center;
+  margin: 0 16px;
+}
+
+.bandeira-header {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.pais-titulo {
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
+.btn-menu {
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.btn-menu:hover,
+.btn-menu:focus-visible {
+  background: rgba(255,255,255,0.1);
+  outline: 2px solid rgba(255,255,255,0.3);
+  outline-offset: 2px;
+}
+
+.btn-menu span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+}
+
+/* === Main === */
+.main-culinaria {
+  padding-top: 70px;
+  padding-bottom: 90px;
+  min-height: 100vh;
+}
+
+/* === Intro === */
+.intro-pais {
+  padding: 20px 16px;
+}
+
+.balao-chef {
+  position: relative;
+  background: var(--roxo);
+  color: white;
+  padding: 16px 20px 16px 60px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  max-width: 100%;
+}
+
+.balao-chef::before {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 30px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 12px solid var(--roxo);
+}
+
+.icone-chef {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.balao-chef p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* === Busca === */
+.busca-container {
+  position: relative;
+  padding: 0 16px 20px;
+}
+
+.input-busca {
+  width: 100%;
+  height: 48px;
+  border: 2px solid var(--roxo);
+  border-radius: 24px;
+  padding: 0 48px 0 20px;
+  font-size: 15px;
+  background: white;
+  color: var(--verde);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-busca::placeholder {
+  color: #999;
+}
+
+.input-busca:focus {
+  border-color: var(--verde);
+  box-shadow: 0 0 0 3px rgba(34, 92, 24, 0.1);
+}
+
+.icone-lupa {
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+/* === Grid de Receitas === */
+.receitas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 0 16px 20px;
+}
+
+.card-receita {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card-receita:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.card-receita:focus-visible {
+  outline: 3px solid var(--roxo);
+  outline-offset: 2px;
+}
+
+.receita-imagem {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.receita-info {
+  padding: 12px;
+}
+
+.receita-nome {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--verde);
+  background: var(--cartao);
+  padding: 6px 10px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.receita-tempo {
+  font-size: 12px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.receita-emoji-humor {
+  font-size: 16px;
+  display: flex;
+  gap: 4px;
+}
+
+/* === Empty State === */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-icon {
+  width: 80px;
+  height: 80px;
+  opacity: 0.5;
+  margin-bottom: 16px;
+}
+
+.empty-state p {
+  color: #666;
+  font-size: 16px;
+  margin: 0 0 20px;
+}
+
+.btn-limpar-busca {
+  background: var(--roxo);
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-limpar-busca:hover {
+  background: var(--verde);
+  transform: scale(1.05);
+}
+
+.btn-limpar-busca:focus-visible {
+  outline: 3px solid var(--roxo);
+  outline-offset: 2px;
+}
+
+/* === Rodapé === */
+.curva {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: var(--roxo-escuro);
+  border-radius: 100% 50% 0 0 / 50% 50% 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  z-index: 50;
+}
+
+.btn-footer {
+  width: 55px;
+  height: 55px;
+  border: none;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+
+.btn-footer:hover,
+.btn-footer:focus-visible {
+  transform: scale(1.1);
+  outline: 3px solid rgba(255,255,255,0.5);
+  outline-offset: 2px;
+}
+
+.btn-footer:active {
+  transform: scale(0.95);
+}
+
+.btn-footer img {
+  width: 250%;
+  height: 250%;
+  object-fit: contain;
+}
+
+.btn-footer.btn-central {
+  width: 150px;
+  height: 150px;
+  margin-top: -40px;
+}
+
+.btn-footer.btn-central img {
+  width: 150%;
+  height: 150%;
+}
+
+/* === Responsividade === */
+@media (min-width: 600px) {
+  .main-culinaria {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .receitas-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .card-receita {
+    border-radius: 20px;
+  }
+
+  .receita-imagem {
+    height: 160px;
+  }
+}
