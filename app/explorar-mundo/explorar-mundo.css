@@ -23,7 +23,6 @@ body {
   overflow: hidden;
   position: fixed;
   width: 100%;
-  touch-action: none;
 }
 
 /* === Container === */
@@ -63,43 +62,29 @@ body {
 }
 
 .mapa-wrapper {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  transform-origin: center center;
-  transition: transform 0.05s ease-out;
   cursor: grab;
-  will-change: transform;
 }
 
 .mapa-wrapper.grabbing {
   cursor: grabbing;
-  transition: none;
 }
 
 .mapa-img {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
   width: 100%;
-  min-width: 100%;
-  height: auto;
-  pointer-events: none;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   user-select: none;
   -webkit-user-drag: none;
-}
-
-/* === Bússola === */
-.bussola {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  width: 80px;
-  height: 80px;
   pointer-events: none;
-  z-index: 5;
-  opacity: 0.9;
 }
 
 /* === Pins dos Países === */
@@ -151,6 +136,8 @@ body {
   pointer-events: none;
   border: 2px solid white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 /* === Tooltip do Pin === */
@@ -277,10 +264,6 @@ body {
     padding: 20px 20px 100px;
   }
 
-  .mapa-img {
-    width: 120%;
-  }
-
   .pin-svg {
     width: 48px;
     height: 72px;
@@ -292,13 +275,6 @@ body {
     top: 4px;
   }
 
-  .bussola {
-    width: 100px;
-    height: 100px;
-    bottom: 30px;
-    left: 30px;
-  }
-
   .pin-tooltip {
     font-size: 15px;
     padding: 8px 14px;
@@ -307,7 +283,6 @@ body {
 
 /* === Performance === */
 @media (prefers-reduced-motion: reduce) {
-  .mapa-wrapper,
   .pin-pais,
   .btn-footer,
   .pin-tooltip {
