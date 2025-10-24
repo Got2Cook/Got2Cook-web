@@ -12,8 +12,8 @@
   const zoomOutBtn = document.getElementById('zoomOut');
   const zoomLevel = document.getElementById('zoomLevel');
 
-  /* ===== Estado GLOBAL ===== */
-  window.mapState = {
+  /* ===== Estado ===== */
+  let state = {
     scale: 0.6,
     posX: 0,
     posY: 0,
@@ -27,8 +27,6 @@
     adjustMode: false,
     selectedPin: null
   };
-  
-  const state = window.mapState; // Alias local
 
   /* ===== Atualizar Display do Zoom ===== */
   function updateZoomDisplay() {
@@ -311,148 +309,96 @@
   }
 
   /* ================================================================ */
-  /* ===== FERRAMENTA DE AJUSTE DE PINS (REMOVER EM PRODUÇÃO) ===== */
+  /* ===== FERRAMENTA DE AJUSTE - ULTRA SIMPLES ===== */
   /* ================================================================ */
   
-  setTimeout(() => {
-    const state = window.mapState; // Usar state global
+  window.addEventListener('load', function() {
+    console.log('%c🗺️ AJUSTE DE PINS', 'background: #28a745; color: white; font-size: 16px; padding: 8px; font-weight: bold;');
+    console.log('Pressione A para ativar');
     
-    console.log('%c🗺️ FERRAMENTA DE AJUSTE DE PINS', 'background: #225c18; color: #c0ffa5; font-size: 16px; padding: 8px; font-weight: bold;');
-    console.log('%c⌨️  Pressione "A" para ativar', 'color: #225c18; font-size: 12px;');
-    console.log('');
-    console.log('%c📖 INSTRUÇÕES:', 'color: #225c18; font-weight: bold;');
-    console.log('  1️⃣  Pressione A');
-    console.log('  2️⃣  CLIQUE no pin');
-    console.log('  3️⃣  Use setas ⬆️⬇️⬅️➡️');
-    console.log('  4️⃣  Enter para copiar');
-    console.log('');
-
-    // Ativar modo
-    document.addEventListener('keydown', function handleAdjustMode(e) {
-      if (e.key.toLowerCase() === 'a' && !e.ctrlKey && !e.metaKey) {
+    // Ativar/desativar
+    document.body.addEventListener('keydown', function(e) {
+      if (e.key === 'a' || e.key === 'A') {
         state.adjustMode = !state.adjustMode;
+        console.clear();
         
         if (state.adjustMode) {
-          console.clear();
-          console.log('%c✅ MODO ATIVADO', 'background: #28a745; color: white; font-size: 14px; padding: 6px; font-weight: bold;');
-          console.log('');
-          console.log('🔒 Mapa BLOQUEADO');
-          console.log('👆 CLIQUE em um pin');
-          console.log('');
+          console.log('%c✅ ATIVADO', 'background: green; color: white; padding: 8px; font-size: 16px;');
+          console.log('Clique em um pin!');
           mapaContainer.style.cursor = 'crosshair';
-          document.body.style.cursor = 'crosshair';
         } else {
-          console.clear();
-          console.log('%c❌ MODO DESATIVADO', 'background: #dc3545; color: white; font-size: 14px; padding: 6px;');
-          
-          if (state.selectedPin) {
-            state.selectedPin.style.filter = '';
-            state.selectedPin = null;
-          }
-          
+          console.log('%c❌ DESATIVADO', 'background: red; color: white; padding: 8px;');
+          if (state.selectedPin) state.selectedPin.style.filter = '';
+          state.selectedPin = null;
           mapaContainer.style.cursor = 'grab';
-          document.body.style.cursor = 'default';
         }
       }
     });
-
-    // Selecionar pin - EVENTO DIRETO em cada pin
-    document.querySelectorAll('.pin-pais').forEach(pin => {
-      pin.addEventListener('mousedown', function selectPin(e) {
+    
+    // Selecionar pin (click direto)
+    document.querySelectorAll('.pin-pais').forEach(function(pin) {
+      pin.addEventListener('click', function(e) {
         if (!state.adjustMode) return;
         
         e.stopPropagation();
         e.preventDefault();
         
-        console.log('🖱️ CLIQUE DETECTADO no pin:', pin.dataset.pais);
-        
-        if (state.selectedPin) {
-          state.selectedPin.style.filter = '';
-        }
+        if (state.selectedPin) state.selectedPin.style.filter = '';
         
         state.selectedPin = pin;
-        pin.style.filter = 'brightness(2) saturate(3) drop-shadow(0 0 15px gold)';
+        pin.style.filter = 'brightness(3) drop-shadow(0 0 20px gold)';
+        pin.style.outline = '3px solid yellow';
         
         console.clear();
-        console.log('%c📍 PIN SELECIONADO!', 'background: #007bff; color: white; font-size: 14px; padding: 6px; font-weight: bold;');
-        console.log('');
-        console.log(`🌍 ${pin.dataset.pais.toUpperCase()}`);
-        console.log(`📝 ${pin.getAttribute('aria-label')}`);
-        console.log('');
-        console.log('%cPosição:', 'font-weight: bold;');
-        console.log(`  top:  ${pin.style.top}`);
-        console.log(`  left: ${pin.style.left}`);
-        console.log('');
-        console.log('%c⌨️  USE AS SETAS AGORA!', 'background: yellow; color: black; font-weight: bold; padding: 4px;');
-        console.log('  ⬆️⬇️⬅️➡️     : move 0.5%');
-        console.log('  Shift+setas: move 0.1%');
-        console.log('  Enter      : copiar código');
+        console.log('%c📍 SELECIONADO: ' + pin.dataset.pais.toUpperCase(), 'background: blue; color: white; padding: 8px; font-size: 14px;');
+        console.log('Posição: ' + pin.style.top + ', ' + pin.style.left);
+        console.log('USE AS SETAS AGORA! ⬆️⬇️⬅️➡️');
       });
     });
-
+    
     // Mover com setas
-    document.addEventListener('keydown', function movePinWithKeys(e) {
+    document.body.addEventListener('keydown', function(e) {
       if (!state.adjustMode || !state.selectedPin) return;
       
-      const step = e.shiftKey ? 0.1 : 0.5;
       let top = parseFloat(state.selectedPin.style.top) || 0;
       let left = parseFloat(state.selectedPin.style.left) || 0;
+      const step = e.shiftKey ? 0.1 : 0.5;
       
-      let moved = false;
-      
-      switch(e.key) {
-        case 'ArrowUp':
-          top -= step;
-          moved = true;
-          break;
-        case 'ArrowDown':
-          top += step;
-          moved = true;
-          break;
-        case 'ArrowLeft':
-          left -= step;
-          moved = true;
-          break;
-        case 'ArrowRight':
-          left += step;
-          moved = true;
-          break;
-        case 'Enter':
-          console.clear();
-          console.log('%c✅ CÓDIGO FINAL', 'background: #28a745; color: white; font-size: 14px; padding: 6px; font-weight: bold;');
-          console.log('');
-          console.log(`📍 ${state.selectedPin.dataset.pais.toUpperCase()}`);
-          console.log('');
-          console.log('%c📋 COPIE ESTE CÓDIGO:', 'font-weight: bold; color: #007bff; font-size: 13px;');
-          console.log('');
-          console.log(`style="top: ${top.toFixed(1)}%; left: ${left.toFixed(1)}%;"`);
-          console.log('');
-          console.log('%c📝 HTML completo:', 'font-weight: bold;');
-          console.log('');
-          console.log(`<button class="pin-pais" data-pais="${state.selectedPin.dataset.pais}" style="top: ${top.toFixed(1)}%; left: ${left.toFixed(1)}%;" aria-label="${state.selectedPin.getAttribute('aria-label')}">`);
-          e.preventDefault();
-          return;
-      }
-      
-      if (moved) {
+      if (e.key === 'ArrowUp') {
         e.preventDefault();
-        state.selectedPin.style.top = `${top}%`;
-        state.selectedPin.style.left = `${left}%`;
-        
+        top -= step;
+        state.selectedPin.style.top = top + '%';
+        console.log('⬆️ top: ' + top.toFixed(1) + '%');
+      }
+      else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        top += step;
+        state.selectedPin.style.top = top + '%';
+        console.log('⬇️ top: ' + top.toFixed(1) + '%');
+      }
+      else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        left -= step;
+        state.selectedPin.style.left = left + '%';
+        console.log('⬅️ left: ' + left.toFixed(1) + '%');
+      }
+      else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        left += step;
+        state.selectedPin.style.left = left + '%';
+        console.log('➡️ left: ' + left.toFixed(1) + '%');
+      }
+      else if (e.key === 'Enter') {
+        e.preventDefault();
         console.clear();
-        console.log('%c📍 MOVENDO', 'background: #007bff; color: white; font-size: 12px; padding: 4px;');
+        console.log('%c✅ CÓDIGO FINAL', 'background: green; color: white; padding: 10px; font-size: 16px;');
         console.log('');
-        console.log(`🌍 ${state.selectedPin.dataset.pais.toUpperCase()}`);
+        console.log('País: ' + state.selectedPin.dataset.pais.toUpperCase());
         console.log('');
-        console.log(`  top:  ${top.toFixed(1)}%`);
-        console.log(`  left: ${left.toFixed(1)}%`);
-        console.log('');
-        console.log('%cContinue ou Enter para finalizar', 'color: #6c757d;');
+        console.log('COPIE ISTO:');
+        console.log('style="top: ' + top.toFixed(1) + '%; left: ' + left.toFixed(1) + '%;"');
       }
     });
-    
-  }, 1000); // Delay maior para garantir
-
-  /* ===== FIM DA FERRAMENTA ===== */
+  });
 
 })();
