@@ -7,15 +7,15 @@
   const CONFIG = {
     minScale: 1,
     maxScale: 3,
-    friction: 0.88,
-    velocityThreshold: 0.3
+    friction: 0.92,
+    velocityThreshold: 0.5
   };
 
   /* ===== Estado ===== */
   let state = {
     scale: 1,
-    posX: 0,
-    posY: 0,
+    offsetX: 0,
+    offsetY: 0,
     startX: 0,
     startY: 0,
     isDragging: false,
@@ -47,24 +47,26 @@
 
   /* ===== Transformação ===== */
   function applyTransform() {
-    const transform = `translate(${state.posX}px, ${state.posY}px) scale(${state.scale})`;
-    elements.mapaWrapper.style.transform = transform;
+    elements.mapaWrapper.style.transform = `translate(${state.offsetX}px, ${state.offsetY}px) scale(${state.scale})`;
   }
 
   function getBounds() {
-    const containerRect = elements.mapaContainer.getBoundingClientRect();
-    const wrapperRect = elements.mapaWrapper.getBoundingClientRect();
+    const container = elements.mapaContainer.getBoundingClientRect();
+    const wrapper = elements.mapaWrapper.getBoundingClientRect();
     
-    const maxX = Math.max(0, (wrapperRect.width * state.scale - containerRect.width) / 2);
-    const maxY = Math.max(0, (wrapperRect.height * state.scale - containerRect.height) / 2);
+    const scaledWidth = container.width * state.scale;
+    const scaledHeight = container.height * state.scale;
+    
+    const maxX = Math.max(0, (scaledWidth - container.width) / 2);
+    const maxY = Math.max(0, (scaledHeight - container.height) / 2);
     
     return { maxX, maxY };
   }
 
   function constrainPosition() {
     const bounds = getBounds();
-    state.posX = Math.max(-bounds.maxX, Math.min(bounds.maxX, state.posX));
-    state.posY = Math.max(-bounds.maxY, Math.min(bounds.maxY, state.posY));
+    state.offsetX = Math.max(-bounds.maxX, Math.min(bounds.maxX, state.offsetX));
+    state.offsetY = Math.max(-bounds.maxY, Math.min(bounds.maxY, state.offsetY));
   }
 
   /* ===== Zoom ===== */
@@ -73,13 +75,14 @@
     state.scale = Math.max(CONFIG.minScale, Math.min(CONFIG.maxScale, state.scale + delta));
     
     if (centerX !== undefined && centerY !== undefined) {
-      const scaleRatio = state.scale / oldScale - 1;
+      const scaleRatio = state.scale / oldScale;
       const containerRect = elements.mapaContainer.getBoundingClientRect();
-      const offsetX = centerX - containerRect.width / 2;
-      const offsetY = centerY - containerRect.height / 2;
       
-      state.posX -= offsetX * scaleRatio;
-      state.posY -= offsetY * scaleRatio;
+      const pointX = centerX - containerRect.left - containerRect.width / 2;
+      const pointY = centerY - containerRect.top - containerRect.height / 2;
+      
+      state.offsetX = pointX - (pointX - state.offsetX) * scaleRatio;
+      state.offsetY = pointY - (pointY - state.offsetY) * scaleRatio;
     }
     
     constrainPosition();
@@ -94,8 +97,8 @@
     state.hasMoved = false;
     elements.mapaWrapper.classList.add('grabbing');
     
-    state.startX = e.clientX - state.posX;
-    state.startY = e.clientY - state.posY;
+    state.startX = e.clientX - state.offsetX;
+    state.startY = e.clientY - state.offsetY;
     state.lastX = e.clientX;
     state.lastY = e.clientY;
     state.velocityX = 0;
@@ -115,7 +118,6 @@
     const deltaX = e.clientX - state.lastX;
     const deltaY = e.clientY - state.lastY;
     
-    // Detectar movimento
     if (Math.abs(deltaX) > 2 || Math.abs(deltaY) > 2) {
       state.hasMoved = true;
     }
@@ -123,8 +125,8 @@
     state.velocityX = deltaX;
     state.velocityY = deltaY;
     
-    state.posX = e.clientX - state.startX;
-    state.posY = e.clientY - state.startY;
+    state.offsetX = e.clientX - state.startX;
+    state.offsetY = e.clientY - state.startY;
     
     constrainPosition();
     applyTransform();
@@ -157,8 +159,8 @@
       elements.mapaWrapper.classList.add('grabbing');
       
       const touch = e.touches[0];
-      state.startX = touch.clientX - state.posX;
-      state.startY = touch.clientY - state.posY;
+      state.startX = touch.clientX - state.offsetX;
+      state.startY = touch.clientY - state.offsetY;
       state.lastX = touch.clientX;
       state.lastY = touch.clientY;
       state.velocityX = 0;
@@ -189,7 +191,6 @@
       const deltaX = touch.clientX - state.lastX;
       const deltaY = touch.clientY - state.lastY;
       
-      // Detectar movimento
       if (Math.abs(deltaX) > 2 || Math.abs(deltaY) > 2) {
         state.hasMoved = true;
       }
@@ -197,8 +198,8 @@
       state.velocityX = deltaX;
       state.velocityY = deltaY;
       
-      state.posX = touch.clientX - state.startX;
-      state.posY = touch.clientY - state.startY;
+      state.offsetX = touch.clientX - state.startX;
+      state.offsetY = touch.clientY - state.startY;
       
       constrainPosition();
       applyTransform();
@@ -214,7 +215,7 @@
       );
       
       if (state.lastTouchDistance > 0) {
-        const delta = (distance - state.lastTouchDistance) * 0.008;
+        const delta = (distance - state.lastTouchDistance) * 0.01;
         const centerX = (touch1.clientX + touch2.clientX) / 2;
         const centerY = (touch1.clientY + touch2.clientY) / 2;
         setZoom(delta, centerX, centerY);
@@ -248,8 +249,8 @@
       state.velocityX *= CONFIG.friction;
       state.velocityY *= CONFIG.friction;
       
-      state.posX += state.velocityX;
-      state.posY += state.velocityY;
+      state.offsetX += state.velocityX;
+      state.offsetY += state.velocityY;
       
       constrainPosition();
       applyTransform();
@@ -268,19 +269,14 @@
   function handleWheel(e) {
     e.preventDefault();
     
-    const delta = e.deltaY > 0 ? -0.15 : 0.15;
-    const rect = elements.mapaContainer.getBoundingClientRect();
-    const centerX = e.clientX - rect.left;
-    const centerY = e.clientY - rect.top;
-    
-    setZoom(delta, centerX, centerY);
+    const delta = e.deltaY > 0 ? -0.2 : 0.2;
+    setZoom(delta, e.clientX, e.clientY);
   }
 
   /* ===== Países ===== */
   function handleCountryClick(e) {
     e.stopPropagation();
     
-    // Se houve movimento de drag, não navegar
     if (state.hasMoved) {
       state.hasMoved = false;
       return;
@@ -309,11 +305,6 @@
     elements.pinsPais.forEach(pin => {
       pin.addEventListener('click', handleCountryClick);
     });
-
-    // Prevenir scroll do body
-    document.body.addEventListener('touchmove', (e) => {
-      e.preventDefault();
-    }, { passive: false });
   }
 
   /* ===== Boot ===== */
