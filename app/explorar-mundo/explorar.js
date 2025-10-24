@@ -35,7 +35,7 @@
   const elements = {
     mapaWrapper: $('#mapaWrapper'),
     mapaContainer: $('#mapaContainer'),
-    mapaSvg: $('#mapaSvg'),
+    mapaImg: $('#mapaImg'),
     pinsPais: $$('.pin-pais')
   };
 
