@@ -8,10 +8,13 @@
   const mapaWrapper = document.getElementById('mapaWrapper');
   const mapaImg = document.getElementById('mapaImg');
   const pinsPais = document.querySelectorAll('.pin-pais');
+  const zoomInBtn = document.getElementById('zoomIn');
+  const zoomOutBtn = document.getElementById('zoomOut');
+  const zoomLevel = document.getElementById('zoomLevel');
 
   /* ===== Estado ===== */
   let state = {
-    scale: 1,
+    scale: 0.6,  // Zoom inicial reduzido para visão mais ampla
     posX: 0,
     posY: 0,
     isDragging: false,
@@ -22,7 +25,9 @@
     minX: 0,
     maxX: 0,
     minY: 0,
-    maxY: 0
+    maxY: 0,
+    minScale: 0.5,
+    maxScale: 2.5
   };
 
   /* ===== Calcular Limites ===== */
@@ -30,17 +35,14 @@
     const containerRect = mapaContainer.getBoundingClientRect();
     const imgRect = mapaImg.getBoundingClientRect();
     
-    // Dimensões escaladas da imagem
     const scaledWidth = imgRect.width * state.scale;
     const scaledHeight = imgRect.height * state.scale;
     
-    // Limites para não sair da imagem
-    state.maxX = 0; // Não pode ir para direita além da origem
-    state.minX = -(scaledWidth - containerRect.width); // Limite esquerdo
-    state.maxY = 0; // Não pode ir para cima além da origem
-    state.minY = -(scaledHeight - containerRect.height); // Limite inferior
+    state.maxX = 0;
+    state.minX = -(scaledWidth - containerRect.width);
+    state.maxY = 0;
+    state.minY = -(scaledHeight - containerRect.height);
     
-    // Se a imagem for menor que o container em alguma direção, centralizar
     if (scaledWidth < containerRect.width) {
       state.minX = state.maxX = 0;
     }
@@ -56,10 +58,50 @@
     state.posY = Math.max(state.minY, Math.min(state.maxY, state.posY));
   }
 
+  /* ===== Atualizar Display do Zoom ===== */
+  function updateZoomDisplay() {
+    const percentage = Math.round(state.scale * 100);
+    zoomLevel.textContent = `${percentage}%`;
+  }
+
   /* ===== Aplicar Transformação ===== */
   function updateTransform() {
     constrainPosition();
     mapaWrapper.style.transform = `translate(${state.posX}px, ${state.posY}px) scale(${state.scale})`;
+    updateZoomDisplay();
+  }
+
+  /* ===== Zoom Functions ===== */
+  function zoomIn() {
+    const oldScale = state.scale;
+    state.scale = Math.min(state.maxScale, state.scale + 0.2);
+    
+    // Centralizar zoom
+    const containerRect = mapaContainer.getBoundingClientRect();
+    const centerX = containerRect.width / 2;
+    const centerY = containerRect.height / 2;
+    
+    const scaleRatio = state.scale / oldScale;
+    state.posX = centerX - (centerX - state.posX) * scaleRatio;
+    state.posY = centerY - (centerY - state.posY) * scaleRatio;
+    
+    updateTransform();
+  }
+
+  function zoomOut() {
+    const oldScale = state.scale;
+    state.scale = Math.max(state.minScale, state.scale - 0.2);
+    
+    // Centralizar zoom
+    const containerRect = mapaContainer.getBoundingClientRect();
+    const centerX = containerRect.width / 2;
+    const centerY = containerRect.height / 2;
+    
+    const scaleRatio = state.scale / oldScale;
+    state.posX = centerX - (centerX - state.posX) * scaleRatio;
+    state.posY = centerY - (centerY - state.posY) * scaleRatio;
+    
+    updateTransform();
   }
 
   /* ===== Mouse Events ===== */
@@ -156,9 +198,8 @@
         const delta = distance - state.lastTouchDistance;
         const scaleChange = delta * 0.01;
         const oldScale = state.scale;
-        state.scale = Math.max(1, Math.min(3, state.scale + scaleChange));
+        state.scale = Math.max(state.minScale, Math.min(state.maxScale, state.scale + scaleChange));
         
-        // Ajustar posição ao fazer zoom para manter centro
         const centerX = (touch1.clientX + touch2.clientX) / 2;
         const centerY = (touch1.clientY + touch2.clientY) / 2;
         const containerRect = mapaContainer.getBoundingClientRect();
@@ -192,9 +233,8 @@
     
     const delta = e.deltaY > 0 ? -0.15 : 0.15;
     const oldScale = state.scale;
-    state.scale = Math.max(1, Math.min(3, state.scale + delta));
+    state.scale = Math.max(state.minScale, Math.min(state.maxScale, state.scale + delta));
     
-    // Zoom em direção ao cursor
     const rect = mapaContainer.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
@@ -227,7 +267,6 @@
 
   /* ===== Inicialização ===== */
   function init() {
-    // Aguardar imagem carregar para calcular bounds corretos
     if (mapaImg.complete) {
       calculateBounds();
       updateTransform();
@@ -250,6 +289,10 @@
     
     // Wheel zoom
     mapaContainer.addEventListener('wheel', onWheel, { passive: false });
+    
+    // Zoom buttons
+    zoomInBtn.addEventListener('click', zoomIn);
+    zoomOutBtn.addEventListener('click', zoomOut);
     
     // Pin clicks
     pinsPais.forEach(pin => {
