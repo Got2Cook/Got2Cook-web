@@ -14,7 +14,7 @@
 
   /* ===== Estado ===== */
   let state = {
-    scale: 0.6,  // Zoom inicial reduzido para visão mais ampla
+    scale: 0.6,
     posX: 0,
     posY: 0,
     isDragging: false,
@@ -22,46 +22,45 @@
     startY: 0,
     lastTouchDistance: 0,
     hasMoved: false,
-    minX: 0,
-    maxX: 0,
-    minY: 0,
-    maxY: 0,
     minScale: 0.5,
     maxScale: 2.5
   };
-
-  /* ===== Calcular Limites ===== */
-  function calculateBounds() {
-    const containerRect = mapaContainer.getBoundingClientRect();
-    const imgRect = mapaImg.getBoundingClientRect();
-    
-    const scaledWidth = imgRect.width * state.scale;
-    const scaledHeight = imgRect.height * state.scale;
-    
-    state.maxX = 0;
-    state.minX = -(scaledWidth - containerRect.width);
-    state.maxY = 0;
-    state.minY = -(scaledHeight - containerRect.height);
-    
-    if (scaledWidth < containerRect.width) {
-      state.minX = state.maxX = 0;
-    }
-    if (scaledHeight < containerRect.height) {
-      state.minY = state.maxY = 0;
-    }
-  }
-
-  /* ===== Restringir Posição ===== */
-  function constrainPosition() {
-    calculateBounds();
-    state.posX = Math.max(state.minX, Math.min(state.maxX, state.posX));
-    state.posY = Math.max(state.minY, Math.min(state.maxY, state.posY));
-  }
 
   /* ===== Atualizar Display do Zoom ===== */
   function updateZoomDisplay() {
     const percentage = Math.round(state.scale * 100);
     zoomLevel.textContent = `${percentage}%`;
+  }
+
+  /* ===== Calcular Limites ===== */
+  function calculateBounds() {
+    const containerRect = mapaContainer.getBoundingClientRect();
+    
+    // Dimensões reais da imagem com escala aplicada
+    const imgNaturalWidth = mapaImg.naturalWidth || mapaImg.width;
+    const imgNaturalHeight = mapaImg.naturalHeight || mapaImg.height;
+    
+    // Como a imagem está em width: 250%, calculamos baseado nisso
+    const imgDisplayWidth = containerRect.width * 2.5; // 250% do container
+    const imgDisplayHeight = (imgNaturalHeight / imgNaturalWidth) * imgDisplayWidth;
+    
+    const scaledWidth = imgDisplayWidth * state.scale;
+    const scaledHeight = imgDisplayHeight * state.scale;
+    
+    // Limites para não sair da imagem
+    const maxX = 0;
+    const minX = Math.min(0, containerRect.width - scaledWidth);
+    const maxY = 0;
+    const minY = Math.min(0, containerRect.height - scaledHeight);
+    
+    return { minX, maxX, minY, maxY };
+  }
+
+  /* ===== Restringir Posição ===== */
+  function constrainPosition() {
+    const bounds = calculateBounds();
+    state.posX = Math.max(bounds.minX, Math.min(bounds.maxX, state.posX));
+    state.posY = Math.max(bounds.minY, Math.min(bounds.maxY, state.posY));
   }
 
   /* ===== Aplicar Transformação ===== */
@@ -76,7 +75,6 @@
     const oldScale = state.scale;
     state.scale = Math.min(state.maxScale, state.scale + 0.2);
     
-    // Centralizar zoom
     const containerRect = mapaContainer.getBoundingClientRect();
     const centerX = containerRect.width / 2;
     const centerY = containerRect.height / 2;
@@ -92,7 +90,6 @@
     const oldScale = state.scale;
     state.scale = Math.max(state.minScale, state.scale - 0.2);
     
-    // Centralizar zoom
     const containerRect = mapaContainer.getBoundingClientRect();
     const centerX = containerRect.width / 2;
     const centerY = containerRect.height / 2;
@@ -106,7 +103,7 @@
 
   /* ===== Mouse Events ===== */
   function onMouseDown(e) {
-    if (e.target.closest('.pin-pais')) return;
+    if (e.target.closest('.pin-pais') || e.target.closest('.zoom-controls')) return;
     
     state.isDragging = true;
     state.hasMoved = false;
@@ -147,7 +144,7 @@
 
   /* ===== Touch Events ===== */
   function onTouchStart(e) {
-    if (e.target.closest('.pin-pais')) return;
+    if (e.target.closest('.pin-pais') || e.target.closest('.zoom-controls')) return;
     
     if (e.touches.length === 1) {
       state.isDragging = true;
@@ -261,20 +258,20 @@
 
   /* ===== Resize Handler ===== */
   function onResize() {
-    calculateBounds();
     updateTransform();
   }
 
   /* ===== Inicialização ===== */
   function init() {
-    if (mapaImg.complete) {
-      calculateBounds();
+    // Aguardar carregamento da imagem
+    const initTransform = () => {
       updateTransform();
+    };
+
+    if (mapaImg.complete && mapaImg.naturalWidth) {
+      initTransform();
     } else {
-      mapaImg.addEventListener('load', () => {
-        calculateBounds();
-        updateTransform();
-      });
+      mapaImg.addEventListener('load', initTransform);
     }
     
     // Mouse events
