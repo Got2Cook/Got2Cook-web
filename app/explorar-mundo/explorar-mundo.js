@@ -25,7 +25,7 @@
     velocityY: 0,
     animationId: null,
     lastTouchDistance: 0,
-    visitedCountries: []
+    hasMoved: false
   };
 
   /* ===== Elementos DOM ===== */
@@ -41,45 +41,8 @@
 
   /* ===== Inicialização ===== */
   function init() {
-    loadVisitedCountries();
-    updateVisitedStatus();
     bindEvents();
     applyTransform();
-  }
-
-  /* ===== LocalStorage ===== */
-  function loadVisitedCountries() {
-    try {
-      const saved = localStorage.getItem('got2cook_visited_countries');
-      state.visitedCountries = saved ? JSON.parse(saved) : [];
-    } catch (e) {
-      console.error('Erro ao carregar países visitados:', e);
-      state.visitedCountries = [];
-    }
-  }
-
-  function saveVisitedCountries() {
-    try {
-      localStorage.setItem('got2cook_visited_countries', JSON.stringify(state.visitedCountries));
-    } catch (e) {
-      console.error('Erro ao salvar países visitados:', e);
-    }
-  }
-
-  function markCountryAsVisited(pais) {
-    if (!state.visitedCountries.includes(pais)) {
-      state.visitedCountries.push(pais);
-      saveVisitedCountries();
-    }
-  }
-
-  function updateVisitedStatus() {
-    elements.pinsPais.forEach(pin => {
-      const pais = pin.dataset.pais;
-      if (state.visitedCountries.includes(pais)) {
-        pin.classList.add('visitado');
-      }
-    });
   }
 
   /* ===== Transformação ===== */
@@ -128,6 +91,7 @@
     if (e.target.closest('.pin-pais')) return;
     
     state.isDragging = true;
+    state.hasMoved = false;
     elements.mapaWrapper.classList.add('grabbing');
     
     state.startX = e.clientX - state.posX;
@@ -150,6 +114,11 @@
     
     const deltaX = e.clientX - state.lastX;
     const deltaY = e.clientY - state.lastY;
+    
+    // Detectar movimento
+    if (Math.abs(deltaX) > 2 || Math.abs(deltaY) > 2) {
+      state.hasMoved = true;
+    }
     
     state.velocityX = deltaX;
     state.velocityY = deltaY;
@@ -184,6 +153,7 @@
     
     if (e.touches.length === 1) {
       state.isDragging = true;
+      state.hasMoved = false;
       elements.mapaWrapper.classList.add('grabbing');
       
       const touch = e.touches[0];
@@ -218,6 +188,11 @@
       const touch = e.touches[0];
       const deltaX = touch.clientX - state.lastX;
       const deltaY = touch.clientY - state.lastY;
+      
+      // Detectar movimento
+      if (Math.abs(deltaX) > 2 || Math.abs(deltaY) > 2) {
+        state.hasMoved = true;
+      }
       
       state.velocityX = deltaX;
       state.velocityY = deltaY;
@@ -304,11 +279,14 @@
   /* ===== Países ===== */
   function handleCountryClick(e) {
     e.stopPropagation();
+    
+    // Se houve movimento de drag, não navegar
+    if (state.hasMoved) {
+      state.hasMoved = false;
+      return;
+    }
+    
     const pais = this.dataset.pais;
-    
-    markCountryAsVisited(pais);
-    this.classList.add('visitado');
-    
     window.location.href = `../culinaria-pais/index.html?pais=${pais}`;
   }
 
