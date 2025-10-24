@@ -12,8 +12,8 @@
   const zoomOutBtn = document.getElementById('zoomOut');
   const zoomLevel = document.getElementById('zoomLevel');
 
-  /* ===== Estado ===== */
-  let state = {
+  /* ===== Estado GLOBAL ===== */
+  window.mapState = {
     scale: 0.6,
     posX: 0,
     posY: 0,
@@ -27,6 +27,8 @@
     adjustMode: false,
     selectedPin: null
   };
+  
+  const state = window.mapState; // Alias local
 
   /* ===== Atualizar Display do Zoom ===== */
   function updateZoomDisplay() {
@@ -312,38 +314,36 @@
   /* ===== FERRAMENTA DE AJUSTE DE PINS (REMOVER EM PRODUÇÃO) ===== */
   /* ================================================================ */
   
-  // Aguardar DOM estar pronto
   setTimeout(() => {
+    const state = window.mapState; // Usar state global
+    
     console.log('%c🗺️ FERRAMENTA DE AJUSTE DE PINS', 'background: #225c18; color: #c0ffa5; font-size: 16px; padding: 8px; font-weight: bold;');
-    console.log('%c⌨️  Pressione "A" para ativar/desativar', 'color: #225c18; font-size: 12px;');
+    console.log('%c⌨️  Pressione "A" para ativar', 'color: #225c18; font-size: 12px;');
     console.log('');
     console.log('%c📖 INSTRUÇÕES:', 'color: #225c18; font-weight: bold;');
-    console.log('  1️⃣  Pressione A para ativar');
-    console.log('  2️⃣  Clique no pin que deseja ajustar');
-    console.log('  3️⃣  Use as setas ⬆️⬇️⬅️➡️ do teclado');
-    console.log('  4️⃣  Shift + setas para precisão');
-    console.log('  5️⃣  Enter para copiar código');
+    console.log('  1️⃣  Pressione A');
+    console.log('  2️⃣  CLIQUE no pin');
+    console.log('  3️⃣  Use setas ⬆️⬇️⬅️➡️');
+    console.log('  4️⃣  Enter para copiar');
     console.log('');
-    console.log('%c⚠️ REMOVER ESTA FERRAMENTA ANTES DA PRODUÇÃO!', 'background: #dc3545; color: white; font-size: 12px; padding: 4px;');
 
-    // Tecla A para ativar/desativar
-    window.addEventListener('keydown', (e) => {
-      if (e.key.toLowerCase() === 'a' && !e.ctrlKey && !e.metaKey && !e.altKey) {
-        e.preventDefault();
+    // Ativar modo
+    document.addEventListener('keydown', function handleAdjustMode(e) {
+      if (e.key.toLowerCase() === 'a' && !e.ctrlKey && !e.metaKey) {
         state.adjustMode = !state.adjustMode;
         
         if (state.adjustMode) {
           console.clear();
-          console.log('%c✅ MODO DE AJUSTE ATIVADO', 'background: #28a745; color: white; font-size: 14px; padding: 6px; font-weight: bold;');
+          console.log('%c✅ MODO ATIVADO', 'background: #28a745; color: white; font-size: 14px; padding: 6px; font-weight: bold;');
           console.log('');
-          console.log('🔒 Navegação do mapa BLOQUEADA');
-          console.log('👆 Clique em um pin para selecionar');
+          console.log('🔒 Mapa BLOQUEADO');
+          console.log('👆 CLIQUE em um pin');
           console.log('');
           mapaContainer.style.cursor = 'crosshair';
+          document.body.style.cursor = 'crosshair';
         } else {
           console.clear();
-          console.log('%c❌ MODO DESATIVADO', 'background: #dc3545; color: white; font-size: 14px; padding: 6px; font-weight: bold;');
-          console.log('✅ Navegação REATIVADA');
+          console.log('%c❌ MODO DESATIVADO', 'background: #dc3545; color: white; font-size: 14px; padding: 6px;');
           
           if (state.selectedPin) {
             state.selectedPin.style.filter = '';
@@ -351,44 +351,47 @@
           }
           
           mapaContainer.style.cursor = 'grab';
+          document.body.style.cursor = 'default';
         }
       }
-    }, false);
+    });
 
-    // Selecionar pin
-    pinsPais.forEach(pin => {
-      pin.addEventListener('click', (e) => {
+    // Selecionar pin - EVENTO DIRETO em cada pin
+    document.querySelectorAll('.pin-pais').forEach(pin => {
+      pin.addEventListener('mousedown', function selectPin(e) {
         if (!state.adjustMode) return;
         
         e.stopPropagation();
         e.preventDefault();
+        
+        console.log('🖱️ CLIQUE DETECTADO no pin:', pin.dataset.pais);
         
         if (state.selectedPin) {
           state.selectedPin.style.filter = '';
         }
         
         state.selectedPin = pin;
-        state.selectedPin.style.filter = 'brightness(1.8) saturate(2) drop-shadow(0 0 10px #ffd700)';
+        pin.style.filter = 'brightness(2) saturate(3) drop-shadow(0 0 15px gold)';
         
         console.clear();
-        console.log('%c📍 PIN SELECIONADO', 'background: #007bff; color: white; font-size: 12px; padding: 4px; font-weight: bold;');
+        console.log('%c📍 PIN SELECIONADO!', 'background: #007bff; color: white; font-size: 14px; padding: 6px; font-weight: bold;');
         console.log('');
-        console.log(`🌍 País: ${pin.dataset.pais.toUpperCase()}`);
-        console.log(`📝 Label: ${pin.getAttribute('aria-label')}`);
+        console.log(`🌍 ${pin.dataset.pais.toUpperCase()}`);
+        console.log(`📝 ${pin.getAttribute('aria-label')}`);
         console.log('');
-        console.log('%cPosição atual:', 'font-weight: bold; color: #007bff;');
+        console.log('%cPosição:', 'font-weight: bold;');
         console.log(`  top:  ${pin.style.top}`);
         console.log(`  left: ${pin.style.left}`);
         console.log('');
-        console.log('%c⌨️  CONTROLES:', 'font-weight: bold;');
-        console.log('  ⬆️⬇️⬅️➡️        : move 0.5%');
-        console.log('  Shift + setas : move 0.1%');
-        console.log('  Enter         : copiar código');
-      }, false);
+        console.log('%c⌨️  USE AS SETAS AGORA!', 'background: yellow; color: black; font-weight: bold; padding: 4px;');
+        console.log('  ⬆️⬇️⬅️➡️     : move 0.5%');
+        console.log('  Shift+setas: move 0.1%');
+        console.log('  Enter      : copiar código');
+      });
     });
 
     // Mover com setas
-    window.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', function movePinWithKeys(e) {
       if (!state.adjustMode || !state.selectedPin) return;
       
       const step = e.shiftKey ? 0.1 : 0.5;
@@ -397,59 +400,58 @@
       
       let moved = false;
       
-      if (e.key === 'ArrowUp') {
-        top -= step;
-        moved = true;
-        e.preventDefault();
-      } else if (e.key === 'ArrowDown') {
-        top += step;
-        moved = true;
-        e.preventDefault();
-      } else if (e.key === 'ArrowLeft') {
-        left -= step;
-        moved = true;
-        e.preventDefault();
-      } else if (e.key === 'ArrowRight') {
-        left += step;
-        moved = true;
-        e.preventDefault();
-      } else if (e.key === 'Enter') {
-        console.clear();
-        console.log('%c✅ CÓDIGO PARA COPIAR', 'background: #28a745; color: white; font-size: 14px; padding: 6px; font-weight: bold;');
-        console.log('');
-        console.log(`📍 País: ${state.selectedPin.dataset.pais.toUpperCase()}`);
-        console.log('');
-        console.log('%c📋 Style para copiar:', 'font-weight: bold; color: #007bff;');
-        console.log('');
-        console.log(`style="top: ${top.toFixed(1)}%; left: ${left.toFixed(1)}%;"`);
-        console.log('');
-        console.log('%c📝 HTML completo:', 'font-weight: bold; color: #007bff;');
-        console.log('');
-        console.log(`<button class="pin-pais" data-pais="${state.selectedPin.dataset.pais}" style="top: ${top.toFixed(1)}%; left: ${left.toFixed(1)}%;" aria-label="${state.selectedPin.getAttribute('aria-label')}">`);
-        console.log('');
-        console.log('%c💡 Cole no HTML e recarregue!', 'color: #6c757d; font-style: italic;');
-        e.preventDefault();
-        return;
+      switch(e.key) {
+        case 'ArrowUp':
+          top -= step;
+          moved = true;
+          break;
+        case 'ArrowDown':
+          top += step;
+          moved = true;
+          break;
+        case 'ArrowLeft':
+          left -= step;
+          moved = true;
+          break;
+        case 'ArrowRight':
+          left += step;
+          moved = true;
+          break;
+        case 'Enter':
+          console.clear();
+          console.log('%c✅ CÓDIGO FINAL', 'background: #28a745; color: white; font-size: 14px; padding: 6px; font-weight: bold;');
+          console.log('');
+          console.log(`📍 ${state.selectedPin.dataset.pais.toUpperCase()}`);
+          console.log('');
+          console.log('%c📋 COPIE ESTE CÓDIGO:', 'font-weight: bold; color: #007bff; font-size: 13px;');
+          console.log('');
+          console.log(`style="top: ${top.toFixed(1)}%; left: ${left.toFixed(1)}%;"`);
+          console.log('');
+          console.log('%c📝 HTML completo:', 'font-weight: bold;');
+          console.log('');
+          console.log(`<button class="pin-pais" data-pais="${state.selectedPin.dataset.pais}" style="top: ${top.toFixed(1)}%; left: ${left.toFixed(1)}%;" aria-label="${state.selectedPin.getAttribute('aria-label')}">`);
+          e.preventDefault();
+          return;
       }
       
       if (moved) {
+        e.preventDefault();
         state.selectedPin.style.top = `${top}%`;
         state.selectedPin.style.left = `${left}%`;
         
         console.clear();
-        console.log('%c📍 MOVENDO PIN', 'background: #007bff; color: white; font-size: 12px; padding: 4px;');
+        console.log('%c📍 MOVENDO', 'background: #007bff; color: white; font-size: 12px; padding: 4px;');
         console.log('');
         console.log(`🌍 ${state.selectedPin.dataset.pais.toUpperCase()}`);
         console.log('');
-        console.log('%cPosição:', 'font-weight: bold; color: #28a745;');
         console.log(`  top:  ${top.toFixed(1)}%`);
         console.log(`  left: ${left.toFixed(1)}%`);
         console.log('');
-        console.log('%cContinue movendo ou Enter para finalizar', 'color: #6c757d; font-style: italic;');
+        console.log('%cContinue ou Enter para finalizar', 'color: #6c757d;');
       }
-    }, false);
+    });
     
-  }, 500); // Delay para garantir que tudo está carregado
+  }, 1000); // Delay maior para garantir
 
   /* ===== FIM DA FERRAMENTA ===== */
 
