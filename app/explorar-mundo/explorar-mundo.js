@@ -311,3 +311,105 @@
   }
 
 })();
+
+/* ===== FERRAMENTA DE AJUSTE DE PINS (REMOVER EM PRODUÇÃO) ===== */
+(function() {
+  let selectedPin = null;
+  let adjustMode = false;
+
+  // Ativar modo de ajuste com tecla 'A'
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'a' || e.key === 'A') {
+      adjustMode = !adjustMode;
+      console.log(`Modo de ajuste: ${adjustMode ? 'ATIVADO' : 'DESATIVADO'}`);
+      console.log('Clique em um pin para ajustar, use as setas do teclado para mover');
+    }
+  });
+
+  // Selecionar pin
+  pinsPais.forEach(pin => {
+    pin.addEventListener('click', (e) => {
+      if (adjustMode) {
+        e.stopPropagation();
+        e.preventDefault();
+        
+        if (selectedPin) {
+          selectedPin.style.filter = '';
+        }
+        
+        selectedPin = pin;
+        selectedPin.style.filter = 'brightness(1.5) saturate(2)';
+        
+        console.log(`Pin selecionado: ${pin.dataset.pais}`);
+        console.log(`Posição atual: top: ${pin.style.top}, left: ${pin.style.left}`);
+      }
+    });
+  });
+
+  // Mover pin com teclado
+  document.addEventListener('keydown', (e) => {
+    if (!adjustMode || !selectedPin) return;
+
+    const step = e.shiftKey ? 0.1 : 0.5; // Shift para movimentos menores
+    let top = parseFloat(selectedPin.style.top);
+    let left = parseFloat(selectedPin.style.left);
+
+    switch(e.key) {
+      case 'ArrowUp':
+        top -= step;
+        e.preventDefault();
+        break;
+      case 'ArrowDown':
+        top += step;
+        e.preventDefault();
+        break;
+      case 'ArrowLeft':
+        left -= step;
+        e.preventDefault();
+        break;
+      case 'ArrowRight':
+        left += step;
+        e.preventDefault();
+        break;
+      case 'Enter':
+        console.log(`Pin ${selectedPin.dataset.pais}:`);
+        console.log(`style="top: ${top}%; left: ${left}%;"`);
+        e.preventDefault();
+        return;
+    }
+
+    selectedPin.style.top = `${top}%`;
+    selectedPin.style.left = `${left}%`;
+    
+    console.clear();
+    console.log(`${selectedPin.dataset.pais}: top: ${top.toFixed(1)}%, left: ${left.toFixed(1)}%`);
+  });
+})();
+```
+
+---
+
+## Como usar a ferramenta
+
+1. **Abra o mapa** no navegador
+2. **Abra o Console** (F12 → Console)
+3. **Pressione 'A'** para ativar o modo de ajuste
+4. **Clique em um pin** que quer ajustar (ele ficará mais brilhante)
+5. **Use as setas do teclado** para mover:
+   - ⬆️ ⬇️ ⬅️ ➡️ : move o pin
+   - **Shift + setas**: movimento mais preciso
+6. **Pressione Enter** quando estiver na posição correta
+7. **Copie o código** que aparece no console
+8. **Cole no HTML** substituindo o style antigo
+
+### Exemplo de uso:
+```
+Console:
+> Modo de ajuste: ATIVADO
+> Pin selecionado: brasil
+> brasil: top: 58.0%, left: 22.0%
+> brasil: top: 58.5%, left: 22.0%
+> brasil: top: 58.5%, left: 22.5%
+> [Pressiona Enter]
+> Pin brasil:
+> style="top: 58.5%; left: 22.5%;"
