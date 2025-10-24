@@ -3,177 +3,80 @@
 (function() {
   'use strict';
 
-  /* ===== Configuração ===== */
-  const CONFIG = {
-    minScale: 1,
-    maxScale: 3,
-    friction: 0.92,
-    velocityThreshold: 0.5
-  };
+  /* ===== Elementos DOM ===== */
+  const mapaContainer = document.getElementById('mapaContainer');
+  const mapaWrapper = document.getElementById('mapaWrapper');
+  const pinsPais = document.querySelectorAll('.pin-pais');
 
   /* ===== Estado ===== */
   let state = {
     scale: 1,
-    offsetX: 0,
-    offsetY: 0,
+    translateX: 0,
+    translateY: 0,
+    isDragging: false,
     startX: 0,
     startY: 0,
-    isDragging: false,
-    lastX: 0,
-    lastY: 0,
-    velocityX: 0,
-    velocityY: 0,
-    animationId: null,
     lastTouchDistance: 0,
     hasMoved: false
   };
 
-  /* ===== Elementos DOM ===== */
-  const $ = (sel) => document.querySelector(sel);
-  const $$ = (sel) => document.querySelectorAll(sel);
-
-  const elements = {
-    mapaWrapper: $('#mapaWrapper'),
-    mapaContainer: $('#mapaContainer'),
-    mapaImg: $('#mapaImg'),
-    pinsPais: $$('.pin-pais')
-  };
-
-  /* ===== Inicialização ===== */
-  function init() {
-    bindEvents();
-    applyTransform();
+  /* ===== Aplicar Transformação ===== */
+  function updateTransform() {
+    mapaWrapper.style.transform = `translate(${state.translateX}px, ${state.translateY}px) scale(${state.scale})`;
   }
 
-  /* ===== Transformação ===== */
-  function applyTransform() {
-    elements.mapaWrapper.style.transform = `translate(${state.offsetX}px, ${state.offsetY}px) scale(${state.scale})`;
-  }
-
-  function getBounds() {
-    const container = elements.mapaContainer.getBoundingClientRect();
-    const wrapper = elements.mapaWrapper.getBoundingClientRect();
-    
-    const scaledWidth = container.width * state.scale;
-    const scaledHeight = container.height * state.scale;
-    
-    const maxX = Math.max(0, (scaledWidth - container.width) / 2);
-    const maxY = Math.max(0, (scaledHeight - container.height) / 2);
-    
-    return { maxX, maxY };
-  }
-
-  function constrainPosition() {
-    const bounds = getBounds();
-    state.offsetX = Math.max(-bounds.maxX, Math.min(bounds.maxX, state.offsetX));
-    state.offsetY = Math.max(-bounds.maxY, Math.min(bounds.maxY, state.offsetY));
-  }
-
-  /* ===== Zoom ===== */
-  function setZoom(delta, centerX, centerY) {
-    const oldScale = state.scale;
-    state.scale = Math.max(CONFIG.minScale, Math.min(CONFIG.maxScale, state.scale + delta));
-    
-    if (centerX !== undefined && centerY !== undefined) {
-      const scaleRatio = state.scale / oldScale;
-      const containerRect = elements.mapaContainer.getBoundingClientRect();
-      
-      const pointX = centerX - containerRect.left - containerRect.width / 2;
-      const pointY = centerY - containerRect.top - containerRect.height / 2;
-      
-      state.offsetX = pointX - (pointX - state.offsetX) * scaleRatio;
-      state.offsetY = pointY - (pointY - state.offsetY) * scaleRatio;
-    }
-    
-    constrainPosition();
-    applyTransform();
-  }
-
-  /* ===== Drag (Mouse) ===== */
-  function handleMouseDown(e) {
+  /* ===== Mouse Events ===== */
+  function onMouseDown(e) {
+    // Ignorar se clicar em um pin
     if (e.target.closest('.pin-pais')) return;
     
     state.isDragging = true;
     state.hasMoved = false;
-    elements.mapaWrapper.classList.add('grabbing');
+    state.startX = e.clientX - state.translateX;
+    state.startY = e.clientY - state.translateY;
     
-    state.startX = e.clientX - state.offsetX;
-    state.startY = e.clientY - state.offsetY;
-    state.lastX = e.clientX;
-    state.lastY = e.clientY;
-    state.velocityX = 0;
-    state.velocityY = 0;
-    
-    if (state.animationId) {
-      cancelAnimationFrame(state.animationId);
-      state.animationId = null;
-    }
-    
+    mapaContainer.style.cursor = 'grabbing';
     e.preventDefault();
   }
 
-  function handleMouseMove(e) {
+  function onMouseMove(e) {
     if (!state.isDragging) return;
     
-    const deltaX = e.clientX - state.lastX;
-    const deltaY = e.clientY - state.lastY;
+    const deltaX = Math.abs(e.clientX - (state.startX + state.translateX));
+    const deltaY = Math.abs(e.clientY - (state.startY + state.translateY));
     
-    if (Math.abs(deltaX) > 2 || Math.abs(deltaY) > 2) {
+    if (deltaX > 3 || deltaY > 3) {
       state.hasMoved = true;
     }
     
-    state.velocityX = deltaX;
-    state.velocityY = deltaY;
+    state.translateX = e.clientX - state.startX;
+    state.translateY = e.clientY - state.startY;
     
-    state.offsetX = e.clientX - state.startX;
-    state.offsetY = e.clientY - state.startY;
-    
-    constrainPosition();
-    applyTransform();
-    
-    state.lastX = e.clientX;
-    state.lastY = e.clientY;
-    
+    updateTransform();
     e.preventDefault();
   }
 
-  function handleMouseUp() {
+  function onMouseUp(e) {
     if (!state.isDragging) return;
     
     state.isDragging = false;
-    elements.mapaWrapper.classList.remove('grabbing');
-    
-    if (Math.abs(state.velocityX) > CONFIG.velocityThreshold || 
-        Math.abs(state.velocityY) > CONFIG.velocityThreshold) {
-      applyInertia();
-    }
+    mapaContainer.style.cursor = 'grab';
+    e.preventDefault();
   }
 
-  /* ===== Touch ===== */
-  function handleTouchStart(e) {
+  /* ===== Touch Events ===== */
+  function onTouchStart(e) {
+    // Ignorar se tocar em um pin
     if (e.target.closest('.pin-pais')) return;
     
     if (e.touches.length === 1) {
       state.isDragging = true;
       state.hasMoved = false;
-      elements.mapaWrapper.classList.add('grabbing');
-      
       const touch = e.touches[0];
-      state.startX = touch.clientX - state.offsetX;
-      state.startY = touch.clientY - state.offsetY;
-      state.lastX = touch.clientX;
-      state.lastY = touch.clientY;
-      state.velocityX = 0;
-      state.velocityY = 0;
-      
-      if (state.animationId) {
-        cancelAnimationFrame(state.animationId);
-        state.animationId = null;
-      }
+      state.startX = touch.clientX - state.translateX;
+      state.startY = touch.clientY - state.translateY;
     } else if (e.touches.length === 2) {
       state.isDragging = false;
-      elements.mapaWrapper.classList.remove('grabbing');
-      
       const touch1 = e.touches[0];
       const touch2 = e.touches[1];
       state.lastTouchDistance = Math.hypot(
@@ -185,27 +88,21 @@
     e.preventDefault();
   }
 
-  function handleTouchMove(e) {
+  function onTouchMove(e) {
     if (e.touches.length === 1 && state.isDragging) {
       const touch = e.touches[0];
-      const deltaX = touch.clientX - state.lastX;
-      const deltaY = touch.clientY - state.lastY;
       
-      if (Math.abs(deltaX) > 2 || Math.abs(deltaY) > 2) {
+      const deltaX = Math.abs(touch.clientX - (state.startX + state.translateX));
+      const deltaY = Math.abs(touch.clientY - (state.startY + state.translateY));
+      
+      if (deltaX > 3 || deltaY > 3) {
         state.hasMoved = true;
       }
       
-      state.velocityX = deltaX;
-      state.velocityY = deltaY;
+      state.translateX = touch.clientX - state.startX;
+      state.translateY = touch.clientY - state.startY;
       
-      state.offsetX = touch.clientX - state.startX;
-      state.offsetY = touch.clientY - state.startY;
-      
-      constrainPosition();
-      applyTransform();
-      
-      state.lastX = touch.clientX;
-      state.lastY = touch.clientY;
+      updateTransform();
     } else if (e.touches.length === 2) {
       const touch1 = e.touches[0];
       const touch2 = e.touches[1];
@@ -215,10 +112,10 @@
       );
       
       if (state.lastTouchDistance > 0) {
-        const delta = (distance - state.lastTouchDistance) * 0.01;
-        const centerX = (touch1.clientX + touch2.clientX) / 2;
-        const centerY = (touch1.clientY + touch2.clientY) / 2;
-        setZoom(delta, centerX, centerY);
+        const delta = distance - state.lastTouchDistance;
+        const scaleChange = delta * 0.01;
+        state.scale = Math.max(1, Math.min(3, state.scale + scaleChange));
+        updateTransform();
       }
       
       state.lastTouchDistance = distance;
@@ -227,56 +124,40 @@
     e.preventDefault();
   }
 
-  function handleTouchEnd(e) {
+  function onTouchEnd(e) {
     if (e.touches.length === 0) {
-      if (state.isDragging) {
-        state.isDragging = false;
-        elements.mapaWrapper.classList.remove('grabbing');
-        
-        if (Math.abs(state.velocityX) > CONFIG.velocityThreshold || 
-            Math.abs(state.velocityY) > CONFIG.velocityThreshold) {
-          applyInertia();
-        }
-      }
-      
+      state.isDragging = false;
       state.lastTouchDistance = 0;
     }
-  }
-
-  /* ===== Inércia ===== */
-  function applyInertia() {
-    function animate() {
-      state.velocityX *= CONFIG.friction;
-      state.velocityY *= CONFIG.friction;
-      
-      state.offsetX += state.velocityX;
-      state.offsetY += state.velocityY;
-      
-      constrainPosition();
-      applyTransform();
-      
-      if (Math.abs(state.velocityX) > 0.1 || Math.abs(state.velocityY) > 0.1) {
-        state.animationId = requestAnimationFrame(animate);
-      } else {
-        state.animationId = null;
-      }
-    }
-    
-    animate();
+    e.preventDefault();
   }
 
   /* ===== Wheel Zoom ===== */
-  function handleWheel(e) {
+  function onWheel(e) {
     e.preventDefault();
     
-    const delta = e.deltaY > 0 ? -0.2 : 0.2;
-    setZoom(delta, e.clientX, e.clientY);
+    const delta = e.deltaY > 0 ? -0.1 : 0.1;
+    const newScale = Math.max(1, Math.min(3, state.scale + delta));
+    
+    // Zoom em direção ao cursor
+    const rect = mapaContainer.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    
+    const scaleFactor = newScale / state.scale;
+    
+    state.translateX = mouseX - (mouseX - state.translateX) * scaleFactor;
+    state.translateY = mouseY - (mouseY - state.translateY) * scaleFactor;
+    state.scale = newScale;
+    
+    updateTransform();
   }
 
-  /* ===== Países ===== */
-  function handleCountryClick(e) {
+  /* ===== Click nos Pins ===== */
+  function onPinClick(e) {
     e.stopPropagation();
     
+    // Se moveu o mapa, não navegar
     if (state.hasMoved) {
       state.hasMoved = false;
       return;
@@ -286,28 +167,38 @@
     window.location.href = `../culinaria-pais/index.html?pais=${pais}`;
   }
 
-  /* ===== Event Bindings ===== */
-  function bindEvents() {
-    // Mouse
-    elements.mapaContainer.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-
-    // Touch
-    elements.mapaContainer.addEventListener('touchstart', handleTouchStart, { passive: false });
-    elements.mapaContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
-    elements.mapaContainer.addEventListener('touchend', handleTouchEnd);
-
-    // Wheel
-    elements.mapaContainer.addEventListener('wheel', handleWheel, { passive: false });
-
-    // Países
-    elements.pinsPais.forEach(pin => {
-      pin.addEventListener('click', handleCountryClick);
+  /* ===== Inicialização ===== */
+  function init() {
+    // Mouse events
+    mapaContainer.addEventListener('mousedown', onMouseDown);
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+    
+    // Touch events
+    mapaContainer.addEventListener('touchstart', onTouchStart, { passive: false });
+    mapaContainer.addEventListener('touchmove', onTouchMove, { passive: false });
+    mapaContainer.addEventListener('touchend', onTouchEnd, { passive: false });
+    
+    // Wheel zoom
+    mapaContainer.addEventListener('wheel', onWheel, { passive: false });
+    
+    // Pin clicks
+    pinsPais.forEach(pin => {
+      pin.addEventListener('click', onPinClick);
     });
+    
+    // Prevenir comportamento padrão
+    mapaContainer.addEventListener('dragstart', (e) => e.preventDefault());
+    
+    // Aplicar transformação inicial
+    updateTransform();
   }
 
   /* ===== Boot ===== */
-  document.addEventListener('DOMContentLoaded', init);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
 })();
