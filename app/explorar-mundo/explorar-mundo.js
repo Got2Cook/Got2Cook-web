@@ -23,7 +23,8 @@
     lastTouchDistance: 0,
     hasMoved: false,
     minScale: 0.5,
-    maxScale: 2.5
+    maxScale: 2.5,
+    adjustMode: false  // Adicionar aqui para controle global
   };
 
   /* ===== Atualizar Display do Zoom ===== */
@@ -36,18 +37,15 @@
   function calculateBounds() {
     const containerRect = mapaContainer.getBoundingClientRect();
     
-    // Dimensões reais da imagem com escala aplicada
     const imgNaturalWidth = mapaImg.naturalWidth || mapaImg.width;
     const imgNaturalHeight = mapaImg.naturalHeight || mapaImg.height;
     
-    // Como a imagem está em width: 250%, calculamos baseado nisso
-    const imgDisplayWidth = containerRect.width * 2.5; // 250% do container
+    const imgDisplayWidth = containerRect.width * 2.5;
     const imgDisplayHeight = (imgNaturalHeight / imgNaturalWidth) * imgDisplayWidth;
     
     const scaledWidth = imgDisplayWidth * state.scale;
     const scaledHeight = imgDisplayHeight * state.scale;
     
-    // Limites para não sair da imagem
     const maxX = 0;
     const minX = Math.min(0, containerRect.width - scaledWidth);
     const maxY = 0;
@@ -103,6 +101,7 @@
 
   /* ===== Mouse Events ===== */
   function onMouseDown(e) {
+    if (state.adjustMode) return; // Bloquear drag no modo ajuste
     if (e.target.closest('.pin-pais') || e.target.closest('.zoom-controls')) return;
     
     state.isDragging = true;
@@ -115,7 +114,7 @@
   }
 
   function onMouseMove(e) {
-    if (!state.isDragging) return;
+    if (!state.isDragging || state.adjustMode) return;
     
     const newX = e.clientX - state.startX;
     const newY = e.clientY - state.startY;
@@ -144,6 +143,7 @@
 
   /* ===== Touch Events ===== */
   function onTouchStart(e) {
+    if (state.adjustMode) return;
     if (e.target.closest('.pin-pais') || e.target.closest('.zoom-controls')) return;
     
     if (e.touches.length === 1) {
@@ -166,6 +166,8 @@
   }
 
   function onTouchMove(e) {
+    if (state.adjustMode) return;
+    
     if (e.touches.length === 1 && state.isDragging) {
       const touch = e.touches[0];
       
@@ -226,6 +228,8 @@
 
   /* ===== Wheel Zoom ===== */
   function onWheel(e) {
+    if (state.adjustMode) return;
+    
     e.preventDefault();
     
     const delta = e.deltaY > 0 ? -0.15 : 0.15;
@@ -245,6 +249,8 @@
 
   /* ===== Click nos Pins ===== */
   function onPinClick(e) {
+    if (state.adjustMode) return; // Deixar a ferramenta lidar com isso
+    
     e.stopPropagation();
     
     if (state.hasMoved) {
@@ -263,7 +269,6 @@
 
   /* ===== Inicialização ===== */
   function init() {
-    // Aguardar carregamento da imagem
     const initTransform = () => {
       updateTransform();
     };
@@ -274,36 +279,28 @@
       mapaImg.addEventListener('load', initTransform);
     }
     
-    // Mouse events
     mapaContainer.addEventListener('mousedown', onMouseDown);
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
     
-    // Touch events
     mapaContainer.addEventListener('touchstart', onTouchStart, { passive: false });
     mapaContainer.addEventListener('touchmove', onTouchMove, { passive: false });
     mapaContainer.addEventListener('touchend', onTouchEnd, { passive: false });
     
-    // Wheel zoom
     mapaContainer.addEventListener('wheel', onWheel, { passive: false });
     
-    // Zoom buttons
     zoomInBtn.addEventListener('click', zoomIn);
     zoomOutBtn.addEventListener('click', zoomOut);
     
-    // Pin clicks
     pinsPais.forEach(pin => {
       pin.addEventListener('click', onPinClick);
     });
     
-    // Resize
     window.addEventListener('resize', onResize);
     
-    // Prevenir comportamento padrão
     mapaContainer.addEventListener('dragstart', (e) => e.preventDefault());
   }
 
-  /* ===== Boot ===== */
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
@@ -316,7 +313,6 @@
   
   (function initPinAdjustTool() {
     let selectedPin = null;
-    let adjustMode = false;
 
     console.log('%c🗺️ FERRAMENTA DE AJUSTE DE PINS', 'background: #225c18; color: #c0ffa5; font-size: 16px; padding: 8px; font-weight: bold;');
     console.log('%cPressione "A" para ativar/desativar o modo de ajuste', 'color: #225c18; font-size: 12px;');
@@ -326,38 +322,45 @@
     console.log('3. Use as setas do teclado para mover');
     console.log('4. Shift + setas para movimento preciso');
     console.log('5. Enter para copiar a posição final');
-    console.log('6. Cole no HTML e salve');
     console.log('%c⚠️ LEMBRE-SE DE REMOVER ESTA FERRAMENTA ANTES DA PRODUÇÃO!', 'background: #dc3545; color: white; font-size: 12px; padding: 4px;');
 
-    // Ativar/desativar modo de ajuste com tecla 'A'
+    // Ativar/desativar modo de ajuste
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'a' || e.key === 'A') {
-        adjustMode = !adjustMode;
+      // Apenas responder à tecla A em letras minúsculas ou maiúsculas
+      if (e.key.toLowerCase() === 'a' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        e.preventDefault();
+        state.adjustMode = !state.adjustMode;
         
-        if (adjustMode) {
+        if (state.adjustMode) {
           console.clear();
           console.log('%c✅ MODO DE AJUSTE ATIVADO', 'background: #28a745; color: white; font-size: 14px; padding: 6px; font-weight: bold;');
-          console.log('Clique em um pin para selecionar');
-          console.log('Use as setas do teclado para mover (Shift para precisão)');
-          console.log('Pressione Enter para copiar a posição');
-          console.log('Pressione A novamente para desativar');
+          console.log('🔒 Navegação do mapa DESATIVADA');
+          console.log('👆 Clique em um pin para selecionar');
+          console.log('⌨️  Use as setas do teclado para mover');
+          console.log('📝 Pressione Enter para copiar a posição');
+          console.log('🔄 Pressione A novamente para desativar');
+          
+          // Mudar cursor para indicar modo especial
+          mapaContainer.style.cursor = 'crosshair';
         } else {
           console.clear();
           console.log('%c❌ MODO DE AJUSTE DESATIVADO', 'background: #dc3545; color: white; font-size: 14px; padding: 6px; font-weight: bold;');
+          console.log('✅ Navegação do mapa REATIVADA');
+          
           if (selectedPin) {
             selectedPin.style.filter = '';
             selectedPin = null;
           }
+          
+          mapaContainer.style.cursor = 'grab';
         }
       }
     });
 
-    // Selecionar pin ao clicar
+    // Selecionar pin ao clicar (apenas no modo de ajuste)
     pinsPais.forEach(pin => {
-      const originalClick = pin.onclick;
-      
-      pin.addEventListener('click', (e) => {
-        if (adjustMode) {
+      pin.addEventListener('mousedown', (e) => {
+        if (state.adjustMode) {
           e.stopPropagation();
           e.preventDefault();
           
@@ -372,24 +375,27 @@
           
           console.clear();
           console.log('%c📍 PIN SELECIONADO', 'background: #007bff; color: white; font-size: 12px; padding: 4px; font-weight: bold;');
-          console.log(`País: ${pin.dataset.pais}`);
+          console.log(`País: ${pin.dataset.pais.toUpperCase()}`);
           console.log(`Label: ${pin.getAttribute('aria-label')}`);
-          console.log(`Posição atual: top: ${pin.style.top}, left: ${pin.style.left}`);
-          console.log('\n%cUse as setas para mover:', 'font-weight: bold;');
-          console.log('  ⬆️ ⬇️ ⬅️ ➡️  : movimento normal (0.5%)');
-          console.log('  Shift + setas: movimento preciso (0.1%)');
-          console.log('  Enter: copiar posição final');
+          console.log(`\n%cPosição atual:`, 'font-weight: bold; color: #007bff;');
+          console.log(`  top: ${pin.style.top}`);
+          console.log(`  left: ${pin.style.left}`);
+          console.log(`\n%cControles:`, 'font-weight: bold;');
+          console.log('  ⬆️ ⬇️ ⬅️ ➡️     : movimento normal (0.5%)');
+          console.log('  Shift + setas : movimento preciso (0.1%)');
+          console.log('  Enter         : copiar posição final');
+          console.log('  A             : sair do modo de ajuste');
         }
       }, true);
     });
 
     // Mover pin com teclado
     document.addEventListener('keydown', (e) => {
-      if (!adjustMode || !selectedPin) return;
+      if (!state.adjustMode || !selectedPin) return;
 
       const step = e.shiftKey ? 0.1 : 0.5;
-      let top = parseFloat(selectedPin.style.top);
-      let left = parseFloat(selectedPin.style.left);
+      let top = parseFloat(selectedPin.style.top) || 0;
+      let left = parseFloat(selectedPin.style.left) || 0;
 
       let moved = false;
 
@@ -398,31 +404,37 @@
           top -= step;
           moved = true;
           e.preventDefault();
+          e.stopPropagation();
           break;
         case 'ArrowDown':
           top += step;
           moved = true;
           e.preventDefault();
+          e.stopPropagation();
           break;
         case 'ArrowLeft':
           left -= step;
           moved = true;
           e.preventDefault();
+          e.stopPropagation();
           break;
         case 'ArrowRight':
           left += step;
           moved = true;
           e.preventDefault();
+          e.stopPropagation();
           break;
         case 'Enter':
           console.clear();
           console.log('%c✅ POSIÇÃO FINAL - COPIE E COLE NO HTML', 'background: #28a745; color: white; font-size: 14px; padding: 6px; font-weight: bold;');
-          console.log(`\nPaís: ${selectedPin.dataset.pais}`);
-          console.log(`\n%cCódigo para copiar:`, 'font-weight: bold; color: #007bff;');
-          console.log(`style="top: ${top.toFixed(1)}%; left: ${left.toFixed(1)}%;"`);
-          console.log(`\n%cHTML completo:`, 'font-weight: bold; color: #007bff;');
-          console.log(`<button class="pin-pais" data-pais="${selectedPin.dataset.pais}" style="top: ${top.toFixed(1)}%; left: ${left.toFixed(1)}%;" aria-label="${selectedPin.getAttribute('aria-label')}">`);
+          console.log(`\n📍 País: ${selectedPin.dataset.pais.toUpperCase()}`);
+          console.log(`\n%c📋 Copie este código:`, 'font-weight: bold; color: #007bff; font-size: 13px;');
+          console.log(`\nstyle="top: ${top.toFixed(1)}%; left: ${left.toFixed(1)}%;"`);
+          console.log(`\n%c📝 Ou copie o HTML completo:`, 'font-weight: bold; color: #007bff; font-size: 13px;');
+          console.log(`\n<button class="pin-pais" data-pais="${selectedPin.dataset.pais}" style="top: ${top.toFixed(1)}%; left: ${left.toFixed(1)}%;" aria-label="${selectedPin.getAttribute('aria-label')}">`);
+          console.log(`\n%c💡 Dica: Cole isso no HTML e recarregue a página`, 'color: #6c757d; font-style: italic;');
           e.preventDefault();
+          e.stopPropagation();
           return;
       }
 
@@ -432,28 +444,16 @@
         
         console.clear();
         console.log('%c📍 MOVENDO PIN', 'background: #007bff; color: white; font-size: 12px; padding: 4px;');
-        console.log(`País: ${selectedPin.dataset.pais}`);
-        console.log(`\n%cPosição atual:`, 'font-weight: bold;');
-        console.log(`top: ${top.toFixed(1)}%`);
-        console.log(`left: ${left.toFixed(1)}%`);
+        console.log(`País: ${selectedPin.dataset.pais.toUpperCase()}`);
+        console.log(`\n%cPosição atual:`, 'font-weight: bold; color: #28a745;');
+        console.log(`  top:  ${top.toFixed(1)}%`);
+        console.log(`  left: ${left.toFixed(1)}%`);
         console.log(`\n%cContinue movendo ou pressione Enter para finalizar`, 'color: #6c757d; font-style: italic;');
       }
-    });
-
-    // Desabilitar navegação durante ajuste
-    const originalOnMouseDown = onMouseDown;
-    window.addEventListener('mousedown', (e) => {
-      if (adjustMode && selectedPin) {
-        e.stopPropagation();
-      }
-    }, true);
+    }, true); // Use capture phase
 
   })();
 
   /* ===== FIM DA FERRAMENTA DE AJUSTE ===== */
 
 })();
-```
-
----
-
