@@ -387,29 +387,4 @@
 })();
 ```
 
----
 
-## Como usar a ferramenta
-
-1. **Abra o mapa** no navegador
-2. **Abra o Console** (F12 → Console)
-3. **Pressione 'A'** para ativar o modo de ajuste
-4. **Clique em um pin** que quer ajustar (ele ficará mais brilhante)
-5. **Use as setas do teclado** para mover:
-   - ⬆️ ⬇️ ⬅️ ➡️ : move o pin
-   - **Shift + setas**: movimento mais preciso
-6. **Pressione Enter** quando estiver na posição correta
-7. **Copie o código** que aparece no console
-8. **Cole no HTML** substituindo o style antigo
-
-### Exemplo de uso:
-```
-Console:
-> Modo de ajuste: ATIVADO
-> Pin selecionado: brasil
-> brasil: top: 58.0%, left: 22.0%
-> brasil: top: 58.5%, left: 22.0%
-> brasil: top: 58.5%, left: 22.5%
-> [Pressiona Enter]
-> Pin brasil:
-> style="top: 58.5%; left: 22.5%;"
