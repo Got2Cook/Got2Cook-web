@@ -54,7 +54,7 @@ body {
   width: 100%;
   flex: 1;
   overflow: hidden;
-  background: #b3d9f2;
+  background: #3a5366;
   border-radius: 16px;
   border: 3px solid var(--borda);
   box-shadow: 0 4px 12px rgba(62, 101, 41, 0.2);
@@ -77,7 +77,7 @@ body {
   transition: none;
 }
 
-#mapaSvg {
+.mapa-img {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -86,11 +86,19 @@ body {
   min-width: 100%;
   height: auto;
   pointer-events: none;
+  user-select: none;
 }
 
-#mapaSvg text {
-  user-select: none;
+/* === Bússola === */
+.bussola {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 80px;
+  height: 80px;
   pointer-events: none;
+  z-index: 5;
+  opacity: 0.9;
 }
 
 /* === Pins dos Países === */
@@ -118,7 +126,7 @@ body {
 }
 
 .pin-pais:focus-visible {
-  outline: 3px solid var(--verde);
+  outline: 3px solid #ffffff;
   outline-offset: 4px;
   border-radius: 50%;
 }
@@ -126,7 +134,7 @@ body {
 .pin-svg {
   width: 40px;
   height: 60px;
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
   pointer-events: none;
 }
 
@@ -141,6 +149,7 @@ body {
   object-fit: cover;
   pointer-events: none;
   border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* Estado visitado */
@@ -165,7 +174,7 @@ body {
   justify-content: center;
   border: 2px solid white;
   z-index: 1;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* === Rodapé Curvo === */
@@ -256,7 +265,7 @@ body {
     padding: 20px 20px 100px;
   }
 
-  #mapaSvg {
+  .mapa-img {
     width: 120%;
   }
 
@@ -269,6 +278,13 @@ body {
     width: 28px;
     height: 28px;
     top: 4px;
+  }
+
+  .bussola {
+    width: 100px;
+    height: 100px;
+    bottom: 30px;
+    left: 30px;
   }
 }
 
