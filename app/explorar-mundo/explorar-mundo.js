@@ -61,13 +61,19 @@
     state.posY = Math.max(bounds.minY, Math.min(bounds.maxY, state.posY));
   }
 
-  /* ===== Aplicar Transformação ===== */
+  /* ===== SOLUÇÃO: Aplicar Transformação com contra-escala nos pins ===== */
   function updateTransform() {
     constrainPosition();
     
-    // Aplicar translação e escala APENAS no wrapper
-    // O mapaImgContainer (que contém imagem + pins) escala junto
+    // Aplicar translação e escala no wrapper (mapa + pins escalam)
     mapaWrapper.style.transform = `translate(${state.posX}px, ${state.posY}px) scale(${state.scale})`;
+    
+    // CONTRA-ESCALA: aplicar escala inversa nos pins para manter tamanho fixo
+    const counterScale = 1 / state.scale;
+    pinsPais.forEach(pin => {
+      // Manter transform original (translate) + adicionar contra-escala
+      pin.style.transform = `translate(-50%, -100%) scale(${counterScale})`;
+    });
     
     updateZoomDisplay();
   }
@@ -271,7 +277,7 @@
   }
 
   /* ================================================================ */
-  /* ===== FERRAMENTA DE AJUSTE DE PINS (REMOVER EM PRODUÇÃO) ===== */
+  /* ===== FERRAMENTA DE AJUSTE DE PINS ===== */
   /* ================================================================ */
   
   window.addEventListener('load', function() {
@@ -295,6 +301,7 @@
           }
           state.selectedPin = null;
           mapaContainer.style.cursor = 'grab';
+          updateTransform(); // Reaplica contra-escala
         }
       }
     });
@@ -389,12 +396,18 @@
 
 ---
 
-## Resumo da solução final:
+## Explicação da solução:
 
-### Estrutura HTML:
+### O que acontece agora:
+
+1. **Wrapper escala** → `scale(1.5)` por exemplo
+2. **Pins recebem contra-escala** → `scale(0.666)` (que é 1/1.5)
+3. **Resultado**: pins mantêm tamanho original
+4. **Posição %**: pin fica no mesmo lugar da imagem
+5. **Responsivo**: funciona em todas as telas
+
+### Exemplo visual:
 ```
-mapa-container
-  └─ mapa-wrapper (recebe transform: translate + scale)
-      └─ mapa-img-container (escala junto)
-          ├─ mapa-img
-          └─ pins (dentro do container, escalam junto com a imagem)
+Zoom 100%: wrapper scale(1) → pins scale(1)   = tamanho normal
+Zoom 150%: wrapper scale(1.5) → pins scale(0.666) = tamanho normal
+Zoom 200%: wrapper scale(2) → pins scale(0.5)  = tamanho normal
