@@ -12,178 +12,170 @@
   <main class="container">
     <h1 class="titulo">EXPLORAR MUNDO</h1>
 
-    <!-- Container do mapa + zoom -->
     <div class="mapa-e-zoom">
       <div class="mapa-container" id="mapaContainer">
         <div class="mapa-wrapper" id="mapaWrapper">
-          <!-- Container da imagem COM os pins dentro -->
-          <div class="mapa-img-container" id="mapaImgContainer">
-            <img src="../../assets/mapa-mundi-realista.png" alt="Mapa Mundi" class="mapa-img" id="mapaImg" draggable="false">
+          <!-- IMPORTANTE: pins dentro deste div junto com a imagem -->
+          <img src="../../assets/mapa-mundi-realista.png" alt="Mapa Mundi" class="mapa-img" id="mapaImg" draggable="false">
 
-            <!-- Pins DENTRO do container da imagem -->
-            <!-- América do Norte -->
-            <button class="pin-pais" data-pais="mexico" style="top: 35%; left: 14%;" aria-label="México">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/mexico.png" alt="México" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">México</span>
-            </button>
+          <!-- Pins -->
+          <button class="pin-pais" data-pais="mexico" style="top: 35%; left: 14%;" aria-label="México">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/mexico.png" alt="México" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">México</span>
+          </button>
 
-            <button class="pin-pais" data-pais="eua" style="top: 28%; left: 15%;" aria-label="Estados Unidos">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/eua.png" alt="EUA" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">Estados Unidos</span>
-            </button>
+          <button class="pin-pais" data-pais="eua" style="top: 28%; left: 15%;" aria-label="Estados Unidos">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/eua.png" alt="EUA" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">Estados Unidos</span>
+          </button>
 
-            <button class="pin-pais" data-pais="canada" style="top: 18%; left: 16%;" aria-label="Canadá">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/canada.png" alt="Canadá" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">Canadá</span>
-            </button>
+          <button class="pin-pais" data-pais="canada" style="top: 18%; left: 16%;" aria-label="Canadá">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/canada.png" alt="Canadá" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">Canadá</span>
+          </button>
 
-            <!-- América do Sul -->
-            <button class="pin-pais" data-pais="brasil" style="top: 58%; left: 22%;" aria-label="Brasil">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/brasil.png" alt="Brasil" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">Brasil</span>
-            </button>
+          <button class="pin-pais" data-pais="brasil" style="top: 58%; left: 22%;" aria-label="Brasil">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/brasil.png" alt="Brasil" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">Brasil</span>
+          </button>
 
-            <button class="pin-pais" data-pais="argentina" style="top: 75%; left: 21%;" aria-label="Argentina">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/argentina.png" alt="Argentina" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">Argentina</span>
-            </button>
+          <button class="pin-pais" data-pais="argentina" style="top: 75%; left: 21%;" aria-label="Argentina">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/argentina.png" alt="Argentina" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">Argentina</span>
+          </button>
 
-            <!-- Europa -->
-            <button class="pin-pais" data-pais="portugal" style="top: 30%; left: 38%;" aria-label="Portugal">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/portugal.png" alt="Portugal" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">Portugal</span>
-            </button>
+          <button class="pin-pais" data-pais="portugal" style="top: 30%; left: 38%;" aria-label="Portugal">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/portugal.png" alt="Portugal" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">Portugal</span>
+          </button>
 
-            <button class="pin-pais" data-pais="espanha" style="top: 30%; left: 39.5%;" aria-label="Espanha">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/espanha.png" alt="Espanha" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">Espanha</span>
-            </button>
+          <button class="pin-pais" data-pais="espanha" style="top: 30%; left: 39.5%;" aria-label="Espanha">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/espanha.png" alt="Espanha" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">Espanha</span>
+          </button>
 
-            <button class="pin-pais" data-pais="franca" style="top: 27%; left: 40.5%;" aria-label="França">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/franca.png" alt="França" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">França</span>
-            </button>
+          <button class="pin-pais" data-pais="franca" style="top: 27%; left: 40.5%;" aria-label="França">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/franca.png" alt="França" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">França</span>
+          </button>
 
-            <button class="pin-pais" data-pais="italia" style="top: 31%; left: 42%;" aria-label="Itália">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/italia.png" alt="Itália" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">Itália</span>
-            </button>
+          <button class="pin-pais" data-pais="italia" style="top: 31%; left: 42%;" aria-label="Itália">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/italia.png" alt="Itália" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">Itália</span>
+          </button>
 
-            <button class="pin-pais" data-pais="grecia" style="top: 32%; left: 43.5%;" aria-label="Grécia">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/grecia.png" alt="Grécia" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">Grécia</span>
-            </button>
+          <button class="pin-pais" data-pais="grecia" style="top: 32%; left: 43.5%;" aria-label="Grécia">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/grecia.png" alt="Grécia" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">Grécia</span>
+          </button>
 
-            <!-- África -->
-            <button class="pin-pais" data-pais="marrocos" style="top: 38%; left: 39%;" aria-label="Marrocos">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/marrocos.png" alt="Marrocos" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">Marrocos</span>
-            </button>
+          <button class="pin-pais" data-pais="marrocos" style="top: 38%; left: 39%;" aria-label="Marrocos">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/marrocos.png" alt="Marrocos" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">Marrocos</span>
+          </button>
 
-            <button class="pin-pais" data-pais="africa-sul" style="top: 78%; left: 43%;" aria-label="África do Sul">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/africa-sul.png" alt="África do Sul" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">África do Sul</span>
-            </button>
+          <button class="pin-pais" data-pais="africa-sul" style="top: 78%; left: 43%;" aria-label="África do Sul">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/africa-sul.png" alt="África do Sul" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">África do Sul</span>
+          </button>
 
-            <!-- Ásia -->
-            <button class="pin-pais" data-pais="india" style="top: 38%; left: 54%;" aria-label="Índia">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/india.png" alt="Índia" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">Índia</span>
-            </button>
+          <button class="pin-pais" data-pais="india" style="top: 38%; left: 54%;" aria-label="Índia">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/india.png" alt="Índia" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">Índia</span>
+          </button>
 
-            <button class="pin-pais" data-pais="tailandia" style="top: 40%; left: 59%;" aria-label="Tailândia">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/tailandia.png" alt="Tailândia" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">Tailândia</span>
-            </button>
+          <button class="pin-pais" data-pais="tailandia" style="top: 40%; left: 59%;" aria-label="Tailândia">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/tailandia.png" alt="Tailândia" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">Tailândia</span>
+          </button>
 
-            <button class="pin-pais" data-pais="china" style="top: 30%; left: 60%;" aria-label="China">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/china.png" alt="China" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">China</span>
-            </button>
+          <button class="pin-pais" data-pais="china" style="top: 30%; left: 60%;" aria-label="China">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/china.png" alt="China" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">China</span>
+          </button>
 
-            <button class="pin-pais" data-pais="japao" style="top: 28%; left: 66%;" aria-label="Japão">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/japao.png" alt="Japão" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">Japão</span>
-            </button>
+          <button class="pin-pais" data-pais="japao" style="top: 28%; left: 66%;" aria-label="Japão">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/japao.png" alt="Japão" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">Japão</span>
+          </button>
 
-            <!-- Oceania -->
-            <button class="pin-pais" data-pais="australia" style="top: 75%; left: 67%;" aria-label="Austrália">
-              <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
-                <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
-                <circle cx="12" cy="12" r="8" fill="white"/>
-              </svg>
-              <img src="../../assets/bandeiras/australia.png" alt="Austrália" class="bandeira-pin" draggable="false">
-              <span class="pin-tooltip">Austrália</span>
-            </button>
-          </div>
+          <button class="pin-pais" data-pais="australia" style="top: 75%; left: 67%;" aria-label="Austrália">
+            <svg class="pin-svg" viewBox="0 0 24 36" width="40" height="60">
+              <path d="M12 0C5.4 0 0 5.4 0 12c0 8 12 24 12 24s12-16 12-24c0-6.6-5.4-12-12-12z" fill="#dc3545"/>
+              <circle cx="12" cy="12" r="8" fill="white"/>
+            </svg>
+            <img src="../../assets/bandeiras/australia.png" alt="Austrália" class="bandeira-pin" draggable="false">
+            <span class="pin-tooltip">Austrália</span>
+          </button>
+
         </div>
       </div>
 
-      <!-- Barra de Zoom -->
+      <!-- Zoom -->
       <div class="zoom-controls">
         <button class="zoom-btn" id="zoomIn" aria-label="Aumentar zoom">+</button>
         <div class="zoom-separator"></div>
@@ -194,17 +186,15 @@
     </div>
   </main>
 
-  <!-- Rodapé curvo -->
+  <!-- Rodapé -->
   <footer class="curva" aria-label="Navegação principal">
     <nav class="curva__nav">
       <a id="btnHumor" class="btn-footer" href="../humor/index.html" aria-label="Escolher humor">
         <img src="../../assets/humor.png" alt="">
       </a>
-
       <a id="btnLogo" class="btn-footer btn-central" href="../home/index.html" aria-label="Gerar receita (logo)">
         <img src="../../assets/logocentral.png" alt="">
       </a>
-
       <a id="btnGeladeira" class="btn-footer" href="../geladeira/index.html" aria-label="Ir para Minha Geladeira">
         <img src="../../assets/geladeira.png" alt="">
       </a>
