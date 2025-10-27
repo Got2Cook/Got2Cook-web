@@ -64,9 +64,17 @@
   function updateTransform() {
     constrainPosition();
     
-    // MUDANÇA CRÍTICA: aplicar translação E escala no wrapper
-    // Assim os pins (que estão dentro) se movem junto
+    // Aplicar translação e escala no wrapper
     mapaWrapper.style.transform = `translate(${state.posX}px, ${state.posY}px) scale(${state.scale})`;
+    
+    // CONTRA-ESCALA: manter pins com tamanho fixo
+    const counterScale = 1 / state.scale;
+    pinsPais.forEach(pin => {
+      // Preservar a posição mas cancelar a escala
+      if (!state.adjustMode || pin !== state.selectedPin) {
+        pin.style.transform = `translate(-50%, -100%) scale(${counterScale})`;
+      }
+    });
     
     updateZoomDisplay();
   }
