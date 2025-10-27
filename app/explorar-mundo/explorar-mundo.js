@@ -6,6 +6,7 @@
   /* ===== Elementos DOM ===== */
   const mapaContainer = document.getElementById('mapaContainer');
   const mapaWrapper = document.getElementById('mapaWrapper');
+  const mapaImgContainer = document.getElementById('mapaImgContainer');
   const mapaImg = document.getElementById('mapaImg');
   const pinsPais = document.querySelectorAll('.pin-pais');
   const zoomInBtn = document.getElementById('zoomIn');
@@ -37,7 +38,7 @@
   /* ===== Calcular Limites ===== */
   function calculateBounds() {
     const containerRect = mapaContainer.getBoundingClientRect();
-    const imgRect = mapaImg.getBoundingClientRect();
+    const imgRect = mapaImgContainer.getBoundingClientRect();
     
     const baseWidth = imgRect.width;
     const baseHeight = imgRect.height;
@@ -64,17 +65,9 @@
   function updateTransform() {
     constrainPosition();
     
-    // Aplicar translação e escala no wrapper
+    // Aplicar translação e escala APENAS no wrapper
+    // O mapaImgContainer (que contém imagem + pins) escala junto
     mapaWrapper.style.transform = `translate(${state.posX}px, ${state.posY}px) scale(${state.scale})`;
-    
-    // CONTRA-ESCALA: manter pins com tamanho fixo
-    const counterScale = 1 / state.scale;
-    pinsPais.forEach(pin => {
-      // Preservar a posição mas cancelar a escala
-      if (!state.adjustMode || pin !== state.selectedPin) {
-        pin.style.transform = `translate(-50%, -100%) scale(${counterScale})`;
-      }
-    });
     
     updateZoomDisplay();
   }
@@ -278,7 +271,7 @@
   }
 
   /* ================================================================ */
-  /* ===== FERRAMENTA DE AJUSTE ===== */
+  /* ===== FERRAMENTA DE AJUSTE DE PINS (REMOVER EM PRODUÇÃO) ===== */
   /* ================================================================ */
   
   window.addEventListener('load', function() {
@@ -392,3 +385,16 @@
   });
 
 })();
+```
+
+---
+
+## Resumo da solução final:
+
+### Estrutura HTML:
+```
+mapa-container
+  └─ mapa-wrapper (recebe transform: translate + scale)
+      └─ mapa-img-container (escala junto)
+          ├─ mapa-img
+          └─ pins (dentro do container, escalam junto com a imagem)
