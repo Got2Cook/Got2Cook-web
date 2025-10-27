@@ -14,7 +14,7 @@
 
   /* ===== Estado ===== */
   let state = {
-    scale: 0.6,
+    scale: 1,  // Zoom inicial 100%
     posX: 0,
     posY: 0,
     isDragging: false,
@@ -22,8 +22,8 @@
     startY: 0,
     lastTouchDistance: 0,
     hasMoved: false,
-    minScale: 0.5,
-    maxScale: 2.5,
+    minScale: 1,    // Não pode diminuir (sempre cobre)
+    maxScale: 3,    // Pode aumentar até 3x
     adjustMode: false,
     selectedPin: null
   };
@@ -37,20 +37,17 @@
   /* ===== Calcular Limites ===== */
   function calculateBounds() {
     const containerRect = mapaContainer.getBoundingClientRect();
+    const imgRect = mapaImg.getBoundingClientRect();
     
-    const imgNaturalWidth = mapaImg.naturalWidth || mapaImg.width;
-    const imgNaturalHeight = mapaImg.naturalHeight || mapaImg.height;
+    // Dimensões escaladas
+    const scaledWidth = imgRect.width * state.scale;
+    const scaledHeight = imgRect.height * state.scale;
     
-    const imgDisplayWidth = containerRect.width * 2.5;
-    const imgDisplayHeight = (imgNaturalHeight / imgNaturalWidth) * imgDisplayWidth;
-    
-    const scaledWidth = imgDisplayWidth * state.scale;
-    const scaledHeight = imgDisplayHeight * state.scale;
-    
-    const maxX = 0;
-    const minX = Math.min(0, containerRect.width - scaledWidth);
-    const maxY = 0;
-    const minY = Math.min(0, containerRect.height - scaledHeight);
+    // Limites para não mostrar fundo
+    const maxX = Math.max(0, (scaledWidth - containerRect.width) / 2);
+    const minX = -maxX;
+    const maxY = Math.max(0, (scaledHeight - containerRect.height) / 2);
+    const minY = -maxY;
     
     return { minX, maxX, minY, maxY };
   }
@@ -72,30 +69,22 @@
   /* ===== Zoom Functions ===== */
   function zoomIn() {
     const oldScale = state.scale;
-    state.scale = Math.min(state.maxScale, state.scale + 0.2);
-    
-    const containerRect = mapaContainer.getBoundingClientRect();
-    const centerX = containerRect.width / 2;
-    const centerY = containerRect.height / 2;
+    state.scale = Math.min(state.maxScale, state.scale + 0.3);
     
     const scaleRatio = state.scale / oldScale;
-    state.posX = centerX - (centerX - state.posX) * scaleRatio;
-    state.posY = centerY - (centerY - state.posY) * scaleRatio;
+    state.posX *= scaleRatio;
+    state.posY *= scaleRatio;
     
     updateTransform();
   }
 
   function zoomOut() {
     const oldScale = state.scale;
-    state.scale = Math.max(state.minScale, state.scale - 0.2);
-    
-    const containerRect = mapaContainer.getBoundingClientRect();
-    const centerX = containerRect.width / 2;
-    const centerY = containerRect.height / 2;
+    state.scale = Math.max(state.minScale, state.scale - 0.3);
     
     const scaleRatio = state.scale / oldScale;
-    state.posX = centerX - (centerX - state.posX) * scaleRatio;
-    state.posY = centerY - (centerY - state.posY) * scaleRatio;
+    state.posX *= scaleRatio;
+    state.posY *= scaleRatio;
     
     updateTransform();
   }
@@ -200,15 +189,9 @@
         const oldScale = state.scale;
         state.scale = Math.max(state.minScale, Math.min(state.maxScale, state.scale + scaleChange));
         
-        const centerX = (touch1.clientX + touch2.clientX) / 2;
-        const centerY = (touch1.clientY + touch2.clientY) / 2;
-        const containerRect = mapaContainer.getBoundingClientRect();
-        const pointX = centerX - containerRect.left;
-        const pointY = centerY - containerRect.top;
-        
         const scaleRatio = state.scale / oldScale;
-        state.posX = pointX - (pointX - state.posX) * scaleRatio;
-        state.posY = pointY - (pointY - state.posY) * scaleRatio;
+        state.posX *= scaleRatio;
+        state.posY *= scaleRatio;
         
         updateTransform();
       }
@@ -233,17 +216,13 @@
     
     e.preventDefault();
     
-    const delta = e.deltaY > 0 ? -0.15 : 0.15;
+    const delta = e.deltaY > 0 ? -0.2 : 0.2;
     const oldScale = state.scale;
     state.scale = Math.max(state.minScale, Math.min(state.maxScale, state.scale + delta));
     
-    const rect = mapaContainer.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    
     const scaleRatio = state.scale / oldScale;
-    state.posX = mouseX - (mouseX - state.posX) * scaleRatio;
-    state.posY = mouseY - (mouseY - state.posY) * scaleRatio;
+    state.posX *= scaleRatio;
+    state.posY *= scaleRatio;
     
     updateTransform();
   }
@@ -309,14 +288,13 @@
   }
 
   /* ================================================================ */
-  /* ===== FERRAMENTA DE AJUSTE - ULTRA SIMPLES ===== */
+  /* ===== FERRAMENTA DE AJUSTE ===== */
   /* ================================================================ */
   
   window.addEventListener('load', function() {
     console.log('%c🗺️ AJUSTE DE PINS', 'background: #28a745; color: white; font-size: 16px; padding: 8px; font-weight: bold;');
     console.log('Pressione A para ativar');
     
-    // Ativar/desativar
     document.body.addEventListener('keydown', function(e) {
       if (e.key === 'a' || e.key === 'A') {
         state.adjustMode = !state.adjustMode;
@@ -335,7 +313,6 @@
       }
     });
     
-    // Selecionar pin (click direto)
     document.querySelectorAll('.pin-pais').forEach(function(pin) {
       pin.addEventListener('click', function(e) {
         if (!state.adjustMode) return;
@@ -356,7 +333,6 @@
       });
     });
     
-    // Mover com setas
     document.body.addEventListener('keydown', function(e) {
       if (!state.adjustMode || !state.selectedPin) return;
       
@@ -390,13 +366,31 @@
       }
       else if (e.key === 'Enter') {
         e.preventDefault();
-        console.clear();
-        console.log('%c✅ CÓDIGO FINAL', 'background: green; color: white; padding: 10px; font-size: 16px;');
-        console.log('');
-        console.log('País: ' + state.selectedPin.dataset.pais.toUpperCase());
-        console.log('');
-        console.log('COPIE ISTO:');
-        console.log('style="top: ' + top.toFixed(1) + '%; left: ' + left.toFixed(1) + '%;"');
+        
+        const pais = state.selectedPin.dataset.pais.toUpperCase();
+        const label = state.selectedPin.getAttribute('aria-label');
+        const codigoStyle = `style="top: ${top.toFixed(1)}%; left: ${left.toFixed(1)}%;"`;
+        const htmlCompleto = `<button class="pin-pais" data-pais="${state.selectedPin.dataset.pais}" ${codigoStyle} aria-label="${label}">`;
+        
+        navigator.clipboard.writeText(codigoStyle).then(() => {
+          console.clear();
+          console.log('%c✅ COPIADO!', 'background: green; color: white; padding: 10px; font-size: 18px;');
+          console.log('');
+          console.log('País: ' + pais);
+          console.log('');
+          console.log('📋 Código (copiado):');
+          console.log(codigoStyle);
+          console.log('');
+          console.log('📝 HTML completo:');
+          console.log(htmlCompleto);
+          console.log('');
+          console.log('💡 Cole no HTML com Ctrl+V!');
+        }).catch(() => {
+          console.clear();
+          console.log('%c⚠️ Copie manualmente:', 'background: orange; padding: 8px;');
+          console.log('');
+          console.log(codigoStyle);
+        });
       }
     });
   });
