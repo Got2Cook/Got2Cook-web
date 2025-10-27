@@ -14,7 +14,7 @@
 
   /* ===== Estado ===== */
   let state = {
-    scale: 1,  // Zoom inicial 100%
+    scale: 1,
     posX: 0,
     posY: 0,
     isDragging: false,
@@ -22,8 +22,8 @@
     startY: 0,
     lastTouchDistance: 0,
     hasMoved: false,
-    minScale: 1,    // Não pode diminuir (sempre cobre)
-    maxScale: 3,    // Pode aumentar até 3x
+    minScale: 1,      // Nunca menor que 1 (sempre cobre)
+    maxScale: 4,      // Pode dar zoom até 4x
     adjustMode: false,
     selectedPin: null
   };
@@ -34,16 +34,20 @@
     zoomLevel.textContent = `${percentage}%`;
   }
 
-  /* ===== Calcular Limites ===== */
+  /* ===== Calcular Limites (nunca mostrar bordas) ===== */
   function calculateBounds() {
     const containerRect = mapaContainer.getBoundingClientRect();
     const imgRect = mapaImg.getBoundingClientRect();
     
-    // Dimensões escaladas
-    const scaledWidth = imgRect.width * state.scale;
-    const scaledHeight = imgRect.height * state.scale;
+    // Dimensões da imagem sem escala
+    const baseWidth = imgRect.width;
+    const baseHeight = imgRect.height;
     
-    // Limites para não mostrar fundo
+    // Dimensões escaladas
+    const scaledWidth = baseWidth * state.scale;
+    const scaledHeight = baseHeight * state.scale;
+    
+    // Limites: nunca permitir que bordas apareçam
     const maxX = Math.max(0, (scaledWidth - containerRect.width) / 2);
     const minX = -maxX;
     const maxY = Math.max(0, (scaledHeight - containerRect.height) / 2);
@@ -62,30 +66,24 @@
   /* ===== Aplicar Transformação ===== */
   function updateTransform() {
     constrainPosition();
-    mapaWrapper.style.transform = `translate(${state.posX}px, ${state.posY}px) scale(${state.scale})`;
+    
+    // Aplicar escala ao wrapper (que contém mapa + pins)
+    mapaWrapper.style.transform = `scale(${state.scale})`;
+    
+    // Aplicar translação à imagem (dentro do wrapper escalado)
+    mapaImg.style.transform = `translate(-50%, -50%) translate(${state.posX / state.scale}px, ${state.posY / state.scale}px)`;
+    
     updateZoomDisplay();
   }
 
   /* ===== Zoom Functions ===== */
   function zoomIn() {
-    const oldScale = state.scale;
     state.scale = Math.min(state.maxScale, state.scale + 0.3);
-    
-    const scaleRatio = state.scale / oldScale;
-    state.posX *= scaleRatio;
-    state.posY *= scaleRatio;
-    
     updateTransform();
   }
 
   function zoomOut() {
-    const oldScale = state.scale;
     state.scale = Math.max(state.minScale, state.scale - 0.3);
-    
-    const scaleRatio = state.scale / oldScale;
-    state.posX *= scaleRatio;
-    state.posY *= scaleRatio;
-    
     updateTransform();
   }
 
@@ -186,13 +184,7 @@
       if (state.lastTouchDistance > 0) {
         const delta = distance - state.lastTouchDistance;
         const scaleChange = delta * 0.01;
-        const oldScale = state.scale;
         state.scale = Math.max(state.minScale, Math.min(state.maxScale, state.scale + scaleChange));
-        
-        const scaleRatio = state.scale / oldScale;
-        state.posX *= scaleRatio;
-        state.posY *= scaleRatio;
-        
         updateTransform();
       }
       
@@ -217,12 +209,7 @@
     e.preventDefault();
     
     const delta = e.deltaY > 0 ? -0.2 : 0.2;
-    const oldScale = state.scale;
     state.scale = Math.max(state.minScale, Math.min(state.maxScale, state.scale + delta));
-    
-    const scaleRatio = state.scale / oldScale;
-    state.posX *= scaleRatio;
-    state.posY *= scaleRatio;
     
     updateTransform();
   }
@@ -306,7 +293,10 @@
           mapaContainer.style.cursor = 'crosshair';
         } else {
           console.log('%c❌ DESATIVADO', 'background: red; color: white; padding: 8px;');
-          if (state.selectedPin) state.selectedPin.style.filter = '';
+          if (state.selectedPin) {
+            state.selectedPin.style.filter = '';
+            state.selectedPin.style.outline = '';
+          }
           state.selectedPin = null;
           mapaContainer.style.cursor = 'grab';
         }
@@ -320,7 +310,10 @@
         e.stopPropagation();
         e.preventDefault();
         
-        if (state.selectedPin) state.selectedPin.style.filter = '';
+        if (state.selectedPin) {
+          state.selectedPin.style.filter = '';
+          state.selectedPin.style.outline = '';
+        }
         
         state.selectedPin = pin;
         pin.style.filter = 'brightness(3) drop-shadow(0 0 20px gold)';
@@ -329,7 +322,7 @@
         console.clear();
         console.log('%c📍 SELECIONADO: ' + pin.dataset.pais.toUpperCase(), 'background: blue; color: white; padding: 8px; font-size: 14px;');
         console.log('Posição: ' + pin.style.top + ', ' + pin.style.left);
-        console.log('USE AS SETAS AGORA! ⬆️⬇️⬅️➡️');
+        console.log('USE AS SETAS! ⬆️⬇️⬅️➡️');
       });
     });
     
@@ -378,13 +371,13 @@
           console.log('');
           console.log('País: ' + pais);
           console.log('');
-          console.log('📋 Código (copiado):');
+          console.log('📋 Código:');
           console.log(codigoStyle);
           console.log('');
           console.log('📝 HTML completo:');
           console.log(htmlCompleto);
           console.log('');
-          console.log('💡 Cole no HTML com Ctrl+V!');
+          console.log('💡 Cole com Ctrl+V!');
         }).catch(() => {
           console.clear();
           console.log('%c⚠️ Copie manualmente:', 'background: orange; padding: 8px;');
