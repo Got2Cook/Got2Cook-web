@@ -394,20 +394,4 @@
 })();
 ```
 
----
 
-## Explicação da solução:
-
-### O que acontece agora:
-
-1. **Wrapper escala** → `scale(1.5)` por exemplo
-2. **Pins recebem contra-escala** → `scale(0.666)` (que é 1/1.5)
-3. **Resultado**: pins mantêm tamanho original
-4. **Posição %**: pin fica no mesmo lugar da imagem
-5. **Responsivo**: funciona em todas as telas
-
-### Exemplo visual:
-```
-Zoom 100%: wrapper scale(1) → pins scale(1)   = tamanho normal
-Zoom 150%: wrapper scale(1.5) → pins scale(0.666) = tamanho normal
-Zoom 200%: wrapper scale(2) → pins scale(0.5)  = tamanho normal
