@@ -22,8 +22,8 @@
     startY: 0,
     lastTouchDistance: 0,
     hasMoved: false,
-    minScale: 1,      // Nunca menor que 1 (sempre cobre)
-    maxScale: 4,      // Pode dar zoom até 4x
+    minScale: 1,
+    maxScale: 4,
     adjustMode: false,
     selectedPin: null
   };
@@ -34,20 +34,17 @@
     zoomLevel.textContent = `${percentage}%`;
   }
 
-  /* ===== Calcular Limites (nunca mostrar bordas) ===== */
+  /* ===== Calcular Limites ===== */
   function calculateBounds() {
     const containerRect = mapaContainer.getBoundingClientRect();
     const imgRect = mapaImg.getBoundingClientRect();
     
-    // Dimensões da imagem sem escala
     const baseWidth = imgRect.width;
     const baseHeight = imgRect.height;
     
-    // Dimensões escaladas
     const scaledWidth = baseWidth * state.scale;
     const scaledHeight = baseHeight * state.scale;
     
-    // Limites: nunca permitir que bordas apareçam
     const maxX = Math.max(0, (scaledWidth - containerRect.width) / 2);
     const minX = -maxX;
     const maxY = Math.max(0, (scaledHeight - containerRect.height) / 2);
@@ -67,11 +64,9 @@
   function updateTransform() {
     constrainPosition();
     
-    // Aplicar escala ao wrapper (que contém mapa + pins)
-    mapaWrapper.style.transform = `scale(${state.scale})`;
-    
-    // Aplicar translação à imagem (dentro do wrapper escalado)
-    mapaImg.style.transform = `translate(-50%, -50%) translate(${state.posX / state.scale}px, ${state.posY / state.scale}px)`;
+    // MUDANÇA CRÍTICA: aplicar translação E escala no wrapper
+    // Assim os pins (que estão dentro) se movem junto
+    mapaWrapper.style.transform = `translate(${state.posX}px, ${state.posY}px) scale(${state.scale})`;
     
     updateZoomDisplay();
   }
