@@ -6,7 +6,6 @@
   /* ===== Elementos DOM ===== */
   const mapaContainer = document.getElementById('mapaContainer');
   const mapaWrapper = document.getElementById('mapaWrapper');
-  const mapaImgContainer = document.getElementById('mapaImgContainer');
   const mapaImg = document.getElementById('mapaImg');
   const pinsPais = document.querySelectorAll('.pin-pais');
   const zoomInBtn = document.getElementById('zoomIn');
@@ -38,7 +37,7 @@
   /* ===== Calcular Limites ===== */
   function calculateBounds() {
     const containerRect = mapaContainer.getBoundingClientRect();
-    const imgRect = mapaImgContainer.getBoundingClientRect();
+    const imgRect = mapaImg.getBoundingClientRect();
     
     const baseWidth = imgRect.width;
     const baseHeight = imgRect.height;
@@ -61,17 +60,17 @@
     state.posY = Math.max(bounds.minY, Math.min(bounds.maxY, state.posY));
   }
 
-  /* ===== SOLUÇÃO: Aplicar Transformação com contra-escala nos pins ===== */
+  /* ===== SOLUÇÃO DEFINITIVA: Pins fixos na imagem com contra-escala ===== */
   function updateTransform() {
     constrainPosition();
     
-    // Aplicar translação e escala no wrapper (mapa + pins escalam)
+    // Aplicar transformação no wrapper (mapa + pins escalam juntos)
     mapaWrapper.style.transform = `translate(${state.posX}px, ${state.posY}px) scale(${state.scale})`;
     
-    // CONTRA-ESCALA: aplicar escala inversa nos pins para manter tamanho fixo
+    // CONTRA-ESCALA nos pins para manter tamanho fixo
     const counterScale = 1 / state.scale;
     pinsPais.forEach(pin => {
-      // Manter transform original (translate) + adicionar contra-escala
+      // Aplicar contra-escala mantendo o transform original (translate)
       pin.style.transform = `translate(-50%, -100%) scale(${counterScale})`;
     });
     
@@ -290,18 +289,21 @@
         console.clear();
         
         if (state.adjustMode) {
-          console.log('%c✅ ATIVADO', 'background: green; color: white; padding: 8px; font-size: 16px;');
-          console.log('Clique em um pin!');
+          console.log('%c✅ MODO AJUSTE ATIVADO', 'background: green; color: white; padding: 8px; font-size: 16px;');
+          console.log('📍 Clique em um pin para selecionar');
+          console.log('⬆️⬇️⬅️➡️ Use as setas para mover');
+          console.log('⏎ Enter para copiar código');
+          console.log('🔒 Shift + seta = movimento fino (0.1%)');
           mapaContainer.style.cursor = 'crosshair';
         } else {
-          console.log('%c❌ DESATIVADO', 'background: red; color: white; padding: 8px;');
+          console.log('%c❌ MODO AJUSTE DESATIVADO', 'background: red; color: white; padding: 8px;');
           if (state.selectedPin) {
             state.selectedPin.style.filter = '';
             state.selectedPin.style.outline = '';
           }
           state.selectedPin = null;
           mapaContainer.style.cursor = 'grab';
-          updateTransform(); // Reaplica contra-escala
+          updateTransform();
         }
       }
     });
@@ -321,11 +323,19 @@
         state.selectedPin = pin;
         pin.style.filter = 'brightness(3) drop-shadow(0 0 20px gold)';
         pin.style.outline = '3px solid yellow';
+        pin.style.outlineOffset = '4px';
         
         console.clear();
-        console.log('%c📍 SELECIONADO: ' + pin.dataset.pais.toUpperCase(), 'background: blue; color: white; padding: 8px; font-size: 14px;');
-        console.log('Posição: ' + pin.style.top + ', ' + pin.style.left);
-        console.log('USE AS SETAS! ⬆️⬇️⬅️➡️');
+        console.log('%c📍 PIN SELECIONADO', 'background: blue; color: white; padding: 8px; font-size: 16px; font-weight: bold;');
+        console.log('');
+        console.log('País: ' + pin.dataset.pais.toUpperCase());
+        console.log('Posição atual: ' + pin.style.top + ', ' + pin.style.left);
+        console.log('');
+        console.log('%cCONTROLES:', 'font-weight: bold; font-size: 14px;');
+        console.log('⬆️ ⬇️ ⬅️ ➡️  Mover pin (0.5% por passo)');
+        console.log('Shift + seta  Movimento fino (0.1%)');
+        console.log('Enter         Copiar código');
+        console.log('A             Sair do modo ajuste');
       });
     });
     
@@ -363,35 +373,47 @@
       else if (e.key === 'Enter') {
         e.preventDefault();
         
-        const pais = state.selectedPin.dataset.pais.toUpperCase();
+        const pais = state.selectedPin.dataset.pais;
+        const paisUpper = pais.toUpperCase();
         const label = state.selectedPin.getAttribute('aria-label');
+        
         const codigoStyle = `style="top: ${top.toFixed(1)}%; left: ${left.toFixed(1)}%;"`;
-        const htmlCompleto = `<button class="pin-pais" data-pais="${state.selectedPin.dataset.pais}" ${codigoStyle} aria-label="${label}">`;
+        const htmlCompleto = `<button class="pin-pais" data-pais="${pais}" ${codigoStyle} aria-label="${label}">`;
         
         navigator.clipboard.writeText(codigoStyle).then(() => {
           console.clear();
-          console.log('%c✅ COPIADO!', 'background: green; color: white; padding: 10px; font-size: 18px;');
+          console.log('%c✅ CÓDIGO COPIADO COM SUCESSO!', 'background: #28a745; color: white; padding: 12px; font-size: 18px; font-weight: bold;');
           console.log('');
-          console.log('País: ' + pais);
+          console.log('%c📍 País: ' + paisUpper, 'font-size: 16px; font-weight: bold; color: #007bff;');
           console.log('');
-          console.log('📋 Código:');
+          console.log('%c📋 Código do style (já está na área de transferência):', 'font-weight: bold; color: #333;');
           console.log(codigoStyle);
           console.log('');
-          console.log('📝 HTML completo:');
+          console.log('%c📝 HTML completo do botão:', 'font-weight: bold; color: #333;');
           console.log(htmlCompleto);
           console.log('');
-          console.log('💡 Cole com Ctrl+V!');
-        }).catch(() => {
-          console.clear();
-          console.log('%c⚠️ Copie manualmente:', 'background: orange; padding: 8px;');
+          console.log('%c💡 PRÓXIMOS PASSOS:', 'background: #ffc107; color: black; padding: 6px; font-weight: bold;');
+          console.log('1. Abra o arquivo HTML');
+          console.log('2. Encontre o botão do país: ' + paisUpper);
+          console.log('3. Cole o código do style (Ctrl+V ou Cmd+V)');
+          console.log('4. Salve o arquivo');
+          console.log('5. Recarregue a página para ver o resultado');
           console.log('');
+          console.log('%c✨ Ajuste outros pins ou pressione A para sair', 'color: #6c757d; font-style: italic;');
+        }).catch(function(err) {
+          console.clear();
+          console.log('%c⚠️ NÃO FOI POSSÍVEL COPIAR AUTOMATICAMENTE', 'background: orange; color: black; padding: 8px; font-weight: bold;');
+          console.log('');
+          console.log('Por favor, copie manualmente abaixo:');
+          console.log('');
+          console.log('%cCÓDIGO:', 'font-weight: bold;');
           console.log(codigoStyle);
+          console.log('');
+          console.log('%cHTML COMPLETO:', 'font-weight: bold;');
+          console.log(htmlCompleto);
         });
       }
     });
   });
 
 })();
-```
-
-
