@@ -96,7 +96,7 @@ body {
   width: auto;
   height: auto;
   max-width: none;
-  object-fit: cover; /* SEMPRE cobre todo o espaço */
+  object-fit: cover;
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
@@ -106,6 +106,7 @@ body {
 .pin-pais {
   position: absolute;
   transform: translate(-50%, -100%);
+  transform-origin: bottom center;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -114,17 +115,12 @@ body {
   align-items: center;
   z-index: 10;
   padding: 0;
-  transition: transform 0.2s ease;
+  transition: none; /* Removido para melhor performance com contra-escala */
   pointer-events: auto;
 }
 
 .pin-pais:hover {
-  transform: translate(-50%, -100%) scale(1.2);
   z-index: 20;
-}
-
-.pin-pais:active {
-  transform: translate(-50%, -100%) scale(0.95);
 }
 
 .pin-pais:focus-visible {
@@ -138,6 +134,15 @@ body {
   height: 60px;
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
   pointer-events: none;
+  transition: filter 0.2s ease;
+}
+
+.pin-pais:hover .pin-svg {
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4)) brightness(1.2);
+}
+
+.pin-pais:active .pin-svg {
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4)) brightness(0.9);
 }
 
 .bandeira-pin {
@@ -359,9 +364,9 @@ body {
 
 /* === Performance === */
 @media (prefers-reduced-motion: reduce) {
-  .pin-pais,
   .btn-footer,
-  .pin-tooltip {
+  .pin-tooltip,
+  .zoom-btn {
     transition: none;
   }
 }
