@@ -158,3 +158,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
     window.location.href = "../gerar/";
   });
 });
+
+// Em /app/visualizar-receita/ver.js
+function salvarReceita(receita) {
+  const receitas = JSON.parse(localStorage.getItem('got2cook_saved_recipes') || '[]');
+  receitas.push({...receita, criadoEm: new Date().toISOString()});
+  localStorage.setItem('got2cook_saved_recipes', JSON.stringify(receitas));
+  
+  if (window.G2C) {
+    window.G2C.inc('salvas');
+    window.G2C.atualizarGraficos();
+  }
+}
