@@ -160,85 +160,123 @@ document.addEventListener("DOMContentLoaded", ()=>{
 });
 
 // Em /app/visualizar-receita/ver.js
-function salvarReceita(receita) {
-  const receitas = JSON.parse(localStorage.getItem('got2cook_saved_recipes') || '[]');
-  receitas.push({...receita, criadoEm: new Date().toISOString()});
-  localStorage.setItem('got2cook_saved_recipes', JSON.stringify(receitas));
-  
-  if (window.G2C) {
-    window.G2C.inc('salvas');
-    window.G2C.atualizarGraficos();
-  }
-}
+// ========= INTEGRAÇÃO COM SISTEMA DE CONQUISTAS (JORNADA) =========
 
-// /app/visualizar-receita/visualizar.js
-
-// ========= INTEGRAÇÃO COM SISTEMA DE CONQUISTAS =========
-
-// Função para salvar receita (botão coração)
-function salvarReceita(receita) {
-  const receitas = JSON.parse(localStorage.getItem('got2cook_saved_recipes') || '[]');
-  
-  // Verificar se já existe
-  const jaExiste = receitas.some(r => r.id === receita.id);
-  
-  if (!jaExiste) {
-    // Adicionar timestamp de criação
-    receitas.push({
-      ...receita,
-      criadoEm: new Date().toISOString()
-    });
+(function() {
+  // Aguardar DOM estar pronto
+  function iniciarIntegracao() {
     
-    localStorage.setItem('got2cook_saved_recipes', JSON.stringify(receitas));
-    
-    // Incrementar conquista de salvamento
-    if (window.G2C) {
-      window.G2C.inc('salvas');
-      window.G2C.atualizarGraficos();
+    // Verificar se o sistema de jornada está disponível
+    if (!window.G2C) {
+      console.warn('⚠️ Sistema de Jornada não disponível');
+      return;
     }
     
-    console.log('✅ Receita salva e conquista atualizada!');
+    // Função para salvar receita
+    function salvarReceita(receita) {
+      const receitas = JSON.parse(localStorage.getItem('got2cook_saved_recipes') || '[]');
+      
+      // Verificar se já existe
+      const jaExiste = receitas.some(r => r.titulo === receita.titulo);
+      
+      if (!jaExiste) {
+        receitas.push({
+          ...receita,
+          criadoEm: new Date().toISOString()
+        });
+        
+        localStorage.setItem('got2cook_saved_recipes', JSON.stringify(receitas));
+        
+        // Atualizar conquistas
+        window.G2C.inc('salvas');
+        window.G2C.atualizarGraficos();
+        
+        console.log('✅ Receita salva! Conquistas atualizadas.');
+        return true;
+      }
+      
+      return false;
+    }
+    
+    // Função para remover receita
+    function removerReceita(tituloReceita) {
+      let receitas = JSON.parse(localStorage.getItem('got2cook_saved_recipes') || '[]');
+      const tamanhoAntes = receitas.length;
+      
+      receitas = receitas.filter(r => r.titulo !== tituloReceita);
+      
+      if (receitas.length < tamanhoAntes) {
+        localStorage.setItem('got2cook_saved_recipes', JSON.stringify(receitas));
+        
+        // Atualizar conquistas
+        window.G2C.setMetrics({ salvas: receitas.length });
+        window.G2C.atualizarGraficos();
+        
+        console.log('❌ Receita removida! Conquistas atualizadas.');
+        return true;
+      }
+      
+      return false;
+    }
+    
+    // Encontrar o botão de coração (ajuste o seletor se necessário)
+    const btnCoracao = document.querySelector('#btnCoracaoSalvar, .btn-salvar, button[aria-label*="salvar"], button[aria-label*="Salvar"]');
+    
+    if (!btnCoracao) {
+      console.warn('⚠️ Botão de salvar não encontrado');
+      return;
+    }
+    
+    // Verificar se já está salva
+    function verificarSeEstaSalva() {
+      const titulo = document.querySelector('.titulo-receita, h1')?.textContent?.trim();
+      if (!titulo) return false;
+      
+      const receitas = JSON.parse(localStorage.getItem('got2cook_saved_recipes') || '[]');
+      return receitas.some(r => r.titulo === titulo);
+    }
+    
+    // Definir estado inicial do botão
+    if (verificarSeEstaSalva()) {
+      btnCoracao.classList.add('salva');
+    }
+    
+    // Adicionar evento de clique
+    btnCoracao.addEventListener('click', function() {
+      const estaSalva = this.classList.contains('salva');
+      
+      // Coletar dados da receita
+      const receita = {
+        id: 'receita_' + Date.now(),
+        titulo: document.querySelector('.titulo-receita, h1')?.textContent?.trim() || 'Sem título',
+        imagem: document.querySelector('.img-receita, img')?.src || '',
+        tempoMinutos: parseInt(document.querySelector('.tempo, [data-tempo]')?.textContent) || 0,
+        ingredientes: Array.from(document.querySelectorAll('.ingrediente, .lista-ingredientes li')).map(el => el.textContent.trim()),
+        modoPreparo: Array.from(document.querySelectorAll('.passo, .modo-preparo li')).map(el => el.textContent.trim()),
+        tipo: 'todos'
+      };
+      
+      if (estaSalva) {
+        // Remover
+        if (removerReceita(receita.titulo)) {
+          this.classList.remove('salva');
+        }
+      } else {
+        // Salvar
+        if (salvarReceita(receita)) {
+          this.classList.add('salva');
+        }
+      }
+    });
+    
+    console.log('🎯 Integração com Jornada ativada!');
   }
-}
-
-// Função para remover receita (desfavoritar)
-function removerReceita(receitaId) {
-  let receitas = JSON.parse(localStorage.getItem('got2cook_saved_recipes') || '[]');
-  receitas = receitas.filter(r => r.id !== receitaId);
   
-  localStorage.setItem('got2cook_saved_recipes', JSON.stringify(receitas));
-  
-  // Atualizar métrica
-  if (window.G2C) {
-    window.G2C.setMetrics({ salvas: receitas.length });
-    window.G2C.atualizarGraficos();
-  }
-  
-  console.log('❌ Receita removida e conquista atualizada!');
-}
-
-// Exemplo de uso no botão coração
-document.getElementById('btnCoracaoSalvar')?.addEventListener('click', function() {
-  const receita = {
-    id: 'receita_' + Date.now(),
-    titulo: document.querySelector('.titulo-receita')?.textContent || 'Sem título',
-    imagem: document.querySelector('.img-receita')?.src || '',
-    tempoMinutos: parseInt(document.querySelector('.tempo')?.textContent) || 0,
-    ingredientes: Array.from(document.querySelectorAll('.ingrediente')).map(el => el.textContent),
-    modoPreparo: Array.from(document.querySelectorAll('.passo')).map(el => el.textContent),
-    humorTags: [], // seus humores aqui
-    tipo: 'doce' // ou 'salgado'
-  };
-  
-  const salva = this.classList.contains('salva');
-  
-  if (salva) {
-    // Já está salva, então remover
-    removerReceita(receita.id);
-    this.classList.remove('salva');
+  // Iniciar quando o DOM estiver pronto
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', iniciarIntegracao);
   } else {
-    // Não está salva, então salvar
-    salvarReceita(receita);
-    this.classList.add('salva');
+    iniciarIntegracao();
   }
-});
+  
+})();
