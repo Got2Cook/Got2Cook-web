@@ -1,317 +1,328 @@
+// /app/visualizar/visualizar.js
+
 "use strict";
 
-/* ===== Utilitários ===== */
+/* ========= UTILITÁRIOS ========= */
 const $ = (sel) => document.querySelector(sel);
-function getLS(key, fb){ try { return JSON.parse(localStorage.getItem(key)) ?? fb; } catch { return fb; } }
-function setLS(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
-function norm(s){ return (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toLowerCase(); }
+const $$ = (sel) => document.querySelectorAll(sel);
 
-/* ===== Refs ===== */
-const hTitulo      = $("#tituloReceita");
-const imgCover     = $("#coverReceita");
-const metaTempo    = $("#metaTempo");
-const metaDif      = $("#metaDificuldade");
-const metaPor      = $("#metaPorcoes"); // exibe Humor
-const textoReceita = $("#textoReceita");
-const olIng        = $("#listaIngredientes");
-const olPasso      = $("#listaPassos");
-const btnMais      = $("#btnLerMais");
-const btnSalvar    = $("#btnSalvar");
-const btnGerar     = $("#btnGerarNovamente");
+function getLS(key, fallback) {
+  try {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : fallback;
+  } catch {
+    return fallback;
+  }
+}
 
-/* ===== Refs do rodapé (somente navegação; sem alterar estilo/HTML) ===== */
-const btnVoltar    = document.getElementById("btnVoltar");
-const btnLogo      = document.getElementById("btnLogo");
-const btnGeladeira = document.getElementById("btnGeladeira");
+function setLS(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (e) {
+    console.error('Erro ao salvar no localStorage:', e);
+  }
+}
 
-/* ===== Navegação do rodapé (NÃO muda classes/estilos/atributos) ===== */
-btnVoltar?.addEventListener("click", () => {
-  window.location.href = "../humor/index.html";
-});
-btnLogo?.addEventListener("click", () => {
-  // se quiser voltar para gerar, troque para: "../gerar/index.html"
-  window.location.href = "../home/index.html";
-});
-btnGeladeira?.addEventListener("click", () => {
-  window.location.href = "../geladeira/index.html";
-});
+/* ========= VERIFICAR PLANO ========= */
+function isPremium() {
+  const status = getLS('got2cook_premium_status', { isPremium: false });
+  return status.isPremium === true;
+}
 
-/* ===== Dados ===== */
-function getReceita(){
-  const r = getLS("receita_temp", null);
-  if (r && typeof r === "object") return r;
-  // MOCK para teste
+/* ========= REFERÊNCIAS DOM ========= */
+const elements = {
+  titulo: $('#tituloReceita'),
+  areaImagem: $('#areaImagem'),
+  metaTempo: $('#metaTempo'),
+  metaDif: $('#metaDificuldade'),
+  metaHumor: $('#metaHumor'),
+  textoReceita: $('#textoReceita'),
+  listaIng: $('#listaIngredientes'),
+  listaPassos: $('#listaPassos'),
+  btnMais: $('#btnLerMais'),
+  btnSalvar: $('#btnSalvar'),
+  btnGerar: $('#btnGerarNovamente'),
+  badgePremium: $('#badgePremium'),
+  
+  // Rodapé
+  btnVoltar: $('#btnVoltar'),
+  btnLogo: $('#btnLogo'),
+  btnGeladeira: $('#btnGeladeira')
+};
+
+/* ========= DADOS DA RECEITA ========= */
+function getReceitaAtual() {
+  const temp = getLS('receita_temp', null);
+  if (temp && typeof temp === 'object') return temp;
+  
+  // Mock para teste
   return {
-    id: "mock-001",
-    titulo: "Receita Gerada",
-    tempo: "30 min",
-    dificuldade: "Fácil",
-    humor: "Conforto 😊",
-    coverImg: "../../assets/receita_exemplo.png",
+    id: 'mock_' + Date.now(),
+    titulo: 'Arroz Temperado com Carne',
+    tempo: '30 min',
+    dificuldade: 'Fácil',
+    humor: 'Conforto 😊',
     ingredientes: [
-      { nome: "1 xícara de arroz cru" },
-      { nome: "200g de carne em cubos ou desfiada (pode ser sobra de churrasco)" },
-      { nome: "1 pimenta fresca ou seca picada (dedo-de-moça, calabresa, etc.)" }
+      '1 xícara de arroz cru',
+      '200g de carne em cubos',
+      '1 pimenta fresca picada',
+      '2 dentes de alho',
+      'Sal a gosto'
     ],
     passos: [
-      "Misture os ingredientes secos.",
-      "Adicione os líquidos aos poucos, mexendo.",
-      "Leve ao fogo até ganhar consistência.",
-      "Sirva em seguida."
-    ]
+      'Refogue o alho até dourar',
+      'Adicione a carne e tempere',
+      'Acrescente o arroz e misture bem',
+      'Adicione água e deixe cozinhar',
+      'Finalize com a pimenta picada'
+    ],
+    imagem: isPremium() ? '../../assets/receita_exemplo.png' : null
   };
 }
 
-/* ===== Favoritar ===== */
-const KEY_SALVAS = "got2cook_minhasReceitas";
-function getSalvas(){ const a=getLS(KEY_SALVAS,[]); return Array.isArray(a)?a:[]; }
-function mesmaReceita(a,b){
-  if(!a||!b) return false;
-  if(a.id&&b.id) return a.id===b.id;
-  return norm(a.titulo||a.nome)===norm(b.titulo||b.nome);
-}
-function isSalva(r){ return getSalvas().some(x=>mesmaReceita(x,r)); }
-function syncHeart(r){
-  const on = isSalva(r);
-  if (!btnSalvar) return;
-  btnSalvar.setAttribute("aria-pressed", on ? "true" : "false");
-  const span = btnSalvar.querySelector(".coracao");
-  if (span) span.textContent = on ? "♥" : "♡";
-}
-function toggleSalvar(r){
-  const arr = getSalvas();
-  const i = arr.findIndex(x=>mesmaReceita(x,r));
-  if(i>=0){ arr.splice(i,1); setLS(KEY_SALVAS,arr); }
-  else { if(!r.id) r.id=`r-${Date.now()}`; arr.push(r); setLS(KEY_SALVAS,arr); }
-  syncHeart(r);
-}
-
-/* ===== Render ===== */
-function render(){
-  const r = getReceita();
-
-  if (hTitulo) hTitulo.textContent = "RECEITA GERADA";
-
-  if (imgCover){
-    imgCover.src = r.coverImg || r.imagem || "../../assets/receita_exemplo.png";
-    imgCover.alt = `Imagem da receita ${r.titulo || ""}`;
-  }
-  if (metaTempo) metaTempo.textContent = `⏱️ ${r.tempo || "—"}`;
-  if (metaDif)   metaDif.textContent   = `Dificuldade ${r.dificuldade || "—"}`;
-
-  // Humor (no lugar de Porções)
-  const humorTxt = Array.isArray(r.humores) ? r.humores.join(", ") : (r.humor || "—");
-  if (metaPor) metaPor.textContent = `Humor ${humorTxt}`;
-
-  // Ingredientes
-  if (olIng){
-    olIng.innerHTML = "";
-    (Array.isArray(r.ingredientes) ? r.ingredientes : []).forEach(item => {
-      const li = document.createElement("li");
-      li.textContent = typeof item === "string" ? item : (item.nome || "");
-      olIng.appendChild(li);
-    });
-  }
-
-  // Passos
-  if (olPasso){
-    olPasso.innerHTML = "";
-    const passos = Array.isArray(r.passos) && r.passos.length
-      ? r.passos
-      : (r.modoPreparo ? [r.modoPreparo] : ["Siga os passos básicos de preparo."]);
-    passos.forEach(p => {
-      const li = document.createElement("li");
-      li.textContent = p;
-      olPasso.appendChild(li);
-    });
-  }
-
-  syncHeart(r);
-  setTimeout(() => hTitulo?.focus(), 0);
-}
-
-/* ===== Ler mais ===== */
-function toggleLerMais(){
-  if (!textoReceita || !btnMais) return;
-  const on = textoReceita.getAttribute("data-scroll") === "on";
-  textoReceita.setAttribute("data-scroll", on ? "off" : "on");
-  btnMais.setAttribute("aria-expanded", on ? "false" : "true");
-  btnMais.textContent = on ? "Ler mais" : "Ler menos";
-}
-
-/* ===== Eventos ===== */
-document.addEventListener("DOMContentLoaded", ()=>{
-  render();
-
-  btnMais?.addEventListener("click", toggleLerMais);
-
-  btnSalvar?.addEventListener("click", ()=>toggleSalvar(getReceita()));
-  btnSalvar?.addEventListener("keydown", e=>{
-    if(e.key==="Enter"||e.key===" "){
-      e.preventDefault();
-      toggleSalvar(getReceita());
-    }
-  });
-
-  // Gerar novamente
-  btnGerar?.addEventListener("click", ()=>{
-    window.location.href = "../gerar/";
-  });
-});
-
-// ========= INTEGRAÇÃO COM SISTEMA DE CONQUISTAS (JORNADA) =========
-
-(function() {
+/* ========= RENDERIZAR IMAGEM OU PLACEHOLDER ========= */
+function renderImagem(receita) {
+  if (!elements.areaImagem) return;
   
-  function iniciarIntegracao() {
-    console.log('🔍 Procurando botão de salvar...');
-    
-    // Seu botão é: id="btnSalvar" class="btn-coracao"
-    const btnCoracao = document.querySelector('#btnSalvar');
-    
-    if (!btnCoracao) {
-      console.error('❌ Botão #btnSalvar não encontrado');
-      return;
-    }
-    
-    console.log('✅ Botão encontrado:', btnCoracao);
-    
-    // Função para salvar receita
-    function salvarReceita(receita) {
-      const receitas = JSON.parse(localStorage.getItem('got2cook_saved_recipes') || '[]');
-      
-      const jaExiste = receitas.some(r => r.titulo === receita.titulo);
-      
-      if (!jaExiste) {
-        receitas.push({
-          ...receita,
-          criadoEm: new Date().toISOString()
-        });
-        
-        localStorage.setItem('got2cook_saved_recipes', JSON.stringify(receitas));
-        
-        // Atualizar conquistas
-        const salvasAtual = Number(localStorage.getItem('got2cook_salvas') || 0) + 1;
-        localStorage.setItem('got2cook_salvas', salvasAtual);
-        
-        console.log('✅ Receita salva! Total:', salvasAtual);
-        
-        // Tentar atualizar G2C se estiver disponível
-        if (window.G2C) {
-          window.G2C.inc('salvas');
-          window.G2C.atualizarGraficos();
-        }
-        
-        return true;
-      }
-      
-      console.log('ℹ️ Receita já estava salva');
-      return false;
-    }
-    
-    // Função para remover receita
-    function removerReceita(tituloReceita) {
-      let receitas = JSON.parse(localStorage.getItem('got2cook_saved_recipes') || '[]');
-      const tamanhoAntes = receitas.length;
-      
-      receitas = receitas.filter(r => r.titulo !== tituloReceita);
-      
-      if (receitas.length < tamanhoAntes) {
-        localStorage.setItem('got2cook_saved_recipes', JSON.stringify(receitas));
-        localStorage.setItem('got2cook_salvas', receitas.length);
-        
-        console.log('❌ Receita removida! Total:', receitas.length);
-        
-        if (window.G2C) {
-          window.G2C.setMetrics({ salvas: receitas.length });
-          window.G2C.atualizarGraficos();
-        }
-        
-        return true;
-      }
-      
-      return false;
-    }
-    
-    // Verificar se já está salva
-    function verificarSeEstaSalva() {
-      const titulo = document.querySelector('h1')?.textContent?.trim();
-      if (!titulo) return false;
-      
-      const receitas = JSON.parse(localStorage.getItem('got2cook_saved_recipes') || '[]');
-      return receitas.some(r => r.titulo === titulo);
-    }
-    
-    // Definir estado inicial do botão
-    if (verificarSeEstaSalva()) {
-      btnCoracao.classList.add('salva', 'ativo');
-      console.log('ℹ️ Receita já estava salva');
-    }
-    
-    // Adicionar evento de clique
-    btnCoracao.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      const estaSalva = this.classList.contains('salva');
-      
-      // Coletar dados da receita
-      const tituloEl = document.querySelector('h1');
-      const imagemEl = document.querySelector('img[alt*="receita"]');
-      const tempoEl = document.querySelector('.tempo, [class*="tempo"]');
-      
-      // Pegar ingredientes
-      const ingredientesEls = document.querySelectorAll('ul li');
-      const ingredientes = [];
-      ingredientesEls.forEach(el => {
-        const texto = el.textContent.trim();
-        if (texto && texto.length > 2 && !texto.toLowerCase().includes('modo de preparo')) {
-          ingredientes.push(texto);
-        }
-      });
-      
-      const receita = {
-        id: 'receita_' + Date.now(),
-        titulo: tituloEl?.textContent?.trim() || 'RECEITA GERADA',
-        imagem: imagemEl?.src || '',
-        tempoMinutos: 30,
-        ingredientes: ingredientes.slice(0, 10), // Primeiros 10 itens
-        modoPreparo: ['Misture os ingredientes selecionados e prepare ao seu gosto.'],
-        tipo: 'todos'
-      };
-      
-      console.log('📝 Dados da receita:', receita);
-      
-      if (estaSalva) {
-        // Remover
-        if (removerReceita(receita.titulo)) {
-          this.classList.remove('salva', 'ativo');
-          
-          // Feedback visual
-          this.style.transform = 'scale(0.8)';
-          setTimeout(() => { this.style.transform = 'scale(1)'; }, 200);
-        }
-      } else {
-        // Salvar
-        if (salvarReceita(receita)) {
-          this.classList.add('salva', 'ativo');
-          
-          // Feedback visual
-          this.style.transform = 'scale(1.3)';
-          setTimeout(() => { this.style.transform = 'scale(1)'; }, 200);
-        }
-      }
-    });
-    
-    console.log('🎯 Integração ativada! Clique no botão vermelho para testar.');
-  }
+  elements.areaImagem.innerHTML = '';
   
-  // Iniciar quando o DOM estiver pronto
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', iniciarIntegracao);
+  if (receita.imagem && isPremium()) {
+    // PREMIUM: Mostrar imagem
+    const img = document.createElement('img');
+    img.src = receita.imagem;
+    img.alt = `Imagem da receita ${receita.titulo}`;
+    img.onerror = () => {
+      // Se erro ao carregar, mostrar placeholder
+      renderPlaceholder(receita.titulo);
+    };
+    elements.areaImagem.appendChild(img);
+    
+    if (elements.badgePremium) {
+      elements.badgePremium.style.display = 'none';
+    }
   } else {
-    iniciarIntegracao();
+    // GRATUITO: Mostrar placeholder com texto
+    renderPlaceholder(receita.titulo);
+    
+    if (elements.badgePremium) {
+      elements.badgePremium.style.display = 'block';
+    }
+  }
+}
+
+function renderPlaceholder(titulo) {
+  const placeholder = document.createElement('div');
+  placeholder.className = 'placeholder-texto';
+  
+  const emojis = ['🍳', '🥘', '🍲', '🥗', '🍝', '🍕'];
+  const emojiAleatorio = emojis[Math.floor(Math.random() * emojis.length)];
+  
+  placeholder.innerHTML = `
+    <span class="emoji-grande">${emojiAleatorio}</span>
+    <p><strong>${titulo}</strong></p>
+    <p class="subtitulo">Receita gerada com sucesso!</p>
+  `;
+  
+  elements.areaImagem.appendChild(placeholder);
+}
+
+/* ========= RENDERIZAR RECEITA ========= */
+function renderReceita() {
+  const receita = getReceitaAtual();
+  
+  // Título
+  if (elements.titulo) {
+    elements.titulo.textContent = receita.titulo || 'RECEITA GERADA';
   }
   
-})();
-```
+  // Imagem ou Placeholder
+  renderImagem(receita);
+  
+  // Meta informações
+  if (elements.metaTempo) {
+    elements.metaTempo.textContent = `⏱️ ${receita.tempo || '30 min'}`;
+  }
+  
+  if (elements.metaDif) {
+    elements.metaDif.textContent = `Dificuldade ${receita.dificuldade || 'Fácil'}`;
+  }
+  
+  if (elements.metaHumor) {
+    const humor = Array.isArray(receita.humores) 
+      ? receita.humores.join(', ') 
+      : (receita.humor || '—');
+    elements.metaHumor.textContent = `Humor ${humor}`;
+  }
+  
+  // Ingredientes
+  if (elements.listaIng) {
+    elements.listaIng.innerHTML = '';
+    const ingredientes = Array.isArray(receita.ingredientes) 
+      ? receita.ingredientes 
+      : [];
+    
+    ingredientes.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = typeof item === 'string' ? item : (item.nome || item);
+      elements.listaIng.appendChild(li);
+    });
+  }
+  
+  // Modo de preparo
+  if (elements.listaPassos) {
+    elements.listaPassos.innerHTML = '';
+    const passos = Array.isArray(receita.passos) && receita.passos.length
+      ? receita.passos
+      : ['Siga as instruções de preparo'];
+    
+    passos.forEach(passo => {
+      const li = document.createElement('li');
+      li.textContent = passo;
+      elements.listaPassos.appendChild(li);
+    });
+  }
+  
+  // Sincronizar botão de favoritar
+  sincronizarBotaoSalvar(receita);
+  
+  // Foco no título
+  setTimeout(() => elements.titulo?.focus(), 100);
+}
+
+/* ========= SISTEMA DE FAVORITOS ========= */
+const KEY_SALVAS = 'got2cook_saved_recipes';
+
+function getReceitasSalvas() {
+  const arr = getLS(KEY_SALVAS, []);
+  return Array.isArray(arr) ? arr : [];
+}
+
+function mesmaReceita(a, b) {
+  if (!a || !b) return false;
+  if (a.id && b.id) return a.id === b.id;
+  
+  const normA = (a.titulo || '').trim().toLowerCase();
+  const normB = (b.titulo || '').trim().toLowerCase();
+  return normA === normB && normA.length > 0;
+}
+
+function estaSalva(receita) {
+  return getReceitasSalvas().some(r => mesmaReceita(r, receita));
+}
+
+function sincronizarBotaoSalvar(receita) {
+  if (!elements.btnSalvar) return;
+  
+  const salva = estaSalva(receita);
+  elements.btnSalvar.setAttribute('aria-pressed', salva ? 'true' : 'false');
+  
+  const coracao = elements.btnSalvar.querySelector('.coracao');
+  if (coracao) {
+    coracao.textContent = salva ? '♥' : '♡';
+  }
+}
+
+function toggleSalvar(receita) {
+  const receitas = getReceitasSalvas();
+  const index = receitas.findIndex(r => mesmaReceita(r, receita));
+  
+  if (index >= 0) {
+    // Remover
+    receitas.splice(index, 1);
+    setLS(KEY_SALVAS, receitas);
+    
+    // Atualizar conquistas
+    const totalSalvas = receitas.length;
+    localStorage.setItem('got2cook_salvas', totalSalvas);
+    
+    if (window.G2C) {
+      window.G2C.setMetrics({ salvas: totalSalvas });
+      window.G2C.atualizarGraficos();
+    }
+    
+    console.log('❌ Receita removida! Total:', totalSalvas);
+  } else {
+    // Salvar
+    if (!receita.id) {
+      receita.id = 'receita_' + Date.now();
+    }
+    receita.criadoEm = new Date().toISOString();
+    
+    receitas.push(receita);
+    setLS(KEY_SALVAS, receitas);
+    
+    // Atualizar conquistas
+    const totalSalvas = receitas.length;
+    localStorage.setItem('got2cook_salvas', totalSalvas);
+    
+    if (window.G2C) {
+      window.G2C.inc('salvas');
+      window.G2C.atualizarGraficos();
+    }
+    
+    console.log('✅ Receita salva! Total:', totalSalvas);
+  }
+  
+  sincronizarBotaoSalvar(receita);
+}
+
+/* ========= LER MAIS / MENOS ========= */
+function toggleLerMais() {
+  if (!elements.textoReceita || !elements.btnMais) return;
+  
+  const ativo = elements.textoReceita.getAttribute('data-scroll') === 'on';
+  
+  elements.textoReceita.setAttribute('data-scroll', ativo ? 'off' : 'on');
+  elements.btnMais.setAttribute('aria-expanded', ativo ? 'false' : 'true');
+  elements.btnMais.textContent = ativo ? 'Ler mais' : 'Ler menos';
+}
+
+/* ========= NAVEGAÇÃO ========= */
+function setupNavegacao() {
+  elements.btnVoltar?.addEventListener('click', () => {
+    window.location.href = '../humor/index.html';
+  });
+  
+  elements.btnLogo?.addEventListener('click', () => {
+    window.location.href = '../home/index.html';
+  });
+  
+  elements.btnGeladeira?.addEventListener('click', () => {
+    window.location.href = '../geladeira/index.html';
+  });
+}
+
+/* ========= EVENTOS ========= */
+function setupEventos() {
+  const receita = getReceitaAtual();
+  
+  // Ler mais
+  elements.btnMais?.addEventListener('click', toggleLerMais);
+  
+  // Salvar
+  elements.btnSalvar?.addEventListener('click', () => {
+    toggleSalvar(receita);
+    
+    // Feedback visual
+    const btn = elements.btnSalvar;
+    btn.style.transform = estaSalva(receita) ? 'scale(1.3)' : 'scale(0.8)';
+    setTimeout(() => { btn.style.transform = 'scale(1)'; }, 200);
+  });
+  
+  // Gerar novamente
+  elements.btnGerar?.addEventListener('click', () => {
+    window.location.href = '../gerar/';
+  });
+}
+
+/* ========= INICIALIZAÇÃO ========= */
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('🎨 Visualizar Receita - Iniciado');
+  console.log('💎 Plano:', isPremium() ? 'PREMIUM' : 'GRATUITO');
+  
+  renderReceita();
+  setupNavegacao();
+  setupEventos();
+  
+  console.log('✅ Tela pronta!');
+});
