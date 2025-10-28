@@ -1,13 +1,13 @@
+<!-- /app/jornada/index.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Minha Jornada - Got2Cook</title>
-
-  <link rel="stylesheet" href="/app/jornada/jornada.css?v=18" />
+  <link rel="stylesheet" href="jornada.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="/app/jornada/jornada.js?v=18" defer></script>
+  <script src="jornada.js" defer></script>
 </head>
 <body>
   <div class="container">
@@ -15,8 +15,8 @@
       <h1 class="titulo">MINHA JORNADA</h1>
     </header>
 
-    <!-- ESQUERDA: gráficos | DIREITA: conquistas -->
     <section class="layout">
+      <!-- ESQUERDA: gráficos -->
       <aside class="painel-graficos" aria-label="Painel de gráficos">
         <div class="grafico">
           <h3 class="grafico-titulo">ESTILOS PREFERIDOS</h3>
@@ -35,6 +35,7 @@
         </div>
       </aside>
 
+      <!-- DIREITA: conquistas -->
       <section class="painel-conquistas" aria-label="Minhas conquistas">
         <h2 class="subtitulo">MINHAS CONQUISTAS</h2>
         <p class="contador-receitas">
@@ -46,17 +47,17 @@
   </div>
 
   <footer class="curva">
-  <button class="btn-footer" id="btnVoltar" aria-label="Voltar para Home">
-    <img src="../../assets/humor.png" alt="">
-  </button>
+    <button class="btn-footer" id="btnVoltar" aria-label="Voltar para Humor">
+      <img src="../../assets/humor.png" alt="">
+    </button>
 
-  <button class="btn-footer btn-central" id="btnLogo" aria-label="Ir para Minhas Receitas">
-    <img src="../../assets/logocentral.png" alt="">
-  </button>
+    <button class="btn-footer btn-central" id="btnLogo" aria-label="Ir para Home">
+      <img src="../../assets/logocentral.png" alt="">
+    </button>
 
-  <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira">
-    <img src="../../assets/geladeira.png" alt="">
-  </button>
-</footer>
+    <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Minha Geladeira">
+      <img src="../../assets/geladeira.png" alt="">
+    </button>
+  </footer>
 </body>
 </html>
