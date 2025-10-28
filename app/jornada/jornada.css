@@ -1,98 +1,415 @@
-/* ===== BASE ===== */
-body{margin:0;padding:0;font-family:'Arial Rounded MT Bold',Arial,sans-serif;background:#c0ffa5;color:#225c18}
-.container{max-width:1600px;margin:0 auto;padding:0 48px 120px}
-.topo-icones.somente-titulo{display:flex;justify-content:center;align-items:center;padding:10px 0}
-.titulo{font-size:35px;color:#225c18;margin:56px 0 20px;text-align:center}
-:focus-visible{outline:2px dotted #492f70;outline-offset:4px}
+/* /app/jornada/jornada.css */
 
-/* ===== LAYOUT ===== */
-.layout{display:grid;gap:24px}
+/* ===== VARIÁVEIS E BASE ===== */
+:root {
+  --bg: #c0ffa5;
+  --roxo: #492f70;
+  --roxo-escuro: #7b7190;
+  --verde: #225c18;
+  --cartao: #dfffbb;
+  --div: #b3e698;
+}
 
-/* ===== GRÁFICOS ===== */
-.painel-graficos{background:#dff5b7;border-radius:28px;padding:18px 22px;display:flex;flex-direction:column;gap:28px}
-.grafico{display:flex;flex-direction:column;gap:10px}
-.grafico-titulo{font-size:18px;margin:0 0 6px 4px;color:#225c18}
-.grafico-row{display:grid;grid-template-columns:140px 1fr;gap:18px;align-items:center;justify-items:start}
-.grafico-row canvas{width:140px !important;height:140px !important;max-width:140px;max-height:140px;display:block}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--verde);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px 120px;
+}
+
+/* ===== CABEÇALHO ===== */
+.topo-icones.somente-titulo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.titulo {
+  font-size: 32px;
+  color: var(--verde);
+  margin: 40px 0 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+:focus-visible {
+  outline: 2px dotted var(--roxo);
+  outline-offset: 4px;
+}
+
+/* ===== LAYOUT PRINCIPAL ===== */
+.layout {
+  display: grid;
+  gap: 32px;
+  margin-top: 20px;
+}
+
+/* ===== PAINEL DE GRÁFICOS ===== */
+.painel-graficos {
+  background: #dff5b7;
+  border-radius: 28px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.grafico {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.grafico-titulo {
+  font-size: 18px;
+  margin: 0;
+  color: var(--verde);
+  font-weight: bold;
+}
+
+.grafico-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.grafico-row canvas {
+  width: 180px !important;
+  height: 180px !important;
+  max-width: 180px;
+  max-height: 180px;
+  display: block;
+}
 
 /* ===== LEGENDA ===== */
-.legenda-lista{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;column-gap:12px;row-gap:10px;align-items:center;justify-content:flex-start;max-width:100%}
-.legenda-lista li{display:flex;align-items:center;gap:10px;background:#7b7190;color:#fff;font-size:14px;padding:8px 12px;border-radius:999px;width:auto;white-space:nowrap}
-.legenda-lista .swatch{width:14px;height:14px;border-radius:50%;flex:0 0 14px}
-
-/* ===== CONQUISTAS ===== */
-.painel-conquistas{text-align:left}
-.subtitulo{font-size:22px;margin:8px 0 10px;font-weight:bold}
-.contador-receitas{font-size:16px;margin:0 0 20px;color:#492f70;font-weight:bold}
-.conquistas{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;justify-items:center}
-.medalha{display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;cursor:help}
-.medalha img{width:120px;height:auto;margin-bottom:5px}
-.estrelas{font-size:28px;margin-bottom:4px}
-
-/* ===== TOOLTIP (card retangular médio, verde translúcido) ===== */
-.tooltip{
-  position:absolute;
-  bottom:112%;
-  left:50%;
-  transform:translateX(-50%);
-  background:rgba(47,163,107,.93); /* verde, leve transparência */
-  color:#fff;
-
-  /* tamanho médio, formato “quadradinho retangular” */
-  padding:12px 14px;
-  border-radius:12px;
-  min-width:220px;
-  max-width:280px;              /* mais largo que alto, mas compacto */
-  white-space:normal;           /* permite 2–3 linhas */
-  line-height:1.35;
-  font-size:13.5px;
-
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .18s ease, transform .18s ease;
-  z-index:20;
-
-  /* embelezamento */
-  box-shadow:0 10px 22px rgba(0,0,0,.2), inset 0 0 0 1px rgba(255,255,255,.14);
-  backdrop-filter: saturate(120%);
-}
-.tooltip::after{
-  content:"";
-  position:absolute;
-  top:100%;
-  left:50%;
-  transform:translateX(-50%);
-  border-width:8px;
-  border-style:solid;
-  border-color:rgba(47,163,107,.93) transparent transparent transparent;
-}
-.medalha:hover .tooltip{
-  opacity:1;
-  transform:translateX(-50%) translateY(-2px);
+.legenda-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
 }
 
-/* conteúdo interno (3 linhas enxutas) */
-.tooltip .desc{display:block;margin-bottom:6px}
-.tooltip .next{display:block;font-weight:700;background:rgba(255,255,255,.12);padding:6px 8px;border-radius:8px}
-.tooltip .progress{display:block;margin-top:6px;opacity:.95}
+.legenda-lista li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--roxo-escuro);
+  color: #fff;
+  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+  cursor: default;
+}
 
-/* ===== RODAPÉ ===== */
-.curva{width:100%;height:70px;background:#7b7190;border-top-left-radius:100% 50%;border-top-right-radius:100% 50%;position:fixed;bottom:0;left:0;display:flex;justify-content:center;align-items:center;gap:40px;z-index:10}
-.btn-footer{background:transparent;border:none;border-radius:50%;width:55px;height:55px;padding:0;display:flex;justify-content:center;align-items:center;overflow:hidden;cursor:pointer;transform:translateY(-10px)}
-.btn-footer img{width:250%;height:250%;object-fit:contain}
-.btn-footer.btn-central{width:150px;height:150px;transform:translateY(-20px)}
-.btn-footer.btn-central img{width:150%;height:150%;object-fit:contain}
+.legenda-lista .swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ===== PAINEL DE CONQUISTAS ===== */
+.painel-conquistas {
+  text-align: left;
+}
+
+.subtitulo {
+  font-size: 24px;
+  margin: 0 0 12px;
+  color: var(--verde);
+  font-weight: bold;
+}
+
+.contador-receitas {
+  font-size: 16px;
+  margin: 0 0 24px;
+  color: var(--roxo);
+  font-weight: bold;
+}
+
+.conquistas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  justify-items: center;
+}
+
+/* ===== MEDALHA ===== */
+.medalha {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  cursor: help;
+  padding: 12px;
+  transition: transform 0.2s ease;
+}
+
+.medalha:hover {
+  transform: translateY(-4px);
+}
+
+.medalha img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 8px;
+  object-fit: contain;
+}
+
+.medalha p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--verde);
+  font-weight: bold;
+  max-width: 120px;
+  line-height: 1.3;
+}
+
+.estrelas {
+  font-size: 24px;
+  margin-bottom: 6px;
+  letter-spacing: 2px;
+}
+
+/* ===== TOOLTIP ===== */
+.tooltip {
+  position: absolute;
+  bottom: 115%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(47, 163, 107, 0.95);
+  color: #fff;
+  padding: 14px 16px;
+  border-radius: 12px;
+  min-width: 220px;
+  max-width: 280px;
+  white-space: normal;
+  line-height: 1.4;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 20;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  text-align: left;
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px;
+  border-style: solid;
+  border-color: rgba(47, 163, 107, 0.95) transparent transparent transparent;
+}
+
+.medalha:hover .tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+.tooltip .desc {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.tooltip .next {
+  display: block;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.tooltip .progress {
+  display: block;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+/* ===== RODAPÉ CURVO ===== */
+.curva {
+  width: 100%;
+  height: 70px;
+  background: var(--roxo-escuro);
+  border-top-left-radius: 100% 50%;
+  border-top-right-radius: 100% 50%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  z-index: 100;
+}
+
+.btn-footer {
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  transform: translateY(-10px);
+  transition: transform 0.2s ease;
+}
+
+.btn-footer:hover {
+  transform: translateY(-14px);
+}
+
+.btn-footer img {
+  width: 250%;
+  height: 250%;
+  object-fit: contain;
+}
+
+.btn-footer.btn-central {
+  width: 150px;
+  height: 150px;
+  transform: translateY(-20px);
+}
+
+.btn-footer.btn-central:hover {
+  transform: translateY(-24px);
+}
+
+.btn-footer.btn-central img {
+  width: 150%;
+  height: 150%;
+  object-fit: contain;
+}
 
 /* ===== DESKTOP ===== */
-@media (min-width:1024px){
-  .layout{grid-template-columns:1fr 1fr;align-items:start;gap:56px}
-  .painel-graficos{position:sticky;top:80px;align-self:start}
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 48px 120px;
+  }
+
+  .layout {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 48px;
+  }
+
+  .painel-graficos {
+    position: sticky;
+    top: 80px;
+    align-self: start;
+  }
+
+  .conquistas {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ===== TABLET ===== */
+@media (max-width: 1023px) and (min-width: 600px) {
+  .layout {
+    gap: 24px;
+  }
+
+  .conquistas {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .grafico-row {
+    grid-template-columns: 160px 1fr;
+  }
+
+  .grafico-row canvas {
+    width: 160px !important;
+    height: 160px !important;
+  }
 }
 
 /* ===== MOBILE ===== */
-@media (max-width:1023px){
-  .layout{gap:16px}
-  .grafico-row{grid-template-columns:1fr;justify-items:center;text-align:center}
-  .legenda-lista{justify-content:center}
-  .conquistas{grid-template-columns:repeat(2,1fr);gap:20px}
+@media (max-width: 599px) {
+  .container {
+    padding: 0 16px 100px;
+  }
+
+  .titulo {
+    font-size: 28px;
+    margin: 24px 0 16px;
+  }
+
+  .layout {
+    gap: 20px;
+  }
+
+  .painel-graficos {
+    padding: 20px 16px;
+    gap: 24px;
+  }
+
+  .grafico-row {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .grafico-row canvas {
+    width: 140px !important;
+    height: 140px !important;
+  }
+
+  .legenda-lista {
+    justify-content: center;
+  }
+
+  .conquistas {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .medalha img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .medalha p {
+    font-size: 12px;
+  }
+
+  .estrelas {
+    font-size: 20px;
+  }
+
+  .tooltip {
+    min-width: 180px;
+    max-width: 220px;
+    font-size: 12px;
+  }
 }
