@@ -1,18 +1,20 @@
+<!-- /app/visualizar/index.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Visualizar Receita - Got2Cook</title>
-  <!-- bump pra limpar cache -->
-  <link rel="stylesheet" href="visualizar.css?v=42" />
+  <link rel="stylesheet" href="visualizar.css" />
 </head>
 <body>
   <main id="conteudo">
     <div class="grid-web">
-      <!-- Coluna da imagem -->
+      <!-- Coluna da imagem/placeholder -->
       <figure class="cover-wrap">
-        <img id="coverReceita" src="../../assets/receita_exemplo.png" alt="Imagem da receita" />
+        <div id="areaImagem" class="area-imagem">
+          <!-- Será preenchido dinamicamente: img ou div com texto -->
+        </div>
       </figure>
 
       <!-- Coluna do texto -->
@@ -22,17 +24,23 @@
         <div class="meta" role="group" aria-label="Informações da receita">
           <span id="metaTempo" class="chip">⏱️ —</span>
           <span id="metaDificuldade" class="chip">Dificuldade —</span>
-          <span id="metaPorcoes" class="chip">Humor —</span>
+          <span id="metaHumor" class="chip">Humor —</span>
         </div>
 
         <section class="bloco" aria-labelledby="tituloReceitaBloco">
           <h3 id="tituloReceitaBloco" class="sec-title">Receita</h3>
 
           <div id="textoReceita" class="texto-receita" data-scroll="off">
-            <h4 class="sub-title"><span class="emoji start" aria-hidden="true">🥣</span>Ingredientes:</h4>
-            <ol id="listaIngredientes" class="lista"></ol>
+            <h4 class="sub-title">
+              <span class="emoji" aria-hidden="true">🥣</span>
+              Ingredientes:
+            </h4>
+            <ul id="listaIngredientes" class="lista"></ul>
 
-            <h4 class="sub-title"><span class="emoji start" aria-hidden="true">🍳</span>Modo de preparo:</h4>
+            <h4 class="sub-title">
+              <span class="emoji" aria-hidden="true">🍳</span>
+              Modo de preparo:
+            </h4>
             <ol id="listaPassos" class="lista"></ol>
           </div>
 
@@ -49,25 +57,30 @@
           <button id="btnGerarNovamente" class="btn-gerar" type="button" aria-label="Gerar novamente">
             Gerar novamente
           </button>
+        </div>
 
-          <div id="liveMsg" class="sr-only" aria-live="polite"></div>
+        <!-- Badge Premium (se não tiver imagem) -->
+        <div id="badgePremium" class="badge-premium" style="display: none;">
+          <p>✨ <strong>Quer ver a imagem desta receita?</strong></p>
+          <p>Assine o plano Premium e desbloqueie fotos de todas as receitas!</p>
+          <a href="../gerenciar-plano/" class="btn-premium">Assinar Premium</a>
         </div>
       </div>
     </div>
   </main>
 
   <footer class="curva">
-    <button class="btn-footer voltar" id="btnVoltar">
-      <img src="../../assets/humor.png" alt="Humor" />
+    <button class="btn-footer" id="btnVoltar" aria-label="Voltar">
+      <img src="../../assets/humor.png" alt="" />
     </button>
-    <button class="btn-footer logo" id="btnLogo">
-      <img src="../../assets/logocentral.png" alt="Logo" />
+    <button class="btn-footer btn-central" id="btnLogo" aria-label="Ir para Home">
+      <img src="../../assets/logocentral.png" alt="" />
     </button>
-    <button class="btn-footer geladeira" id="btnGeladeira">
-      <img src="../../assets/geladeira.png" alt="Geladeira" />
+    <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Geladeira">
+      <img src="../../assets/geladeira.png" alt="" />
     </button>
   </footer>
 
-  <script src="visualizar.js?v=24" defer></script>
+  <script src="visualizar.js" defer></script>
 </body>
 </html>
