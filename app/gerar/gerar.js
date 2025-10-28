@@ -142,3 +142,37 @@ window.selecionarTipo = (t) => {
 };
 
 window.gerarReceita = gerarReceita;
+
+// Em /app/gerar-receita/gerar.js
+function aoGerarReceita(receita) {
+  if (window.G2C) {
+    // Incrementar total e criadas
+    window.G2C.inc('total');
+    window.G2C.inc('criadas');
+    
+    // Verificar condições especiais
+    if (receita.ingredientes.length <= 3) {
+      window.G2C.inc('improviso');
+    }
+    
+    if (receita.tempoMinutos < 10) {
+      window.G2C.inc('rapidas');
+    }
+    
+    const hora = new Date().getHours();
+    if (hora >= 0 && hora < 5) {
+      window.G2C.inc('noturnas');
+    }
+    
+    if (receita.tags?.includes('saudavel')) {
+      window.G2C.inc('saudaveis');
+    }
+    
+    if (receita.cozinha && !['brasileira','portuguesa'].includes(receita.cozinha.toLowerCase())) {
+      window.G2C.inc('cozinhas');
+    }
+    
+    // Atualizar gráficos
+    window.G2C.atualizarGraficos();
+  }
+}
