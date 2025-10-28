@@ -9,63 +9,8 @@
 </head>
 <body>
   <main id="conteudo">
-    <div class="grid-web">
-      <!-- Coluna da imagem/placeholder -->
-      <figure class="cover-wrap">
-        <div id="areaImagem" class="area-imagem">
-          <!-- Será preenchido dinamicamente: img ou div com texto -->
-        </div>
-      </figure>
-
-      <!-- Coluna do texto -->
-      <div class="lado-texto">
-        <h1 id="tituloReceita" tabindex="-1">RECEITA GERADA</h1>
-
-        <div class="meta" role="group" aria-label="Informações da receita">
-          <span id="metaTempo" class="chip">⏱️ —</span>
-          <span id="metaDificuldade" class="chip">Dificuldade —</span>
-          <span id="metaHumor" class="chip">Humor —</span>
-        </div>
-
-        <section class="bloco" aria-labelledby="tituloReceitaBloco">
-          <h3 id="tituloReceitaBloco" class="sec-title">Receita</h3>
-
-          <div id="textoReceita" class="texto-receita" data-scroll="off">
-            <h4 class="sub-title">
-              <span class="emoji" aria-hidden="true">🥣</span>
-              Ingredientes:
-            </h4>
-            <ul id="listaIngredientes" class="lista"></ul>
-
-            <h4 class="sub-title">
-              <span class="emoji" aria-hidden="true">🍳</span>
-              Modo de preparo:
-            </h4>
-            <ol id="listaPassos" class="lista"></ol>
-          </div>
-
-          <button id="btnLerMais" class="btn-lermais" type="button" aria-controls="textoReceita" aria-expanded="false">
-            Ler mais
-          </button>
-        </section>
-
-        <div class="acoes">
-          <button id="btnSalvar" class="btn-coracao" type="button" aria-pressed="false" aria-label="Salvar receita">
-            <span class="coracao" aria-hidden="true">♡</span>
-          </button>
-
-          <button id="btnGerarNovamente" class="btn-gerar" type="button" aria-label="Gerar novamente">
-            Gerar novamente
-          </button>
-        </div>
-
-        <!-- Badge Premium (se não tiver imagem) -->
-        <div id="badgePremium" class="badge-premium" style="display: none;">
-          <p>✨ <strong>Quer ver a imagem desta receita?</strong></p>
-          <p>Assine o plano Premium e desbloqueie fotos de todas as receitas!</p>
-          <a href="../gerenciar-plano/" class="btn-premium">Assinar Premium</a>
-        </div>
-      </div>
+    <div class="wrapper-receita" id="wrapperReceita">
+      <!-- Container dinâmico: será preenchido pelo JS -->
     </div>
   </main>
 
