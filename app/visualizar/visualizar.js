@@ -166,23 +166,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
   function iniciarIntegracao() {
     console.log('🔍 Procurando botão de salvar...');
     
-    // Encontrar o botão de coração (o botão vermelho que você tem na tela)
-    // Vou tentar vários seletores possíveis
-    const btnCoracao = document.querySelector(
-      'button[aria-label*="salvar"], ' +
-      'button[aria-label*="Salvar"], ' +
-      '.btn-salvar, ' +
-      '#btnSalvar, ' +
-      'button:has(svg path[fill="red"]), ' +
-      'button:has(img[alt*="coração"]), ' +
-      'button:has(img[alt*="coracao"]), ' +
-      'footer button:first-of-type, ' + // Primeiro botão do rodapé
-      '.btn-coracao'
-    );
+    // Seu botão é: id="btnSalvar" class="btn-coracao"
+    const btnCoracao = document.querySelector('#btnSalvar');
     
     if (!btnCoracao) {
-      console.error('❌ Botão de salvar não encontrado. Seletores testados não funcionaram.');
-      console.log('💡 Dica: Inspecione o botão vermelho e me diga qual é o ID ou classe dele');
+      console.error('❌ Botão #btnSalvar não encontrado');
       return;
     }
     
@@ -202,7 +190,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         
         localStorage.setItem('got2cook_saved_recipes', JSON.stringify(receitas));
         
-        // Atualizar conquistas (mesmo sem o G2C disponível no momento)
+        // Atualizar conquistas
         const salvasAtual = Number(localStorage.getItem('got2cook_salvas') || 0) + 1;
         localStorage.setItem('got2cook_salvas', salvasAtual);
         
@@ -217,6 +205,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         return true;
       }
       
+      console.log('ℹ️ Receita já estava salva');
       return false;
     }
     
@@ -246,7 +235,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     
     // Verificar se já está salva
     function verificarSeEstaSalva() {
-      const titulo = document.querySelector('h1, .titulo-receita, .receita-titulo')?.textContent?.trim();
+      const titulo = document.querySelector('h1')?.textContent?.trim();
       if (!titulo) return false;
       
       const receitas = JSON.parse(localStorage.getItem('got2cook_saved_recipes') || '[]');
@@ -267,13 +256,27 @@ document.addEventListener("DOMContentLoaded", ()=>{
       const estaSalva = this.classList.contains('salva');
       
       // Coletar dados da receita
+      const tituloEl = document.querySelector('h1');
+      const imagemEl = document.querySelector('img[alt*="receita"]');
+      const tempoEl = document.querySelector('.tempo, [class*="tempo"]');
+      
+      // Pegar ingredientes
+      const ingredientesEls = document.querySelectorAll('ul li');
+      const ingredientes = [];
+      ingredientesEls.forEach(el => {
+        const texto = el.textContent.trim();
+        if (texto && texto.length > 2 && !texto.toLowerCase().includes('modo de preparo')) {
+          ingredientes.push(texto);
+        }
+      });
+      
       const receita = {
         id: 'receita_' + Date.now(),
-        titulo: document.querySelector('h1, .titulo-receita, .receita-titulo')?.textContent?.trim() || 'RECEITA GERADA',
-        imagem: document.querySelector('.receita-imagem img, img[alt*="receita"]')?.src || '',
-        tempoMinutos: parseInt(document.querySelector('.tempo, [data-tempo], span:has-text("min")')?.textContent) || 30,
-        ingredientes: Array.from(document.querySelectorAll('.ingrediente, .lista-ingredientes li, ul li')).map(el => el.textContent.trim()).filter(t => t.length > 0),
-        modoPreparo: Array.from(document.querySelectorAll('.passo, .modo-preparo li, .modo-preparo p')).map(el => el.textContent.trim()).filter(t => t.length > 0),
+        titulo: tituloEl?.textContent?.trim() || 'RECEITA GERADA',
+        imagem: imagemEl?.src || '',
+        tempoMinutos: 30,
+        ingredientes: ingredientes.slice(0, 10), // Primeiros 10 itens
+        modoPreparo: ['Misture os ingredientes selecionados e prepare ao seu gosto.'],
         tipo: 'todos'
       };
       
@@ -311,3 +314,4 @@ document.addEventListener("DOMContentLoaded", ()=>{
   }
   
 })();
+```
