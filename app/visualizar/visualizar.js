@@ -3,9 +3,6 @@
 "use strict";
 
 /* ========= UTILITÁRIOS ========= */
-const $ = (sel) => document.querySelector(sel);
-const $$ = (sel) => document.querySelectorAll(sel);
-
 function getLS(key, fallback) {
   try {
     const item = localStorage.getItem(key);
@@ -29,27 +26,6 @@ function isPremium() {
   return status.isPremium === true;
 }
 
-/* ========= REFERÊNCIAS DOM ========= */
-const elements = {
-  titulo: $('#tituloReceita'),
-  areaImagem: $('#areaImagem'),
-  metaTempo: $('#metaTempo'),
-  metaDif: $('#metaDificuldade'),
-  metaHumor: $('#metaHumor'),
-  textoReceita: $('#textoReceita'),
-  listaIng: $('#listaIngredientes'),
-  listaPassos: $('#listaPassos'),
-  btnMais: $('#btnLerMais'),
-  btnSalvar: $('#btnSalvar'),
-  btnGerar: $('#btnGerarNovamente'),
-  badgePremium: $('#badgePremium'),
-  
-  // Rodapé
-  btnVoltar: $('#btnVoltar'),
-  btnLogo: $('#btnLogo'),
-  btnGeladeira: $('#btnGeladeira')
-};
-
 /* ========= DADOS DA RECEITA ========= */
 function getReceitaAtual() {
   const temp = getLS('receita_temp', null);
@@ -58,135 +34,141 @@ function getReceitaAtual() {
   // Mock para teste
   return {
     id: 'mock_' + Date.now(),
-    titulo: 'Arroz Temperado com Carne',
+    titulo: 'Arroz Temperado com Carne e Pimenta',
     tempo: '30 min',
     dificuldade: 'Fácil',
     humor: 'Conforto 😊',
     ingredientes: [
       '1 xícara de arroz cru',
-      '200g de carne em cubos',
-      '1 pimenta fresca picada',
-      '2 dentes de alho',
-      'Sal a gosto'
+      '200g de carne em cubos ou desfiada',
+      '1 pimenta fresca picada (dedo-de-moça)',
+      '2 dentes de alho amassados',
+      '1 cebola média picada',
+      'Sal e pimenta-do-reino a gosto',
+      '2 colheres de óleo'
     ],
     passos: [
-      'Refogue o alho até dourar',
-      'Adicione a carne e tempere',
-      'Acrescente o arroz e misture bem',
-      'Adicione água e deixe cozinhar',
-      'Finalize com a pimenta picada'
+      'Aqueça o óleo em uma panela e refogue o alho até dourar',
+      'Adicione a cebola e deixe murchar',
+      'Acrescente a carne e tempere com sal e pimenta',
+      'Refogue até a carne ficar dourada',
+      'Adicione o arroz e misture bem',
+      'Acrescente água (2 xícaras) e deixe cozinhar',
+      'Quando o arroz estiver quase pronto, adicione a pimenta picada',
+      'Finalize e sirva quente'
     ],
     imagem: isPremium() ? '../../assets/receita_exemplo.png' : null
   };
 }
 
-/* ========= RENDERIZAR IMAGEM OU PLACEHOLDER ========= */
-function renderImagem(receita) {
-  if (!elements.areaImagem) return;
-  
-  elements.areaImagem.innerHTML = '';
-  
-  if (receita.imagem && isPremium()) {
-    // PREMIUM: Mostrar imagem
-    const img = document.createElement('img');
-    img.src = receita.imagem;
-    img.alt = `Imagem da receita ${receita.titulo}`;
-    img.onerror = () => {
-      // Se erro ao carregar, mostrar placeholder
-      renderPlaceholder(receita.titulo);
-    };
-    elements.areaImagem.appendChild(img);
-    
-    if (elements.badgePremium) {
-      elements.badgePremium.style.display = 'none';
-    }
-  } else {
-    // GRATUITO: Mostrar placeholder com texto
-    renderPlaceholder(receita.titulo);
-    
-    if (elements.badgePremium) {
-      elements.badgePremium.style.display = 'block';
-    }
-  }
-}
-
-function renderPlaceholder(titulo) {
-  const placeholder = document.createElement('div');
-  placeholder.className = 'placeholder-texto';
-  
-  const emojis = ['🍳', '🥘', '🍲', '🥗', '🍝', '🍕'];
-  const emojiAleatorio = emojis[Math.floor(Math.random() * emojis.length)];
-  
-  placeholder.innerHTML = `
-    <span class="emoji-grande">${emojiAleatorio}</span>
-    <p><strong>${titulo}</strong></p>
-    <p class="subtitulo">Receita gerada com sucesso!</p>
-  `;
-  
-  elements.areaImagem.appendChild(placeholder);
-}
-
-/* ========= RENDERIZAR RECEITA ========= */
-function renderReceita() {
+/* ========= RENDERIZAR LAYOUT ========= */
+function renderLayout() {
   const receita = getReceitaAtual();
+  const wrapper = document.getElementById('wrapperReceita');
   
-  // Título
-  if (elements.titulo) {
-    elements.titulo.textContent = receita.titulo || 'RECEITA GERADA';
+  if (!wrapper) return;
+  
+  const premium = isPremium() && receita.imagem;
+  
+  if (premium) {
+    // LAYOUT PREMIUM: Grid com imagem
+    wrapper.className = 'layout-premium';
+    wrapper.innerHTML = `
+      ${renderImagem(receita)}
+      ${renderConteudoTexto(receita)}
+    `;
+  } else {
+    // LAYOUT GRATUITO: Apenas texto centralizado
+    wrapper.className = 'layout-gratuito';
+    wrapper.innerHTML = renderConteudoTexto(receita, true);
   }
   
-  // Imagem ou Placeholder
-  renderImagem(receita);
+  setupEventos(receita);
+}
+
+/* ========= RENDERIZAR IMAGEM ========= */
+function renderImagem(receita) {
+  return `
+    <figure class="imagem-receita">
+      <img 
+        src="${receita.imagem || '../../assets/receita_exemplo.png'}" 
+        alt="Imagem da receita ${receita.titulo}"
+        onerror="this.src='../../assets/receita_exemplo.png'"
+      />
+    </figure>
+  `;
+}
+
+/* ========= RENDERIZAR CONTEÚDO DE TEXTO ========= */
+function renderConteudoTexto(receita, mostrarBadge = false) {
+  const ingredientes = Array.isArray(receita.ingredientes) ? receita.ingredientes : [];
+  const passos = Array.isArray(receita.passos) && receita.passos.length 
+    ? receita.passos 
+    : ['Siga as instruções de preparo'];
   
-  // Meta informações
-  if (elements.metaTempo) {
-    elements.metaTempo.textContent = `⏱️ ${receita.tempo || '30 min'}`;
-  }
+  const humor = Array.isArray(receita.humores) 
+    ? receita.humores.join(', ') 
+    : (receita.humor || '—');
   
-  if (elements.metaDif) {
-    elements.metaDif.textContent = `Dificuldade ${receita.dificuldade || 'Fácil'}`;
-  }
-  
-  if (elements.metaHumor) {
-    const humor = Array.isArray(receita.humores) 
-      ? receita.humores.join(', ') 
-      : (receita.humor || '—');
-    elements.metaHumor.textContent = `Humor ${humor}`;
-  }
-  
-  // Ingredientes
-  if (elements.listaIng) {
-    elements.listaIng.innerHTML = '';
-    const ingredientes = Array.isArray(receita.ingredientes) 
-      ? receita.ingredientes 
-      : [];
-    
-    ingredientes.forEach(item => {
-      const li = document.createElement('li');
-      li.textContent = typeof item === 'string' ? item : (item.nome || item);
-      elements.listaIng.appendChild(li);
-    });
-  }
-  
-  // Modo de preparo
-  if (elements.listaPassos) {
-    elements.listaPassos.innerHTML = '';
-    const passos = Array.isArray(receita.passos) && receita.passos.length
-      ? receita.passos
-      : ['Siga as instruções de preparo'];
-    
-    passos.forEach(passo => {
-      const li = document.createElement('li');
-      li.textContent = passo;
-      elements.listaPassos.appendChild(li);
-    });
-  }
-  
-  // Sincronizar botão de favoritar
-  sincronizarBotaoSalvar(receita);
-  
-  // Foco no título
-  setTimeout(() => elements.titulo?.focus(), 100);
+  return `
+    <div class="conteudo-texto">
+      <h1 class="titulo-receita">${receita.titulo || 'RECEITA GERADA'}</h1>
+      
+      <div class="meta-info">
+        <span class="chip">⏱️ ${receita.tempo || '30 min'}</span>
+        <span class="chip">📊 ${receita.dificuldade || 'Fácil'}</span>
+        <span class="chip">😊 ${humor}</span>
+      </div>
+      
+      <div class="card-receita">
+        <section class="secao">
+          <h2 class="secao-titulo">
+            <span class="emoji">🥣</span>
+            Ingredientes
+          </h2>
+          <ul class="lista-items">
+            ${ingredientes.map(ing => `
+              <li>${typeof ing === 'string' ? ing : (ing.nome || ing)}</li>
+            `).join('')}
+          </ul>
+        </section>
+        
+        <section class="secao">
+          <h2 class="secao-titulo">
+            <span class="emoji">🍳</span>
+            Modo de Preparo
+          </h2>
+          <ol class="lista-items passos">
+            ${passos.map(passo => `<li>${passo}</li>`).join('')}
+          </ol>
+        </section>
+      </div>
+      
+      <div class="acoes">
+        <button id="btnSalvar" class="btn-coracao" type="button" aria-pressed="false" aria-label="Salvar receita">
+          <span class="coracao">♡</span>
+        </button>
+        <button id="btnGerarNovamente" class="btn-gerar" type="button">
+          🔄 Gerar Novamente
+        </button>
+      </div>
+      
+      ${mostrarBadge ? `
+        <div class="badge-premium">
+          <h3 class="badge-premium-titulo">
+            <span class="icone">🖼️</span>
+            Desbloqueie Imagens das Receitas
+          </h3>
+          <p class="badge-premium-texto">
+            Com o <strong>Plano Premium</strong>, todas as suas receitas ganham fotos incríveis que vão te inspirar ainda mais na cozinha!
+          </p>
+          <a href="../gerenciar-plano/" class="btn-premium">
+            ✨ Assinar Premium
+          </a>
+        </div>
+      ` : ''}
+    </div>
+  `;
 }
 
 /* ========= SISTEMA DE FAVORITOS ========= */
@@ -211,12 +193,13 @@ function estaSalva(receita) {
 }
 
 function sincronizarBotaoSalvar(receita) {
-  if (!elements.btnSalvar) return;
+  const btn = document.getElementById('btnSalvar');
+  if (!btn) return;
   
   const salva = estaSalva(receita);
-  elements.btnSalvar.setAttribute('aria-pressed', salva ? 'true' : 'false');
+  btn.setAttribute('aria-pressed', salva ? 'true' : 'false');
   
-  const coracao = elements.btnSalvar.querySelector('.coracao');
+  const coracao = btn.querySelector('.coracao');
   if (coracao) {
     coracao.textContent = salva ? '♥' : '♡';
   }
@@ -231,7 +214,6 @@ function toggleSalvar(receita) {
     receitas.splice(index, 1);
     setLS(KEY_SALVAS, receitas);
     
-    // Atualizar conquistas
     const totalSalvas = receitas.length;
     localStorage.setItem('got2cook_salvas', totalSalvas);
     
@@ -251,7 +233,6 @@ function toggleSalvar(receita) {
     receitas.push(receita);
     setLS(KEY_SALVAS, receitas);
     
-    // Atualizar conquistas
     const totalSalvas = receitas.length;
     localStorage.setItem('got2cook_salvas', totalSalvas);
     
@@ -266,63 +247,50 @@ function toggleSalvar(receita) {
   sincronizarBotaoSalvar(receita);
 }
 
-/* ========= LER MAIS / MENOS ========= */
-function toggleLerMais() {
-  if (!elements.textoReceita || !elements.btnMais) return;
+/* ========= SETUP DE EVENTOS ========= */
+function setupEventos(receita) {
+  // Salvar receita
+  const btnSalvar = document.getElementById('btnSalvar');
+  if (btnSalvar) {
+    sincronizarBotaoSalvar(receita);
+    
+    btnSalvar.addEventListener('click', () => {
+      toggleSalvar(receita);
+    });
+  }
   
-  const ativo = elements.textoReceita.getAttribute('data-scroll') === 'on';
+  // Gerar novamente
+  const btnGerar = document.getElementById('btnGerarNovamente');
+  if (btnGerar) {
+    btnGerar.addEventListener('click', () => {
+      window.location.href = '../gerar/';
+    });
+  }
   
-  elements.textoReceita.setAttribute('data-scroll', ativo ? 'off' : 'on');
-  elements.btnMais.setAttribute('aria-expanded', ativo ? 'false' : 'true');
-  elements.btnMais.textContent = ativo ? 'Ler mais' : 'Ler menos';
-}
-
-/* ========= NAVEGAÇÃO ========= */
-function setupNavegacao() {
-  elements.btnVoltar?.addEventListener('click', () => {
+  // Navegação do rodapé
+  const btnVoltar = document.getElementById('btnVoltar');
+  const btnLogo = document.getElementById('btnLogo');
+  const btnGeladeira = document.getElementById('btnGeladeira');
+  
+  btnVoltar?.addEventListener('click', () => {
     window.location.href = '../humor/index.html';
   });
   
-  elements.btnLogo?.addEventListener('click', () => {
+  btnLogo?.addEventListener('click', () => {
     window.location.href = '../home/index.html';
   });
   
-  elements.btnGeladeira?.addEventListener('click', () => {
+  btnGeladeira?.addEventListener('click', () => {
     window.location.href = '../geladeira/index.html';
-  });
-}
-
-/* ========= EVENTOS ========= */
-function setupEventos() {
-  const receita = getReceitaAtual();
-  
-  // Ler mais
-  elements.btnMais?.addEventListener('click', toggleLerMais);
-  
-  // Salvar
-  elements.btnSalvar?.addEventListener('click', () => {
-    toggleSalvar(receita);
-    
-    // Feedback visual
-    const btn = elements.btnSalvar;
-    btn.style.transform = estaSalva(receita) ? 'scale(1.3)' : 'scale(0.8)';
-    setTimeout(() => { btn.style.transform = 'scale(1)'; }, 200);
-  });
-  
-  // Gerar novamente
-  elements.btnGerar?.addEventListener('click', () => {
-    window.location.href = '../gerar/';
   });
 }
 
 /* ========= INICIALIZAÇÃO ========= */
 document.addEventListener('DOMContentLoaded', () => {
   console.log('🎨 Visualizar Receita - Iniciado');
-  console.log('💎 Plano:', isPremium() ? 'PREMIUM' : 'GRATUITO');
+  console.log('💎 Plano:', isPremium() ? 'PREMIUM ✨' : 'GRATUITO');
   
-  renderReceita();
-  setupNavegacao();
-  setupEventos();
+  renderLayout();
   
-  console.log('✅ Tela pronta!');
+  console.log('✅ Tela renderizada com sucesso!');
 });
