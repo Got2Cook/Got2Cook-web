@@ -170,3 +170,75 @@ function salvarReceita(receita) {
     window.G2C.atualizarGraficos();
   }
 }
+
+// /app/visualizar-receita/visualizar.js
+
+// ========= INTEGRAÇÃO COM SISTEMA DE CONQUISTAS =========
+
+// Função para salvar receita (botão coração)
+function salvarReceita(receita) {
+  const receitas = JSON.parse(localStorage.getItem('got2cook_saved_recipes') || '[]');
+  
+  // Verificar se já existe
+  const jaExiste = receitas.some(r => r.id === receita.id);
+  
+  if (!jaExiste) {
+    // Adicionar timestamp de criação
+    receitas.push({
+      ...receita,
+      criadoEm: new Date().toISOString()
+    });
+    
+    localStorage.setItem('got2cook_saved_recipes', JSON.stringify(receitas));
+    
+    // Incrementar conquista de salvamento
+    if (window.G2C) {
+      window.G2C.inc('salvas');
+      window.G2C.atualizarGraficos();
+    }
+    
+    console.log('✅ Receita salva e conquista atualizada!');
+  }
+}
+
+// Função para remover receita (desfavoritar)
+function removerReceita(receitaId) {
+  let receitas = JSON.parse(localStorage.getItem('got2cook_saved_recipes') || '[]');
+  receitas = receitas.filter(r => r.id !== receitaId);
+  
+  localStorage.setItem('got2cook_saved_recipes', JSON.stringify(receitas));
+  
+  // Atualizar métrica
+  if (window.G2C) {
+    window.G2C.setMetrics({ salvas: receitas.length });
+    window.G2C.atualizarGraficos();
+  }
+  
+  console.log('❌ Receita removida e conquista atualizada!');
+}
+
+// Exemplo de uso no botão coração
+document.getElementById('btnCoracaoSalvar')?.addEventListener('click', function() {
+  const receita = {
+    id: 'receita_' + Date.now(),
+    titulo: document.querySelector('.titulo-receita')?.textContent || 'Sem título',
+    imagem: document.querySelector('.img-receita')?.src || '',
+    tempoMinutos: parseInt(document.querySelector('.tempo')?.textContent) || 0,
+    ingredientes: Array.from(document.querySelectorAll('.ingrediente')).map(el => el.textContent),
+    modoPreparo: Array.from(document.querySelectorAll('.passo')).map(el => el.textContent),
+    humorTags: [], // seus humores aqui
+    tipo: 'doce' // ou 'salgado'
+  };
+  
+  const salva = this.classList.contains('salva');
+  
+  if (salva) {
+    // Já está salva, então remover
+    removerReceita(receita.id);
+    this.classList.remove('salva');
+  } else {
+    // Não está salva, então salvar
+    salvarReceita(receita);
+    this.classList.add('salva');
+  }
+});
