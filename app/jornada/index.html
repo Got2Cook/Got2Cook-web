@@ -6,42 +6,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Minha Jornada - Got2Cook</title>
   <link rel="stylesheet" href="jornada.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
   <script src="jornada.js" defer></script>
 </head>
 <body>
   <div class="container">
-    <header class="topo-icones somente-titulo">
-      <h1 class="titulo">MINHA JORNADA</h1>
+    <header class="topo">
+      <h1 class="titulo">✨ MINHA JORNADA</h1>
+      <p class="subtitulo-header">Acompanhe seu progresso e conquistas</p>
     </header>
 
     <section class="layout">
-      <!-- ESQUERDA: gráficos -->
-      <aside class="painel-graficos" aria-label="Painel de gráficos">
-        <div class="grafico">
-          <h3 class="grafico-titulo">ESTILOS PREFERIDOS</h3>
-          <div class="grafico-row">
-            <canvas id="graficoEstilos" aria-label="Gráfico Estilos"></canvas>
+      <!-- PAINEL DE ESTATÍSTICAS -->
+      <aside class="painel-stats">
+        <div class="stats-header">
+          <h2>📊 Minhas Estatísticas</h2>
+          <p class="stats-desc">Seus hábitos culinários em dados</p>
+        </div>
+
+        <!-- Card Contador Principal -->
+        <div class="card-contador">
+          <div class="contador-content">
+            <span class="contador-emoji">🏆</span>
+            <div class="contador-info">
+              <p class="contador-label">RECEITAS CRIADAS</p>
+              <p class="contador-numero" id="contador">0</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gráfico Estilos -->
+        <div class="grafico-card">
+          <h3 class="grafico-titulo">
+            <span class="icone">🍝</span>
+            ESTILOS PREFERIDOS
+          </h3>
+          <div class="grafico-content">
+            <div class="grafico-wrapper">
+              <canvas id="graficoEstilos" aria-label="Gráfico Estilos Preferidos"></canvas>
+            </div>
             <ul class="legenda-lista" id="legendaEstilos" aria-label="Legenda Estilos"></ul>
           </div>
         </div>
 
-        <div class="grafico">
-          <h3 class="grafico-titulo">MOMENTOS DO DIA</h3>
-          <div class="grafico-row">
-            <canvas id="graficoMomentos" aria-label="Gráfico Momentos"></canvas>
+        <!-- Gráfico Momentos -->
+        <div class="grafico-card">
+          <h3 class="grafico-titulo">
+            <span class="icone">⏰</span>
+            MOMENTOS DO DIA
+          </h3>
+          <div class="grafico-content">
+            <div class="grafico-wrapper">
+              <canvas id="graficoMomentos" aria-label="Gráfico Momentos do Dia"></canvas>
+            </div>
             <ul class="legenda-lista" id="legendaMomentos" aria-label="Legenda Momentos"></ul>
           </div>
         </div>
       </aside>
 
-      <!-- DIREITA: conquistas -->
-      <section class="painel-conquistas" aria-label="Minhas conquistas">
-        <h2 class="subtitulo">MINHAS CONQUISTAS</h2>
-        <p class="contador-receitas">
-          🏆 VOCÊ JÁ CRIOU <span id="contador">0</span> RECEITAS COM A GOT2COOK! 🏆
-        </p>
-        <section class="conquistas" id="conquistasContainer"></section>
+      <!-- PAINEL DE CONQUISTAS -->
+      <section class="painel-conquistas">
+        <div class="conquistas-header">
+          <h2>🏅 MINHAS CONQUISTAS</h2>
+          <p class="conquistas-desc">Desbloqueie medalhas ao atingir marcos especiais</p>
+        </div>
+
+        <div class="conquistas-grid" id="conquistasContainer"></div>
       </section>
     </section>
   </div>
