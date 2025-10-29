@@ -494,79 +494,71 @@ img {
   transform: translateY(-2px);
 }
 
-/* /app/visualizar/visualizar.css */
-
-/* ... (mantenha todo o código anterior até a seção do rodapé) ... */
-
-/* ===== RODAPÉ CURVO (IDÊNTICO AO GERAR) ===== */
+/* ===== RODAPÉ CURVO (TAMANHO FIXO GARANTIDO) ===== */
 .curva {
-  width: 100%;
-  height: 70px;
-  background: var(--roxo-escuro);
-  border-top-left-radius: 100% 50%;
-  border-top-right-radius: 100% 50%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-  z-index: 100;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+  width: 100% !important;
+  height: 70px !important;
+  min-height: 70px !important;
+  max-height: 70px !important;
+  background-color: #7b7190 !important;
+  border-top-left-radius: 100% 50% !important;
+  border-top-right-radius: 100% 50% !important;
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 40px !important;
+  z-index: 100 !important;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.15) !important;
 }
 
 .btn-footer {
-  background: transparent;
-  border: none;
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  cursor: pointer;
-  transform: translateY(-10px);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-footer:hover {
-  transform: translateY(-16px) scale(1.1);
-}
-
-.btn-footer:active {
-  transform: translateY(-8px) scale(0.95);
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 50% !important;
+  width: 55px !important;
+  height: 55px !important;
+  min-width: 55px !important;
+  max-width: 55px !important;
+  min-height: 55px !important;
+  max-height: 55px !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  overflow: hidden !important;
+  cursor: pointer !important;
+  transform: translateY(-10px) !important;
 }
 
 .btn-footer img {
-  width: 250%;
-  height: 250%;
-  object-fit: contain;
+  width: 250% !important;
+  height: 250% !important;
+  min-width: 250% !important;
+  min-height: 250% !important;
+  object-fit: contain !important;
 }
 
 .btn-footer.btn-central {
-  width: 150px;
-  height: 150px;
-  transform: translateY(-20px);
-}
-
-.btn-footer.btn-central:hover {
-  transform: translateY(-28px) scale(1.05);
-}
-
-.btn-footer.btn-central:active {
-  transform: translateY(-18px) scale(0.98);
+  width: 150px !important;
+  height: 150px !important;
+  min-width: 150px !important;
+  max-width: 150px !important;
+  min-height: 150px !important;
+  max-height: 150px !important;
+  transform: translateY(-20px) !important;
 }
 
 .btn-footer.btn-central img {
-  width: 150%;
-  height: 150%;
-  object-fit: contain;
+  width: 150% !important;
+  height: 150% !important;
+  min-width: 150% !important;
+  min-height: 150% !important;
+  object-fit: contain !important;
 }
-
-/* ... (mantenha o resto do código) ... */
+```
 
 /* ===== ACESSIBILIDADE ===== */
 :focus-visible {
