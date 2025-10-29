@@ -28,15 +28,13 @@ let tipoReceita = "";
 
 /* ========= REFERÊNCIAS DOM ========= */
 const elements = {
-  listaItens: document.getElementById('listaItens'),
+  listaLinhas: document.getElementById('listaLinhas'),
   geladeiraGrid: document.getElementById('geladeiraGrid'),
   inputBusca: document.getElementById('inputBusca'),
   contadorItens: document.getElementById('contadorItens'),
-  placeholderVazio: document.getElementById('placeholderVazio'),
   btnGerar: document.getElementById('btnGerar'),
   btnFiltros: document.querySelectorAll('.btn-filtro'),
   
-  // Rodapé
   btnVoltar: document.getElementById('btnVoltar'),
   btnLogo: document.getElementById('btnLogo'),
   btnGeladeira: document.getElementById('btnGeladeira')
@@ -62,9 +60,9 @@ function renderGeladeira() {
   
   if (ingredientes.length === 0) {
     elements.geladeiraGrid.innerHTML = `
-      <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
-        <p style="color: var(--verde); opacity: 0.6;">
-          Nenhum ingrediente na geladeira. Adicione alguns primeiro!
+      <div style="grid-column: 1/-1; text-align: center; padding: 32px;">
+        <p style="color: var(--verde); opacity: 0.6; font-size: 14px;">
+          Nenhum ingrediente na geladeira
         </p>
       </div>
     `;
@@ -97,12 +95,10 @@ function toggleIngrediente(card, nome) {
   const estaSelecionado = card.classList.contains('selected');
   
   if (estaSelecionado) {
-    // Remover
     card.classList.remove('selected');
     selecionados = selecionados.filter(n => n !== nome);
     removerDaLista(nome);
   } else {
-    // Adicionar
     card.classList.add('selected');
     selecionados.push(nome);
     adicionarNaLista(nome);
@@ -111,21 +107,34 @@ function toggleIngrediente(card, nome) {
   atualizarUI();
 }
 
-/* ========= ADICIONAR NA LISTA ========= */
+/* ========= ADICIONAR NA LISTA (SISTEMA DE 3 LINHAS) ========= */
 function adicionarNaLista(nome) {
-  if (!elements.listaItens) return;
+  if (!elements.listaLinhas) return;
   
-  // Esconder placeholder
-  if (elements.placeholderVazio) {
-    elements.placeholderVazio.style.display = 'none';
+  const linhas = elements.listaLinhas.querySelectorAll('.linha-lista');
+  
+  // Encontrar a linha com menos itens (max 3 por linha)
+  let linhaAlvo = null;
+  let menorQtd = Infinity;
+  
+  linhas.forEach(linha => {
+    const qtd = linha.querySelectorAll('.item-ingrediente').length;
+    if (qtd < 3 && qtd < menorQtd) {
+      menorQtd = qtd;
+      linhaAlvo = linha;
+    }
+  });
+  
+  // Se todas as 3 linhas estão cheias, usar a primeira
+  if (!linhaAlvo) {
+    linhaAlvo = linhas[0];
   }
   
   const item = document.createElement('div');
-  item.className = 'item-lista';
+  item.className = 'item-ingrediente';
   item.dataset.nome = nome;
   
   item.innerHTML = `
-    <span class="check-icon">✓</span>
     <span>${nome}</span>
     <span class="remover">×</span>
   `;
@@ -135,32 +144,25 @@ function adicionarNaLista(nome) {
     removerIngrediente(nome);
   });
   
-  elements.listaItens.appendChild(item);
+  linhaAlvo.appendChild(item);
 }
 
 /* ========= REMOVER DA LISTA ========= */
 function removerDaLista(nome) {
-  const item = elements.listaItens?.querySelector(`[data-nome="${nome}"]`);
+  const item = elements.listaLinhas?.querySelector(`[data-nome="${nome}"]`);
   if (item) {
     item.style.animation = 'none';
     item.style.opacity = '0';
-    item.style.transform = 'scale(0.8)';
-    setTimeout(() => item.remove(), 200);
-  }
-  
-  // Mostrar placeholder se vazio
-  if (selecionados.length === 0 && elements.placeholderVazio) {
-    elements.placeholderVazio.style.display = 'flex';
+    item.style.transform = 'scale(0.7)';
+    setTimeout(() => item.remove(), 150);
   }
 }
 
 /* ========= REMOVER INGREDIENTE ========= */
 function removerIngrediente(nome) {
-  // Remover da lista
   selecionados = selecionados.filter(n => n !== nome);
   removerDaLista(nome);
   
-  // Desmarcar no grid
   const card = elements.geladeiraGrid?.querySelector(`[data-nome="${nome}"]`);
   if (card) {
     card.classList.remove('selected');
@@ -171,13 +173,11 @@ function removerIngrediente(nome) {
 
 /* ========= ATUALIZAR UI ========= */
 function atualizarUI() {
-  // Atualizar contador
   if (elements.contadorItens) {
     const count = selecionados.length;
     elements.contadorItens.textContent = `${count} ${count === 1 ? 'item' : 'itens'}`;
   }
   
-  // Habilitar/desabilitar botão gerar
   if (elements.btnGerar) {
     const podeGerar = selecionados.length > 0 && tipoReceita !== "";
     elements.btnGerar.disabled = !podeGerar;
@@ -188,17 +188,10 @@ function atualizarUI() {
 function setupFiltros() {
   elements.btnFiltros.forEach(btn => {
     btn.addEventListener('click', () => {
-      // Remover ativo de todos
       elements.btnFiltros.forEach(b => b.classList.remove('ativo'));
-      
-      // Ativar clicado
       btn.classList.add('ativo');
-      
-      // Definir tipo
       tipoReceita = btn.dataset.tipo;
-      
-      console.log('Tipo selecionado:', tipoReceita);
-      
+      console.log('Tipo:', tipoReceita);
       atualizarUI();
     });
   });
@@ -211,18 +204,12 @@ function setupBusca() {
   const aplicarFiltro = () => {
     const query = norm(elements.inputBusca.value);
     const tokens = query.split(/[,\s]+/).filter(Boolean);
-    
     const cards = elements.geladeiraGrid.querySelectorAll('.ingrediente-card');
     
     cards.forEach(card => {
       const nomeNorm = card.dataset.norm || "";
       const match = tokens.length === 0 || tokens.every(t => nomeNorm.includes(t));
-      
       card.style.display = match ? '' : 'none';
-      
-      if (match && tokens.length > 0) {
-        card.style.animation = 'fadeIn 0.3s ease-out';
-      }
     });
   };
   
@@ -241,7 +228,6 @@ function gerarReceita() {
     return;
   }
   
-  // Criar receita temporária
   const receita = {
     id: 'receita_' + Date.now(),
     titulo: `Receita ${tipoReceita === 'doce' ? 'Doce' : 'Salgada'} Personalizada`,
@@ -261,40 +247,31 @@ function gerarReceita() {
     criadoEm: new Date().toISOString()
   };
   
-  // Salvar no localStorage
   setLS('receita_temp', receita);
   
   // ATUALIZAR CONQUISTAS
   if (window.G2C) {
-    // Total e criadas
     window.G2C.inc('total');
     window.G2C.inc('criadas');
     
-    // Improviso (≤3 ingredientes)
     if (receita.ingredientes.length <= 3) {
       window.G2C.inc('improviso');
     }
     
-    // Rápidas (<10 min) - placeholder para quando tiver tempo real
     if (receita.tempoMinutos < 10) {
       window.G2C.inc('rapidas');
     }
     
-    // Noturnas (00:00-05:00)
     const hora = new Date().getHours();
     if (hora >= 0 && hora < 5) {
       window.G2C.inc('noturnas');
     }
     
-    // Atualizar gráficos
     window.G2C.atualizarGraficos();
-    
     console.log('✅ Conquistas atualizadas!');
   }
   
   console.log('📝 Receita gerada:', receita);
-  
-  // Navegar para visualização
   window.location.href = '../visualizar/index.html';
 }
 
@@ -326,5 +303,5 @@ document.addEventListener('DOMContentLoaded', () => {
   atualizarUI();
   
   console.log('✅ Tela pronta!');
-  console.log('📦 Ingredientes disponíveis:', ingredientes.length);
+  console.log('📦 Ingredientes:', ingredientes.length);
 });
