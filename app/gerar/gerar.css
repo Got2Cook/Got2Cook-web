@@ -1,208 +1,508 @@
+/* /app/gerar/gerar.css */
+
+/* ===== VARIÁVEIS ===== */
+:root {
+  --bg: #c0ffa5;
+  --roxo: #492f70;
+  --roxo-escuro: #7b7190;
+  --verde: #225c18;
+  --cartao: #dfffbb;
+  --div: #b3e698;
+  
+  --card-bg: #f5ffe8;
+  --card-shadow: 0 4px 20px rgba(34, 92, 24, 0.12);
+  --border-radius: 24px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== RESET & BASE ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
 body {
-  margin: 0;
-  background-color: #c0ffa5;
-  font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
+  font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+  background: linear-gradient(135deg, var(--bg) 0%, #b3e698 100%);
+  color: var(--verde);
+  line-height: 1.6;
   min-height: 100vh;
+  overflow-x: hidden;
+  padding-bottom: 90px;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px;
-}
-
-h1 {
-  font-size: 35px;
-  color: #225c18;
-  margin: 0;
-  margin-bottom: -160px;
-}
-
-.icone-canto {
-  width: 40px;
-  height: 40px;
-}
-
+/* ===== MAIN ===== */
 main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 0 16px;
-  overflow: hidden;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px 140px;
 }
 
-/* Filtros com largura máxima para grandes telas */
+/* ===== TOPO ===== */
+.topo {
+  text-align: center;
+  margin-bottom: 32px;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.topo h1 {
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--roxo);
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(73, 47, 112, 0.08);
+}
+
+/* ===== FILTROS ===== */
 .filtros {
   display: flex;
-  gap: 12px;
-  margin: 20px auto 10px;
-  margin-top: 100px;
-  max-width: 600px;
-  width: 100%;
+  justify-content: center;
+  gap: 16px;
+  margin: 0 0 32px;
   flex-wrap: wrap;
+  animation: fadeIn 0.6s ease-out 0.1s backwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .btn-filtro {
-  background-color: #8ed660;
-  color: #000;
-  border: none;
-  border-radius: 20px;
-  padding: 10px 20px;
-  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #fff 0%, #f9fff5 100%);
+  border: 3px solid var(--verde);
+  color: var(--verde);
+  border-radius: 999px;
+  padding: 14px 32px;
+  font-weight: 800;
   font-size: 16px;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(34, 92, 24, 0.1);
+}
+
+.btn-filtro .emoji {
+  font-size: 24px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.btn-filtro:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(34, 92, 24, 0.2);
 }
 
 .btn-filtro.ativo {
-  background-color: #492f70;
-  color: white;
+  background: linear-gradient(135deg, var(--roxo) 0%, #5a3a80 100%);
+  color: #fff;
+  border-color: var(--roxo);
   transform: scale(1.05);
 }
 
-/* Barra de busca */
+/* ===== BUSCA ===== */
+.busca-wrapper {
+  max-width: 700px;
+  margin: 0 auto 24px;
+  animation: fadeIn 0.6s ease-out 0.2s backwards;
+}
+
 .busca {
   position: relative;
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto 12px;
 }
 
 .busca input {
   width: 100%;
-  padding: 10px 12px 10px 38px;
-  border: none;
-  border-radius: 20px;
-  background-color: #8ed660;
-  color: #492f70;
+  padding: 16px 16px 16px 50px;
+  border: 3px solid rgba(127, 177, 78, 0.3);
+  border-radius: var(--border-radius);
+  background: var(--card-bg);
+  color: var(--verde);
   font-size: 16px;
-  height: 40px;
-  box-sizing: border-box;
+  font-weight: 600;
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.busca input:focus {
+  outline: none;
+  border-color: var(--roxo);
+  box-shadow: 0 4px 16px rgba(73, 47, 112, 0.15);
+  transform: translateY(-2px);
+}
+
+.busca input::placeholder {
+  color: rgba(34, 92, 24, 0.5);
+  font-weight: 600;
 }
 
 .icone-lupa {
   position: absolute;
-  left: 10px;
-  top: 10px;
-  width: 18px;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  opacity: 0.6;
+  pointer-events: none;
 }
 
-/* Container lista + botão */
-.container-lista-e-botao {
+/* ===== ÁREA LISTA DE COMPRAS ===== */
+.area-lista-compras {
+  max-width: 900px;
+  margin: 0 auto 40px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeIn 0.6s ease-out 0.3s backwards;
+}
+
+/* Card da Lista */
+.card-lista {
+  background: var(--card-bg);
+  border: 3px solid rgba(127, 177, 78, 0.3);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+}
+
+.header-lista {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  width: 100%;
-  max-width: 600px;
-  flex-wrap: wrap;
-  margin: 0 auto 20px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid rgba(73, 47, 112, 0.1);
 }
 
-.lista-compras {
-  background-color: #e0f6c9;
-  border-radius: 0 0 30px 30px;
-  padding: 20px;
-  min-height: 80px;
-  flex: 1;
+.header-lista h2 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  color: var(--roxo);
+  margin: 0;
+  font-weight: 800;
+}
+
+.header-lista .emoji {
+  font-size: 26px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.contador {
+  background: linear-gradient(135deg, var(--verde) 0%, #1a4912 100%);
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(34, 92, 24, 0.3);
+}
+
+/* Lista de Itens */
+.lista-itens {
+  min-height: 120px;
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
-  box-sizing: border-box;
+  gap: 12px;
+  align-items: flex-start;
 }
 
-.lista-compras p {
-  background-color: #c0ffa5;
-  padding: 6px 10px;
-  border-radius: 16px;
-  color: #492f70;
-  font-size: 14px;
-  font-weight: bold;
+.placeholder-vazio {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  text-align: center;
+  opacity: 0.6;
+}
+
+.placeholder-vazio .emoji-grande {
+  font-size: 56px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.1));
+}
+
+.placeholder-vazio p {
+  color: var(--verde);
+  font-size: 15px;
   margin: 0;
 }
 
+/* Item da Lista */
+.item-lista {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #fff 0%, #f9fff5 100%);
+  border: 2px solid var(--verde);
+  color: var(--verde);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(34, 92, 24, 0.1);
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.item-lista:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(34, 92, 24, 0.2);
+  background: linear-gradient(135deg, #f0fff0 0%, #e8ffe8 100%);
+}
+
+.item-lista .check-icon {
+  width: 20px;
+  height: 20px;
+  background: var(--verde);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.item-lista .remover {
+  width: 20px;
+  height: 20px;
+  background: #e53935;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 900;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.item-lista:hover .remover {
+  transform: rotate(90deg);
+}
+
+/* Botão Gerar */
 .btn-gerar {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
-  flex-shrink: 0;
-  cursor: pointer;
-}
-
-.btn-gerar img {
-  width: 36px;
-}
-
-.geladeira h2 {
-  color: #225c18;
-  margin: 8px 0;
+  gap: 12px;
+  background: linear-gradient(135deg, var(--verde) 0%, #1a4912 100%);
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 18px 40px;
+  font-weight: 900;
   font-size: 18px;
-}
-
-/* repete para garantir consistência em algumas engines */
-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 0 16px;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 6px 20px rgba(34, 92, 24, 0.3);
+  position: relative;
   overflow: hidden;
 }
 
-/* Garante que a seção ocupe bem o espaço */
-.geladeira-scroll {
-  max-height: 300px;
-  overflow-y: auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
-  justify-content: center;
-  padding-bottom: 100px; /* espaço extra antes do rodapé */
-}
-
-.ingrediente {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  cursor: pointer;
-}
-
-.ingrediente img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.check {
+.btn-gerar::before {
+  content: '';
   position: absolute;
-  top: -10px;
-  right: -10px;
-  width: 30px;
-  height: 30px;
-  background-color: #4CAF50;
+  inset: 0;
+  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-gerar:hover:not(:disabled)::before {
+  opacity: 1;
+}
+
+.btn-gerar:hover:not(:disabled) {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(34, 92, 24, 0.4);
+}
+
+.btn-gerar:active:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.btn-gerar:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
+}
+
+.btn-gerar .icone-gerar {
+  font-size: 28px;
+  font-weight: 900;
+  transition: transform 0.3s ease;
+}
+
+.btn-gerar:hover:not(:disabled) .icone-gerar {
+  transform: translateX(5px);
+}
+
+/* ===== MINHA GELADEIRA ===== */
+.geladeira {
+  max-width: 1000px;
+  margin: 0 auto;
+  animation: fadeIn 0.6s ease-out 0.4s backwards;
+}
+
+.titulo-secao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 24px;
+  color: var(--roxo);
+  margin: 0 0 24px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.titulo-secao .emoji {
+  font-size: 30px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15));
+}
+
+/* Grid de Ingredientes */
+.geladeira-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 20px;
+  padding-bottom: 20px;
+}
+
+/* Card de Ingrediente */
+.ingrediente-card {
+  position: relative;
+  background: var(--card-bg);
+  border: 3px solid transparent;
+  border-radius: var(--border-radius);
+  padding: 16px;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.ingrediente-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(34, 92, 24, 0.2);
+  border-color: var(--verde);
+}
+
+.ingrediente-card.selected {
+  border-color: var(--verde);
+  background: linear-gradient(135deg, #e8ffe8 0%, #d0ffd0 100%);
+  box-shadow: 0 6px 20px rgba(34, 92, 24, 0.25);
+}
+
+.ingrediente-card img {
+  width: 100%;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.1));
+  transition: var(--transition);
+}
+
+.ingrediente-card:hover img {
+  transform: scale(1.1);
+}
+
+.ingrediente-card .nome {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--verde);
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* Check Badge */
+.check-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
   border-radius: 50%;
   display: none;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 900;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+  animation: popIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.check::before {
-  content: '✔';
-  color: white;
-  font-size: 18px;
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-.ingrediente.selected .check {
+.ingrediente-card.selected .check-badge {
   display: flex;
 }
 
-/* Rodapé curvo — medidas EXATAS */
+/* ===== RODAPÉ CURVO ===== */
 .curva {
   width: 100%;
   height: 70px;
-  background-color: #7b7190;
+  background: var(--roxo-escuro);
   border-top-left-radius: 100% 50%;
   border-top-right-radius: 100% 50%;
   position: fixed;
@@ -211,12 +511,13 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 40px; /* (fix) faltava ; no original */
-  z-index: 10;
+  gap: 40px;
+  z-index: 100;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
 }
 
 .btn-footer {
-  background-color: transparent;
+  background: transparent;
   border: none;
   border-radius: 50%;
   width: 55px;
@@ -228,6 +529,15 @@ main {
   overflow: hidden;
   cursor: pointer;
   transform: translateY(-10px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-footer:hover {
+  transform: translateY(-16px) scale(1.1);
+}
+
+.btn-footer:active {
+  transform: translateY(-8px) scale(0.95);
 }
 
 .btn-footer img {
@@ -236,90 +546,114 @@ main {
   object-fit: contain;
 }
 
-.btn-footer.logo {
+.btn-footer.btn-central {
   width: 150px;
   height: 150px;
   transform: translateY(-20px);
 }
 
-.btn-footer.logo img {
+.btn-footer.btn-central:hover {
+  transform: translateY(-28px) scale(1.05);
+}
+
+.btn-footer.btn-central:active {
+  transform: translateY(-18px) scale(0.98);
+}
+
+.btn-footer.btn-central img {
   width: 150%;
   height: 150%;
   object-fit: contain;
 }
 
-/* responsivo simples (desktop) */
+/* ===== ACESSIBILIDADE ===== */
+:focus-visible {
+  outline: 3px solid var(--roxo);
+  outline-offset: 4px;
+}
+
+/* ===== RESPONSIVO ===== */
 @media (min-width: 1024px) {
-  .filtros,
-  .busca,
-  .container-lista-e-botao,
-  .geladeira-scroll {
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+  main {
+    padding: 40px 48px 140px;
+  }
+
+  .topo h1 {
+    font-size: 42px;
+  }
+
+  .geladeira-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 24px;
+  }
+
+  .ingrediente-card img {
+    height: 120px;
   }
 }
 
-/* Centralizar SOMENTE o título da seção "Minha Geladeira" */
-section.geladeira h2 {
-  text-align: center;
-  margin: 16px 0 8px;
+@media (max-width: 768px) {
+  .topo h1 {
+    font-size: 30px;
+  }
+
+  .filtros {
+    gap: 12px;
+  }
+
+  .btn-filtro {
+    padding: 12px 24px;
+    font-size: 15px;
+  }
+
+  .header-lista h2 {
+    font-size: 18px;
+  }
+
+  .contador {
+    font-size: 12px;
+    padding: 4px 12px;
+  }
+
+  .btn-gerar {
+    padding: 16px 32px;
+    font-size: 16px;
+  }
+
+  .geladeira-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 16px;
+  }
 }
 
-/* Sessão "Minha Geladeira" — só rolagem vertical */
-section.geladeira .geladeira-scroll{
-  margin-top: 18px;          /* afasta do título */
-  padding: 14px 8px 120px;   /* top p/ o ✔ não cortar, laterais evitam empurrão, bottom p/ rodapé */
-  max-height: 42vh;
+@media (max-width: 480px) {
+  main {
+    padding: 20px 16px 120px;
+  }
 
-  /* rolagem SÓ vertical */
-  overflow-y: auto;
-  overflow-x: hidden;
+  .topo h1 {
+    font-size: 26px;
+  }
 
-  /* layout */
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
-  justify-content: center;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
+  .btn-filtro {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
 
-  /* evita “tremida” quando aparece a barra de rolagem */
-  scrollbar-gutter: stable;
+  .card-lista {
+    padding: 20px 16px;
+  }
+
+  .geladeira-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 12px;
+  }
+
+  .ingrediente-card {
+    padding: 12px;
+  }
+
+  .ingrediente-card img {
+    height: 80px;
+  }
 }
-
-/* micro ajuste extra pra baixar os cards */
-section.geladeira .ingrediente{ margin-top: 6px; }
-
-/* (opcional) esconder qq scroll horizontal da página */
-html, body { overflow-x: hidden; }
-
-/* Remover qualquer traço do header nesta página */
-header { display: none !important; }
-
-/* Título agora fora do header: zera o offset antigo */
-h1 {
-  margin: 16px 0 8px !important;   /* antes tinha margin-bottom: -160px */
-  font-size: 35px;
-  color: #225c18;
-}
-
-/* Filtros não precisam mais compensar o header */
-.filtros {
-  margin-top: 12px !important;     /* antes: 100px */
-}
-
-/* Garante que nada “empurre” pro lado por conta do header removido */
-html, body { overflow-x: hidden; }
-
-/* Centralizar o título desta página */
-main > h1{
-  max-width: 600px;
-  margin: 16px auto 8px !important; /* centraliza o bloco */
-  text-align: center;                /* centraliza o texto */
-}
-
-/* Alternativa responsiva */
-main > h1{ margin: clamp(60px, 14vh, 120px) auto 8px !important; }
