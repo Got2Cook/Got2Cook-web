@@ -494,7 +494,11 @@ img {
   transform: translateY(-2px);
 }
 
-/* ===== RODAPÉ CURVO ===== */
+/* /app/visualizar/visualizar.css */
+
+/* ... (mantenha todo o código anterior até a seção do rodapé) ... */
+
+/* ===== RODAPÉ CURVO (IDÊNTICO AO GERAR) ===== */
 .curva {
   width: 100%;
   height: 70px;
@@ -561,6 +565,8 @@ img {
   height: 150%;
   object-fit: contain;
 }
+
+/* ... (mantenha o resto do código) ... */
 
 /* ===== ACESSIBILIDADE ===== */
 :focus-visible {
