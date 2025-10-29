@@ -16,14 +16,8 @@
 
     <!-- Filtros -->
     <div class="filtros">
-      <button class="btn-filtro" data-tipo="doce">
-        <span class="emoji">🍰</span>
-        DOCE
-      </button>
-      <button class="btn-filtro" data-tipo="salgado">
-        <span class="emoji">🍕</span>
-        SALGADO
-      </button>
+      <button class="btn-filtro" data-tipo="doce">DOCE</button>
+      <button class="btn-filtro" data-tipo="salgado">SALGADO</button>
     </div>
 
     <!-- Busca -->
@@ -42,34 +36,27 @@
     <!-- Lista de Compras + Botão Gerar -->
     <div class="area-lista-compras">
       <div class="card-lista">
-        <div class="header-lista">
-          <h2>
-            <span class="emoji">🛒</span>
-            Minha Lista de Compras
-          </h2>
+        <div class="contador-header">
           <span class="contador" id="contadorItens">0 itens</span>
         </div>
         
-        <div class="lista-itens" id="listaItens">
-          <div class="placeholder-vazio" id="placeholderVazio">
-            <span class="emoji-grande">📝</span>
-            <p>Clique nos ingredientes abaixo para adicionar à sua lista</p>
-          </div>
+        <div class="lista-linhas" id="listaLinhas">
+          <!-- Linhas serão preenchidas dinamicamente -->
+          <div class="linha-lista"></div>
+          <div class="linha-lista"></div>
+          <div class="linha-lista"></div>
         </div>
       </div>
 
       <button class="btn-gerar" id="btnGerar" disabled>
         <span class="icone-gerar">→</span>
-        <span class="texto">Gerar Receita</span>
+        <span class="texto">Gerar</span>
       </button>
     </div>
 
     <!-- Minha Geladeira -->
     <section class="geladeira">
-      <h2 class="titulo-secao">
-        <span class="emoji">🧊</span>
-        MINHA GELADEIRA
-      </h2>
+      <h2 class="titulo-secao">MINHA GELADEIRA</h2>
       <div class="geladeira-grid" id="geladeiraGrid"></div>
     </section>
   </main>
