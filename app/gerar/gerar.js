@@ -191,7 +191,7 @@ function setupFiltros() {
       elements.btnFiltros.forEach(b => b.classList.remove('ativo'));
       btn.classList.add('ativo');
       tipoReceita = btn.dataset.tipo;
-      console.log('Tipo:', tipoReceita);
+      console.log('🎯 Tipo selecionado:', tipoReceita);
       atualizarUI();
     });
   });
@@ -216,6 +216,154 @@ function setupBusca() {
   elements.inputBusca.addEventListener('input', aplicarFiltro);
 }
 
+/* ========= DETECTAR CARACTERÍSTICAS DA RECEITA ========= */
+function analisarReceita(receita) {
+  const analise = {
+    ehRapida: false,
+    ehImproviso: false,
+    ehSaudavel: false,
+    ehInternacional: false,
+    ehNoturna: false
+  };
+  
+  // 1. RECEITA RÁPIDA (tempo < 10 min)
+  if (receita.tempoMinutos < 10) {
+    analise.ehRapida = true;
+  }
+  
+  // 2. CHEF DO IMPROVISO (≤ 3 ingredientes)
+  if (receita.ingredientes.length <= 3) {
+    analise.ehImproviso = true;
+  }
+  
+  // 3. SAUDÁVEL (detectar palavras-chave)
+  const ingredientesTexto = receita.ingredientes.join(' ').toLowerCase();
+  const palavrasSaudaveis = [
+    'integral', 'light', 'diet', 'aveia', 'quinoa', 'chia',
+    'salada', 'vegetal', 'verdura', 'legume', 'frutas',
+    'natural', 'orgânico', 'sem açúcar', 'sem gordura'
+  ];
+  
+  analise.ehSaudavel = palavrasSaudaveis.some(palavra => 
+    ingredientesTexto.includes(palavra)
+  );
+  
+  // 4. INTERNACIONAL (detectar ingredientes/pratos típicos)
+  const palavrasInternacionais = [
+    'sushi', 'yakisoba', 'curry', 'paella', 'risoto',
+    'pasta', 'pizza', 'spaghetti', 'macarrão italiano',
+    'wasabi', 'shoyu', 'gengibre', 'açafrão', 'páprica',
+    'molho inglês', 'molho de soja', 'molho agridoce'
+  ];
+  
+  const tituloTexto = receita.titulo.toLowerCase();
+  analise.ehInternacional = palavrasInternacionais.some(palavra =>
+    ingredientesTexto.includes(palavra) || tituloTexto.includes(palavra)
+  );
+  
+  // 5. AGENTE NOTURNO (entre 00:00 e 05:00)
+  const hora = new Date().getHours();
+  if (hora >= 0 && hora < 5) {
+    analise.ehNoturna = true;
+  }
+  
+  return analise;
+}
+
+/* ========= ATUALIZAR CONQUISTAS ========= */
+function atualizarConquistas(receita, analise) {
+  console.log('🏆 Atualizando conquistas...');
+  console.log('📊 Análise da receita:', analise);
+  
+  // Verificar se o sistema G2C está disponível
+  if (!window.G2C) {
+    console.warn('⚠️ Sistema de conquistas (G2C) não disponível');
+    console.log('💡 As métricas serão salvas no localStorage para sincronização futura');
+  }
+  
+  // ===== CONQUISTA 1: PRIMEIRA MORDIDA (total de receitas) =====
+  const totalAtual = Number(localStorage.getItem('got2cook_total_receitas') || 0);
+  const novoTotal = totalAtual + 1;
+  localStorage.setItem('got2cook_total_receitas', novoTotal);
+  
+  if (window.G2C) {
+    window.G2C.inc('total');
+  }
+  console.log('✅ Total de receitas:', novoTotal);
+  
+  // ===== CONQUISTA 1 (continuação): CRIADAS =====
+  const criadasAtual = Number(localStorage.getItem('got2cook_receitas_criadas') || 0);
+  localStorage.setItem('got2cook_receitas_criadas', criadasAtual + 1);
+  
+  if (window.G2C) {
+    window.G2C.inc('criadas');
+  }
+  console.log('✅ Receitas criadas:', criadasAtual + 1);
+  
+  // ===== CONQUISTA 3: RECEITA RELÂMPAGO (<10 min) =====
+  if (analise.ehRapida) {
+    const rapidasAtual = Number(localStorage.getItem('got2cook_rapidas') || 0);
+    localStorage.setItem('got2cook_rapidas', rapidasAtual + 1);
+    
+    if (window.G2C) {
+      window.G2C.inc('rapidas');
+    }
+    console.log('⚡ Receita rápida! Total:', rapidasAtual + 1);
+  }
+  
+  // ===== CONQUISTA 4: CHEF DO IMPROVISO (≤3 ingredientes) =====
+  if (analise.ehImproviso) {
+    const improvisoAtual = Number(localStorage.getItem('got2cook_improviso') || 0);
+    localStorage.setItem('got2cook_improviso', improvisoAtual + 1);
+    
+    if (window.G2C) {
+      window.G2C.inc('improviso');
+    }
+    console.log('🎨 Chef do improviso! Total:', improvisoAtual + 1);
+  }
+  
+  // ===== CONQUISTA 6: INTERNACIONAL =====
+  if (analise.ehInternacional) {
+    const cozinhasAtual = Number(localStorage.getItem('got2cook_cozinhas') || 0);
+    localStorage.setItem('got2cook_cozinhas', cozinhasAtual + 1);
+    
+    if (window.G2C) {
+      window.G2C.inc('cozinhas');
+    }
+    console.log('🌍 Receita internacional! Total:', cozinhasAtual + 1);
+  }
+  
+  // ===== CONQUISTA 7: SAUDÁVEL =====
+  if (analise.ehSaudavel) {
+    const saudaveisAtual = Number(localStorage.getItem('got2cook_saudaveis') || 0);
+    localStorage.setItem('got2cook_saudaveis', saudaveisAtual + 1);
+    
+    if (window.G2C) {
+      window.G2C.inc('saudaveis');
+    }
+    console.log('🥗 Receita saudável! Total:', saudaveisAtual + 1);
+  }
+  
+  // ===== CONQUISTA 8: AGENTE NOTURNO (00:00-05:00) =====
+  if (analise.ehNoturna) {
+    const noturnasAtual = Number(localStorage.getItem('got2cook_noturnas') || 0);
+    localStorage.setItem('got2cook_noturnas', noturnasAtual + 1);
+    
+    if (window.G2C) {
+      window.G2C.inc('noturnas');
+    }
+    console.log('🌙 Agente noturno! Total:', noturnasAtual + 1);
+  }
+  
+  // ===== ATUALIZAR GRÁFICOS =====
+  if (window.G2C && typeof window.G2C.atualizarGraficos === 'function') {
+    window.G2C.atualizarGraficos();
+    console.log('📊 Gráficos atualizados!');
+  }
+  
+  console.log('🎉 Conquistas atualizadas com sucesso!');
+}
+
 /* ========= GERAR RECEITA ========= */
 function gerarReceita() {
   if (selecionados.length === 0) {
@@ -228,6 +376,7 @@ function gerarReceita() {
     return;
   }
   
+  // Criar receita
   const receita = {
     id: 'receita_' + Date.now(),
     titulo: `Receita ${tipoReceita === 'doce' ? 'Doce' : 'Salgada'} Personalizada`,
@@ -239,39 +388,42 @@ function gerarReceita() {
       'Separe todos os ingredientes',
       'Prepare os ingredientes conforme necessário',
       'Combine os ingredientes na ordem adequada',
+      'Cozinhe em fogo médio por alguns minutos',
       'Finalize o preparo e sirva'
     ],
     tipo: tipoReceita,
-    tempoMinutos: 30,
+    tempoMinutos: 30, // Padrão 30 min (ajustar quando tiver input de tempo)
     imagem: null,
     criadoEm: new Date().toISOString()
   };
   
+  // Salvar receita temporária
   setLS('receita_temp', receita);
   
-  // ATUALIZAR CONQUISTAS
-  if (window.G2C) {
-    window.G2C.inc('total');
-    window.G2C.inc('criadas');
-    
-    if (receita.ingredientes.length <= 3) {
-      window.G2C.inc('improviso');
-    }
-    
-    if (receita.tempoMinutos < 10) {
-      window.G2C.inc('rapidas');
-    }
-    
-    const hora = new Date().getHours();
-    if (hora >= 0 && hora < 5) {
-      window.G2C.inc('noturnas');
-    }
-    
-    window.G2C.atualizarGraficos();
-    console.log('✅ Conquistas atualizadas!');
-  }
+  // Analisar características da receita
+  const analise = analisarReceita(receita);
   
-  console.log('📝 Receita gerada:', receita);
+  // Atualizar conquistas
+  atualizarConquistas(receita, analise);
+  
+  // Exibir resumo no console
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  console.log('📝 RECEITA GERADA');
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  console.log('🏷️  Título:', receita.titulo);
+  console.log('🍽️  Tipo:', tipoReceita);
+  console.log('🥘 Ingredientes:', selecionados.length);
+  console.log('⏱️  Tempo:', receita.tempo);
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  console.log('🏆 CONQUISTAS DESBLOQUEADAS:');
+  if (analise.ehRapida) console.log('  ⚡ Receita Relâmpago');
+  if (analise.ehImproviso) console.log('  🎨 Chef do Improviso');
+  if (analise.ehSaudavel) console.log('  🥗 Saudável');
+  if (analise.ehInternacional) console.log('  🌍 Internacional');
+  if (analise.ehNoturna) console.log('  🌙 Agente Noturno');
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  
+  // Navegar para visualização
   window.location.href = '../visualizar/index.html';
 }
 
@@ -294,7 +446,9 @@ function setupNavegacao() {
 
 /* ========= INICIALIZAÇÃO ========= */
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('🎨 Gerar Receita - Iniciado');
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  console.log('🎨 GOT2COOK - GERAR RECEITA');
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
   
   renderGeladeira();
   setupFiltros();
@@ -303,5 +457,7 @@ document.addEventListener('DOMContentLoaded', () => {
   atualizarUI();
   
   console.log('✅ Tela pronta!');
-  console.log('📦 Ingredientes:', ingredientes.length);
+  console.log('📦 Ingredientes disponíveis:', ingredientes.length);
+  console.log('🏆 Sistema de conquistas:', window.G2C ? 'CONECTADO' : 'OFFLINE (será sincronizado)');
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 });
