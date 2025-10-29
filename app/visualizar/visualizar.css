@@ -553,25 +553,26 @@ img {
 /* ===== DESKTOP (≥1024px) ===== */
 @media (min-width: 1024px) {
   #conteudo {
+    max-width: 1100px; /* REDUZIDO de 1400px */
     padding: 48px 48px 140px;
   }
 
   .layout-premium {
-    grid-template-columns: 45% 55%;
-    gap: 56px;
+    grid-template-columns: 40% 60%; /* AJUSTADO de 45% 55% */
+    gap: 40px; /* REDUZIDO de 56px */
     align-items: start;
   }
 
   .imagem-receita {
     position: sticky;
     top: 48px;
-    height: 600px;
+    height: 450px; /* REDUZIDO de 600px */
   }
 
   .titulo-receita {
     text-align: left;
-    font-size: 48px;
-    margin-bottom: 28px;
+    font-size: 38px; /* REDUZIDO de 48px */
+    margin-bottom: 24px;
   }
 
   .meta-info {
@@ -579,11 +580,28 @@ img {
   }
 
   .card-receita {
-    padding: 40px;
+    padding: 32px; /* REDUZIDO de 40px */
+  }
+
+  .secao-titulo {
+    font-size: 22px; /* Mantém consistência */
+  }
+
+  .lista-items li {
+    font-size: 15px; /* REDUZIDO de 16px */
   }
 
   .acoes {
     justify-content: flex-start;
+  }
+  
+  .coracao {
+    font-size: 50px; /* REDUZIDO de 56px */
+  }
+  
+  .btn-gerar {
+    font-size: 15px; /* Consistente */
+    padding: 14px 32px; /* AJUSTADO */
   }
 }
 
@@ -594,11 +612,11 @@ img {
   }
 
   .titulo-receita {
-    font-size: 36px;
+    font-size: 34px; /* REDUZIDO de 36px */
   }
 
   .imagem-receita {
-    height: 400px;
+    height: 350px; /* REDUZIDO de 400px */
   }
 
   .card-receita {
