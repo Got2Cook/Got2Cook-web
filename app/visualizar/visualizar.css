@@ -494,11 +494,11 @@ img {
   transform: translateY(-2px);
 }
 
-/* ===== RODAPÉ CURVO (INALTERADO) ===== */
+/* ===== RODAPÉ CURVO ===== */
 .curva {
   width: 100%;
   height: 70px;
-  background-color: #7b7190;
+  background: var(--roxo-escuro);
   border-top-left-radius: 100% 50%;
   border-top-right-radius: 100% 50%;
   position: fixed;
@@ -509,10 +509,11 @@ img {
   align-items: center;
   gap: 40px;
   z-index: 100;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
 }
 
 .btn-footer {
-  background-color: transparent;
+  background: transparent;
   border: none;
   border-radius: 50%;
   width: 55px;
@@ -524,6 +525,15 @@ img {
   overflow: hidden;
   cursor: pointer;
   transform: translateY(-10px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-footer:hover {
+  transform: translateY(-16px) scale(1.1);
+}
+
+.btn-footer:active {
+  transform: translateY(-8px) scale(0.95);
 }
 
 .btn-footer img {
@@ -536,6 +546,14 @@ img {
   width: 150px;
   height: 150px;
   transform: translateY(-20px);
+}
+
+.btn-footer.btn-central:hover {
+  transform: translateY(-28px) scale(1.05);
+}
+
+.btn-footer.btn-central:active {
+  transform: translateY(-18px) scale(0.98);
 }
 
 .btn-footer.btn-central img {
