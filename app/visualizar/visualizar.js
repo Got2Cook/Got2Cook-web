@@ -247,6 +247,12 @@ function toggleSalvar(receita) {
   sincronizarBotaoSalvar(receita);
 }
 
+/* ========= NAVEGAÇÃO INSTANTÂNEA (SEM DELAY) ========= */
+function navegarPara(url) {
+  // Navegação instantânea sem preventDefault ou verificações
+  window.location.href = url;
+}
+
 /* ========= SETUP DE EVENTOS ========= */
 function setupEventos(receita) {
   // Salvar receita
@@ -263,26 +269,26 @@ function setupEventos(receita) {
   const btnGerar = document.getElementById('btnGerarNovamente');
   if (btnGerar) {
     btnGerar.addEventListener('click', () => {
-      window.location.href = '../gerar/';
+      navegarPara('../gerar/');
     });
   }
   
-  // Navegação do rodapé
+  // Navegação do rodapé (CORRIGIDO - SEM DELAY)
   const btnVoltar = document.getElementById('btnVoltar');
   const btnLogo = document.getElementById('btnLogo');
   const btnGeladeira = document.getElementById('btnGeladeira');
   
-  btnVoltar?.addEventListener('click', () => {
-    window.location.href = '../humor/index.html';
-  });
+  if (btnVoltar) {
+    btnVoltar.addEventListener('click', () => navegarPara('../humor/index.html'));
+  }
   
-  btnLogo?.addEventListener('click', () => {
-    window.location.href = '../home/index.html';
-  });
+  if (btnLogo) {
+    btnLogo.addEventListener('click', () => navegarPara('../home/index.html'));
+  }
   
-  btnGeladeira?.addEventListener('click', () => {
-    window.location.href = '../geladeira/index.html';
-  });
+  if (btnGeladeira) {
+    btnGeladeira.addEventListener('click', () => navegarPara('../geladeira/index.html'));
+  }
 }
 
 /* ========= INICIALIZAÇÃO ========= */
@@ -292,5 +298,5 @@ document.addEventListener('DOMContentLoaded', () => {
   
   renderLayout();
   
-  console.log('✅ Tela renderizada com sucesso!');
+  console.log('✅ Tela renderizada!');
 });
