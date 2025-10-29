@@ -1,3 +1,4 @@
+<!-- /app/gerar/index.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -8,49 +9,83 @@
   <link rel="icon" href="../../assets/logo.png" />
 </head>
 <body>
-
   <main>
-    <h1>GERAR RECEITA</h1>
-    
+    <header class="topo">
+      <h1>GERAR RECEITA</h1>
+    </header>
+
+    <!-- Filtros -->
     <div class="filtros">
-      <button class="btn-filtro" onclick="selecionarTipo('doce')">DOCE</button>
-      <button class="btn-filtro" onclick="selecionarTipo('salgado')">SALGADO</button>
+      <button class="btn-filtro" data-tipo="doce">
+        <span class="emoji">🍰</span>
+        DOCE
+      </button>
+      <button class="btn-filtro" data-tipo="salgado">
+        <span class="emoji">🍕</span>
+        SALGADO
+      </button>
     </div>
 
-    <div class="container-lista-total">
+    <!-- Busca -->
+    <div class="busca-wrapper">
       <div class="busca">
-        <img src="../../assets/lupa.png" class="icone-lupa" alt="Buscar">
-        <input type="text" placeholder="EX: Arroz, frango e batata" />
+        <img src="../../assets/lupa.png" class="icone-lupa" alt="">
+        <input 
+          type="text" 
+          id="inputBusca"
+          placeholder="Ex: arroz, frango, batata..." 
+          autocomplete="off"
+        />
       </div>
+    </div>
 
-      <div class="container-lista-e-botao">
-        <div class="lista-compras" id="lista-compras"></div>
-        <div class="btn-gerar" onclick="gerarReceita()">
-          <img src="../../assets/seta.png" alt="Gerar Receita">
+    <!-- Lista de Compras + Botão Gerar -->
+    <div class="area-lista-compras">
+      <div class="card-lista">
+        <div class="header-lista">
+          <h2>
+            <span class="emoji">🛒</span>
+            Minha Lista de Compras
+          </h2>
+          <span class="contador" id="contadorItens">0 itens</span>
+        </div>
+        
+        <div class="lista-itens" id="listaItens">
+          <div class="placeholder-vazio" id="placeholderVazio">
+            <span class="emoji-grande">📝</span>
+            <p>Clique nos ingredientes abaixo para adicionar à sua lista</p>
+          </div>
         </div>
       </div>
+
+      <button class="btn-gerar" id="btnGerar" disabled>
+        <span class="icone-gerar">→</span>
+        <span class="texto">Gerar Receita</span>
+      </button>
     </div>
 
+    <!-- Minha Geladeira -->
     <section class="geladeira">
-      <h2>MINHA GELADEIRA:</h2>
-      <div class="geladeira-scroll" id="geladeira-scroll"></div>
+      <h2 class="titulo-secao">
+        <span class="emoji">🧊</span>
+        MINHA GELADEIRA
+      </h2>
+      <div class="geladeira-grid" id="geladeiraGrid"></div>
     </section>
   </main>
 
   <footer class="curva">
-    <button class="btn-footer voltar" id="btnVoltar">
-      <img src="../../assets/humor.png" alt="Humor" />
+    <button class="btn-footer" id="btnVoltar" aria-label="Voltar">
+      <img src="../../assets/humor.png" alt="" />
     </button>
-    <button class="btn-footer logo" id="btnLogo">
-      <img src="../../assets/logocentral.png" alt="Logo" />
+    <button class="btn-footer btn-central" id="btnLogo" aria-label="Ir para Home">
+      <img src="../../assets/logocentral.png" alt="" />
     </button>
-    <button class="btn-footer geladeira" id="btnGeladeira">
-      <img src="../../assets/geladeira.png" alt="Geladeira" />
+    <button class="btn-footer" id="btnGeladeira" aria-label="Ir para Geladeira">
+      <img src="../../assets/geladeira.png" alt="" />
     </button>
   </footer>
 
-  <!-- (opcional) script global do site -->
-  <script src="../../assets/main.js"></script>
   <script src="gerar.js"></script>
 </body>
 </html>
