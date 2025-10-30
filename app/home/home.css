@@ -83,13 +83,13 @@ header {
   border-radius: 50%;
 }
 
-/* ========== Menus com fundo marrom claro ========== */
+/* ========== Menus com fundo marrom claro e espaçamento da primeira versão ========== */
 .menu-perfil,
 .menu-principal {
   position: absolute;
   background: #c9eb9e;
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
   animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 }
@@ -107,9 +107,8 @@ header {
 
 .menu-perfil {
   top: 60px;
-  left: 10px;
-  width: 250px;
-  padding: 16px;
+  left: 0;
+  width: 260px;
   z-index: 100;
 }
 
@@ -117,79 +116,54 @@ header {
   display: flex;
   align-items: center;
   gap: 12px;
+  padding: 16px;
+  background: var(--roxo);
+  color: white;
   font-weight: bold;
-  font-size: 17px;
-  color: var(--roxo);
-  padding-bottom: 12px;
-  margin-bottom: 8px;
-  border-bottom: 2px solid #b5e593;
+  font-size: 16px;
 }
 
 .menu-perfil .perfil-nome img {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid white;
 }
 
 .menu-perfil ul,
 .menu-principal ul {
   list-style: none;
-  padding: 0;
+  padding: 8px;
   margin: 0;
 }
 
 .menu-perfil li,
 .menu-principal li {
-  display: flex;
+  display: grid;
+  grid-template-columns: 28px 1fr;
   align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
-  border-radius: 10px;
+  gap: 12px;
+  padding: 12px;
+  font-size: 15px;
   color: var(--roxo);
-  font-weight: bold;
-  font-size: 16px;
-  height: 40px;
+  font-weight: 600;
   cursor: pointer;
-  line-height: 1;
-  border-bottom: 2px solid #b5e593;
+  border-radius: 8px;
   transition: var(--transicao);
-}
-
-.menu-perfil li:last-child,
-.menu-principal li:last-child {
-  border-bottom: none;
 }
 
 .menu-perfil li:hover,
 .menu-principal li:hover {
-  background-color: #a6e97c;
+  background: linear-gradient(135deg, var(--div) 0%, var(--cartao) 100%);
+  transform: translateX(4px);
 }
 
 .menu-principal {
   top: 60px;
-  right: 10px;
-  width: 270px;
-  padding: 12px 0;
+  right: 0;
+  width: 280px;
   z-index: 100;
-}
-
-.menu-principal li {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
-  font-size: 16px;
-  color: var(--roxo);
-  font-weight: bold;
-  border-bottom: 2px solid #b5e593;
-  cursor: pointer;
-  border-radius: 0;
-  height: auto;
-}
-
-.menu-principal li:hover {
-  background-color: #a6e97c;
 }
 
 .menu-principal li.danger {
@@ -197,7 +171,7 @@ header {
 }
 
 .menu-principal li.danger:hover {
-  background: #ffcdd2;
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
 }
 
 .item-ico {
@@ -207,7 +181,6 @@ header {
   align-items: center;
   justify-content: center;
   font-size: 18px;
-  line-height: 1;
 }
 
 .hidden {
