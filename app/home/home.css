@@ -36,7 +36,7 @@ body {
   position: relative;
 }
 
-/* ========== Header ========== */
+/* ========== Header com fundo transparente ========== */
 header {
   display: flex;
   justify-content: space-between;
@@ -47,7 +47,7 @@ header {
 }
 
 .icone {
-  background: white;
+  background: transparent;
   border: none;
   width: 48px;
   height: 48px;
@@ -57,23 +57,21 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--sombra-suave);
   transition: var(--transicao);
   position: relative;
 }
 
 .icone:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--sombra-media);
+  transform: scale(1.1);
 }
 
 .icone:active {
-  transform: translateY(0);
+  transform: scale(0.95);
 }
 
 .icone img {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
   display: block;
 }
@@ -85,16 +83,15 @@ header {
   border-radius: 50%;
 }
 
-/* ========== Menus ========== */
+/* ========== Menus com fundo marrom claro ========== */
 .menu-perfil,
 .menu-principal {
   position: absolute;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  background: #c9eb9e;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
-  backdrop-filter: blur(10px);
 }
 
 @keyframes slideDown {
@@ -110,8 +107,9 @@ header {
 
 .menu-perfil {
   top: 60px;
-  left: 0;
-  width: 260px;
+  left: 10px;
+  width: 250px;
+  padding: 16px;
   z-index: 100;
 }
 
@@ -119,54 +117,79 @@ header {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 16px;
-  background: linear-gradient(135deg, var(--roxo) 0%, var(--roxo-escuro) 100%);
-  color: white;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 17px;
+  color: var(--roxo);
+  padding-bottom: 12px;
+  margin-bottom: 8px;
+  border-bottom: 2px solid #b5e593;
 }
 
 .menu-perfil .perfil-nome img {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid white;
 }
 
 .menu-perfil ul,
 .menu-principal ul {
   list-style: none;
-  padding: 8px;
+  padding: 0;
   margin: 0;
 }
 
 .menu-perfil li,
 .menu-principal li {
-  display: grid;
-  grid-template-columns: 28px 1fr;
+  display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px;
-  font-size: 15px;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
   color: var(--roxo);
-  font-weight: 600;
+  font-weight: bold;
+  font-size: 16px;
+  height: 40px;
   cursor: pointer;
-  border-radius: 8px;
+  line-height: 1;
+  border-bottom: 2px solid #b5e593;
   transition: var(--transicao);
+}
+
+.menu-perfil li:last-child,
+.menu-principal li:last-child {
+  border-bottom: none;
 }
 
 .menu-perfil li:hover,
 .menu-principal li:hover {
-  background: linear-gradient(135deg, var(--div) 0%, var(--cartao) 100%);
-  transform: translateX(4px);
+  background-color: #a6e97c;
 }
 
 .menu-principal {
   top: 60px;
-  right: 0;
-  width: 280px;
+  right: 10px;
+  width: 270px;
+  padding: 12px 0;
   z-index: 100;
+}
+
+.menu-principal li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  font-size: 16px;
+  color: var(--roxo);
+  font-weight: bold;
+  border-bottom: 2px solid #b5e593;
+  cursor: pointer;
+  border-radius: 0;
+  height: auto;
+}
+
+.menu-principal li:hover {
+  background-color: #a6e97c;
 }
 
 .menu-principal li.danger {
@@ -174,7 +197,7 @@ header {
 }
 
 .menu-principal li.danger:hover {
-  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  background: #ffcdd2;
 }
 
 .item-ico {
@@ -184,6 +207,7 @@ header {
   align-items: center;
   justify-content: center;
   font-size: 18px;
+  line-height: 1;
 }
 
 .hidden {
@@ -268,7 +292,7 @@ header {
   }
 }
 
-/* ========== Sugestões ========== */
+/* ========== Sugestões (sem emoji no título) ========== */
 .sugestoes {
   animation: fadeInUp 0.6s ease-out 0.2s both;
 }
@@ -286,24 +310,7 @@ header {
   color: var(--roxo);
   margin: 0;
   font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 8px;
   flex: 1;
-}
-
-.emoji-humor {
-  font-size: 24px;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
 }
 
 .btn-recarregar {
@@ -478,7 +485,7 @@ header {
   transform: translateY(0);
 }
 
-/* ========== Atalhos rápidos ========== */
+/* ========== Atalhos rápidos (sem emojis) ========== */
 .acessos-rapidos {
   position: fixed;
   bottom: 90px;
@@ -521,9 +528,6 @@ header {
   box-shadow: var(--sombra-media);
   transition: var(--transicao);
   white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .acesso-btn:hover {
@@ -551,10 +555,6 @@ header {
 
 .acesso-btn.acesso-primary:hover {
   background: linear-gradient(135deg, var(--roxo-escuro) 0%, var(--roxo) 100%);
-}
-
-.btn-icon {
-  font-size: 18px;
 }
 
 /* ========== Rodapé curvo (preservado EXATAMENTE) ========== */
@@ -647,8 +647,18 @@ header {
   }
 
   .icone img {
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .menu-perfil {
+    top: 68px;
+    left: 0;
+  }
+
+  .menu-principal {
+    top: 68px;
+    right: 0;
   }
 
   .fala {
