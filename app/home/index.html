@@ -1,3 +1,4 @@
+<!-- /app/home/index.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -5,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Got2Cook — Home</title>
   <meta name="description" content="Página inicial do Got2Cook com sugestões de receitas baseadas no seu humor e atalhos rápidos." />
-  <link rel="stylesheet" href="./home.css" />
+  <link rel="stylesheet" href="home.css" />
 </head>
 <body>
   <div class="container">
@@ -17,7 +18,7 @@
         <img src="../../assets/perfil.png" alt="Perfil" id="perfilBtn" />
         <nav class="menu-perfil hidden" id="perfilMenu" aria-label="Menu do perfil">
           <div class="perfil-nome">
-            <img src="../../assets/perfil.png" alt="Ícone Perfil" />
+            <img src="../../assets/perfil.png" alt="Ícone Perfil" id="perfilFotoMenu" />
             <span id="perfil-nome"></span>
           </div>
           <ul>
@@ -30,7 +31,6 @@
               <span>Meu histórico de humor</span>
             </li>
             <li onclick="window.location.href='../gostos/index.html'">
-              <!-- coração colorido (emoji com variation selector) -->
               <span class="item-ico" aria-hidden="true">❤️</span>
               <span>Meus gostos culinários</span>
             </li>
@@ -39,7 +39,7 @@
               <span>Minha jornada culinária</span>
             </li>
             <li onclick="window.location.href='../explorar-mundo/index.html'">
-              <span class="item-ico" aria-hidden="true">🗺️</span>
+              <span class="item-ico" aria-hidden="true">🌍</span>
               <span>Explorar Mundo</span>
             </li>
           </ul>
@@ -92,35 +92,52 @@
     <div class="fala">
       <img src="../../assets/cozinheiro.png" alt="Cozinheiro" class="cozinheiro" />
       <div class="balao-fala">
-        Olá, <span id="usuario">Usuário</span>! O que vamos cozinhar hoje?
+        <span id="textoFala"></span>
+        <span class="cursor-digitacao">|</span>
       </div>
     </div>
 
     <!-- ===== Sugestões ===== -->
     <section class="sugestoes" aria-labelledby="titulo-sugestoes">
-      <h2 id="titulo-sugestoes">Sugestões baseadas no seu humor</h2>
+      <div class="sugestoes-header">
+        <h2 id="titulo-sugestoes">
+          <span class="emoji-humor" id="emojiHumor">😊</span>
+          Sugestões baseadas no seu humor
+        </h2>
+        <button class="btn-recarregar" id="btnRecarregar" aria-label="Recarregar sugestões" title="Buscar novas sugestões">
+          🔄
+        </button>
+      </div>
 
-      <!-- Cards estáticos (pode deixar só 4 ou duplicar quantos quiser) -->
-      <div class="sugestoes-grid" role="list">
-        <a href="../minhas-receitas/index.html" class="card" role="listitem">
-          <img src="../../assets/receita1.png" alt="Sugestão de receita 1" />
-        </a>
-        <a href="../minhas-receitas/index.html" class="card" role="listitem">
-          <img src="../../assets/receita2.png" alt="Sugestão de receita 2" />
-        </a>
-        <a href="../minhas-receitas/index.html" class="card" role="listitem">
-          <img src="../../assets/receita3.png" alt="Sugestão de receita 3" />
-        </a>
-        <a href="../minhas-receitas/index.html" class="card" role="listitem">
-          <img src="../../assets/receita4.png" alt="Sugestão de receita 4" />
-        </a>
+      <!-- Grid de receitas (será preenchido dinamicamente) -->
+      <div class="sugestoes-grid" role="list" id="sugestoesGrid">
+        <!-- Loading skeleton (aparece enquanto carrega) -->
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
+
+      <!-- Estado vazio (quando não há sugestões) -->
+      <div class="empty-state hidden" id="emptyState">
+        <div class="empty-icon">🍽️</div>
+        <p>Escolha seu humor para receber sugestões personalizadas!</p>
+        <button class="btn-escolher-humor" onclick="window.location.href='../humor/index.html'">
+          Escolher Humor
+        </button>
       </div>
     </section>
 
     <!-- ===== Atalhos rápidos (abrem pelo botão central) ===== -->
     <section class="acessos-rapidos" id="atalhosRapidos" aria-label="Atalhos rápidos">
-      <button onclick="window.location.href='../minhas-receitas/index.html'" class="acesso-btn">MINHAS RECEITAS</button>
-      <button onclick="window.location.href='../gerar/index.html'" class="acesso-btn">GERAR RECEITA</button>
+      <button onclick="window.location.href='../minhas-receitas/index.html'" class="acesso-btn">
+        <span class="btn-icon">📖</span>
+        MINHAS RECEITAS
+      </button>
+      <button onclick="window.location.href='../gerar/index.html'" class="acesso-btn acesso-primary">
+        <span class="btn-icon">✨</span>
+        GERAR RECEITA
+      </button>
     </section>
 
     <!-- ===== Rodapé curvo fixo (preservado como memorizado) ===== -->
@@ -139,6 +156,6 @@
   </div>
 
   <!-- Scripts -->
-  <script src="./home.js" defer></script>
+  <script src="home.js"></script>
 </body>
 </html>
