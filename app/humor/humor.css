@@ -7,8 +7,8 @@
   --verde: #c0ffa5;
   --roxo-1: #7b7190;
   --roxo-2: #7758a6;
-  --shadow: 0 4px 12px rgba(0, 0, 0, .12);
-  --shadow-hover: 0 6px 20px rgba(0, 0, 0, .18);
+  --shadow: 0 3px 10px rgba(0, 0, 0, .15);
+  --shadow-hover: 0 5px 18px rgba(0, 0, 0, .2);
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -24,72 +24,30 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
-  overflow: hidden;
 }
 
 .container {
   width: 100%;
   max-width: 430px;
-  height: 100vh;
   margin: 0 auto;
-  padding: 40px 20px 110px;
+  padding: 40px 20px 120px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   position: relative;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 /* =========================
-   ANIMAÇÕES
-========================= */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
-
-.fade-in {
-  animation: fadeIn 0.6s ease-out;
-}
-
-.fade-in-up {
-  animation: fadeInUp 0.6s ease-out 0.2s backwards;
-}
-
-/* =========================
-   BALÃO PERGUNTA
+   BALÕES
 ========================= */
 .balao {
   color: #fff;
-  border-radius: 24px;
+  border-radius: 26px;
+  margin: 20px 0;
   text-align: left;
   position: relative;
   line-height: 1.5;
@@ -99,24 +57,58 @@ body {
 
 .balao.pergunta {
   background-color: var(--roxo-1);
-  padding: 20px 24px;
-  font-size: 20px;
+  padding: 24px 30px;
+  font-size: 22px;
   font-weight: 500;
-  max-width: 85%;
+  max-width: 88%;
   align-self: flex-start;
-  flex-shrink: 0;
+  margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 .balao.pergunta::after {
   content: "";
   position: absolute;
   left: -10px;
-  top: 18px;
+  top: 24px;
   width: 0;
   height: 0;
-  border-top: 12px solid transparent;
-  border-bottom: 12px solid transparent;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
   border-right: 14px solid var(--roxo-1);
+}
+
+.balao.resposta {
+  background-color: var(--roxo-2);
+  padding: 22px 32px;
+  font-size: 52px;
+  max-width: 80%;
+  align-self: flex-end;
+  margin-top: 20px;
+  animation: slideInRight 0.4s ease-out;
+}
+
+.balao.resposta::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: 20px;
+  width: 0;
+  height: 0;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+  border-left: 14px solid var(--roxo-2);
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* =========================
@@ -125,21 +117,21 @@ body {
 .emojis {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+  gap: 14px;
+  margin-top: 20px;
+  margin-bottom: 30px;
   width: 100%;
-  max-width: 320px;
-  margin: 0 auto;
-  flex-shrink: 0;
+  max-width: 360px;
 }
 
 .emojis button {
   aspect-ratio: 1;
-  font-size: 28px;
+  font-size: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid #1d5c00;
-  border-radius: 14px;
+  border-radius: 16px;
   cursor: pointer;
   background-color: #fff;
   box-shadow: var(--shadow);
@@ -153,13 +145,13 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%);
+  background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 60%);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
 .emojis button:hover {
-  transform: translateY(-4px) scale(1.05);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-hover);
   border-color: var(--roxo-2);
 }
@@ -169,19 +161,12 @@ body {
 }
 
 .emojis button:active {
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(-1px);
 }
 
 .emojis button:focus-visible {
   outline: 3px solid var(--roxo-2);
-  outline-offset: 2px;
-}
-
-.emojis button.selected {
-  animation: pulse 0.3s ease;
-  border-color: var(--roxo-2);
-  border-width: 3px;
-  background-color: #f0e6ff;
+  outline-offset: 3px;
 }
 
 /* =========================
@@ -197,7 +182,7 @@ body {
   bottom: 0;
   left: 0;
   z-index: 10;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, .1);
+  box-shadow: 0 -3px 15px rgba(0, 0, 0, .12);
 }
 
 .pular {
@@ -207,8 +192,8 @@ body {
   transform: translateX(-50%);
   background-color: #fff;
   border: none;
-  padding: 12px 32px;
-  border-radius: 24px;
+  padding: 12px 34px;
+  border-radius: 25px;
   color: var(--roxo-1);
   font-weight: 600;
   font-size: 16px;
@@ -221,7 +206,7 @@ body {
 .pular:hover {
   transform: translateX(-50%) translateY(-2px);
   box-shadow: var(--shadow-hover);
-  background-color: #f8f8f8;
+  background-color: #f5f5f5;
 }
 
 .pular:active {
@@ -230,52 +215,33 @@ body {
 
 .pular:focus-visible {
   outline: 3px solid var(--roxo-2);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
 /* =========================
-   RESPONSIVO MOBILE PEQUENO
+   MOBILE PEQUENO
 ========================= */
 @media (max-width: 380px) {
   .container {
-    padding: 30px 16px 110px;
+    padding: 30px 16px 120px;
   }
 
   .balao.pergunta {
-    font-size: 18px;
-    padding: 18px 22px;
-  }
-
-  .emojis {
-    gap: 10px;
-    max-width: 280px;
-  }
-
-  .emojis button {
-    font-size: 24px;
-  }
-}
-
-/* =========================
-   MOBILE ALTO (>667px)
-========================= */
-@media (min-height: 668px) and (max-width: 1023px) {
-  .container {
-    padding: 60px 20px 110px;
-  }
-
-  .balao.pergunta {
-    font-size: 22px;
+    font-size: 20px;
     padding: 22px 26px;
   }
 
   .emojis {
-    gap: 16px;
-    max-width: 360px;
+    gap: 12px;
+    max-width: 320px;
   }
 
   .emojis button {
-    font-size: 32px;
+    font-size: 28px;
+  }
+
+  .balao.resposta {
+    font-size: 46px;
   }
 }
 
@@ -284,49 +250,56 @@ body {
 ========================= */
 @media (min-width: 1024px) {
   .container {
-    max-width: 800px;
-    padding: 80px 40px 110px;
-    justify-content: center;
-    gap: 50px;
+    max-width: 900px;
+    padding: 60px 40px 120px;
   }
 
   .balao.pergunta {
-    align-self: flex-start;
-    max-width: 480px;
-    padding: 26px 32px;
-    font-size: 24px;
+    max-width: 520px;
+    padding: 28px 36px;
+    font-size: 26px;
+    margin-top: 40px;
+    margin-bottom: 50px;
   }
 
   .balao.pergunta::after {
     left: -12px;
-    top: 22px;
+    top: 26px;
     border-right: 16px solid var(--roxo-1);
   }
 
   .emojis {
-    width: 480px;
+    width: 520px;
     max-width: 90vw;
     gap: 18px;
-    margin: 0;
+    margin-top: 30px;
+    margin-bottom: 50px;
   }
 
   .emojis button {
-    font-size: 36px;
-    border-radius: 18px;
+    font-size: 42px;
+    border-radius: 20px;
   }
 
   .emojis button:hover {
-    transform: translateY(-6px) scale(1.08);
+    transform: translateY(-5px);
   }
 
-  .curva {
-    height: 90px;
+  .balao.resposta {
+    max-width: 520px;
+    padding: 28px 38px;
+    font-size: 64px;
+  }
+
+  .balao.resposta::after {
+    right: -12px;
+    top: 26px;
+    border-left: 16px solid var(--roxo-2);
   }
 
   .pular {
-    padding: 14px 40px;
+    padding: 14px 42px;
     font-size: 17px;
-    top: 22px;
   }
 }
 
@@ -335,22 +308,25 @@ body {
 ========================= */
 @media (min-width: 1440px) {
   .container {
-    max-width: 900px;
-    gap: 60px;
+    max-width: 1000px;
   }
 
   .balao.pergunta {
-    max-width: 520px;
-    padding: 28px 36px;
-    font-size: 26px;
+    max-width: 580px;
+    font-size: 28px;
   }
 
   .emojis {
-    width: 540px;
+    width: 580px;
     gap: 20px;
   }
 
   .emojis button {
-    font-size: 40px;
+    font-size: 46px;
+  }
+
+  .balao.resposta {
+    max-width: 580px;
+    font-size: 68px;
   }
 }
