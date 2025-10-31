@@ -1,3 +1,4 @@
+<!-- /app/humor/index.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -8,17 +9,19 @@
 </head>
 <body>
   <div class="container">
-    <div class="balao pergunta">Como você está se sentindo hoje?</div>
+    <div class="balao pergunta fade-in">
+      Como você está se sentindo hoje?
+    </div>
 
-    <div class="emojis">
-      <button onclick="selecionarHumor('😀')">😀</button>
-      <button onclick="selecionarHumor('😐')">😐</button>
-      <button onclick="selecionarHumor('😢')">😢</button>
-      <button onclick="selecionarHumor('😡')">😡</button>
-      <button onclick="selecionarHumor('😴')">😴</button>
-      <button onclick="selecionarHumor('🤢')">🤢</button>
-      <button onclick="selecionarHumor('😍')">😍</button>
-      <button onclick="selecionarHumor('🤯')">🤯</button>
+    <div class="emojis fade-in-up">
+      <button onclick="selecionarHumor('😀')" aria-label="Feliz">😀</button>
+      <button onclick="selecionarHumor('😐')" aria-label="Neutro">😐</button>
+      <button onclick="selecionarHumor('😢')" aria-label="Triste">😢</button>
+      <button onclick="selecionarHumor('😡')" aria-label="Irritado">😡</button>
+      <button onclick="selecionarHumor('😴')" aria-label="Cansado">😴</button>
+      <button onclick="selecionarHumor('🤢')" aria-label="Enjoado">🤢</button>
+      <button onclick="selecionarHumor('😍')" aria-label="Apaixonado">😍</button>
+      <button onclick="selecionarHumor('🤯')" aria-label="Surpreso">🤯</button>
     </div>
 
     <div id="humorSelecionado" class="balao resposta" style="display:none;"></div>
