@@ -9,11 +9,9 @@
 </head>
 <body>
   <div class="container">
-    <div class="balao pergunta fade-in">
-      Como você está se sentindo hoje?
-    </div>
+    <div class="balao pergunta">Como você está se sentindo hoje?</div>
 
-    <div class="emojis fade-in-up">
+    <div class="emojis">
       <button onclick="selecionarHumor('😀')" aria-label="Feliz">😀</button>
       <button onclick="selecionarHumor('😐')" aria-label="Neutro">😐</button>
       <button onclick="selecionarHumor('😢')" aria-label="Triste">😢</button>
@@ -23,6 +21,8 @@
       <button onclick="selecionarHumor('😍')" aria-label="Apaixonado">😍</button>
       <button onclick="selecionarHumor('🤯')" aria-label="Surpreso">🤯</button>
     </div>
+
+    <div id="humorSelecionado" class="balao resposta" style="display:none;"></div>
 
     <div class="curva">
       <button class="pular" onclick="pularHumor()">Pular</button>
