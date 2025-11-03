@@ -117,21 +117,21 @@ body {
 .emojis {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+  gap: 12px;
   margin-top: 20px;
   margin-bottom: 30px;
   width: 100%;
-  max-width: 360px;
+  max-width: 280px;
 }
 
 .emojis button {
   aspect-ratio: 1;
-  font-size: 32px;
+  font-size: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid #1d5c00;
-  border-radius: 16px;
+  border-radius: 14px;
   cursor: pointer;
   background-color: #fff;
   box-shadow: var(--shadow);
@@ -232,12 +232,12 @@ body {
   }
 
   .emojis {
-    gap: 12px;
-    max-width: 320px;
+    gap: 10px;
+    max-width: 260px;
   }
 
   .emojis button {
-    font-size: 28px;
+    font-size: 22px;
   }
 
   .balao.resposta {
@@ -270,16 +270,16 @@ body {
   }
 
   .emojis {
-    width: 520px;
+    width: 440px;
     max-width: 90vw;
-    gap: 18px;
+    gap: 16px;
     margin-top: 30px;
     margin-bottom: 50px;
   }
 
   .emojis button {
-    font-size: 42px;
-    border-radius: 20px;
+    font-size: 36px;
+    border-radius: 18px;
   }
 
   .emojis button:hover {
@@ -319,12 +319,12 @@ body {
   }
 
   .emojis {
-    width: 580px;
-    gap: 20px;
+    width: 480px;
+    gap: 18px;
   }
 
   .emojis button {
-    font-size: 46px;
+    font-size: 40px;
   }
 
   .balao.resposta {
