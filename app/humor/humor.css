@@ -47,7 +47,7 @@ body {
 .balao {
   color: #fff;
   border-radius: 22px;
-  margin: 20px 0;
+  margin: 12px 0;
   text-align: left;
   position: relative;
   line-height: 1.4;
@@ -63,7 +63,7 @@ body {
   max-width: 75%;
   align-self: flex-start;
   margin-top: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
 }
 
 .balao.pergunta::after {
@@ -84,7 +84,7 @@ body {
   font-size: 40px;
   max-width: 65%;
   align-self: flex-end;
-  margin-top: 20px;
+  margin-top: 12px;
   animation: slideInRight 0.4s ease-out;
 }
 
@@ -117,21 +117,21 @@ body {
 .emojis {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-top: 20px;
-  margin-bottom: 30px;
+  gap: 10px;
+  margin-top: 16px;
+  margin-bottom: 20px;
   width: 100%;
-  max-width: 280px;
+  max-width: 240px;
 }
 
 .emojis button {
   aspect-ratio: 1;
-  font-size: 24px;
+  font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid #1d5c00;
-  border-radius: 14px;
+  border-radius: 12px;
   cursor: pointer;
   background-color: #fff;
   box-shadow: var(--shadow);
@@ -229,20 +229,22 @@ body {
   .balao.pergunta {
     font-size: 16px;
     padding: 14px 20px;
+    margin-bottom: 20px;
   }
 
   .emojis {
-    gap: 10px;
-    max-width: 260px;
+    gap: 8px;
+    max-width: 220px;
   }
 
   .emojis button {
-    font-size: 22px;
+    font-size: 18px;
   }
 
   .balao.resposta {
     font-size: 36px;
     padding: 12px 18px;
+    margin-top: 10px;
   }
 }
 
@@ -260,7 +262,7 @@ body {
     padding: 20px 28px;
     font-size: 20px;
     margin-top: 40px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
   }
 
   .balao.pergunta::after {
@@ -270,16 +272,16 @@ body {
   }
 
   .emojis {
-    width: 440px;
+    width: 360px;
     max-width: 90vw;
-    gap: 16px;
-    margin-top: 30px;
-    margin-bottom: 50px;
+    gap: 14px;
+    margin-top: 20px;
+    margin-bottom: 30px;
   }
 
   .emojis button {
-    font-size: 36px;
-    border-radius: 18px;
+    font-size: 30px;
+    border-radius: 16px;
   }
 
   .emojis button:hover {
@@ -290,6 +292,7 @@ body {
     max-width: 380px;
     padding: 18px 26px;
     font-size: 52px;
+    margin-top: 16px;
   }
 
   .balao.resposta::after {
@@ -319,12 +322,12 @@ body {
   }
 
   .emojis {
-    width: 480px;
-    gap: 18px;
+    width: 400px;
+    gap: 16px;
   }
 
   .emojis button {
-    font-size: 40px;
+    font-size: 34px;
   }
 
   .balao.resposta {
