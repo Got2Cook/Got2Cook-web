@@ -46,21 +46,21 @@ body {
 ========================= */
 .balao {
   color: #fff;
-  border-radius: 26px;
+  border-radius: 22px;
   margin: 20px 0;
   text-align: left;
   position: relative;
-  line-height: 1.5;
+  line-height: 1.4;
   box-shadow: var(--shadow);
   transition: var(--transition);
 }
 
 .balao.pergunta {
   background-color: var(--roxo-1);
-  padding: 24px 30px;
-  font-size: 22px;
+  padding: 16px 22px;
+  font-size: 18px;
   font-weight: 500;
-  max-width: 88%;
+  max-width: 75%;
   align-self: flex-start;
   margin-top: 20px;
   margin-bottom: 40px;
@@ -69,20 +69,20 @@ body {
 .balao.pergunta::after {
   content: "";
   position: absolute;
-  left: -10px;
-  top: 24px;
+  left: -9px;
+  top: 18px;
   width: 0;
   height: 0;
-  border-top: 11px solid transparent;
-  border-bottom: 11px solid transparent;
-  border-right: 14px solid var(--roxo-1);
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 12px solid var(--roxo-1);
 }
 
 .balao.resposta {
   background-color: var(--roxo-2);
-  padding: 22px 32px;
-  font-size: 52px;
-  max-width: 80%;
+  padding: 14px 20px;
+  font-size: 40px;
+  max-width: 65%;
   align-self: flex-end;
   margin-top: 20px;
   animation: slideInRight 0.4s ease-out;
@@ -91,13 +91,13 @@ body {
 .balao.resposta::after {
   content: "";
   position: absolute;
-  right: -10px;
-  top: 20px;
+  right: -9px;
+  top: 16px;
   width: 0;
   height: 0;
-  border-top: 11px solid transparent;
-  border-bottom: 11px solid transparent;
-  border-left: 14px solid var(--roxo-2);
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 12px solid var(--roxo-2);
 }
 
 @keyframes slideInRight {
@@ -227,8 +227,8 @@ body {
   }
 
   .balao.pergunta {
-    font-size: 20px;
-    padding: 22px 26px;
+    font-size: 16px;
+    padding: 14px 20px;
   }
 
   .emojis {
@@ -241,7 +241,8 @@ body {
   }
 
   .balao.resposta {
-    font-size: 46px;
+    font-size: 36px;
+    padding: 12px 18px;
   }
 }
 
@@ -255,17 +256,17 @@ body {
   }
 
   .balao.pergunta {
-    max-width: 520px;
-    padding: 28px 36px;
-    font-size: 26px;
+    max-width: 420px;
+    padding: 20px 28px;
+    font-size: 20px;
     margin-top: 40px;
     margin-bottom: 50px;
   }
 
   .balao.pergunta::after {
-    left: -12px;
-    top: 26px;
-    border-right: 16px solid var(--roxo-1);
+    left: -10px;
+    top: 20px;
+    border-right: 14px solid var(--roxo-1);
   }
 
   .emojis {
@@ -286,15 +287,15 @@ body {
   }
 
   .balao.resposta {
-    max-width: 520px;
-    padding: 28px 38px;
-    font-size: 64px;
+    max-width: 380px;
+    padding: 18px 26px;
+    font-size: 52px;
   }
 
   .balao.resposta::after {
-    right: -12px;
-    top: 26px;
-    border-left: 16px solid var(--roxo-2);
+    right: -10px;
+    top: 20px;
+    border-left: 14px solid var(--roxo-2);
   }
 
   .pular {
@@ -312,8 +313,9 @@ body {
   }
 
   .balao.pergunta {
-    max-width: 580px;
-    font-size: 28px;
+    max-width: 460px;
+    padding: 22px 30px;
+    font-size: 22px;
   }
 
   .emojis {
@@ -326,7 +328,8 @@ body {
   }
 
   .balao.resposta {
-    max-width: 580px;
-    font-size: 68px;
+    max-width: 420px;
+    padding: 20px 28px;
+    font-size: 56px;
   }
 }
