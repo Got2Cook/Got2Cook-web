@@ -3,12 +3,11 @@
 // ===== CONFIGURAÇÃO =====
 const LS_ITENS = 'got2cook_geladeira';
 const LS_ITENS_LEGACY = 'geladeira';
-const BASE = '/assets/ingredientes'; // ✓ CORRIGIDO: caminho correto conforme seu código
+const BASE = '/assets/ingredientes';
 
-// Migração automática
+// Migração
 if (!localStorage.getItem(LS_ITENS) && localStorage.getItem(LS_ITENS_LEGACY)) {
   localStorage.setItem(LS_ITENS, localStorage.getItem(LS_ITENS_LEGACY));
-  console.log('✓ Dados migrados');
 }
 
 // ===== ESTADO =====
@@ -41,6 +40,27 @@ function anunciar(mensagem) {
   }
 }
 
+function mostrarToast(mensagem, icone = '✓') {
+  const toast = document.getElementById('toast');
+  const toastIcon = document.getElementById('toastIcon');
+  const toastMessage = document.getElementById('toastMessage');
+  
+  toastIcon.textContent = icone;
+  toastMessage.textContent = mensagem;
+  toast.hidden = false;
+  
+  requestAnimationFrame(() => {
+    toast.classList.add('show');
+  });
+  
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => {
+      toast.hidden = true;
+    }, 300);
+  }, 2500);
+}
+
 // ===== REFERÊNCIAS =====
 const wrap = document.getElementById('geladeiraWrap');
 const porta = document.getElementById('portaImagem');
@@ -59,9 +79,11 @@ const tabsEl = document.getElementById('tabsCategorias');
 const buscaModalEl = document.getElementById('buscaModal');
 
 const selecionadosWrap = document.getElementById('selecionadosWrap');
-const chipsEl = document.getElementById('chipsSelecionados');
 const selecionadosCountEl = document.getElementById('selecionadosCount');
-const limparSelBtn = document.getElementById('limparSelecionados');
+
+const modalSelecionados = document.getElementById('modalSelecionados');
+const modalSelecionadosBackdrop = document.getElementById('modalSelecionadosBackdrop');
+const chipsListModal = document.getElementById('chipsListModal');
 
 // ===== PORTA =====
 porta.addEventListener('click', () => {
@@ -184,12 +206,7 @@ const catalogIndex = {};
 const slugCat = cat => normalizar(cat).replace(/\s|&|\/|,/g,'-');
 Object.entries(CATEGORIAS).forEach(([cat, lista]) => {
   lista.forEach(([id, nome]) => {
-    catalogIndex[id] = { 
-      id, 
-      nome, 
-      cat, 
-      img: `${BASE}/${slugCat(cat)}/${id}.png` // ✓ MANTIDO conforme seu código original
-    };
+    catalogIndex[id] = { id, nome, cat, img: `${BASE}/${slugCat(cat)}/${id}.png` };
   });
 });
 
@@ -213,8 +230,6 @@ function renderIngredientes(filtro = '') {
   }
 
   conteudo.innerHTML = '';
-  conteudo.classList.add('conteudo-geladeira');
-
   lista.forEach((item, index) => {
     const cell = document.createElement('div');
     cell.className = 'celula';
@@ -228,7 +243,6 @@ function renderIngredientes(filtro = '') {
     const btn = document.createElement('button');
     btn.className = 'btn-remover';
     btn.textContent = '✕';
-    btn.setAttribute('aria-label', `Remover ${item.nome}`);
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       cell.style.transform = 'scale(0)';
@@ -238,15 +252,14 @@ function renderIngredientes(filtro = '') {
         salvar();
         renderIngredientes(campoBusca.value);
         renderSelecionados();
-        marcarSelecionadosGaleria();
-        anunciar(`${item.nome} removido`);
+        renderGaleria(); // ATUALIZA GALERIA
+        mostrarToast(`${item.nome} removido`, '🗑️');
       }, 200);
     });
 
     cell.appendChild(img);
     cell.appendChild(btn);
     conteudo.appendChild(cell);
-    cell.style.animation = `itemIn 0.3s ease-out ${index * 0.03}s backwards`;
   });
 }
 
@@ -260,9 +273,7 @@ function abrirPopup() {
   modal.hidden = false;
   requestAnimationFrame(() => {
     modal.classList.add('ativo');
-    modal.focus();
   });
-  anunciar('Galeria aberta');
 }
 
 function fecharPopup() {
@@ -271,7 +282,6 @@ function fecharPopup() {
     modal.hidden = true;
     backdrop.hidden = true;
   }, 300);
-  anunciar('Galeria fechada');
 }
 
 abrirBtn.addEventListener('click', abrirPopup);
@@ -285,10 +295,14 @@ document.addEventListener('keydown', (e) => {
 });
 
 adicionarBtn.addEventListener('click', () => {
+  if (ingredientes.length === 0) {
+    mostrarToast('Selecione pelo menos um ingrediente', '⚠️');
+    return;
+  }
   salvar();
   renderIngredientes(campoBusca.value);
   fecharPopup();
-  anunciar(`${ingredientes.length} ingredientes na geladeira`);
+  mostrarToast(`${ingredientes.length} ingredientes adicionados!`, '✓');
 });
 
 // ===== TABS =====
@@ -308,29 +322,35 @@ function renderTabs() {
       btn.setAttribute('aria-selected', 'true');
       buscaModalEl.value = '';
       renderGaleria();
-      anunciar(`Categoria ${cat}`);
     });
     tabsEl.appendChild(btn);
   });
 }
 
-// ===== GALERIA =====
+// ===== GALERIA (FILTRA JÁ ADICIONADOS) =====
 function renderGaleria() {
   const filtro = normalizar(buscaModalEl.value || '');
   const lista = CATEGORIAS[currentCategory];
 
-  const skeletons = galeriaEl.querySelectorAll('.skeleton-item');
-  skeletons.forEach(sk => sk.remove());
-
+  galeriaEl.querySelectorAll('.skeleton-item').forEach(sk => sk.remove());
   galeriaEl.innerHTML = '';
 
-  const itensFiltrados = lista.filter(([id, nome]) => normalizar(nome).includes(filtro));
+  // IDs já adicionados
+  const idsAdicionados = new Set(ingredientes.map(i => i.id || normalizar(i.nome)));
+
+  const itensFiltrados = lista.filter(([id, nome]) => {
+    // FILTRO 1: Não mostrar os já adicionados
+    if (idsAdicionados.has(id)) return false;
+    // FILTRO 2: Busca textual
+    return normalizar(nome).includes(filtro);
+  });
 
   if (itensFiltrados.length === 0) {
     galeriaEl.innerHTML = `
-      <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--verde);">
-        <p style="font-size: 18px;">🔍</p>
-        <p style="font-size: 14px; margin-top: 8px;">Nenhum ingrediente encontrado</p>
+      <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--verde);">
+        <p style="font-size: 48px; margin-bottom: 16px;">✓</p>
+        <p style="font-size: 16px; font-weight: 600;">Todos os ingredientes desta categoria já foram adicionados!</p>
+        <p style="font-size: 14px; margin-top: 8px; opacity: 0.7;">Tente outra categoria ou busque manualmente</p>
       </div>
     `;
     return;
@@ -342,7 +362,6 @@ function renderGaleria() {
     item.className = 'item';
     item.tabIndex = 0;
     item.dataset.id = id;
-    item.style.animationDelay = `${idx * 0.02}s`;
 
     const img = document.createElement('img');
     img.src = data.img;
@@ -376,9 +395,11 @@ buscaModalEl.addEventListener('input', renderGaleria);
 function marcarSelecionadosGaleria() {
   const ids = new Set(ingredientes.map(i => i.id || normalizar(i.nome)));
   Array.from(galeriaEl.children).forEach((el) => {
-    const id = el.dataset.id;
-    if (ids.has(id)) el.classList.add('selecionado');
-    else el.classList.remove('selecionado');
+    if (el.dataset.id) {
+      const id = el.dataset.id;
+      if (ids.has(id)) el.classList.add('selecionado');
+      else el.classList.remove('selecionado');
+    }
   });
 }
 
@@ -388,10 +409,10 @@ function toggleSelecionado(catItem) {
 
   if (idx >= 0) {
     ingredientes.splice(idx, 1);
-    anunciar(`${catItem.nome} removido`);
+    mostrarToast(`${catItem.nome} removido`, '➖');
   } else {
     ingredientes.push({ id, nome: catItem.nome, url: catItem.img });
-    anunciar(`${catItem.nome} adicionado`);
+    mostrarToast(`${catItem.nome} adicionado`, '✓');
   }
 
   salvar();
@@ -400,7 +421,7 @@ function toggleSelecionado(catItem) {
   marcarSelecionadosGaleria();
 }
 
-// ===== CHIPS =====
+// ===== SELECIONADOS =====
 function renderSelecionados() {
   const total = ingredientes.length;
   selecionadosCountEl.innerHTML = `
@@ -408,56 +429,77 @@ function renderSelecionados() {
     <span>${total === 1 ? 'selecionado' : 'selecionados'}</span>
   `;
   selecionadosWrap.hidden = total === 0;
+}
 
-  chipsEl.innerHTML = '';
+// Ver selecionados (modal popup)
+document.getElementById('verSelecionados').addEventListener('click', () => {
+  chipsListModal.innerHTML = '';
   ingredientes.forEach(item => {
     const chip = document.createElement('div');
-    chip.className = 'chip';
-    chip.dataset.id = item.id || normalizar(item.nome);
+    chip.className = 'chip-full';
 
     const img = document.createElement('img');
     img.src = item.url;
     img.alt = '';
-    img.loading = 'lazy';
     img.onerror = () => { img.style.display = 'none'; };
 
     const name = document.createElement('span');
+    name.className = 'chip-full-nome';
     name.textContent = item.nome;
 
     const btn = document.createElement('button');
-    btn.className = 'chip-x';
-    btn.title = 'Remover';
-    btn.setAttribute('aria-label', `Remover ${item.nome}`);
+    btn.className = 'chip-full-remove';
     btn.textContent = '×';
     btn.addEventListener('click', () => {
-      const id = item.id || normalizar(item.nome);
-      const idx = ingredientes.findIndex(i => (i.id || normalizar(i.nome)) === id);
+      const idx = ingredientes.findIndex(i => i.id === item.id);
       if (idx >= 0) {
         ingredientes.splice(idx, 1);
         salvar();
         renderIngredientes(campoBusca.value);
         renderSelecionados();
-        marcarSelecionadosGaleria();
-        anunciar(`${item.nome} removido`);
+        renderGaleria();
+        chip.remove();
+        if (ingredientes.length === 0) {
+          fecharModalSelecionados();
+        }
+        mostrarToast(`${item.nome} removido`, '🗑️');
       }
     });
 
     chip.appendChild(img);
     chip.appendChild(name);
     chip.appendChild(btn);
-    chipsEl.appendChild(chip);
+    chipsListModal.appendChild(chip);
   });
+
+  modalSelecionadosBackdrop.hidden = false;
+  modalSelecionados.hidden = false;
+  requestAnimationFrame(() => {
+    modalSelecionados.classList.add('ativo');
+  });
+});
+
+function fecharModalSelecionados() {
+  modalSelecionados.classList.remove('ativo');
+  setTimeout(() => {
+    modalSelecionados.hidden = true;
+    modalSelecionadosBackdrop.hidden = true;
+  }, 300);
 }
 
-limparSelBtn.addEventListener('click', () => {
-  if (!ingredientes.length) return;
-  if (confirm(`Remover todos os ${ingredientes.length} ingredientes?`)) {
+document.getElementById('fecharSelecionados').addEventListener('click', fecharModalSelecionados);
+document.getElementById('fecharModalSelecionados').addEventListener('click', fecharModalSelecionados);
+modalSelecionadosBackdrop.addEventListener('click', fecharModalSelecionados);
+
+document.getElementById('limparTodosSelecionados').addEventListener('click', () => {
+  if (confirm(`Remover todos os ${ingredientes.length} ingredientes selecionados?`)) {
     ingredientes = [];
     salvar();
     renderIngredientes(campoBusca.value);
     renderSelecionados();
-    marcarSelecionadosGaleria();
-    anunciar('Todos removidos');
+    renderGaleria();
+    fecharModalSelecionados();
+    mostrarToast('Todos removidos', '🗑️');
   }
 });
 
@@ -465,14 +507,13 @@ document.getElementById('adicionarManual').addEventListener('click', () => {
   const nome = prompt('Digite o nome do ingrediente:');
   if (!nome || !nome.trim()) return;
   const nomeClean = nome.trim();
-  const url = prompt('Cole o caminho da imagem (opcional):', '/assets/placeholder.png');
   const id = normalizar(nomeClean).replace(/\s+/g, '-').slice(0, 40) || `item-${Date.now()}`;
-  ingredientes.push({ id, nome: nomeClean, url: url || '/assets/placeholder.png' });
+  ingredientes.push({ id, nome: nomeClean, url: '/assets/placeholder.png' });
   salvar();
   renderIngredientes(campoBusca.value);
   renderSelecionados();
-  marcarSelecionadosGaleria();
-  anunciar(`${nomeClean} adicionado`);
+  renderGaleria();
+  mostrarToast(`${nomeClean} adicionado manualmente`, '✏️');
 });
 
 // ===== NAVEGAÇÃO =====
