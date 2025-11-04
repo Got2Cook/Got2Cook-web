@@ -12,13 +12,11 @@
   <div class="page">
     <main id="conteudo" class="conteudo" tabindex="-1">
       
-      <!-- Cabeçalho -->
       <header class="header-geladeira">
         <h1 class="titulo-geladeira">MINHA GELADEIRA</h1>
         <p class="subtitulo-geladeira">Organize seus ingredientes e facilite sua vida na cozinha</p>
       </header>
 
-      <!-- Busca -->
       <section class="pesquisa-container" aria-label="Buscar ingredientes na geladeira">
         <div class="barra-pesquisa">
           <img src="/assets/lupa.png" alt="" class="lupa" aria-hidden="true">
@@ -26,14 +24,19 @@
         </div>
       </section>
 
-      <!-- Geladeira visual -->
+      <!-- Geladeira com duas portas -->
       <div class="geladeira-container" id="geladeiraWrap">
-        <div class="porta-wrapper">
-          <img src="/assets/geladeira-fechada.png" alt="Clique para abrir a geladeira" class="porta-imagem" id="portaImagem" />
-          <div class="porta-hint">
-            <span class="hint-icon">👆</span>
-            <span class="hint-text">Clique para abrir</span>
+        <div class="porta-wrapper" id="portaImagem">
+          <div class="porta-esquerda">
+            <span class="porta-icone">❄️</span>
           </div>
+          <div class="porta-direita">
+            <span class="porta-icone">🧊</span>
+          </div>
+        </div>
+        <div class="porta-hint">
+          <span class="hint-icon">👆</span>
+          <span class="hint-text">Clique para abrir</span>
         </div>
 
         <div class="geladeira-aberta" id="geladeiraAberta" aria-hidden="true">
@@ -43,9 +46,7 @@
             <span class="geladeira-count" id="ingredientesCount">0 itens</span>
           </div>
 
-          <div class="conteudo-geladeira" id="conteudoGeladeira">
-            <!-- Preenchido dinamicamente -->
-          </div>
+          <div class="conteudo-geladeira" id="conteudoGeladeira"></div>
 
           <div class="geladeira-footer">
             <button class="btn-adicionar" id="abrirIngrediente">
@@ -84,7 +85,6 @@
           </div>
         </div>
 
-        <!-- Chips de selecionados (REMOVIDOS - agora só contagem) -->
         <section class="selecionados-compacto" id="selecionadosWrap" aria-live="polite" hidden>
           <div class="selecionados__resumo">
             <strong id="selecionadosCount">
@@ -97,7 +97,6 @@
           </div>
         </section>
 
-        <!-- Galeria com MUITO MAIS ESPAÇO -->
         <div class="galeria-wrapper">
           <div class="galeria" id="galeriaIngredientes" aria-label="Galeria de ingredientes disponíveis">
             <div class="skeleton-item" aria-hidden="true"></div>
@@ -121,13 +120,11 @@
         </div>
       </dialog>
 
-      <!-- Toast de feedback -->
       <div class="toast" id="toast" aria-live="assertive" aria-atomic="true" hidden>
         <span class="toast-icon" id="toastIcon">✓</span>
         <span class="toast-message" id="toastMessage"></span>
       </div>
 
-      <!-- Modal de Selecionados (popup separado) -->
       <div id="modalSelecionadosBackdrop" class="modal-backdrop" hidden></div>
       <dialog id="modalSelecionados" class="popup-selecionados" hidden>
         <div class="popup__header">
@@ -149,7 +146,6 @@
 
     </main>
 
-    <!-- Rodapé curvo -->
     <footer class="curva">
       <button class="btn-footer voltar" id="btnVoltar" aria-label="Selecionar humor novamente">
         <img src="/assets/humor.png" alt="" />
@@ -158,7 +154,7 @@
         <img src="/assets/logocentral.png" alt="" />
       </button>
       <button class="btn-footer geladeira" id="btnGeladeira" aria-label="Abrir Minha Geladeira">
-        <img src="/assets/geladeira.png" alt="" />
+        <img src="/assets/img/geladeira.png" alt="" />
       </button>
     </footer>
   </div>
