@@ -1,20 +1,19 @@
 // /app/geladeira/geladeira.js
 
-// ===== CONSTANTES E CONFIGURAÇÃO =====
+// ===== CONFIGURAÇÃO =====
 const LS_ITENS = 'got2cook_geladeira';
-const LS_ITENS_LEGACY = 'geladeira'; // Suporte a chave antiga
-const BASE = '/assets/img/ingredientes';
+const LS_ITENS_LEGACY = 'geladeira';
+const BASE = '/assets/ingredientes'; // ✓ CORRIGIDO: caminho correto conforme seu código
 
-// Migração automática de dados antigos
+// Migração automática
 if (!localStorage.getItem(LS_ITENS) && localStorage.getItem(LS_ITENS_LEGACY)) {
   localStorage.setItem(LS_ITENS, localStorage.getItem(LS_ITENS_LEGACY));
-  console.log('✓ Dados migrados de "geladeira" para "got2cook_geladeira"');
+  console.log('✓ Dados migrados');
 }
 
-// ===== ESTADO GLOBAL =====
+// ===== ESTADO =====
 let ingredientes = JSON.parse(localStorage.getItem(LS_ITENS) || '[]');
 
-// Normalizar dados legados (strings puras → objetos)
 ingredientes = ingredientes.map(it => {
   if (typeof it === 'string') {
     const id = it.split('/').pop().split('.')[0].toLowerCase();
@@ -28,14 +27,10 @@ salvar();
 // ===== HELPERS =====
 function salvar() {
   localStorage.setItem(LS_ITENS, JSON.stringify(ingredientes));
-  console.log(`💾 ${ingredientes.length} ingredientes salvos no localStorage`);
 }
 
 function normalizar(texto) {
-  return (texto || '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase();
+  return (texto || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 }
 
 function anunciar(mensagem) {
@@ -46,41 +41,35 @@ function anunciar(mensagem) {
   }
 }
 
-// ===== REFERÊNCIAS DO DOM =====
+// ===== REFERÊNCIAS =====
 const wrap = document.getElementById('geladeiraWrap');
 const porta = document.getElementById('portaImagem');
 const campoBusca = document.getElementById('campoBusca');
 const conteudo = document.getElementById('conteudoGeladeira');
 const ingredientesCount = document.getElementById('ingredientesCount');
 
-// Modal
 const modal = document.getElementById('modalGaleria');
 const backdrop = document.getElementById('modalBackdrop');
 const abrirBtn = document.getElementById('abrirIngrediente');
 const fecharBtn = document.getElementById('fecharModal');
 const adicionarBtn = document.getElementById('adicionarSelecao');
 
-// Galeria
 const galeriaEl = document.getElementById('galeriaIngredientes');
 const tabsEl = document.getElementById('tabsCategorias');
 const buscaModalEl = document.getElementById('buscaModal');
 
-// Selecionados (chips)
 const selecionadosWrap = document.getElementById('selecionadosWrap');
 const chipsEl = document.getElementById('chipsSelecionados');
 const selecionadosCountEl = document.getElementById('selecionadosCount');
 const limparSelBtn = document.getElementById('limparSelecionados');
 
-// ===== ANIMAÇÃO DA PORTA =====
+// ===== PORTA =====
 porta.addEventListener('click', () => {
   wrap.classList.toggle('is-open');
-  anunciar(wrap.classList.contains('is-open') 
-    ? 'Geladeira aberta' 
-    : 'Geladeira fechada'
-  );
+  anunciar(wrap.classList.contains('is-open') ? 'Geladeira aberta' : 'Geladeira fechada');
 });
 
-// ===== CATÁLOGO DE INGREDIENTES =====
+// ===== CATÁLOGO =====
 const CATEGORIAS = {
   'Legumes e Verduras': [
     ['tomate','Tomate'],['cebola','Cebola'],['alho','Alho'],['batata','Batata'],
@@ -191,29 +180,24 @@ const CATEGORIAS = {
   ]
 };
 
-// Index do catálogo (sem subpastas de categoria)
 const catalogIndex = {};
+const slugCat = cat => normalizar(cat).replace(/\s|&|\/|,/g,'-');
 Object.entries(CATEGORIAS).forEach(([cat, lista]) => {
   lista.forEach(([id, nome]) => {
     catalogIndex[id] = { 
       id, 
       nome, 
       cat, 
-      img: `${BASE}/${id}.png` // ✓ Corrigido: sem subcategoria
+      img: `${BASE}/${slugCat(cat)}/${id}.png` // ✓ MANTIDO conforme seu código original
     };
   });
 });
 
-// ===== RENDER DA GRADE DA GELADEIRA =====
+// ===== RENDER GELADEIRA =====
 function renderIngredientes(filtro = '') {
-  const lista = ingredientes.filter(i => 
-    normalizar(i.nome).includes(normalizar(filtro))
-  );
-
-  // Atualizar contador
+  const lista = ingredientes.filter(i => normalizar(i.nome).includes(normalizar(filtro)));
   ingredientesCount.textContent = `${lista.length} ${lista.length === 1 ? 'item' : 'itens'}`;
 
-  // Empty state
   if (lista.length === 0) {
     conteudo.innerHTML = `
       <div class="empty-state">
@@ -228,7 +212,6 @@ function renderIngredientes(filtro = '') {
     return;
   }
 
-  // Renderizar grid
   conteudo.innerHTML = '';
   conteudo.classList.add('conteudo-geladeira');
 
@@ -240,10 +223,7 @@ function renderIngredientes(filtro = '') {
     img.src = item.url;
     img.alt = item.nome;
     img.loading = 'lazy';
-    img.onerror = () => { 
-      img.style.opacity = '0.3';
-      img.src = '/assets/img/icons/placeholder.png'; // Fallback genérico
-    };
+    img.onerror = () => { img.style.opacity = '0.3'; };
 
     const btn = document.createElement('button');
     btn.className = 'btn-remover';
@@ -251,11 +231,8 @@ function renderIngredientes(filtro = '') {
     btn.setAttribute('aria-label', `Remover ${item.nome}`);
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      
-      // Animação de saída
       cell.style.transform = 'scale(0)';
       cell.style.opacity = '0';
-      
       setTimeout(() => {
         ingredientes.splice(index, 1);
         salvar();
@@ -269,15 +246,13 @@ function renderIngredientes(filtro = '') {
     cell.appendChild(img);
     cell.appendChild(btn);
     conteudo.appendChild(cell);
-
-    // Animação de entrada escalonada
     cell.style.animation = `itemIn 0.3s ease-out ${index * 0.03}s backwards`;
   });
 }
 
 campoBusca.addEventListener('input', () => renderIngredientes(campoBusca.value));
 
-// ===== MODAL: ABRIR/FECHAR =====
+// ===== MODAL =====
 function abrirPopup() {
   renderSelecionados();
   renderGaleria();
@@ -287,7 +262,7 @@ function abrirPopup() {
     modal.classList.add('ativo');
     modal.focus();
   });
-  anunciar('Galeria de ingredientes aberta');
+  anunciar('Galeria aberta');
 }
 
 function fecharPopup() {
@@ -303,7 +278,6 @@ abrirBtn.addEventListener('click', abrirPopup);
 fecharBtn.addEventListener('click', fecharPopup);
 backdrop.addEventListener('click', fecharPopup);
 
-// ESC para fechar
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && modal.classList.contains('ativo')) {
     fecharPopup();
@@ -317,7 +291,7 @@ adicionarBtn.addEventListener('click', () => {
   anunciar(`${ingredientes.length} ingredientes na geladeira`);
 });
 
-// ===== TABS DE CATEGORIAS =====
+// ===== TABS =====
 let currentCategory = Object.keys(CATEGORIAS)[0];
 
 function renderTabs() {
@@ -328,36 +302,29 @@ function renderTabs() {
     btn.role = 'tab';
     btn.setAttribute('aria-selected', String(cat === currentCategory));
     btn.textContent = cat;
-    
     btn.addEventListener('click', () => {
       currentCategory = cat;
-      Array.from(tabsEl.children).forEach(el => 
-        el.setAttribute('aria-selected', 'false')
-      );
+      Array.from(tabsEl.children).forEach(el => el.setAttribute('aria-selected', 'false'));
       btn.setAttribute('aria-selected', 'true');
       buscaModalEl.value = '';
       renderGaleria();
-      anunciar(`Categoria ${cat} selecionada`);
+      anunciar(`Categoria ${cat}`);
     });
-    
     tabsEl.appendChild(btn);
   });
 }
 
-// ===== GALERIA DE INGREDIENTES =====
+// ===== GALERIA =====
 function renderGaleria() {
   const filtro = normalizar(buscaModalEl.value || '');
   const lista = CATEGORIAS[currentCategory];
 
-  // Remover skeleton loader
   const skeletons = galeriaEl.querySelectorAll('.skeleton-item');
   skeletons.forEach(sk => sk.remove());
 
   galeriaEl.innerHTML = '';
 
-  const itensFiltrados = lista.filter(([id, nome]) => 
-    normalizar(nome).includes(filtro)
-  );
+  const itensFiltrados = lista.filter(([id, nome]) => normalizar(nome).includes(filtro));
 
   if (itensFiltrados.length === 0) {
     galeriaEl.innerHTML = `
@@ -381,17 +348,13 @@ function renderGaleria() {
     img.src = data.img;
     img.alt = nome;
     img.loading = 'lazy';
-    img.onerror = () => {
-      img.style.opacity = '0.3';
-      img.src = '/assets/img/icons/placeholder.png';
-    };
+    img.onerror = () => { img.style.opacity = '0.3'; };
 
     const label = document.createElement('div');
     label.className = 'nome';
     label.textContent = nome;
 
     const toggle = () => toggleSelecionado(data);
-    
     item.addEventListener('click', toggle);
     item.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -414,30 +377,20 @@ function marcarSelecionadosGaleria() {
   const ids = new Set(ingredientes.map(i => i.id || normalizar(i.nome)));
   Array.from(galeriaEl.children).forEach((el) => {
     const id = el.dataset.id;
-    if (ids.has(id)) {
-      el.classList.add('selecionado');
-    } else {
-      el.classList.remove('selecionado');
-    }
+    if (ids.has(id)) el.classList.add('selecionado');
+    else el.classList.remove('selecionado');
   });
 }
 
-// ===== SELECIONAR/REMOVER =====
 function toggleSelecionado(catItem) {
   const id = catItem.id;
-  const idx = ingredientes.findIndex(i => 
-    (i.id || normalizar(i.nome)) === id
-  );
+  const idx = ingredientes.findIndex(i => (i.id || normalizar(i.nome)) === id);
 
   if (idx >= 0) {
     ingredientes.splice(idx, 1);
     anunciar(`${catItem.nome} removido`);
   } else {
-    ingredientes.push({ 
-      id, 
-      nome: catItem.nome, 
-      url: catItem.img 
-    });
+    ingredientes.push({ id, nome: catItem.nome, url: catItem.img });
     anunciar(`${catItem.nome} adicionado`);
   }
 
@@ -447,19 +400,16 @@ function toggleSelecionado(catItem) {
   marcarSelecionadosGaleria();
 }
 
-// ===== CHIPS DE SELECIONADOS =====
+// ===== CHIPS =====
 function renderSelecionados() {
   const total = ingredientes.length;
-  
   selecionadosCountEl.innerHTML = `
     <span class="count-badge">${total}</span>
     <span>${total === 1 ? 'selecionado' : 'selecionados'}</span>
   `;
-  
   selecionadosWrap.hidden = total === 0;
 
   chipsEl.innerHTML = '';
-  
   ingredientes.forEach(item => {
     const chip = document.createElement('div');
     chip.className = 'chip';
@@ -479,13 +429,9 @@ function renderSelecionados() {
     btn.title = 'Remover';
     btn.setAttribute('aria-label', `Remover ${item.nome}`);
     btn.textContent = '×';
-    
     btn.addEventListener('click', () => {
       const id = item.id || normalizar(item.nome);
-      const idx = ingredientes.findIndex(i => 
-        (i.id || normalizar(i.nome)) === id
-      );
-      
+      const idx = ingredientes.findIndex(i => (i.id || normalizar(i.nome)) === id);
       if (idx >= 0) {
         ingredientes.splice(idx, 1);
         salvar();
@@ -503,49 +449,33 @@ function renderSelecionados() {
   });
 }
 
-// Limpar todos
 limparSelBtn.addEventListener('click', () => {
   if (!ingredientes.length) return;
-  
-  if (confirm(`Remover todos os ${ingredientes.length} ingredientes selecionados?`)) {
+  if (confirm(`Remover todos os ${ingredientes.length} ingredientes?`)) {
     ingredientes = [];
     salvar();
     renderIngredientes(campoBusca.value);
     renderSelecionados();
     marcarSelecionadosGaleria();
-    anunciar('Todos os ingredientes removidos');
+    anunciar('Todos removidos');
   }
 });
 
-// ===== ADICIONAR INGREDIENTE MANUAL =====
 document.getElementById('adicionarManual').addEventListener('click', () => {
   const nome = prompt('Digite o nome do ingrediente:');
-  
   if (!nome || !nome.trim()) return;
-  
   const nomeClean = nome.trim();
-  const url = prompt(
-    'Cole o caminho da imagem (opcional):\nEx: /assets/img/ingredientes/item.png',
-    '/assets/img/icons/placeholder.png'
-  );
-  
-  const id = normalizar(nomeClean).replace(/\s+/g, '-').slice(0, 40) || 
-    `item-${Date.now()}`;
-  
-  ingredientes.push({ 
-    id, 
-    nome: nomeClean, 
-    url: url || '/assets/img/icons/placeholder.png' 
-  });
-  
+  const url = prompt('Cole o caminho da imagem (opcional):', '/assets/placeholder.png');
+  const id = normalizar(nomeClean).replace(/\s+/g, '-').slice(0, 40) || `item-${Date.now()}`;
+  ingredientes.push({ id, nome: nomeClean, url: url || '/assets/placeholder.png' });
   salvar();
   renderIngredientes(campoBusca.value);
   renderSelecionados();
   marcarSelecionadosGaleria();
-  anunciar(`${nomeClean} adicionado manualmente`);
+  anunciar(`${nomeClean} adicionado`);
 });
 
-// ===== NAVEGAÇÃO DO RODAPÉ =====
+// ===== NAVEGAÇÃO =====
 document.getElementById('btnVoltar').addEventListener('click', () => {
   window.location.href = '/app/humor/index.html';
 });
@@ -558,12 +488,9 @@ document.getElementById('btnGeladeira').addEventListener('click', () => {
   window.location.href = '/app/geladeira/index.html';
 });
 
-// ===== INICIALIZAÇÃO =====
+// ===== INIT =====
 renderIngredientes();
 renderTabs();
 renderGaleria();
 
-console.log('🚀 Geladeira inicializada com sucesso!');
-console.log(`📦 ${ingredientes.length} ingredientes carregados`);
-console.log(`🗂️ ${Object.keys(CATEGORIAS).length} categorias disponíveis`);
-console.log(`🏷️ ${Object.keys(catalogIndex).length} ingredientes no catálogo`);
+console.log('🚀 Geladeira OK!');
