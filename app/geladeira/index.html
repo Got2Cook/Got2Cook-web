@@ -18,26 +18,18 @@
         <p class="subtitulo-geladeira">Organize seus ingredientes e facilite sua vida na cozinha</p>
       </header>
 
-      <!-- Busca com ícone alternativo (SVG inline) -->
+      <!-- Busca -->
       <section class="pesquisa-container" aria-label="Buscar ingredientes na geladeira">
         <div class="barra-pesquisa">
-          <svg class="lupa" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.35-4.35"></path>
-          </svg>
+          <img src="/assets/lupa.png" alt="" class="lupa" aria-hidden="true">
           <input type="text" id="campoBusca" placeholder="Buscar ingrediente na geladeira..." aria-label="Buscar ingrediente" />
         </div>
       </section>
 
-      <!-- Geladeira visual com texto alternativo -->
+      <!-- Geladeira visual -->
       <div class="geladeira-container" id="geladeiraWrap">
         <div class="porta-wrapper">
-          <div class="porta-placeholder" id="portaImagem">
-            <div class="porta-conteudo">
-              <div class="porta-handle-visual"></div>
-              <span class="porta-texto">🧊 GELADEIRA</span>
-            </div>
-          </div>
+          <img src="/assets/geladeira-fechada.png" alt="Clique para abrir a geladeira" class="porta-imagem" id="portaImagem" />
           <div class="porta-hint">
             <span class="hint-icon">👆</span>
             <span class="hint-text">Clique para abrir</span>
@@ -87,10 +79,7 @@
             <div class="tabs" id="tabsCategorias" role="tablist" aria-label="Categorias de ingredientes"></div>
           </div>
           <div class="barra-pesquisa barra-pesquisa--modal">
-            <svg class="lupa" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.35-4.35"></path>
-            </svg>
+            <img src="/assets/lupa.png" alt="" class="lupa" aria-hidden="true">
             <input type="text" id="buscaModal" placeholder="Digite para filtrar..." aria-label="Filtrar ingrediente por nome" />
           </div>
         </div>
@@ -133,28 +122,16 @@
 
     </main>
 
-    <!-- Rodapé curvo com SVG inline -->
+    <!-- Rodapé curvo -->
     <footer class="curva">
       <button class="btn-footer voltar" id="btnVoltar" aria-label="Selecionar humor novamente">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
-          <line x1="9" y1="9" x2="9.01" y2="9"></line>
-          <line x1="15" y1="9" x2="15.01" y2="9"></line>
-        </svg>
+        <img src="/assets/humor.png" alt="" />
       </button>
       <button class="btn-footer logo" id="btnLogo" aria-label="Abrir atalhos rápidos">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
-          <path d="M12 8l-4 4h3v4h2v-4h3l-4-4z" fill="white"/>
-        </svg>
+        <img src="/assets/logocentral.png" alt="" />
       </button>
       <button class="btn-footer geladeira" id="btnGeladeira" aria-label="Abrir Minha Geladeira">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-          <line x1="9" y1="3" x2="9" y2="21"></line>
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-        </svg>
+        <img src="/assets/geladeira.png" alt="" />
       </button>
     </footer>
   </div>
