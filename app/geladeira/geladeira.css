@@ -9,7 +9,6 @@
   --cartao: #dfffbb;
   --div: #b3e698;
   
-  /* Novos tons para gradientes */
   --verde-claro: #e8ffe0;
   --verde-medio: #7ed957;
   --verde-escuro: #1a4d12;
@@ -17,14 +16,13 @@
   --sombra: rgba(73, 47, 112, 0.15);
   --sombra-forte: rgba(73, 47, 112, 0.25);
   
-  /* Animações */
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-/* ===== RESET / BASE ===== */
+/* ===== RESET ===== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -43,10 +41,8 @@ body {
   color: var(--roxo);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===== ACESSIBILIDADE ===== */
 .sr-only {
   position: absolute !important;
   width: 1px;
@@ -59,18 +55,14 @@ body {
   border: 0;
 }
 
-/* Respeitar preferências de movimento */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
 
-/* ===== LAYOUT PRINCIPAL ===== */
+/* ===== LAYOUT ===== */
 .page {
   min-height: 100vh;
   padding-bottom: 120px;
@@ -82,10 +74,10 @@ body {
   padding: 20px 16px 40px;
 }
 
-/* ===== HEADER COM ANIMAÇÃO ===== */
+/* ===== HEADER (SEM EMOJI, MAIS COMPACTO) ===== */
 .header-geladeira {
   text-align: center;
-  margin: 60px 0 20px;
+  margin: 30px 0 20px; /* Reduzido de 60px para 30px */
   animation: fadeInDown 0.6s var(--bounce);
 }
 
@@ -101,28 +93,11 @@ body {
 }
 
 .titulo-geladeira {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 800;
-  color: var(--verde);
+  color: var(--verde-escuro);
   text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.5);
   margin-bottom: 8px;
-}
-
-.titulo-icon {
-  font-size: 40px;
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-.titulo-texto {
   letter-spacing: 1px;
 }
 
@@ -133,7 +108,7 @@ body {
   font-weight: 500;
 }
 
-/* ===== BUSCA MELHORADA ===== */
+/* ===== BUSCA ===== */
 .pesquisa-container {
   padding: 0 0 20px;
   margin-top: 16px;
@@ -159,26 +134,22 @@ body {
   align-items: center;
   gap: 12px;
   padding: 12px 18px;
-  box-shadow: 0 4px 12px var(--sombra), 0 0 0 4px rgba(126, 217, 87, 0.1);
+  box-shadow: 0 4px 12px var(--sombra);
   transition: all var(--transition-base);
 }
 
 .barra-pesquisa:focus-within {
   border-color: var(--roxo);
-  box-shadow: 0 6px 20px var(--sombra-forte), 0 0 0 4px rgba(73, 47, 112, 0.15);
+  box-shadow: 0 6px 20px var(--sombra-forte);
   transform: translateY(-2px);
 }
 
 .barra-pesquisa .lupa {
   width: 22px;
   height: 22px;
+  color: var(--verde);
   opacity: 0.7;
-  transition: transform var(--transition-fast);
-}
-
-.barra-pesquisa:focus-within .lupa {
-  transform: scale(1.1);
-  opacity: 1;
+  flex-shrink: 0;
 }
 
 .barra-pesquisa input {
@@ -199,10 +170,9 @@ body {
 .barra-pesquisa--modal {
   background: #ffffff;
   border: 2px solid var(--verde-medio);
-  box-shadow: 0 2px 8px var(--sombra);
 }
 
-/* ===== GELADEIRA COM ANIMAÇÃO 3D ===== */
+/* ===== GELADEIRA (PORTA PLACEHOLDER) ===== */
 .geladeira-container {
   width: min(90vw, 380px);
   margin: 30px auto 0;
@@ -214,47 +184,76 @@ body {
   position: relative;
   cursor: pointer;
   transition: transform var(--transition-slow);
-  transform-style: preserve-3d;
 }
 
 .geladeira-container:not(.is-open) .porta-wrapper:hover {
   transform: scale(1.02);
 }
 
-.geladeira-container:not(.is-open) .porta-wrapper:active {
-  transform: scale(0.98);
-}
-
-.porta-imagem {
-  display: block;
+.porta-placeholder {
   width: 100%;
-  height: auto;
+  aspect-ratio: 3/4;
+  background: linear-gradient(135deg, #e8f5ff 0%, #c5dff8 100%);
+  border: 4px solid var(--roxo);
   border-radius: 20px;
   box-shadow: 0 10px 40px var(--sombra-forte);
-  transition: all var(--transition-slow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Alça da porta */
-.porta-handle {
+.porta-placeholder::before {
+  content: '';
   position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 8px;
-  height: 80px;
+  inset: 0;
+  background: 
+    linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 50%),
+    radial-gradient(circle at 30% 40%, rgba(255,255,255,0.2), transparent);
+  pointer-events: none;
+}
+
+.porta-conteudo {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.porta-handle-visual {
+  width: 12px;
+  height: 100px;
   background: linear-gradient(135deg, #bbb 0%, #888 100%);
   border-radius: 20px;
   box-shadow: 
-    inset 0 2px 4px rgba(255, 255, 255, 0.5),
-    0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: transform var(--transition-base);
+    inset 0 2px 4px rgba(255,255,255,0.5),
+    0 4px 8px rgba(0,0,0,0.3);
+  position: relative;
 }
 
-.geladeira-container:not(.is-open) .porta-wrapper:hover .porta-handle {
-  transform: translateY(-50%) translateX(3px);
+.porta-handle-visual::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 40px;
+  background: rgba(0,0,0,0.1);
+  border-radius: 10px;
 }
 
-/* Hint animado */
+.porta-texto {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--roxo);
+  text-shadow: 0 2px 4px rgba(255,255,255,0.8);
+  letter-spacing: 2px;
+}
+
 .porta-hint {
   position: absolute;
   bottom: -40px;
@@ -272,16 +271,11 @@ body {
   color: var(--roxo);
   box-shadow: 0 4px 12px var(--sombra);
   animation: pulse 2s ease-in-out infinite;
-  transition: opacity var(--transition-base);
 }
 
 @keyframes pulse {
-  0%, 100% {
-    transform: translateX(-50%) scale(1);
-  }
-  50% {
-    transform: translateX(-50%) scale(1.05);
-  }
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.05); }
 }
 
 .hint-icon {
@@ -290,12 +284,8 @@ body {
 }
 
 @keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 
 /* Estado aberto */
@@ -308,10 +298,7 @@ body {
   background: linear-gradient(180deg, #f0fff0 0%, #e6ffe1 100%);
   border: 4px solid var(--roxo);
   border-radius: 20px;
-  padding: 0;
-  box-shadow: 
-    0 20px 60px var(--sombra-forte),
-    inset 0 4px 20px rgba(126, 217, 87, 0.2);
+  box-shadow: 0 20px 60px var(--sombra-forte);
   animation: slideIn 0.5s var(--bounce);
   overflow: hidden;
 }
@@ -331,39 +318,12 @@ body {
   display: block;
 }
 
-/* Header da geladeira aberta */
 .geladeira-header {
   background: linear-gradient(135deg, var(--roxo) 0%, var(--roxo-claro) 100%);
   padding: 16px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
-  overflow: hidden;
-}
-
-.geladeira-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, 
-    transparent 0%,
-    rgba(255, 255, 255, 0.5) 50%,
-    transparent 100%
-  );
-  animation: shine 2s ease-in-out infinite;
-}
-
-@keyframes shine {
-  0%, 100% {
-    transform: translateX(-100%);
-  }
-  50% {
-    transform: translateX(100%);
-  }
 }
 
 .geladeira-luz {
@@ -371,37 +331,30 @@ body {
   height: 12px;
   background: #4ade80;
   border-radius: 50%;
-  box-shadow: 0 0 10px #4ade80, 0 0 20px rgba(74, 222, 128, 0.5);
+  box-shadow: 0 0 10px #4ade80;
   animation: blink 2s ease-in-out infinite;
 }
 
 @keyframes blink {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.4;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 
 .geladeira-titulo {
   font-size: 18px;
   font-weight: 700;
   color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .geladeira-count {
   font-size: 13px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
+  color: white;
   background: rgba(255, 255, 255, 0.2);
   padding: 4px 10px;
   border-radius: 12px;
-  backdrop-filter: blur(10px);
 }
 
-/* Grid de ingredientes */
 .conteudo-geladeira {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -422,96 +375,58 @@ body {
   padding: 12px;
   aspect-ratio: 1;
   transition: all var(--transition-base);
-  cursor: pointer;
 }
 
 .celula:hover {
   background: var(--verde-claro);
   transform: scale(1.02);
   z-index: 1;
-  box-shadow: 0 4px 12px var(--sombra);
 }
 
 .celula img {
   max-width: 80%;
   max-height: 80%;
   object-fit: contain;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-  transition: transform var(--transition-base);
-}
-
-.celula:hover img {
-  transform: scale(1.1);
 }
 
 .btn-remover {
   position: absolute;
   top: 6px;
   right: 6px;
-  background: linear-gradient(135deg, #ff5757 0%, #ff2d2d 100%);
+  background: #ff5757;
   color: #fff;
   border: none;
   border-radius: 50%;
   width: 26px;
   height: 26px;
   font-size: 14px;
-  font-weight: bold;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  box-shadow: 0 2px 8px rgba(255, 77, 77, 0.4);
-  transition: all var(--transition-fast);
   opacity: 0;
-  transform: scale(0.8);
+  transition: all var(--transition-fast);
 }
 
 .celula:hover .btn-remover {
   opacity: 1;
-  transform: scale(1);
 }
 
 .btn-remover:hover {
-  background: linear-gradient(135deg, #ff2d2d 0%, #cc0000 100%);
+  background: #ff2d2d;
   transform: scale(1.1);
 }
 
-.btn-remover:active {
-  transform: scale(0.95);
-}
-
-.btn-remover:focus-visible {
-  outline: 3px solid var(--roxo);
-  outline-offset: 2px;
-}
-
-/* Empty state elegante */
 .empty-state {
   grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 40px 20px;
   text-align: center;
   background: linear-gradient(135deg, #ffffff 0%, var(--verde-claro) 100%);
-  animation: fadeIn 0.5s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 .empty-state-icon {
   font-size: 64px;
   margin-bottom: 16px;
-  animation: float 3s ease-in-out infinite;
 }
 
 .empty-state-title {
@@ -525,7 +440,6 @@ body {
   font-size: 14px;
   color: var(--verde);
   margin-bottom: 20px;
-  max-width: 280px;
 }
 
 .empty-state-cta {
@@ -534,7 +448,6 @@ body {
   border: none;
   padding: 12px 24px;
   border-radius: 25px;
-  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 4px 12px var(--sombra);
@@ -543,17 +456,10 @@ body {
 
 .empty-state-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px var(--sombra-forte);
 }
 
-.empty-state-cta:active {
-  transform: translateY(0);
-}
-
-/* Footer da geladeira */
 .geladeira-footer {
   padding: 16px;
-  background: linear-gradient(180deg, transparent 0%, rgba(126, 217, 87, 0.1) 100%);
 }
 
 .btn-adicionar {
@@ -572,57 +478,23 @@ body {
   gap: 10px;
   box-shadow: 0 6px 20px var(--sombra-forte);
   transition: all var(--transition-base);
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-adicionar::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-
-.btn-adicionar:hover::before {
-  width: 300px;
-  height: 300px;
 }
 
 .btn-adicionar:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px var(--sombra-forte);
-}
-
-.btn-adicionar:active {
-  transform: translateY(0);
 }
 
 .btn-adicionar-icon {
   font-size: 24px;
-  font-weight: bold;
-  position: relative;
-  z-index: 1;
 }
 
-.btn-adicionar-texto {
-  position: relative;
-  z-index: 1;
-}
-
-/* ===== MODAL POP-UP MELHORADO ===== */
+/* ===== MODAL ===== */
 .modal-backdrop {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
   z-index: 80;
   backdrop-filter: blur(8px);
-  animation: fadeIn 0.3s ease-out;
 }
 
 .popup {
@@ -631,7 +503,6 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  width: 100%;
   max-height: 85vh;
   background: #ffffff;
   border-radius: 30px 30px 0 0;
@@ -648,7 +519,6 @@ body {
   transform: translateY(0);
 }
 
-/* Header do modal */
 .popup__header {
   display: flex;
   align-items: flex-start;
@@ -656,9 +526,6 @@ body {
   padding: 20px;
   border-bottom: 2px solid var(--verde-claro);
   background: linear-gradient(135deg, #ffffff 0%, var(--verde-claro) 100%);
-  position: sticky;
-  top: 0;
-  z-index: 2;
 }
 
 .popup__header-content {
@@ -682,11 +549,9 @@ body {
 .modal-subtitle {
   font-size: 13px;
   color: var(--verde);
-  opacity: 0.8;
 }
 
 .fechar {
-  flex-shrink: 0;
   border: 2px solid var(--roxo);
   background: white;
   color: var(--roxo);
@@ -695,36 +560,23 @@ body {
   height: 40px;
   cursor: pointer;
   font-size: 28px;
-  font-weight: 300;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all var(--transition-base);
-  line-height: 1;
 }
 
 .fechar:hover {
   background: var(--roxo);
   color: white;
-  transform: rotate(90deg);
 }
 
-.fechar:focus-visible {
-  outline: 3px solid var(--roxo-claro);
-  outline-offset: 2px;
-}
-
-/* Filtros e tabs */
 .popup__filters {
   padding: 16px 20px;
   border-bottom: 2px solid var(--verde-claro);
-  background: #fafffe;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  position: sticky;
-  top: 86px;
-  z-index: 2;
 }
 
 .filters-tabs {
@@ -738,7 +590,6 @@ body {
   font-weight: 700;
   color: var(--verde);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 .tabs {
@@ -746,17 +597,6 @@ body {
   gap: 8px;
   overflow-x: auto;
   padding-bottom: 4px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--verde-medio) transparent;
-}
-
-.tabs::-webkit-scrollbar {
-  height: 6px;
-}
-
-.tabs::-webkit-scrollbar-thumb {
-  background: var(--verde-medio);
-  border-radius: 10px;
 }
 
 .tab-btn {
@@ -775,35 +615,17 @@ body {
 
 .tab-btn:hover {
   background: var(--verde-claro);
-  transform: translateY(-1px);
 }
 
 .tab-btn[aria-selected="true"] {
-  background: linear-gradient(135deg, var(--verde) 0%, var(--verde-escuro) 100%);
+  background: var(--verde);
   color: white;
-  box-shadow: 0 4px 12px rgba(34, 92, 24, 0.3);
 }
 
-/* Selecionados (chips) */
 .selecionados {
-  position: sticky;
-  top: 212px;
-  z-index: 1;
   background: white;
   border-bottom: 2px solid var(--verde-claro);
   padding: 12px 20px;
-  animation: slideDown 0.3s ease-out;
-}
-
-@keyframes slideDown {
-  from {
-    transform: translateY(-20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
 }
 
 .selecionados__topo {
@@ -823,7 +645,7 @@ body {
 }
 
 .count-badge {
-  background: linear-gradient(135deg, var(--roxo) 0%, var(--roxo-claro) 100%);
+  background: var(--roxo);
   color: white;
   width: 28px;
   height: 28px;
@@ -832,26 +654,18 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 13px;
-  box-shadow: 0 2px 8px var(--sombra);
 }
 
 .btn-link {
   background: none;
   border: none;
   color: #ff5757;
-  text-decoration: none;
   cursor: pointer;
   font-weight: 600;
   font-size: 13px;
   display: flex;
   align-items: center;
   gap: 6px;
-  transition: all var(--transition-fast);
-}
-
-.btn-link:hover {
-  color: #ff2d2d;
-  transform: scale(1.05);
 }
 
 .chips {
@@ -860,8 +674,6 @@ body {
   flex-wrap: wrap;
   max-height: 120px;
   overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--verde-medio) transparent;
 }
 
 .chip {
@@ -871,23 +683,9 @@ body {
   padding: 8px 12px;
   border: 2px solid var(--verde);
   border-radius: 20px;
-  background: linear-gradient(135deg, white 0%, var(--verde-claro) 100%);
+  background: var(--verde-claro);
   font-size: 13px;
   font-weight: 600;
-  color: var(--verde-escuro);
-  box-shadow: 0 2px 6px var(--sombra);
-  animation: chipIn 0.3s var(--bounce);
-}
-
-@keyframes chipIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
 }
 
 .chip img {
@@ -904,26 +702,12 @@ body {
   height: 20px;
   border-radius: 50%;
   cursor: pointer;
-  line-height: 1;
   font-size: 12px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all var(--transition-fast);
 }
 
-.chip-x:hover {
-  background: #ff2d2d;
-  transform: scale(1.1);
-}
-
-/* Galeria com skeleton loader */
 .galeria-wrapper {
   flex: 1;
   overflow-y: auto;
-  overscroll-behavior: contain;
-  background: white;
 }
 
 .galeria {
@@ -942,12 +726,8 @@ body {
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 .galeria .item {
@@ -959,35 +739,20 @@ body {
   border: 2px solid transparent;
   border-radius: 12px;
   background: white;
-  transition: all var(--transition-base);
   cursor: pointer;
-  user-select: none;
-  min-width: 0;
-  animation: itemIn 0.3s ease-out backwards;
-}
-
-@keyframes itemIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  transition: all var(--transition-base);
+  position: relative;
 }
 
 .galeria .item:hover {
   background: var(--verde-claro);
   transform: translateY(-4px);
-  box-shadow: 0 4px 12px var(--sombra);
   border-color: var(--verde-medio);
 }
 
 .galeria .item.selecionado {
   border-color: var(--roxo);
-  background: linear-gradient(135deg, white 0%, #f3e8ff 100%);
-  box-shadow: 0 0 0 3px rgba(73, 47, 112, 0.2), 0 4px 12px var(--sombra);
+  background: #f3e8ff;
 }
 
 .galeria .item.selecionado::before {
@@ -1005,35 +770,12 @@ body {
   justify-content: center;
   font-size: 12px;
   font-weight: bold;
-  box-shadow: 0 2px 6px var(--sombra);
-  animation: checkIn 0.3s var(--bounce);
-}
-
-@keyframes checkIn {
-  from {
-    opacity: 0;
-    transform: scale(0) rotate(-180deg);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-  }
-}
-
-.galeria .item {
-  position: relative;
 }
 
 .galeria .item img {
   width: 70px;
   height: 70px;
   object-fit: contain;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-  transition: transform var(--transition-base);
-}
-
-.galeria .item:hover img {
-  transform: scale(1.1);
 }
 
 .galeria .nome {
@@ -1041,20 +783,14 @@ body {
   text-align: center;
   color: var(--roxo);
   font-weight: 600;
-  line-height: 1.3;
 }
 
-/* Footer do modal */
 .popup__footer {
-  position: sticky;
-  bottom: 0;
   background: white;
-  z-index: 2;
   display: flex;
   gap: 10px;
   padding: 16px 20px;
   border-top: 2px solid var(--verde-claro);
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .btn-modal {
@@ -1070,26 +806,6 @@ body {
   justify-content: center;
   gap: 8px;
   transition: all var(--transition-base);
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-modal::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-
-.btn-modal:hover::before {
-  width: 300px;
-  height: 300px;
 }
 
 .btn-modal--secondary {
@@ -1101,8 +817,6 @@ body {
 .btn-modal--secondary:hover {
   background: var(--roxo);
   color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px var(--sombra-forte);
 }
 
 .btn-modal--primary {
@@ -1113,14 +827,9 @@ body {
 
 .btn-modal--primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px var(--sombra-forte);
 }
 
-.btn-modal:active {
-  transform: translateY(0);
-}
-
-/* ===== RODAPÉ CURVO (ESPECIFICAÇÃO IMUTÁVEL) ===== */
+/* ===== RODAPÉ CURVO ===== */
 .curva {
   width: 100%;
   height: 70px;
@@ -1130,7 +839,6 @@ body {
   position: fixed;
   bottom: 0;
   left: 0;
-  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1140,16 +848,15 @@ body {
 }
 
 .btn-footer {
-  background-color: transparent;
+  background-color: #ffffff;
   border: none;
   border-radius: 50%;
   width: 55px;
   height: 55px;
-  padding: 0;
+  padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
   cursor: pointer;
   transform: translateY(-10px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
@@ -1158,61 +865,34 @@ body {
 
 .btn-footer:hover {
   transform: translateY(-14px) scale(1.05);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
-.btn-footer:active {
-  transform: translateY(-8px) scale(0.98);
-}
-
-.btn-footer img {
-  width: 250%;
-  height: 250%;
-  object-fit: contain;
-  display: block;
+.btn-footer svg {
+  width: 100%;
+  height: 100%;
+  color: var(--roxo);
+  fill: currentColor;
 }
 
 .btn-footer.logo {
   width: 150px;
   height: 150px;
   transform: translateY(-20px);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
+  padding: 20px;
 }
 
 .btn-footer.logo:hover {
   transform: translateY(-24px) scale(1.05);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
 }
 
-.btn-footer.logo:active {
-  transform: translateY(-18px) scale(0.98);
-}
-
-.btn-footer.logo img {
-  width: 150%;
-  height: 150%;
-}
-
-/* ===== RESPONSIVIDADE DESKTOP ===== */
+/* ===== RESPONSIVO ===== */
 @media (min-width: 768px) {
-  .conteudo {
-    padding: 30px 24px 60px;
-  }
-
   .header-geladeira {
-    margin: 80px 0 30px;
+    margin: 40px 0 30px;
   }
 
   .titulo-geladeira {
     font-size: 42px;
-  }
-
-  .titulo-icon {
-    font-size: 50px;
-  }
-
-  .subtitulo-geladeira {
-    font-size: 16px;
   }
 
   .geladeira-container {
@@ -1230,7 +910,6 @@ body {
     left: 50%;
     right: auto;
     width: min(90vw, 900px);
-    max-height: 80vh;
     transform: translate(-50%, -50%) scale(0.9);
     border-radius: 30px;
   }
@@ -1242,30 +921,5 @@ body {
   .galeria {
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 16px;
-    padding: 24px;
-  }
-
-  .galeria .item img {
-    width: 80px;
-    height: 80px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .conteudo {
-    max-width: 800px;
-  }
-
-  .geladeira-container {
-    max-width: 500px;
-  }
-
-  .popup {
-    width: min(90vw, 1000px);
-  }
-
-  .galeria {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 20px;
   }
 }
