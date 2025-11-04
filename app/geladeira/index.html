@@ -12,7 +12,7 @@
   <div class="page">
     <main id="conteudo" class="conteudo" tabindex="-1">
       
-      <!-- Cabeçalho sem emoji, mais compacto -->
+      <!-- Cabeçalho -->
       <header class="header-geladeira">
         <h1 class="titulo-geladeira">MINHA GELADEIRA</h1>
         <p class="subtitulo-geladeira">Organize seus ingredientes e facilite sua vida na cozinha</p>
@@ -84,21 +84,24 @@
           </div>
         </div>
 
-        <section class="selecionados" id="selecionadosWrap" aria-live="polite" hidden>
-          <div class="selecionados__topo">
+        <!-- Chips de selecionados (REMOVIDOS - agora só contagem) -->
+        <section class="selecionados-compacto" id="selecionadosWrap" aria-live="polite" hidden>
+          <div class="selecionados__resumo">
             <strong id="selecionadosCount">
               <span class="count-badge">0</span>
               <span>selecionados</span>
             </strong>
-            <button class="btn-link" id="limparSelecionados" aria-label="Limpar todos os selecionados">
-              <span aria-hidden="true">🗑️</span> Limpar tudo
+            <button class="btn-link-small" id="verSelecionados" aria-label="Ver ingredientes selecionados">
+              Ver selecionados
             </button>
           </div>
-          <div class="chips" id="chipsSelecionados"></div>
         </section>
 
+        <!-- Galeria com MUITO MAIS ESPAÇO -->
         <div class="galeria-wrapper">
           <div class="galeria" id="galeriaIngredientes" aria-label="Galeria de ingredientes disponíveis">
+            <div class="skeleton-item" aria-hidden="true"></div>
+            <div class="skeleton-item" aria-hidden="true"></div>
             <div class="skeleton-item" aria-hidden="true"></div>
             <div class="skeleton-item" aria-hidden="true"></div>
             <div class="skeleton-item" aria-hidden="true"></div>
@@ -114,6 +117,30 @@
           <button class="btn-modal btn-modal--primary" id="adicionarSelecao">
             <span aria-hidden="true">✓</span>
             Adicionar à geladeira
+          </button>
+        </div>
+      </dialog>
+
+      <!-- Toast de feedback -->
+      <div class="toast" id="toast" aria-live="assertive" aria-atomic="true" hidden>
+        <span class="toast-icon" id="toastIcon">✓</span>
+        <span class="toast-message" id="toastMessage"></span>
+      </div>
+
+      <!-- Modal de Selecionados (popup separado) -->
+      <div id="modalSelecionadosBackdrop" class="modal-backdrop" hidden></div>
+      <dialog id="modalSelecionados" class="popup-selecionados" hidden>
+        <div class="popup__header">
+          <h2>Ingredientes Selecionados</h2>
+          <button class="fechar" id="fecharSelecionados" aria-label="Fechar">×</button>
+        </div>
+        <div class="chips-list" id="chipsListModal"></div>
+        <div class="popup__footer">
+          <button class="btn-modal btn-modal--secondary" id="limparTodosSelecionados">
+            🗑️ Limpar tudo
+          </button>
+          <button class="btn-modal btn-modal--primary" id="fecharModalSelecionados">
+            Voltar
           </button>
         </div>
       </dialog>
