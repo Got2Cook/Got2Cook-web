@@ -1,46 +1,86 @@
+// /app/geladeira/geladeira.js
 
-// ===== Porta ↔ Interior =====
-const wrap  = document.getElementById('geladeiraWrap');
-const porta = document.getElementById('portaImagem');
-porta.addEventListener('click', () => wrap.classList.toggle('is-open'));
+// ===== CONSTANTES E CONFIGURAÇÃO =====
+const LS_ITENS = 'got2cook_geladeira';
+const LS_ITENS_LEGACY = 'geladeira'; // Suporte a chave antiga
+const BASE = '/assets/img/ingredientes';
 
-// ===== Storage =====
-const LS_ITENS = 'geladeira';
+// Migração automática de dados antigos
+if (!localStorage.getItem(LS_ITENS) && localStorage.getItem(LS_ITENS_LEGACY)) {
+  localStorage.setItem(LS_ITENS, localStorage.getItem(LS_ITENS_LEGACY));
+  console.log('✓ Dados migrados de "geladeira" para "got2cook_geladeira"');
+}
+
+// ===== ESTADO GLOBAL =====
 let ingredientes = JSON.parse(localStorage.getItem(LS_ITENS) || '[]');
-ingredientes = ingredientes.map(it => typeof it === 'string'
-  ? { id: it.split('/').pop().split('.')[0].toLowerCase(), nome: it.split('/').pop().split('.')[0], url: it }
-  : it
-);
+
+// Normalizar dados legados (strings puras → objetos)
+ingredientes = ingredientes.map(it => {
+  if (typeof it === 'string') {
+    const id = it.split('/').pop().split('.')[0].toLowerCase();
+    return { id, nome: it.split('/').pop().split('.')[0], url: it };
+  }
+  return it;
+});
+
 salvar();
-function salvar(){ localStorage.setItem(LS_ITENS, JSON.stringify(ingredientes)); }
-function normalizar(t){ return (t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); }
 
-// ===== DOM =====
-const campoBusca   = document.getElementById('campoBusca');
-const conteudo     = document.getElementById('conteudoGeladeira');
+// ===== HELPERS =====
+function salvar() {
+  localStorage.setItem(LS_ITENS, JSON.stringify(ingredientes));
+  console.log(`💾 ${ingredientes.length} ingredientes salvos no localStorage`);
+}
 
-// POPUP refs
-const modal        = document.getElementById('modalGaleria');
-const backdrop     = document.getElementById('modalBackdrop');
-const abrirBtn     = document.getElementById('abrirIngrediente');
-const fecharBtn    = document.getElementById('fecharModal');
+function normalizar(texto) {
+  return (texto || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}
+
+function anunciar(mensagem) {
+  const announcer = document.getElementById('ariaAnnouncer');
+  if (announcer) {
+    announcer.textContent = mensagem;
+    setTimeout(() => { announcer.textContent = ''; }, 1000);
+  }
+}
+
+// ===== REFERÊNCIAS DO DOM =====
+const wrap = document.getElementById('geladeiraWrap');
+const porta = document.getElementById('portaImagem');
+const campoBusca = document.getElementById('campoBusca');
+const conteudo = document.getElementById('conteudoGeladeira');
+const ingredientesCount = document.getElementById('ingredientesCount');
+
+// Modal
+const modal = document.getElementById('modalGaleria');
+const backdrop = document.getElementById('modalBackdrop');
+const abrirBtn = document.getElementById('abrirIngrediente');
+const fecharBtn = document.getElementById('fecharModal');
 const adicionarBtn = document.getElementById('adicionarSelecao');
 
-// Galeria refs
-const galeriaEl    = document.getElementById('galeriaIngredientes');
-const tabsEl       = document.getElementById('tabsCategorias');
+// Galeria
+const galeriaEl = document.getElementById('galeriaIngredientes');
+const tabsEl = document.getElementById('tabsCategorias');
 const buscaModalEl = document.getElementById('buscaModal');
 
 // Selecionados (chips)
-const selecionadosWrap  = document.getElementById('selecionadosWrap');
-const chipsEl           = document.getElementById('chipsSelecionados');
-const selecionadosCount = document.getElementById('selecionadosCount');
-const limparSelBtn      = document.getElementById('limparSelecionados');
+const selecionadosWrap = document.getElementById('selecionadosWrap');
+const chipsEl = document.getElementById('chipsSelecionados');
+const selecionadosCountEl = document.getElementById('selecionadosCount');
+const limparSelBtn = document.getElementById('limparSelecionados');
 
-// ===== Caminho base das imagens (Vercel/GitHub: pasta 'assets' na raiz) =====
-const BASE = '/assets/ingredientes';
+// ===== ANIMAÇÃO DA PORTA =====
+porta.addEventListener('click', () => {
+  wrap.classList.toggle('is-open');
+  anunciar(wrap.classList.contains('is-open') 
+    ? 'Geladeira aberta' 
+    : 'Geladeira fechada'
+  );
+});
 
-// ===== Catálogo com categorias e IDs (apenas crie os PNGs com estes nomes) =====
+// ===== CATÁLOGO DE INGREDIENTES =====
 const CATEGORIAS = {
   'Legumes e Verduras': [
     ['tomate','Tomate'],['cebola','Cebola'],['alho','Alho'],['batata','Batata'],
@@ -151,21 +191,46 @@ const CATEGORIAS = {
   ]
 };
 
-// ===== Index do catálogo com caminho completo das imagens =====
+// Index do catálogo (sem subpastas de categoria)
 const catalogIndex = {};
-const slugCat = cat => normalizar(cat).replace(/\s|&|\/|,/g,'-');
 Object.entries(CATEGORIAS).forEach(([cat, lista]) => {
   lista.forEach(([id, nome]) => {
-    catalogIndex[id] = { id, nome, cat, img: `${BASE}/${slugCat(cat)}/${id}.png` };
+    catalogIndex[id] = { 
+      id, 
+      nome, 
+      cat, 
+      img: `${BASE}/${id}.png` // ✓ Corrigido: sem subcategoria
+    };
   });
 });
 
-// ===== Render grade da geladeira =====
-function renderIngredientes(filtro=''){
+// ===== RENDER DA GRADE DA GELADEIRA =====
+function renderIngredientes(filtro = '') {
+  const lista = ingredientes.filter(i => 
+    normalizar(i.nome).includes(normalizar(filtro))
+  );
+
+  // Atualizar contador
+  ingredientesCount.textContent = `${lista.length} ${lista.length === 1 ? 'item' : 'itens'}`;
+
+  // Empty state
+  if (lista.length === 0) {
+    conteudo.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">🍽️</div>
+        <h3 class="empty-state-title">Geladeira vazia</h3>
+        <p class="empty-state-text">Adicione ingredientes para começar a criar receitas incríveis!</p>
+        <button class="empty-state-cta" onclick="document.getElementById('abrirIngrediente').click()">
+          + Adicionar Ingredientes
+        </button>
+      </div>
+    `;
+    return;
+  }
+
+  // Renderizar grid
   conteudo.innerHTML = '';
   conteudo.classList.add('conteudo-geladeira');
-
-  const lista = ingredientes.filter(i => normalizar(i.nome).includes(normalizar(filtro)));
 
   lista.forEach((item, index) => {
     const cell = document.createElement('div');
@@ -174,135 +239,227 @@ function renderIngredientes(filtro=''){
     const img = document.createElement('img');
     img.src = item.url;
     img.alt = item.nome;
-    // se a imagem não existir ainda no repositório, só oculta a miniatura
-    img.onerror = () => { img.style.display = 'none'; };
+    img.loading = 'lazy';
+    img.onerror = () => { 
+      img.style.opacity = '0.3';
+      img.src = '/assets/img/icons/placeholder.png'; // Fallback genérico
+    };
 
     const btn = document.createElement('button');
     btn.className = 'btn-remover';
     btn.textContent = '✕';
+    btn.setAttribute('aria-label', `Remover ${item.nome}`);
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      ingredientes.splice(index, 1);
-      salvar();
-      renderIngredientes(campoBusca.value);
-      renderSelecionados();
-      marcarSelecionadosGaleria();
+      
+      // Animação de saída
+      cell.style.transform = 'scale(0)';
+      cell.style.opacity = '0';
+      
+      setTimeout(() => {
+        ingredientes.splice(index, 1);
+        salvar();
+        renderIngredientes(campoBusca.value);
+        renderSelecionados();
+        marcarSelecionadosGaleria();
+        anunciar(`${item.nome} removido`);
+      }, 200);
     });
 
     cell.appendChild(img);
     cell.appendChild(btn);
     conteudo.appendChild(cell);
+
+    // Animação de entrada escalonada
+    cell.style.animation = `itemIn 0.3s ease-out ${index * 0.03}s backwards`;
   });
 }
+
 campoBusca.addEventListener('input', () => renderIngredientes(campoBusca.value));
 
-// ===== POPUP: abrir/fechar =====
+// ===== MODAL: ABRIR/FECHAR =====
 function abrirPopup() {
   renderSelecionados();
   renderGaleria();
   backdrop.hidden = false;
   modal.hidden = false;
-  requestAnimationFrame(() => modal.classList.add('ativo'));
+  requestAnimationFrame(() => {
+    modal.classList.add('ativo');
+    modal.focus();
+  });
+  anunciar('Galeria de ingredientes aberta');
 }
+
 function fecharPopup() {
   modal.classList.remove('ativo');
   setTimeout(() => {
     modal.hidden = true;
     backdrop.hidden = true;
-  }, 200);
+  }, 300);
+  anunciar('Galeria fechada');
 }
+
 abrirBtn.addEventListener('click', abrirPopup);
 fecharBtn.addEventListener('click', fecharPopup);
 backdrop.addEventListener('click', fecharPopup);
-adicionarBtn.addEventListener('click', () => { salvar(); renderIngredientes(campoBusca.value); fecharPopup(); });
 
-// ===== Tabs de categorias =====
+// ESC para fechar
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modal.classList.contains('ativo')) {
+    fecharPopup();
+  }
+});
+
+adicionarBtn.addEventListener('click', () => {
+  salvar();
+  renderIngredientes(campoBusca.value);
+  fecharPopup();
+  anunciar(`${ingredientes.length} ingredientes na geladeira`);
+});
+
+// ===== TABS DE CATEGORIAS =====
 let currentCategory = Object.keys(CATEGORIAS)[0];
-function renderTabs(){
+
+function renderTabs() {
   tabsEl.innerHTML = '';
-  Object.keys(CATEGORIAS).forEach((cat, idx) => {
-    const b = document.createElement('button');
-    b.className = 'tab-btn';
-    b.role = 'tab';
-    b.setAttribute('aria-selected', String(cat === currentCategory));
-    b.textContent = cat;
-    b.addEventListener('click', () => {
+  Object.keys(CATEGORIAS).forEach((cat) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn';
+    btn.role = 'tab';
+    btn.setAttribute('aria-selected', String(cat === currentCategory));
+    btn.textContent = cat;
+    
+    btn.addEventListener('click', () => {
       currentCategory = cat;
-      Array.from(tabsEl.children).forEach(el => el.setAttribute('aria-selected','false'));
-      b.setAttribute('aria-selected','true');
+      Array.from(tabsEl.children).forEach(el => 
+        el.setAttribute('aria-selected', 'false')
+      );
+      btn.setAttribute('aria-selected', 'true');
       buscaModalEl.value = '';
       renderGaleria();
+      anunciar(`Categoria ${cat} selecionada`);
     });
-    tabsEl.appendChild(b);
-    if (idx === 0) b.setAttribute('aria-selected','true');
+    
+    tabsEl.appendChild(btn);
   });
 }
 
-// ===== Galeria por categoria + filtro =====
-function renderGaleria(){
+// ===== GALERIA DE INGREDIENTES =====
+function renderGaleria() {
   const filtro = normalizar(buscaModalEl.value || '');
   const lista = CATEGORIAS[currentCategory];
 
+  // Remover skeleton loader
+  const skeletons = galeriaEl.querySelectorAll('.skeleton-item');
+  skeletons.forEach(sk => sk.remove());
+
   galeriaEl.innerHTML = '';
-  lista
-    .filter(([id,nome]) => normalizar(nome).includes(filtro))
-    .forEach(([id, nome]) => {
-      const data = catalogIndex[id];
-      const item = document.createElement('div');
-      item.className = 'item';
-      item.tabIndex = 0;
-      item.dataset.id = id;
 
-      const img = document.createElement('img');
-      img.src = data.img;
-      img.alt = nome;
+  const itensFiltrados = lista.filter(([id, nome]) => 
+    normalizar(nome).includes(filtro)
+  );
 
-      const label = document.createElement('div');
-      label.className = 'nome';
-      label.textContent = nome;
+  if (itensFiltrados.length === 0) {
+    galeriaEl.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--verde);">
+        <p style="font-size: 18px;">🔍</p>
+        <p style="font-size: 14px; margin-top: 8px;">Nenhum ingrediente encontrado</p>
+      </div>
+    `;
+    return;
+  }
 
-      const toggle = () => toggleSelecionado(data);
-      item.addEventListener('click', toggle);
-      item.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
-      });
+  itensFiltrados.forEach(([id, nome], idx) => {
+    const data = catalogIndex[id];
+    const item = document.createElement('div');
+    item.className = 'item';
+    item.tabIndex = 0;
+    item.dataset.id = id;
+    item.style.animationDelay = `${idx * 0.02}s`;
 
-      item.appendChild(img);
-      item.appendChild(label);
-      galeriaEl.appendChild(item);
+    const img = document.createElement('img');
+    img.src = data.img;
+    img.alt = nome;
+    img.loading = 'lazy';
+    img.onerror = () => {
+      img.style.opacity = '0.3';
+      img.src = '/assets/img/icons/placeholder.png';
+    };
+
+    const label = document.createElement('div');
+    label.className = 'nome';
+    label.textContent = nome;
+
+    const toggle = () => toggleSelecionado(data);
+    
+    item.addEventListener('click', toggle);
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle();
+      }
     });
+
+    item.appendChild(img);
+    item.appendChild(label);
+    galeriaEl.appendChild(item);
+  });
 
   marcarSelecionadosGaleria();
 }
+
 buscaModalEl.addEventListener('input', renderGaleria);
 
-function marcarSelecionadosGaleria(){
+function marcarSelecionadosGaleria() {
   const ids = new Set(ingredientes.map(i => i.id || normalizar(i.nome)));
   Array.from(galeriaEl.children).forEach((el) => {
     const id = el.dataset.id;
-    if (ids.has(id)) el.classList.add('selecionado'); else el.classList.remove('selecionado');
+    if (ids.has(id)) {
+      el.classList.add('selecionado');
+    } else {
+      el.classList.remove('selecionado');
+    }
   });
 }
 
-// ===== Selecionar / remover =====
-function toggleSelecionado(catItem){
+// ===== SELECIONAR/REMOVER =====
+function toggleSelecionado(catItem) {
   const id = catItem.id;
-  const idx = ingredientes.findIndex(i => (i.id || normalizar(i.nome)) === id);
-  if (idx >= 0) ingredientes.splice(idx,1);
-  else ingredientes.push({ id, nome: catItem.nome, url: catItem.img });
+  const idx = ingredientes.findIndex(i => 
+    (i.id || normalizar(i.nome)) === id
+  );
+
+  if (idx >= 0) {
+    ingredientes.splice(idx, 1);
+    anunciar(`${catItem.nome} removido`);
+  } else {
+    ingredientes.push({ 
+      id, 
+      nome: catItem.nome, 
+      url: catItem.img 
+    });
+    anunciar(`${catItem.nome} adicionado`);
+  }
+
   salvar();
   renderIngredientes(campoBusca.value);
   renderSelecionados();
   marcarSelecionadosGaleria();
 }
 
-// ===== Chips de selecionados =====
-function renderSelecionados(){
+// ===== CHIPS DE SELECIONADOS =====
+function renderSelecionados() {
   const total = ingredientes.length;
-  selecionadosCount.textContent = `${total} selecionado${total===1?'':'s'}`;
+  
+  selecionadosCountEl.innerHTML = `
+    <span class="count-badge">${total}</span>
+    <span>${total === 1 ? 'selecionado' : 'selecionados'}</span>
+  `;
+  
   selecionadosWrap.hidden = total === 0;
 
   chipsEl.innerHTML = '';
+  
   ingredientes.forEach(item => {
     const chip = document.createElement('div');
     chip.className = 'chip';
@@ -311,6 +468,7 @@ function renderSelecionados(){
     const img = document.createElement('img');
     img.src = item.url;
     img.alt = '';
+    img.loading = 'lazy';
     img.onerror = () => { img.style.display = 'none'; };
 
     const name = document.createElement('span');
@@ -321,15 +479,20 @@ function renderSelecionados(){
     btn.title = 'Remover';
     btn.setAttribute('aria-label', `Remover ${item.nome}`);
     btn.textContent = '×';
+    
     btn.addEventListener('click', () => {
       const id = item.id || normalizar(item.nome);
-      const idx = ingredientes.findIndex(i => (i.id || normalizar(i.nome)) === id);
+      const idx = ingredientes.findIndex(i => 
+        (i.id || normalizar(i.nome)) === id
+      );
+      
       if (idx >= 0) {
-        ingredientes.splice(idx,1);
+        ingredientes.splice(idx, 1);
         salvar();
         renderIngredientes(campoBusca.value);
         renderSelecionados();
         marcarSelecionadosGaleria();
+        anunciar(`${item.nome} removido`);
       }
     });
 
@@ -343,41 +506,64 @@ function renderSelecionados(){
 // Limpar todos
 limparSelBtn.addEventListener('click', () => {
   if (!ingredientes.length) return;
-  if (confirm('Remover todos os ingredientes selecionados?')) {
+  
+  if (confirm(`Remover todos os ${ingredientes.length} ingredientes selecionados?`)) {
     ingredientes = [];
     salvar();
     renderIngredientes(campoBusca.value);
     renderSelecionados();
     marcarSelecionadosGaleria();
+    anunciar('Todos os ingredientes removidos');
   }
 });
 
-// “Outro ingrediente?”
+// ===== ADICIONAR INGREDIENTE MANUAL =====
 document.getElementById('adicionarManual').addEventListener('click', () => {
   const nome = prompt('Digite o nome do ingrediente:');
-  const url  = prompt('Cole o caminho/arquivo da imagem (PNG/SVG):');
-  if (nome && url) {
-    const id = normalizar(nome).replace(/\s+/g,'-').slice(0,40) || `item-${Date.now()}`;
-    ingredientes.push({ id, nome, url });
-    salvar();
-    renderIngredientes(campoBusca.value);
-    renderSelecionados();
-    marcarSelecionadosGaleria();
-  }
+  
+  if (!nome || !nome.trim()) return;
+  
+  const nomeClean = nome.trim();
+  const url = prompt(
+    'Cole o caminho da imagem (opcional):\nEx: /assets/img/ingredientes/item.png',
+    '/assets/img/icons/placeholder.png'
+  );
+  
+  const id = normalizar(nomeClean).replace(/\s+/g, '-').slice(0, 40) || 
+    `item-${Date.now()}`;
+  
+  ingredientes.push({ 
+    id, 
+    nome: nomeClean, 
+    url: url || '/assets/img/icons/placeholder.png' 
+  });
+  
+  salvar();
+  renderIngredientes(campoBusca.value);
+  renderSelecionados();
+  marcarSelecionadosGaleria();
+  anunciar(`${nomeClean} adicionado manualmente`);
 });
 
-// ===== Init =====
+// ===== NAVEGAÇÃO DO RODAPÉ =====
+document.getElementById('btnVoltar').addEventListener('click', () => {
+  window.location.href = '/app/humor/index.html';
+});
+
+document.getElementById('btnLogo').addEventListener('click', () => {
+  window.location.href = '/app/home/index.html';
+});
+
+document.getElementById('btnGeladeira').addEventListener('click', () => {
+  window.location.href = '/app/geladeira/index.html';
+});
+
+// ===== INICIALIZAÇÃO =====
 renderIngredientes();
 renderTabs();
 renderGaleria();
 
-// ===== Navegação rodapé =====
-document.getElementById("btnVoltar").addEventListener("click", () => {
-  window.location.href = "/app/humor/index.html";
-});
-document.getElementById("btnLogo").addEventListener("click", () => {
-  window.location.href = "/app/home/index.html";
-});
-document.getElementById("btnGeladeira").addEventListener("click", () => {
-  window.location.href = "/app/geladeira/index.html";
-});
+console.log('🚀 Geladeira inicializada com sucesso!');
+console.log(`📦 ${ingredientes.length} ingredientes carregados`);
+console.log(`🗂️ ${Object.keys(CATEGORIAS).length} categorias disponíveis`);
+console.log(`🏷️ ${Object.keys(catalogIndex).length} ingredientes no catálogo`);
