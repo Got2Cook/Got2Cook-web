@@ -231,7 +231,7 @@ Object.entries(CATEGORIAS).forEach(([cat, lista]) => {
   });
 });
 
-// ===== RENDER DA GRADE DA GELADEIRA =====
+// ===== RENDER DA GRADE DA GELADEIRA (COM NOMES) =====
 function renderIngredientes(filtro = '') {
   const lista = ingredientes.filter(i => 
     normalizar(i.nome).includes(normalizar(filtro))
@@ -271,6 +271,11 @@ function renderIngredientes(filtro = '') {
       img.style.opacity = '0.3';
     };
 
+    // ADICIONADO: elemento de texto com o nome
+    const nome = document.createElement('div');
+    nome.className = 'celula-nome';
+    nome.textContent = item.nome;
+
     const btn = document.createElement('button');
     btn.className = 'btn-remover';
     btn.textContent = '✕';
@@ -293,6 +298,7 @@ function renderIngredientes(filtro = '') {
     });
 
     cell.appendChild(img);
+    cell.appendChild(nome); // ADICIONADO: adiciona o nome
     cell.appendChild(btn);
     conteudo.appendChild(cell);
 
