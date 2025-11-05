@@ -459,15 +459,41 @@ body {
   backdrop-filter: blur(10px);
 }
 
-/* Grid de ingredientes (MENORES) */
+/* Grid de ingredientes (BEM MENORES + SCROLL) */
 .conteudo-geladeira {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 0;
   border: 2px solid #cfe9c8;
   border-radius: 0 0 16px 16px;
-  overflow: hidden;
+  overflow-y: auto;
+  max-height: 400px;
   min-height: 250px;
+}
+
+/* Scrollbar customizada */
+.conteudo-geladeira::-webkit-scrollbar {
+  width: 8px;
+}
+
+.conteudo-geladeira::-webkit-scrollbar-track {
+  background: #e6ffe1;
+  border-radius: 0 0 16px 0;
+}
+
+.conteudo-geladeira::-webkit-scrollbar-thumb {
+  background: var(--verde-medio);
+  border-radius: 10px;
+}
+
+.conteudo-geladeira::-webkit-scrollbar-thumb:hover {
+  background: var(--verde-escuro);
+}
+
+/* Para Firefox */
+.conteudo-geladeira {
+  scrollbar-width: thin;
+  scrollbar-color: var(--verde-medio) #e6ffe1;
 }
 
 .celula {
@@ -477,7 +503,7 @@ body {
   align-items: center;
   justify-content: center;
   background: #ffffff;
-  padding: 8px;
+  padding: 6px;
   aspect-ratio: 1;
   transition: all var(--transition-base);
   cursor: pointer;
@@ -491,28 +517,28 @@ body {
 }
 
 .celula img {
-  max-width: 60%;
-  max-height: 60%;
+  max-width: 50%;
+  max-height: 50%;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
   transition: transform var(--transition-base);
 }
 
 .celula:hover img {
-  transform: scale(1.15);
+  transform: scale(1.2);
 }
 
 .btn-remover {
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: 3px;
+  right: 3px;
   background: linear-gradient(135deg, #ff5757 0%, #ff2d2d 100%);
   color: #fff;
   border: none;
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  font-size: 11px;
   font-weight: bold;
   cursor: pointer;
   display: flex;
@@ -529,7 +555,7 @@ body {
 
 .btn-remover:hover {
   background: linear-gradient(135deg, #ff2d2d 0%, #cc0000 100%);
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
 .btn-remover:active {
@@ -537,8 +563,8 @@ body {
 }
 
 .btn-remover:focus-visible {
-  outline: 3px solid var(--roxo);
-  outline-offset: 2px;
+  outline: 2px solid var(--roxo);
+  outline-offset: 1px;
 }
 
 /* Empty state */
@@ -552,6 +578,7 @@ body {
   text-align: center;
   background: linear-gradient(135deg, #ffffff 0%, var(--verde-claro) 100%);
   animation: fadeIn 0.5s ease-out;
+  min-height: 250px;
 }
 
 @keyframes fadeIn {
@@ -1313,7 +1340,8 @@ body {
   }
 
   .conteudo-geladeira {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
+    max-height: 450px;
   }
 
   .popup {
@@ -1349,6 +1377,14 @@ body {
   }
 
   .conteudo-geladeira {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(8, 1fr);
+    max-height: 500px;
+  }
+}
+
+/* Ajuste para telas muito pequenas */
+@media (max-width: 360px) {
+  .conteudo-geladeira {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
