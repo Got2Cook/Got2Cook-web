@@ -459,10 +459,10 @@ body {
   backdrop-filter: blur(10px);
 }
 
-/* Grid de ingredientes (AINDA MENORES + SÓ SCROLL VERTICAL) */
+/* Grid de ingredientes (MAIORES + 3 COLUNAS MOBILE / 5 DESKTOP) */
 .conteudo-geladeira {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr); /* REDUZIDO: de 5 para 3 colunas no mobile */
   gap: 0;
   border: 2px solid #cfe9c8;
   border-radius: 0 0 16px 16px;
@@ -504,7 +504,7 @@ body {
   align-items: center;
   justify-content: center;
   background: #ffffff;
-  padding: 4px;
+  padding: 8px; /* AUMENTADO: de 4px para 8px */
   aspect-ratio: 1;
   transition: all var(--transition-base);
   cursor: pointer;
@@ -519,28 +519,28 @@ body {
 }
 
 .celula img {
-  max-width: 45%;
-  max-height: 45%;
+  max-width: 85%; /* AUMENTADO: de 45% para 85% */
+  max-height: 85%; /* AUMENTADO: de 45% para 85% */
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
   transition: transform var(--transition-base);
 }
 
 .celula:hover img {
-  transform: scale(1.25);
+  transform: scale(1.1); /* REDUZIDO: de 1.25 para 1.1 */
 }
 
 .btn-remover {
   position: absolute;
-  top: 2px;
-  right: 2px;
+  top: 4px; /* AUMENTADO: de 2px para 4px */
+  right: 4px; /* AUMENTADO: de 2px para 4px */
   background: linear-gradient(135deg, #ff5757 0%, #ff2d2d 100%);
   color: #fff;
   border: none;
   border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  font-size: 10px;
+  width: 24px; /* AUMENTADO: de 18px para 24px */
+  height: 24px; /* AUMENTADO: de 18px para 24px */
+  font-size: 12px; /* AUMENTADO: de 10px para 12px */
   font-weight: bold;
   cursor: pointer;
   display: flex;
@@ -557,7 +557,7 @@ body {
 
 .btn-remover:hover {
   background: linear-gradient(135deg, #ff2d2d 0%, #cc0000 100%);
-  transform: scale(1.2);
+  transform: scale(1.15);
 }
 
 .btn-remover:active {
@@ -1342,7 +1342,7 @@ body {
   }
 
   .conteudo-geladeira {
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(5, 1fr); /* 5 colunas no desktop */
     max-height: 450px;
   }
 
@@ -1379,7 +1379,7 @@ body {
   }
 
   .conteudo-geladeira {
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: repeat(5, 1fr); /* Mantém 5 colunas */
     max-height: 500px;
   }
 }
@@ -1387,6 +1387,6 @@ body {
 /* Ajuste para telas muito pequenas */
 @media (max-width: 360px) {
   .conteudo-geladeira {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas muito pequenas */
   }
 }
