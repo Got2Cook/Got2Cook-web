@@ -69,7 +69,7 @@ body {
 }
 
 .conteudo {
-  max-width: 700px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px 16px 40px;
 }
@@ -171,99 +171,97 @@ body {
   border: 2px solid var(--verde-medio);
 }
 
-/* ===== GELADEIRA DUPLA (MAIS LARGA) ===== */
+/* ===== GELADEIRA ADAPTÁVEL ===== */
 .geladeira-container {
-  width: min(95vw, 600px); /* Aumentado de 380px para 600px */
+  width: min(90vw, 400px);
   margin: 30px auto 0;
   animation: fadeInUp 0.6s var(--bounce) 0.2s backwards;
-  perspective: 1600px; /* Aumentado para melhor efeito 3D */
+  perspective: 1600px;
+  position: relative;
 }
 
+/* MOBILE: Uma porta (padrão) */
 .porta-wrapper {
   position: relative;
   cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+.porta-wrapper--desktop {
+  display: none;
+}
+
+.porta-wrapper--mobile {
+  display: block;
+}
+
+/* Porta simples (mobile) */
+.porta-simples {
+  position: relative;
+  transition: transform var(--transition-slow);
+}
+
+.porta-simples .porta-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px var(--sombra-forte);
+}
+
+.geladeira-container:not(.is-open) .porta-simples:hover {
+  transform: scale(1.02);
+}
+
+/* Animação mobile (porta única) */
+.geladeira-container.is-open .porta-simples {
+  animation: abrirSimples 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes abrirSimples {
+  0% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: rotateY(-120deg);
+    opacity: 0;
+  }
+}
+
+/* DESKTOP: Duas portas */
+.porta-wrapper--desktop {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4px;
-  padding: 0;
-  transform-style: preserve-3d;
 }
 
-/* Container das portas */
-.porta-imagem {
-  display: none; /* Vamos usar divs estilizadas no lugar */
-}
-
-/* Portas individuais */
 .porta-esquerda,
 .porta-direita {
-  aspect-ratio: 1/1.4;
-  background: linear-gradient(135deg, #e8f5ff 0%, #c5dff8 100%);
-  border: 4px solid var(--roxo);
-  border-radius: 20px;
   position: relative;
   transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   transform-style: preserve-3d;
-  box-shadow: 0 10px 40px var(--sombra-forte);
-  overflow: hidden;
 }
 
-/* Efeito de brilho nas portas */
-.porta-esquerda::before,
-.porta-direita::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: 
-    linear-gradient(180deg, rgba(255,255,255,0.4) 0%, transparent 30%),
-    radial-gradient(circle at 30% 40%, rgba(255,255,255,0.3), transparent);
-  pointer-events: none;
-}
-
-/* Alças das portas */
-.porta-esquerda::after,
-.porta-direita::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 12px;
-  height: 100px;
-  background: linear-gradient(135deg, #bbb 0%, #888 100%);
+.porta-esquerda .porta-img,
+.porta-direita .porta-img {
+  display: block;
+  width: 100%;
+  height: auto;
   border-radius: 20px;
-  box-shadow: 
-    inset 0 2px 4px rgba(255,255,255,0.5),
-    0 4px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 10px 40px var(--sombra-forte);
 }
 
-.porta-esquerda::after {
-  right: 20px;
-}
-
-.porta-direita::after {
-  left: 20px;
-}
-
-/* Ícone decorativo na porta */
-.porta-icone {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 48px;
-  opacity: 0.6;
-}
-
-/* Hover nas portas fechadas */
-.geladeira-container:not(.is-open) .porta-wrapper:hover .porta-esquerda {
+/* Hover desktop */
+.geladeira-container:not(.is-open) .porta-esquerda:hover {
   transform: rotateY(-2deg);
 }
 
-.geladeira-container:not(.is-open) .porta-wrapper:hover .porta-direita {
+.geladeira-container:not(.is-open) .porta-direita:hover {
   transform: rotateY(2deg);
 }
 
-/* Animação de abertura das portas */
+/* Animação desktop (portas duplas) */
 .geladeira-container.is-open .porta-esquerda {
   animation: abrirEsquerda 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
@@ -294,11 +292,12 @@ body {
   }
 }
 
+/* Hint centralizado */
 .porta-hint {
   position: absolute;
-  bottom: -50px;
+  bottom: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, 50%);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -312,11 +311,16 @@ body {
   box-shadow: 0 4px 12px var(--sombra);
   animation: pulse 2s ease-in-out infinite;
   z-index: 10;
+  pointer-events: none;
 }
 
 @keyframes pulse {
-  0%, 100% { transform: translateX(-50%) scale(1); }
-  50% { transform: translateX(-50%) scale(1.05); }
+  0%, 100% { 
+    transform: translate(-50%, 50%) scale(1);
+  }
+  50% { 
+    transform: translate(-50%, 50%) scale(1.05);
+  }
 }
 
 .hint-icon {
@@ -327,6 +331,11 @@ body {
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-5px); }
+}
+
+/* Esconder hint quando aberta */
+.geladeira-container.is-open .porta-hint {
+  display: none;
 }
 
 /* Esconder portas quando aberta */
@@ -419,9 +428,10 @@ body {
   border-radius: 12px;
 }
 
+/* Grid de ingredientes (MENORES) */
 .conteudo-geladeira {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Aumentado de 2 para 3 colunas */
+  grid-template-columns: repeat(3, 1fr);
   gap: 0;
   border: 2px solid #cfe9c8;
   border-radius: 0 0 16px 16px;
@@ -436,7 +446,7 @@ body {
   align-items: center;
   justify-content: center;
   background: #ffffff;
-  padding: 12px;
+  padding: 8px; /* REDUZIDO: de 12px para 8px */
   aspect-ratio: 1;
   transition: all var(--transition-base);
   cursor: pointer;
@@ -449,28 +459,28 @@ body {
 }
 
 .celula img {
-  max-width: 75%;
-  max-height: 75%;
+  max-width: 60%; /* REDUZIDO: de 75% para 60% */
+  max-height: 60%; /* REDUZIDO: de 75% para 60% */
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
   transition: transform var(--transition-base);
 }
 
 .celula:hover img {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
 .btn-remover {
   position: absolute;
-  top: 6px;
-  right: 6px;
+  top: 4px;
+  right: 4px;
   background: linear-gradient(135deg, #ff5757 0%, #ff2d2d 100%);
   color: #fff;
   border: none;
   border-radius: 50%;
-  width: 26px;
-  height: 26px;
-  font-size: 14px;
+  width: 24px; /* REDUZIDO: de 26px para 24px */
+  height: 24px; /* REDUZIDO: de 26px para 24px */
+  font-size: 12px; /* REDUZIDO: de 14px para 12px */
   font-weight: bold;
   cursor: pointer;
   display: flex;
@@ -1072,18 +1082,27 @@ body {
   height: 150%;
 }
 
-/* ===== RESPONSIVO ===== */
+/* ===== RESPONSIVO DESKTOP ===== */
 @media (min-width: 768px) {
   .conteudo {
-    max-width: 900px;
+    max-width: 1000px;
   }
 
+  /* Trocar para duas portas no desktop */
   .geladeira-container {
-    max-width: 700px;
+    width: min(95vw, 850px);
+  }
+
+  .porta-wrapper--mobile {
+    display: none;
+  }
+
+  .porta-wrapper--desktop {
+    display: grid;
   }
 
   .conteudo-geladeira {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
 
   .popup {
@@ -1115,10 +1134,31 @@ body {
 
 @media (min-width: 1024px) {
   .geladeira-container {
-    max-width: 750px;
+    max-width: 900px;
   }
 
   .conteudo-geladeira {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
 }
+```
+
+O JavaScript permanece o mesmo (código anterior), funciona para ambos os layouts!
+
+---
+
+## **📸 IMAGENS NECESSÁRIAS**
+
+Você precisará criar/adicionar estas imagens:
+
+### **1. Mobile (porta única):**
+```
+/assets/geladeira-fechada.png
+```
+- Geladeira completa de uma porta
+- Proporção vertical (aproximadamente 3:4)
+
+### **2. Desktop (portas duplas):**
+```
+/assets/geladeira-esquerda.png
+/assets/geladeira-direita.png
