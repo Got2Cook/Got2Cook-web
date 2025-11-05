@@ -5,14 +5,16 @@ const LS_ITENS = 'got2cook_geladeira';
 const LS_ITENS_LEGACY = 'geladeira';
 const BASE = '/assets/ingredientes';
 
-// Migração
+// Migração automática
 if (!localStorage.getItem(LS_ITENS) && localStorage.getItem(LS_ITENS_LEGACY)) {
   localStorage.setItem(LS_ITENS, localStorage.getItem(LS_ITENS_LEGACY));
+  console.log('✓ Dados migrados de "geladeira" para "got2cook_geladeira"');
 }
 
-// ===== ESTADO =====
+// ===== ESTADO GLOBAL =====
 let ingredientes = JSON.parse(localStorage.getItem(LS_ITENS) || '[]');
 
+// Normalizar dados legados (strings puras → objetos)
 ingredientes = ingredientes.map(it => {
   if (typeof it === 'string') {
     const id = it.split('/').pop().split('.')[0].toLowerCase();
@@ -26,10 +28,14 @@ salvar();
 // ===== HELPERS =====
 function salvar() {
   localStorage.setItem(LS_ITENS, JSON.stringify(ingredientes));
+  console.log(`💾 ${ingredientes.length} ingredientes salvos no localStorage`);
 }
 
 function normalizar(texto) {
-  return (texto || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  return (texto || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
 }
 
 function anunciar(mensagem) {
@@ -61,37 +67,46 @@ function mostrarToast(mensagem, icone = '✓') {
   }, 2500);
 }
 
-// ===== REFERÊNCIAS =====
+// ===== REFERÊNCIAS DO DOM =====
 const wrap = document.getElementById('geladeiraWrap');
-const porta = document.getElementById('portaImagem');
+const frame = document.querySelector('.geladeira-frame');
 const campoBusca = document.getElementById('campoBusca');
 const conteudo = document.getElementById('conteudoGeladeira');
 const ingredientesCount = document.getElementById('ingredientesCount');
 
+// Modal
 const modal = document.getElementById('modalGaleria');
 const backdrop = document.getElementById('modalBackdrop');
 const abrirBtn = document.getElementById('abrirIngrediente');
 const fecharBtn = document.getElementById('fecharModal');
 const adicionarBtn = document.getElementById('adicionarSelecao');
 
+// Galeria
 const galeriaEl = document.getElementById('galeriaIngredientes');
 const tabsEl = document.getElementById('tabsCategorias');
 const buscaModalEl = document.getElementById('buscaModal');
 
+// Selecionados (chips)
 const selecionadosWrap = document.getElementById('selecionadosWrap');
 const selecionadosCountEl = document.getElementById('selecionadosCount');
 
+// Modal Selecionados
 const modalSelecionados = document.getElementById('modalSelecionados');
 const modalSelecionadosBackdrop = document.getElementById('modalSelecionadosBackdrop');
 const chipsListModal = document.getElementById('chipsListModal');
 
-// ===== PORTA =====
-porta.addEventListener('click', () => {
-  wrap.classList.toggle('is-open');
-  anunciar(wrap.classList.contains('is-open') ? 'Geladeira aberta' : 'Geladeira fechada');
-});
+// ===== ANIMAÇÃO DA PORTA (COM CLIQUE NA MOLDURA) =====
+if (frame) {
+  frame.addEventListener('click', () => {
+    wrap.classList.toggle('is-open');
+    anunciar(wrap.classList.contains('is-open') 
+      ? 'Geladeira aberta' 
+      : 'Geladeira fechada'
+    );
+  });
+}
 
-// ===== CATÁLOGO =====
+// ===== CATÁLOGO DE INGREDIENTES =====
 const CATEGORIAS = {
   'Legumes e Verduras': [
     ['tomate','Tomate'],['cebola','Cebola'],['alho','Alho'],['batata','Batata'],
@@ -202,19 +217,30 @@ const CATEGORIAS = {
   ]
 };
 
+// Index do catálogo (sem subpastas de categoria)
 const catalogIndex = {};
 const slugCat = cat => normalizar(cat).replace(/\s|&|\/|,/g,'-');
 Object.entries(CATEGORIAS).forEach(([cat, lista]) => {
   lista.forEach(([id, nome]) => {
-    catalogIndex[id] = { id, nome, cat, img: `${BASE}/${slugCat(cat)}/${id}.png` };
+    catalogIndex[id] = { 
+      id, 
+      nome, 
+      cat, 
+      img: `${BASE}/${slugCat(cat)}/${id}.png`
+    };
   });
 });
 
-// ===== RENDER GELADEIRA =====
+// ===== RENDER DA GRADE DA GELADEIRA =====
 function renderIngredientes(filtro = '') {
-  const lista = ingredientes.filter(i => normalizar(i.nome).includes(normalizar(filtro)));
+  const lista = ingredientes.filter(i => 
+    normalizar(i.nome).includes(normalizar(filtro))
+  );
+
+  // Atualizar contador
   ingredientesCount.textContent = `${lista.length} ${lista.length === 1 ? 'item' : 'itens'}`;
 
+  // Empty state
   if (lista.length === 0) {
     conteudo.innerHTML = `
       <div class="empty-state">
@@ -229,7 +255,10 @@ function renderIngredientes(filtro = '') {
     return;
   }
 
+  // Renderizar grid
   conteudo.innerHTML = '';
+  conteudo.classList.add('conteudo-geladeira');
+
   lista.forEach((item, index) => {
     const cell = document.createElement('div');
     cell.className = 'celula';
@@ -238,21 +267,27 @@ function renderIngredientes(filtro = '') {
     img.src = item.url;
     img.alt = item.nome;
     img.loading = 'lazy';
-    img.onerror = () => { img.style.opacity = '0.3'; };
+    img.onerror = () => { 
+      img.style.opacity = '0.3';
+    };
 
     const btn = document.createElement('button');
     btn.className = 'btn-remover';
     btn.textContent = '✕';
+    btn.setAttribute('aria-label', `Remover ${item.nome}`);
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
+      
+      // Animação de saída
       cell.style.transform = 'scale(0)';
       cell.style.opacity = '0';
+      
       setTimeout(() => {
         ingredientes.splice(index, 1);
         salvar();
         renderIngredientes(campoBusca.value);
         renderSelecionados();
-        renderGaleria(); // ATUALIZA GALERIA
+        renderGaleria(); // Atualiza galeria
         mostrarToast(`${item.nome} removido`, '🗑️');
       }, 200);
     });
@@ -260,12 +295,15 @@ function renderIngredientes(filtro = '') {
     cell.appendChild(img);
     cell.appendChild(btn);
     conteudo.appendChild(cell);
+
+    // Animação de entrada escalonada
+    cell.style.animation = `itemIn 0.3s ease-out ${index * 0.03}s backwards`;
   });
 }
 
 campoBusca.addEventListener('input', () => renderIngredientes(campoBusca.value));
 
-// ===== MODAL =====
+// ===== MODAL: ABRIR/FECHAR =====
 function abrirPopup() {
   renderSelecionados();
   renderGaleria();
@@ -273,7 +311,9 @@ function abrirPopup() {
   modal.hidden = false;
   requestAnimationFrame(() => {
     modal.classList.add('ativo');
+    modal.focus();
   });
+  anunciar('Galeria de ingredientes aberta');
 }
 
 function fecharPopup() {
@@ -282,12 +322,14 @@ function fecharPopup() {
     modal.hidden = true;
     backdrop.hidden = true;
   }, 300);
+  anunciar('Galeria fechada');
 }
 
 abrirBtn.addEventListener('click', abrirPopup);
 fecharBtn.addEventListener('click', fecharPopup);
 backdrop.addEventListener('click', fecharPopup);
 
+// ESC para fechar
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && modal.classList.contains('ativo')) {
     fecharPopup();
@@ -305,7 +347,7 @@ adicionarBtn.addEventListener('click', () => {
   mostrarToast(`${ingredientes.length} ingredientes adicionados!`, '✓');
 });
 
-// ===== TABS =====
+// ===== TABS DE CATEGORIAS =====
 let currentCategory = Object.keys(CATEGORIAS)[0];
 
 function renderTabs() {
@@ -316,26 +358,34 @@ function renderTabs() {
     btn.role = 'tab';
     btn.setAttribute('aria-selected', String(cat === currentCategory));
     btn.textContent = cat;
+    
     btn.addEventListener('click', () => {
       currentCategory = cat;
-      Array.from(tabsEl.children).forEach(el => el.setAttribute('aria-selected', 'false'));
+      Array.from(tabsEl.children).forEach(el => 
+        el.setAttribute('aria-selected', 'false')
+      );
       btn.setAttribute('aria-selected', 'true');
       buscaModalEl.value = '';
       renderGaleria();
+      anunciar(`Categoria ${cat} selecionada`);
     });
+    
     tabsEl.appendChild(btn);
   });
 }
 
-// ===== GALERIA (FILTRA JÁ ADICIONADOS) =====
+// ===== GALERIA DE INGREDIENTES (FILTRA JÁ ADICIONADOS) =====
 function renderGaleria() {
   const filtro = normalizar(buscaModalEl.value || '');
   const lista = CATEGORIAS[currentCategory];
 
-  galeriaEl.querySelectorAll('.skeleton-item').forEach(sk => sk.remove());
+  // Remover skeleton loader
+  const skeletons = galeriaEl.querySelectorAll('.skeleton-item');
+  skeletons.forEach(sk => sk.remove());
+
   galeriaEl.innerHTML = '';
 
-  // IDs já adicionados
+  // IDs já adicionados (FILTRO PRINCIPAL)
   const idsAdicionados = new Set(ingredientes.map(i => i.id || normalizar(i.nome)));
 
   const itensFiltrados = lista.filter(([id, nome]) => {
@@ -362,18 +412,22 @@ function renderGaleria() {
     item.className = 'item';
     item.tabIndex = 0;
     item.dataset.id = id;
+    item.style.animationDelay = `${idx * 0.02}s`;
 
     const img = document.createElement('img');
     img.src = data.img;
     img.alt = nome;
     img.loading = 'lazy';
-    img.onerror = () => { img.style.opacity = '0.3'; };
+    img.onerror = () => { 
+      img.style.opacity = '0.3';
+    };
 
     const label = document.createElement('div');
     label.className = 'nome';
     label.textContent = nome;
 
     const toggle = () => toggleSelecionado(data);
+    
     item.addEventListener('click', toggle);
     item.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
@@ -397,21 +451,31 @@ function marcarSelecionadosGaleria() {
   Array.from(galeriaEl.children).forEach((el) => {
     if (el.dataset.id) {
       const id = el.dataset.id;
-      if (ids.has(id)) el.classList.add('selecionado');
-      else el.classList.remove('selecionado');
+      if (ids.has(id)) {
+        el.classList.add('selecionado');
+      } else {
+        el.classList.remove('selecionado');
+      }
     }
   });
 }
 
+// ===== SELECIONAR/REMOVER =====
 function toggleSelecionado(catItem) {
   const id = catItem.id;
-  const idx = ingredientes.findIndex(i => (i.id || normalizar(i.nome)) === id);
+  const idx = ingredientes.findIndex(i => 
+    (i.id || normalizar(i.nome)) === id
+  );
 
   if (idx >= 0) {
     ingredientes.splice(idx, 1);
     mostrarToast(`${catItem.nome} removido`, '➖');
   } else {
-    ingredientes.push({ id, nome: catItem.nome, url: catItem.img });
+    ingredientes.push({ 
+      id, 
+      nome: catItem.nome, 
+      url: catItem.img 
+    });
     mostrarToast(`${catItem.nome} adicionado`, '✓');
   }
 
@@ -421,19 +485,22 @@ function toggleSelecionado(catItem) {
   marcarSelecionadosGaleria();
 }
 
-// ===== SELECIONADOS =====
+// ===== SELECIONADOS (CONTADOR COMPACTO) =====
 function renderSelecionados() {
   const total = ingredientes.length;
+  
   selecionadosCountEl.innerHTML = `
     <span class="count-badge">${total}</span>
     <span>${total === 1 ? 'selecionado' : 'selecionados'}</span>
   `;
+  
   selecionadosWrap.hidden = total === 0;
 }
 
 // Ver selecionados (modal popup)
 document.getElementById('verSelecionados').addEventListener('click', () => {
   chipsListModal.innerHTML = '';
+  
   ingredientes.forEach(item => {
     const chip = document.createElement('div');
     chip.className = 'chip-full';
@@ -441,6 +508,7 @@ document.getElementById('verSelecionados').addEventListener('click', () => {
     const img = document.createElement('img');
     img.src = item.url;
     img.alt = '';
+    img.loading = 'lazy';
     img.onerror = () => { img.style.display = 'none'; };
 
     const name = document.createElement('span');
@@ -450,6 +518,7 @@ document.getElementById('verSelecionados').addEventListener('click', () => {
     const btn = document.createElement('button');
     btn.className = 'chip-full-remove';
     btn.textContent = '×';
+    btn.setAttribute('aria-label', `Remover ${item.nome}`);
     btn.addEventListener('click', () => {
       const idx = ingredientes.findIndex(i => i.id === item.id);
       if (idx >= 0) {
@@ -491,6 +560,7 @@ document.getElementById('fecharSelecionados').addEventListener('click', fecharMo
 document.getElementById('fecharModalSelecionados').addEventListener('click', fecharModalSelecionados);
 modalSelecionadosBackdrop.addEventListener('click', fecharModalSelecionados);
 
+// Limpar todos
 document.getElementById('limparTodosSelecionados').addEventListener('click', () => {
   if (confirm(`Remover todos os ${ingredientes.length} ingredientes selecionados?`)) {
     ingredientes = [];
@@ -503,12 +573,27 @@ document.getElementById('limparTodosSelecionados').addEventListener('click', () 
   }
 });
 
+// Adicionar ingrediente manual
 document.getElementById('adicionarManual').addEventListener('click', () => {
   const nome = prompt('Digite o nome do ingrediente:');
+  
   if (!nome || !nome.trim()) return;
+  
   const nomeClean = nome.trim();
-  const id = normalizar(nomeClean).replace(/\s+/g, '-').slice(0, 40) || `item-${Date.now()}`;
-  ingredientes.push({ id, nome: nomeClean, url: '/assets/placeholder.png' });
+  const url = prompt(
+    'Cole o caminho da imagem (opcional):\nEx: /assets/ingredientes/categoria/item.png',
+    '/assets/placeholder.png'
+  );
+  
+  const id = normalizar(nomeClean).replace(/\s+/g, '-').slice(0, 40) || 
+    `item-${Date.now()}`;
+  
+  ingredientes.push({ 
+    id, 
+    nome: nomeClean, 
+    url: url || '/assets/placeholder.png' 
+  });
+  
   salvar();
   renderIngredientes(campoBusca.value);
   renderSelecionados();
@@ -516,7 +601,7 @@ document.getElementById('adicionarManual').addEventListener('click', () => {
   mostrarToast(`${nomeClean} adicionado manualmente`, '✏️');
 });
 
-// ===== NAVEGAÇÃO =====
+// ===== NAVEGAÇÃO DO RODAPÉ =====
 document.getElementById('btnVoltar').addEventListener('click', () => {
   window.location.href = '/app/humor/index.html';
 });
@@ -529,9 +614,12 @@ document.getElementById('btnGeladeira').addEventListener('click', () => {
   window.location.href = '/app/geladeira/index.html';
 });
 
-// ===== INIT =====
+// ===== INICIALIZAÇÃO =====
 renderIngredientes();
 renderTabs();
 renderGaleria();
 
-console.log('🚀 Geladeira OK!');
+console.log('🚀 Geladeira inicializada com sucesso!');
+console.log(`📦 ${ingredientes.length} ingredientes carregados`);
+console.log(`🗂️ ${Object.keys(CATEGORIAS).length} categorias disponíveis`);
+console.log(`🏷️ ${Object.keys(catalogIndex).length} ingredientes no catálogo`);
