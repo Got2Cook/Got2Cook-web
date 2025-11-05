@@ -501,14 +501,16 @@ body {
   position: relative;
   border: 2px solid #cfe9c8;
   display: flex;
+  flex-direction: column; /* MUDOU: de align-items: center para flex-direction: column */
   align-items: center;
   justify-content: center;
   background: #ffffff;
-  padding: 8px; /* AUMENTADO: de 4px para 8px */
+  padding: 8px 8px 4px 8px; /* MUDOU: padding diferente embaixo para o texto */
   aspect-ratio: 1;
   transition: all var(--transition-base);
   cursor: pointer;
   min-width: 0;
+  gap: 4px; /* ADICIONADO: espaço entre imagem e texto */
 }
 
 .celula:hover {
@@ -519,15 +521,31 @@ body {
 }
 
 .celula img {
-  max-width: 85%; /* AUMENTADO: de 45% para 85% */
-  max-height: 85%; /* AUMENTADO: de 45% para 85% */
+  max-width: 70%; /* REDUZIDO: de 85% para 70% para dar espaço ao texto */
+  max-height: 70%; /* REDUZIDO: de 85% para 70% */
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
   transition: transform var(--transition-base);
+  flex-shrink: 0; /* ADICIONADO: previne que a imagem encolha */
 }
 
 .celula:hover img {
   transform: scale(1.1); /* REDUZIDO: de 1.25 para 1.1 */
+}
+
+.celula-nome {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--verde-escuro);
+  text-align: center;
+  line-height: 1.1;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
 }
 
 .btn-remover {
