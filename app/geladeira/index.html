@@ -24,21 +24,33 @@
         </div>
       </section>
 
-      <!-- Geladeira com duas portas -->
+      <!-- Geladeira adaptável -->
       <div class="geladeira-container" id="geladeiraWrap">
-        <div class="porta-wrapper" id="portaImagem">
-          <div class="porta-esquerda">
-            <span class="porta-icone">❄️</span>
-          </div>
-          <div class="porta-direita">
-            <span class="porta-icone">🧊</span>
+        
+        <!-- MOBILE: Uma porta -->
+        <div class="porta-wrapper porta-wrapper--mobile" id="portaWrapperMobile">
+          <div class="porta-simples">
+            <img src="/assets/geladeira-fechada.png" alt="Geladeira" class="porta-img" />
           </div>
         </div>
+
+        <!-- DESKTOP: Duas portas -->
+        <div class="porta-wrapper porta-wrapper--desktop" id="portaWrapperDesktop">
+          <div class="porta-esquerda">
+            <img src="/assets/geladeira-esquerda.png" alt="Porta esquerda" class="porta-img" />
+          </div>
+          <div class="porta-direita">
+            <img src="/assets/geladeira-direita.png" alt="Porta direita" class="porta-img" />
+          </div>
+        </div>
+
+        <!-- Hint centralizado -->
         <div class="porta-hint">
           <span class="hint-icon">👆</span>
           <span class="hint-text">Clique para abrir</span>
         </div>
 
+        <!-- Interior (mesmo para mobile e desktop) -->
         <div class="geladeira-aberta" id="geladeiraAberta" aria-hidden="true">
           <div class="geladeira-header">
             <span class="geladeira-luz" aria-hidden="true"></span>
@@ -154,7 +166,7 @@
         <img src="/assets/logocentral.png" alt="" />
       </button>
       <button class="btn-footer geladeira" id="btnGeladeira" aria-label="Abrir Minha Geladeira">
-        <img src="/assets/img/geladeira.png" alt="" />
+        <img src="/assets/geladeira.png" alt="" />
       </button>
     </footer>
   </div>
