@@ -459,14 +459,15 @@ body {
   backdrop-filter: blur(10px);
 }
 
-/* Grid de ingredientes (BEM MENORES + SCROLL) */
+/* Grid de ingredientes (AINDA MENORES + SÓ SCROLL VERTICAL) */
 .conteudo-geladeira {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 0;
   border: 2px solid #cfe9c8;
   border-radius: 0 0 16px 16px;
   overflow-y: auto;
+  overflow-x: hidden;
   max-height: 400px;
   min-height: 250px;
 }
@@ -503,42 +504,43 @@ body {
   align-items: center;
   justify-content: center;
   background: #ffffff;
-  padding: 6px;
+  padding: 4px;
   aspect-ratio: 1;
   transition: all var(--transition-base);
   cursor: pointer;
+  min-width: 0;
 }
 
 .celula:hover {
   background: var(--verde-claro);
-  transform: scale(1.02);
+  transform: scale(1.05);
   z-index: 1;
   box-shadow: 0 4px 12px var(--sombra);
 }
 
 .celula img {
-  max-width: 50%;
-  max-height: 50%;
+  max-width: 45%;
+  max-height: 45%;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
   transition: transform var(--transition-base);
 }
 
 .celula:hover img {
-  transform: scale(1.2);
+  transform: scale(1.25);
 }
 
 .btn-remover {
   position: absolute;
-  top: 3px;
-  right: 3px;
+  top: 2px;
+  right: 2px;
   background: linear-gradient(135deg, #ff5757 0%, #ff2d2d 100%);
   color: #fff;
   border: none;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  font-size: 11px;
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
   font-weight: bold;
   cursor: pointer;
   display: flex;
@@ -555,7 +557,7 @@ body {
 
 .btn-remover:hover {
   background: linear-gradient(135deg, #ff2d2d 0%, #cc0000 100%);
-  transform: scale(1.15);
+  transform: scale(1.2);
 }
 
 .btn-remover:active {
@@ -1340,7 +1342,7 @@ body {
   }
 
   .conteudo-geladeira {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     max-height: 450px;
   }
 
@@ -1377,7 +1379,7 @@ body {
   }
 
   .conteudo-geladeira {
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(10, 1fr);
     max-height: 500px;
   }
 }
@@ -1385,6 +1387,6 @@ body {
 /* Ajuste para telas muito pequenas */
 @media (max-width: 360px) {
   .conteudo-geladeira {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
